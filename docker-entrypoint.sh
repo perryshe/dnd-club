@@ -11,4 +11,4 @@ echo "Running seed..."
 tsx prisma/seed.ts
 
 echo "Starting application..."
-exec node server.js
+exec su -s /bin/sh -c "exec node server.js" nextjs
