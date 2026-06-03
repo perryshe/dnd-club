@@ -14,7 +14,7 @@ export default function Home() {
 
         <div className="flex gap-4 justify-center mb-12">
           <a
-            href="https://t.me/your_club"
+            href="https://t.me/d21_blg"
             target="_blank"
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg transition"
           >

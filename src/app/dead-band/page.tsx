@@ -92,10 +92,13 @@ export default async function DeadBandPage() {
                     <h3 className="text-xl font-bold mb-2">{char.name}</h3>
                     <div className="text-sm text-slate-400 mb-4">
                       {char.race} • {char.class} • Уровень {char.level}
+                      {char.background && ` • ${char.background}`}
+                      {char.alignment && ` • ${char.alignment}`}
                     </div>
-                    <div className="flex gap-4 text-sm">
-                      <span className="text-red-400">HP: {char.hp}</span>
+                    <div className="flex flex-wrap gap-3 text-sm">
+                      <span className="text-red-400">HP: {char.hp}/{char.maxHp}</span>
                       <span className="text-blue-400">AC: {char.ac}</span>
+                      <span className="text-slate-400">STR: {stats.str ?? 10} DEX: {stats.dex ?? 10} CON: {stats.con ?? 10}</span>
                     </div>
                   </Link>
                   {(session?.user?.role === "admin" || session?.user?.id === char.userId) && (

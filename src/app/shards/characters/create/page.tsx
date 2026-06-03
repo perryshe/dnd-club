@@ -23,7 +23,7 @@ export default async function CreateCharacterPage() {
       </header>
 
       <main className="container mx-auto px-4 pb-16">
-        <div className="max-w-2xl">
+        <div className="max-w-4xl">
           <CreateCharacterForm />
         </div>
       </main>
