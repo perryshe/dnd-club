@@ -1,9 +1,9 @@
 import type { Metadata } from "next"
-import { SessionProvider } from "next-auth/react"
 import { auth } from "@/lib/auth"
 import "./globals.css"
 import Link from "next/link"
 import SignOutButton from "@/components/signout-button"
+import Providers from "@/components/providers"
 
 export const metadata: Metadata = {
   title: "ДНД Клуб",
@@ -20,7 +20,7 @@ export default async function RootLayout({
   return (
     <html lang="ru">
       <body className="antialiased">
-        <SessionProvider session={session}>
+        <Providers session={session}>
           <nav className="bg-slate-900/80 border-b border-slate-700">
             <div className="container mx-auto px-4 h-14 flex items-center justify-between">
               <Link href="/" className="font-bold text-amber-400">
@@ -60,7 +60,7 @@ export default async function RootLayout({
             </div>
           </nav>
           {children}
-        </SessionProvider>
+        </Providers>
       </body>
     </html>
   )
