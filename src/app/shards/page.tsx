@@ -1,7 +1,22 @@
-import Link from "next/link";
-import { ArrowLeft, Map, Users, Image, Scroll } from "lucide-react";
+import { prisma } from "@/lib/prisma"
+import { auth } from "@/lib/auth"
+import Link from "next/link"
+import { notFound } from "next/navigation"
+import { ArrowLeft, Map as MapIcon, Users, Image, Scroll, Plus } from "lucide-react"
+import DeleteCharacterButton from "@/components/delete-character-button"
 
-export default function ShardsPage() {
+export default async function ShardsPage() {
+  const session = await auth()
+  const campaign = await prisma.campaign.findUnique({
+    where: { slug: "shards" },
+  })
+  if (!campaign) notFound()
+
+  const characters = await prisma.character.findMany({
+    where: { campaignId: campaign.id },
+    orderBy: { createdAt: "desc" },
+  })
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-950 to-slate-900 text-white">
       <header className="container mx-auto px-4 py-8">
@@ -43,7 +58,7 @@ export default function ShardsPage() {
             Персонажи
           </button>
           <button className="flex items-center gap-2 bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-lg transition">
-            <Map size={18} />
+            <MapIcon size={18} />
             Карты
           </button>
           <button className="flex items-center gap-2 bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-lg transition">
@@ -58,9 +73,49 @@ export default function ShardsPage() {
       </nav>
 
       <main className="container mx-auto px-4 pb-16">
-        <h2 className="text-2xl font-bold mb-6">Персонажи</h2>
-        <p className="text-slate-400">Скоро здесь появятся персонажи...</p>
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-bold">Персонажи</h2>
+          {session?.user && (
+            <Link
+              href="/shards/characters/create"
+              className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg transition text-sm"
+            >
+              <Plus size={18} />
+              Создать
+            </Link>
+          )}
+        </div>
+
+        {characters.length === 0 ? (
+          <p className="text-slate-400">Пока нет персонажей</p>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {characters.map((char) => (
+              <div
+                key={char.id}
+                className="bg-slate-800 rounded-xl p-6 border border-slate-700 relative group"
+              >
+                <Link
+                  href={`/shards/characters/${char.id}`}
+                  className="block"
+                >
+                  <h3 className="text-xl font-bold mb-2">{char.name}</h3>
+                  <div className="text-sm text-slate-400 mb-4">
+                    {char.race} • {char.class} • Уровень {char.level}
+                  </div>
+                  <div className="flex gap-4 text-sm">
+                    <span className="text-red-400">HP: {char.hp}</span>
+                    <span className="text-blue-400">AC: {char.ac}</span>
+                  </div>
+                </Link>
+                {(session?.user?.role === "admin" || session?.user?.id === char.userId) && (
+                  <DeleteCharacterButton characterId={char.id} />
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </main>
     </div>
-  );
+  )
 }
