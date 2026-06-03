@@ -2,46 +2,47 @@ import { prisma } from "@/lib/prisma"
 import { auth } from "@/lib/auth"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowLeft, Map as MapIcon, Users, Image, Scroll, Plus } from "lucide-react"
+import { ArrowLeft, Users, Map as MapIcon, Image, Scroll, Plus } from "lucide-react"
 import DeleteCharacterButton from "@/components/delete-character-button"
+import { StatusForm, DeleteStatusButton, MapForm, DeleteMapButton, GalleryForm, DeleteGalleryButton } from "@/components/campaign-admin"
 
 export default async function ShardsPage() {
   const session = await auth()
-  const campaign = await prisma.campaign.findUnique({
-    where: { slug: "shards" },
-  })
+  const campaign = await prisma.campaign.findUnique({ where: { slug: "shards" } })
   if (!campaign) notFound()
 
-  const characters = await prisma.character.findMany({
-    where: { campaignId: campaign.id },
-    orderBy: { createdAt: "desc" },
-  })
+  const isAdmin = session?.user?.role === "admin"
+
+  const [characters, maps, statuses, gallery] = await Promise.all([
+    prisma.character.findMany({
+      where: { campaignId: campaign.id },
+      orderBy: { createdAt: "desc" },
+    }),
+    prisma.map.findMany({
+      where: { campaignId: campaign.id },
+      orderBy: { createdAt: "desc" },
+    }),
+    prisma.status.findMany({
+      where: { campaignId: campaign.id },
+      orderBy: { date: "desc" },
+    }),
+    prisma.gallery.findMany({
+      where: { campaignId: campaign.id },
+      orderBy: { createdAt: "desc" },
+    }),
+  ])
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-950 to-slate-900 text-white">
       <header className="container mx-auto px-4 py-8">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-slate-400 hover:text-white mb-6 transition"
-        >
+        <Link href="/" className="inline-flex items-center gap-2 text-slate-400 hover:text-white mb-6 transition">
           <ArrowLeft size={20} />
           На главную
         </Link>
-
         <div className="flex items-center gap-4 mb-8">
           <div className="p-4 bg-purple-900/50 rounded-xl">
-            <svg
-              className="text-purple-400"
-              width="48"
-              height="48"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M12 2L2 7l10 5 10-5-10-5z" />
-              <path d="M2 17l10 5 10-5" />
-              <path d="M2 12l10 5 10-5" />
+            <svg className="text-purple-400" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" />
             </svg>
           </div>
           <div>
@@ -52,75 +53,149 @@ export default async function ShardsPage() {
       </header>
 
       <nav className="container mx-auto px-4 mb-8">
-        <div className="flex flex-wrap gap-4">
-          <button className="flex items-center gap-2 bg-purple-600 px-4 py-2 rounded-lg">
-            <Users size={18} />
-            Персонажи
-          </button>
-          <button className="flex items-center gap-2 bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-lg transition">
-            <MapIcon size={18} />
-            Карты
-          </button>
-          <button className="flex items-center gap-2 bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-lg transition">
-            <Image size={18} />
-            Галерея
-          </button>
-          <button className="flex items-center gap-2 bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-lg transition">
-            <Scroll size={18} />
-            Статус
-          </button>
+        <div className="flex flex-wrap gap-2">
+          {[
+            { id: "characters", label: "Персонажи", icon: Users },
+            { id: "statuses", label: "Летопись", icon: Scroll },
+            { id: "maps", label: "Карты", icon: MapIcon },
+            { id: "gallery", label: "Галерея", icon: Image },
+          ].map((tab) => (
+            <a key={tab.id} href={`#${tab.id}`} className="flex items-center gap-2 bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-lg transition">
+              <tab.icon size={18} />
+              {tab.label}
+            </a>
+          ))}
         </div>
       </nav>
 
-      <main className="container mx-auto px-4 pb-16">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold">Персонажи</h2>
-          {session?.user && (
-            <Link
-              href="/shards/characters/create"
-              className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg transition text-sm"
-            >
-              <Plus size={18} />
-              Создать
-            </Link>
-          )}
-        </div>
-
-        {characters.length === 0 ? (
-          <p className="text-slate-400">Пока нет персонажей</p>
-        ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {characters.map((char) => {
-              const stats = char.stats as Record<string, number>
-              return (
-                <div
-                  key={char.id}
-                  className="bg-slate-800 rounded-xl p-6 border border-slate-700 relative group"
-                >
-                  <Link
-                    href={`/shards/characters/${char.id}`}
-                    className="block"
-                  >
-                    <h3 className="text-xl font-bold mb-2">{char.name}</h3>
-                    <div className="text-sm text-slate-400 mb-4">
-                      {char.race} • {char.class} • Уровень {char.level}
-                      {char.background && ` • ${char.background}`}
-                      {char.alignment && ` • ${char.alignment}`}
-                    </div>
-                    <div className="flex flex-wrap gap-3 text-sm">
-                      <span className="text-red-400">HP: {char.hp}/{char.maxHp}</span>
-                      <span className="text-blue-400">AC: {char.ac}</span>
-                      <span className="text-slate-400">STR: {stats.str ?? 10} DEX: {stats.dex ?? 10} CON: {stats.con ?? 10}</span>
-                    </div>
-                  </Link>
-                  {(session?.user?.role === "admin" || session?.user?.id === char.userId) && (
-                    <DeleteCharacterButton characterId={char.id} />
-                  )}
-                </div>
-              )
-            })}
+      <main className="container mx-auto px-4 pb-16 space-y-16">
+        <section id="characters">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold">Персонажи</h2>
+            {session?.user && (
+              <Link href="/shards/characters/create" className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg transition text-sm">
+                <Plus size={18} />
+                Создать
+              </Link>
+            )}
           </div>
-        )}
+          {characters.length === 0 ? (
+            <p className="text-slate-400">Пока нет персонажей</p>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {characters.map((char) => {
+                const s = char.stats as Record<string, number>
+                return (
+                  <div key={char.id} className="bg-slate-800 rounded-xl p-6 border border-slate-700 relative group">
+                    <Link href={`/shards/characters/${char.id}`} className="block">
+                      <h3 className="text-xl font-bold mb-2">{char.name}</h3>
+                      <div className="text-sm text-slate-400 mb-4">
+                        {char.race} • {char.class} • Уровень {char.level}
+                        {char.background && ` • ${char.background}`}
+                      </div>
+                      <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+                        <span className="text-red-400">HP: {char.hp}/{char.maxHp}</span>
+                        <span className="text-blue-400">КД: {char.ac}</span>
+                        <span className="text-slate-400">СИЛ:{s.str ?? 10} ЛВК:{s.dex ?? 10} ВЫН:{s.con ?? 10}</span>
+                      </div>
+                    </Link>
+                    {(isAdmin || session?.user?.id === char.userId) && (
+                      <DeleteCharacterButton characterId={char.id} />
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </section>
+
+        <section id="statuses">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold">Летопись</h2>
+            {isAdmin && <StatusForm slug="shards" />}
+          </div>
+          {statuses.length === 0 ? (
+            <p className="text-slate-400">Пока нет записей</p>
+          ) : (
+            <div className="space-y-6 relative before:absolute before:left-[15px] before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-700">
+              {statuses.map((s) => (
+                <div key={s.id} className="relative pl-10">
+                  <div className="absolute left-[9px] top-1.5 w-3 h-3 rounded-full bg-purple-600 border-2 border-slate-900" />
+                  <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                    <div className="flex items-start justify-between mb-3">
+                      <div>
+                        <time className="text-xs text-slate-500">{new Date(s.date).toLocaleDateString("ru-RU")}</time>
+                        <h3 className="text-lg font-bold mt-1">{s.title}</h3>
+                      </div>
+                      {isAdmin && <DeleteStatusButton statusId={s.id} />}
+                    </div>
+                    {s.essay && <p className="text-slate-300 text-sm whitespace-pre-wrap mb-3">{s.essay}</p>}
+                    {s.result && (
+                      <div className="bg-slate-900/50 rounded-lg p-3 border-l-2 border-purple-600">
+                        <span className="text-xs font-bold text-purple-400 uppercase">Результат:</span>
+                        <p className="text-sm text-slate-300 mt-1">{s.result}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+
+        <section id="maps">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold">Карты</h2>
+            {isAdmin && <MapForm slug="shards" />}
+          </div>
+          {maps.length === 0 ? (
+            <p className="text-slate-400">Пока нет карт</p>
+          ) : (
+            <div className="grid md:grid-cols-2 gap-6">
+              {maps.map((m) => (
+                <div key={m.id} className="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 group">
+                  <a href={m.url} target="_blank" rel="noopener noreferrer">
+                    <div className="aspect-video bg-slate-700 flex items-center justify-center text-slate-500 overflow-hidden">
+                      <img src={m.url} alt={m.name} className="w-full h-full object-cover" loading="lazy" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; (e.target as HTMLImageElement).parentElement!.innerHTML = '<span>Не удалось загрузить</span>' }} />
+                    </div>
+                  </a>
+                  <div className="p-4 flex items-center justify-between">
+                    <h3 className="font-semibold">{m.name}</h3>
+                    {isAdmin && <DeleteMapButton mapId={m.id} />}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+
+        <section id="gallery">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold">Галерея</h2>
+            {isAdmin && <GalleryForm slug="shards" />}
+          </div>
+          {gallery.length === 0 ? (
+            <p className="text-slate-400">Пока нет изображений</p>
+          ) : (
+            <div className="grid md:grid-cols-3 gap-4">
+              {gallery.map((img) => (
+                <div key={img.id} className="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 group">
+                  <a href={img.url} target="_blank" rel="noopener noreferrer">
+                    <div className="aspect-[4/3] bg-slate-700 flex items-center justify-center text-slate-500 overflow-hidden">
+                      <img src={img.url} alt={img.caption} className="w-full h-full object-cover" loading="lazy" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; (e.target as HTMLImageElement).parentElement!.innerHTML = '<span>Не удалось загрузить</span>' }} />
+                    </div>
+                  </a>
+                  <div className="p-3">
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm text-slate-300">{img.caption || "—"}</p>
+                      {isAdmin && <DeleteGalleryButton imageId={img.id} />}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
       </main>
     </div>
   )

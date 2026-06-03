@@ -108,8 +108,10 @@ model Map {
 model Status {
   id         String   @id @default(cuid())
   campaignId String   @map("campaign_id")
+  date       DateTime @default(now())
   title      String
-  content    String
+  essay      String   @default("")
+  result     String   @default("")
   createdBy  String   @map("created_by")
   createdAt  DateTime @default(now()) @map("created_at")
 

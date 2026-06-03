@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma"
 import { auth } from "@/lib/auth"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowLeft, Trash2 } from "lucide-react"
+import { ArrowLeft, Trash2, Pencil } from "lucide-react"
 import { deleteCharacter } from "@/lib/character-actions"
 
 function abilityModifier(score: number): number {
@@ -18,12 +18,12 @@ const ABILITY_NAMES: Record<string, string> = {
 }
 
 const SKILL_LABELS: Record<string, string> = {
-  acrobatics: "Acrobatics", animal_handling: "Animal Handling", arcana: "Arcana",
-  athletics: "Athletics", deception: "Deception", history: "History",
-  insight: "Insight", intimidation: "Intimidation", investigation: "Investigation",
-  medicine: "Medicine", nature: "Nature", perception: "Perception",
-  performance: "Performance", persuasion: "Persuasion", religion: "Religion",
-  sleight_of_hand: "Sleight of Hand", stealth: "Stealth", survival: "Survival",
+  acrobatics: "Акробатика", animal_handling: "Уход за животными", arcana: "Магия",
+  athletics: "Атлетика", deception: "Обман", history: "История",
+  insight: "Проницательность", intimidation: "Запугивание", investigation: "Анализ",
+  medicine: "Медицина", nature: "Природа", perception: "Внимательность",
+  performance: "Выступление", persuasion: "Убеждение", religion: "Религия",
+  sleight_of_hand: "Ловкость рук", stealth: "Скрытность", survival: "Выживание",
 }
 
 const SKILL_ABILITY: Record<string, string> = {
@@ -84,21 +84,32 @@ export default async function CharacterSheet({
               {character.alignment && ` • ${character.alignment}`}
             </p>
             {character.experiencePoints > 0 && (
-              <p className="text-sm text-slate-500">XP: {character.experiencePoints}</p>
+              <p className="text-sm text-slate-500">Опыт: {character.experiencePoints}</p>
             )}
           </div>
-          {canDelete && (
-            <form
-              action={async () => {
-                "use server"
-                await deleteCharacter(character.id)
-              }}
-            >
-              <button className="flex items-center gap-2 bg-red-800 hover:bg-red-700 px-4 py-2 rounded-lg transition">
-                <Trash2 size={18} />
-                Удалить
-              </button>
-            </form>
+          {(canDelete || character.userId === session?.user?.id) && (
+            <div className="flex items-center gap-3">
+              <Link
+                href={`/${character.campaign.slug}/characters/${character.id}/edit`}
+                className="flex items-center gap-2 bg-slate-600 hover:bg-slate-500 px-4 py-2 rounded-lg transition"
+              >
+                <Pencil size={18} />
+                Редактировать
+              </Link>
+              {canDelete && (
+                <form
+                  action={async () => {
+                    "use server"
+                    await deleteCharacter(character.id)
+                  }}
+                >
+                  <button className="flex items-center gap-2 bg-red-800 hover:bg-red-700 px-4 py-2 rounded-lg transition">
+                    <Trash2 size={18} />
+                    Удалить
+                  </button>
+                </form>
+              )}
+            </div>
           )}
         </div>
       </header>
@@ -106,7 +117,7 @@ export default async function CharacterSheet({
       <main className="container mx-auto px-4 pb-16 space-y-6">
         <div className="grid lg:grid-cols-5 gap-4">
           <div className={`${sectionCard} text-center`}>
-            <div className="text-xs text-slate-400 uppercase">AC</div>
+            <div className="text-xs text-slate-400 uppercase">КД</div>
             <div className={`text-3xl font-bold ${accentColor.replace("500", "400")}`}>{character.ac}</div>
           </div>
           <div className={`${sectionCard} text-center`}>
@@ -115,17 +126,17 @@ export default async function CharacterSheet({
             <div className="text-xs text-slate-500">/ {character.maxHp}</div>
           </div>
           <div className={`${sectionCard} text-center`}>
-            <div className="text-xs text-slate-400 uppercase">Temp HP</div>
+            <div className="text-xs text-slate-400 uppercase">Врем. HP</div>
             <div className="text-3xl font-bold text-slate-300">{character.tempHp || 0}</div>
           </div>
           <div className={`${sectionCard} text-center`}>
-            <div className="text-xs text-slate-400 uppercase">Initiative</div>
+            <div className="text-xs text-slate-400 uppercase">Инициатива</div>
             <div className="text-3xl font-bold text-slate-300">
               {formatMod(character.initiative || abilityModifier(stats.dex ?? 10))}
             </div>
           </div>
           <div className={`${sectionCard} text-center`}>
-            <div className="text-xs text-slate-400 uppercase">Speed</div>
+            <div className="text-xs text-slate-400 uppercase">Скорость</div>
             <div className="text-3xl font-bold text-slate-300">{character.speed}</div>
           </div>
         </div>
@@ -160,7 +171,7 @@ export default async function CharacterSheet({
                   return (
                     <div key={key} className="flex items-center gap-3 py-1">
                       {proficient ? (
-                        <span className="w-5 h-5 rounded-full bg-amber-600 flex items-center justify-center text-xs font-bold">P</span>
+                        <span className="w-5 h-5 rounded-full bg-amber-600 flex items-center justify-center text-xs font-bold">В</span>
                       ) : (
                         <span className="w-5 h-5 rounded-full bg-slate-700 flex items-center justify-center text-xs text-slate-500">-</span>
                       )}
@@ -183,7 +194,7 @@ export default async function CharacterSheet({
                   return (
                     <div key={key} className="flex items-center gap-3 py-0.5">
                       {proficient ? (
-                        <span className="w-4 h-4 rounded-full bg-amber-600 flex items-center justify-center text-[10px] font-bold">P</span>
+                        <span className="w-4 h-4 rounded-full bg-amber-600 flex items-center justify-center text-[10px] font-bold">В</span>
                       ) : (
                         <span className="w-4 h-4 rounded-full bg-slate-700" />
                       )}
