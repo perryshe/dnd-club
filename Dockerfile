@@ -25,8 +25,7 @@ RUN npm install -g prisma@6 tsx
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/prisma ./prisma
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=builder /app/node_modules/@prisma/client ./node_modules/@prisma/client
+COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/docker-entrypoint.sh ./
 COPY --from=builder /app/package.json ./package.json
 RUN chmod +x docker-entrypoint.sh && chown -R nextjs:nodejs /app
