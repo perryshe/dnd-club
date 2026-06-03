@@ -1,11 +1,9 @@
-"use client"
-
-import { useSession } from "next-auth/react"
+import { auth } from "@/lib/auth"
 import Link from "next/link"
 import SignOutButton from "@/components/signout-button"
 
-export default function Nav() {
-  const { data: session } = useSession()
+export default async function Nav() {
+  const session = await auth()
 
   return (
     <nav className="bg-slate-900/80 border-b border-slate-700">

@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
 import "./globals.css"
-import Providers from "@/components/providers"
 import Nav from "@/components/nav"
 
 export const metadata: Metadata = {
@@ -16,10 +15,8 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body className="antialiased">
-        <Providers>
-          <Nav />
-          {children}
-        </Providers>
+        <Nav />
+        {children}
       </body>
     </html>
   )
