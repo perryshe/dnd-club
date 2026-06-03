@@ -1,8 +1,20 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { createStatus, deleteStatus, createMap, deleteMap, createGalleryImage, deleteGalleryImage } from "@/lib/admin-actions"
+
+async function uploadFile(file: File): Promise<string> {
+  const fd = new FormData()
+  fd.set("file", file)
+  const res = await fetch("/api/upload", { method: "POST", body: fd })
+  if (!res.ok) {
+    const err = await res.json()
+    throw new Error(err.error || "Ошибка загрузки файла")
+  }
+  const data = await res.json()
+  return data.url
+}
 
 export function StatusForm({ slug }: { slug: string }) {
   const router = useRouter()
@@ -73,13 +85,24 @@ export function MapForm({ slug }: { slug: string }) {
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [preview, setPreview] = useState<string | null>(null)
+  const fileRef = useRef<HTMLInputElement>(null)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setLoading(true)
     try {
-      await createMap(slug, new FormData(e.currentTarget))
+      const form = e.currentTarget
+      const file = fileRef.current?.files?.[0]
+      if (!file) throw new Error("Выберите файл")
+
+      const url = await uploadFile(file)
+      const fd = new FormData()
+      fd.set("name", (form.elements.namedItem("name") as HTMLInputElement).value)
+      fd.set("url", url)
+      await createMap(slug, fd)
       setOpen(false)
+      setPreview(null)
       router.refresh()
     } catch (err) {
       alert(err instanceof Error ? err.message : "Ошибка")
@@ -97,12 +120,28 @@ export function MapForm({ slug }: { slug: string }) {
         <input name="name" required className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm" />
       </div>
       <div>
-        <label className="text-xs text-slate-400 block mb-1">Ссылка на изображение</label>
-        <input name="url" required placeholder="https://..." className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm" />
+        <label className="text-xs text-slate-400 block mb-1">Файл</label>
+        <input
+          ref={fileRef}
+          name="file"
+          type="file"
+          accept="image/*"
+          required
+          onChange={() => {
+            const f = fileRef.current?.files?.[0]
+            setPreview(f ? URL.createObjectURL(f) : null)
+          }}
+          className="w-full text-sm text-slate-300 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-slate-700 file:text-white file:text-sm file:cursor-pointer hover:file:bg-slate-600"
+        />
       </div>
+      {preview && (
+        <div className="aspect-video bg-slate-700 rounded-lg overflow-hidden">
+          <img src={preview} alt="" className="w-full h-full object-cover" />
+        </div>
+      )}
       <div className="flex gap-3">
         <button type="submit" disabled={loading} className="bg-amber-600 hover:bg-amber-700 disabled:opacity-50 px-4 py-2 rounded-lg text-sm transition">
-          {loading ? "Сохранение..." : "Сохранить"}
+          {loading ? "Загрузка..." : "Сохранить"}
         </button>
         <button type="button" onClick={() => setOpen(false)} className="text-slate-400 hover:text-white px-4 py-2 text-sm">Отмена</button>
       </div>
@@ -128,13 +167,24 @@ export function GalleryForm({ slug }: { slug: string }) {
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [preview, setPreview] = useState<string | null>(null)
+  const fileRef = useRef<HTMLInputElement>(null)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setLoading(true)
     try {
-      await createGalleryImage(slug, new FormData(e.currentTarget))
+      const form = e.currentTarget
+      const file = fileRef.current?.files?.[0]
+      if (!file) throw new Error("Выберите файл")
+
+      const url = await uploadFile(file)
+      const fd = new FormData()
+      fd.set("url", url)
+      fd.set("caption", (form.elements.namedItem("caption") as HTMLInputElement).value)
+      await createGalleryImage(slug, fd)
       setOpen(false)
+      setPreview(null)
       router.refresh()
     } catch (err) {
       alert(err instanceof Error ? err.message : "Ошибка")
@@ -148,16 +198,32 @@ export function GalleryForm({ slug }: { slug: string }) {
     <form onSubmit={handleSubmit} className="bg-slate-800 rounded-xl p-6 space-y-4 border border-amber-500/30">
       <h3 className="font-bold text-amber-400">Новое изображение</h3>
       <div>
-        <label className="text-xs text-slate-400 block mb-1">Ссылка на изображение</label>
-        <input name="url" required placeholder="https://..." className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm" />
+        <label className="text-xs text-slate-400 block mb-1">Файл</label>
+        <input
+          ref={fileRef}
+          name="file"
+          type="file"
+          accept="image/*"
+          required
+          onChange={() => {
+            const f = fileRef.current?.files?.[0]
+            setPreview(f ? URL.createObjectURL(f) : null)
+          }}
+          className="w-full text-sm text-slate-300 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-slate-700 file:text-white file:text-sm file:cursor-pointer hover:file:bg-slate-600"
+        />
       </div>
+      {preview && (
+        <div className="aspect-video bg-slate-700 rounded-lg overflow-hidden">
+          <img src={preview} alt="" className="w-full h-full object-cover" />
+        </div>
+      )}
       <div>
         <label className="text-xs text-slate-400 block mb-1">Подпись</label>
         <input name="caption" className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm" />
       </div>
       <div className="flex gap-3">
         <button type="submit" disabled={loading} className="bg-amber-600 hover:bg-amber-700 disabled:opacity-50 px-4 py-2 rounded-lg text-sm transition">
-          {loading ? "Сохранение..." : "Сохранить"}
+          {loading ? "Загрузка..." : "Сохранить"}
         </button>
         <button type="button" onClick={() => setOpen(false)} className="text-slate-400 hover:text-white px-4 py-2 text-sm">Отмена</button>
       </div>

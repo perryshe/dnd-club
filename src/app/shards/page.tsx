@@ -4,7 +4,8 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowLeft, Users, Map as MapIcon, Image, Scroll, Plus } from "lucide-react"
 import DeleteCharacterButton from "@/components/delete-character-button"
-import { StatusForm, DeleteStatusButton, MapForm, DeleteMapButton, GalleryForm, DeleteGalleryButton } from "@/components/campaign-admin"
+import { StatusForm, DeleteStatusButton, MapForm, DeleteMapButton, GalleryForm } from "@/components/campaign-admin"
+import GalleryLightbox from "@/components/gallery-lightbox"
 
 export default async function ShardsPage() {
   const session = await auth()
@@ -174,27 +175,10 @@ export default async function ShardsPage() {
             <h2 className="text-2xl font-bold">Галерея</h2>
             {isAdmin && <GalleryForm slug="shards" />}
           </div>
-          {gallery.length === 0 ? (
-            <p className="text-slate-400">Пока нет изображений</p>
-          ) : (
-            <div className="grid md:grid-cols-3 gap-4">
-              {gallery.map((img) => (
-                <div key={img.id} className="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 group">
-                  <a href={img.url} target="_blank" rel="noopener noreferrer">
-                    <div className="aspect-[4/3] bg-slate-700 flex items-center justify-center text-slate-500 overflow-hidden">
-                      <img src={img.url} alt={img.caption} className="w-full h-full object-cover" loading="lazy" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; (e.target as HTMLImageElement).parentElement!.innerHTML = '<span>Не удалось загрузить</span>' }} />
-                    </div>
-                  </a>
-                  <div className="p-3">
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm text-slate-300">{img.caption || "—"}</p>
-                      {isAdmin && <DeleteGalleryButton imageId={img.id} />}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+          <GalleryLightbox
+            images={gallery.map((g) => ({ id: g.id, url: g.url, caption: g.caption }))}
+            isAdmin={isAdmin}
+          />
         </section>
       </main>
     </div>
