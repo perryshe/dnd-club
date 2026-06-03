@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 
@@ -16,18 +15,26 @@ export default function LoginPage() {
     setError("")
 
     const form = new FormData(e.currentTarget)
-    const res = await signIn("credentials", {
-      email: form.get("email") as string,
-      password: form.get("password") as string,
-      redirect: false,
+
+    const csrfRes = await fetch("/api/auth/csrf")
+    const { csrfToken } = await csrfRes.json()
+
+    const res = await fetch("/api/auth/callback/credentials", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        csrfToken,
+        email: form.get("email") as string,
+        password: form.get("password") as string,
+      }),
     })
 
-    if (res?.error) {
-      setError("Неверный email или пароль, либо аккаунт ещё не подтверждён")
-      setLoading(false)
-    } else {
+    if (res.ok || res.redirected) {
       router.push("/")
       router.refresh()
+    } else {
+      setError("Неверный email или пароль, либо аккаунт ещё не подтверждён")
+      setLoading(false)
     }
   }
 
