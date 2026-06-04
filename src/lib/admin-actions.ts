@@ -7,6 +7,21 @@ import { writeFile, mkdir } from "fs/promises"
 import path from "path"
 import bcrypt from "bcryptjs"
 
+function decodeFilename(name: string): string {
+  let s = name
+  try { if (s.includes("%")) s = decodeURIComponent(s) } catch {}
+
+  if ([...s].some(c => c.charCodeAt(0) > 127)) {
+    try {
+      const bytes = new Uint8Array(s.length)
+      for (let i = 0; i < s.length; i++) bytes[i] = s.charCodeAt(i) & 0xFF
+      const fixed = new TextDecoder("utf-8").decode(bytes)
+      if (fixed !== s) s = fixed
+    } catch {}
+  }
+  return s
+}
+
 async function requireAdmin() {
   const session = await auth()
   if (session?.user?.role !== "admin") throw new Error("Только для админа")
@@ -120,7 +135,7 @@ export async function createMaps(slug: string, formData: FormData) {
 
   for (const file of files) {
     const url = await saveFile(file)
-    const name = file.name.replace(/\.[^.]+$/, "")
+    const name = decodeFilename(file.name.replace(/\.[^.]+$/, ""))
     await prisma.map.create({
       data: { campaignId: campaign.id, name, url, uploadedBy: session.user.id! },
     })
@@ -182,7 +197,7 @@ export async function createRules(slug: string, formData: FormData) {
   for (const file of files) {
     const url = await saveFile(file)
     const isPdf = file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf")
-    const title = file.name.replace(/\.[^.]+$/, "")
+    const title = decodeFilename(file.name.replace(/\.[^.]+$/, ""))
     await prisma.rule.create({
       data: { campaignId: campaign.id, title, url, type: isPdf ? "pdf" : "image", uploadedBy: session.user.id! },
     })
