@@ -138,7 +138,7 @@ export function StatusImageUpload({ statusId }: { statusId: string }) {
     setLoading(true)
     try {
       const formData = new FormData()
-      for (const f of files) formData.append("files", f)
+      Array.from(files).forEach((f) => formData.append("files", f))
       await uploadStatusImage(statusId, formData)
       router.refresh()
     } catch (err) {
