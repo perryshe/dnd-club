@@ -199,10 +199,13 @@ export default async function ShardsPage() {
             />
           )}
         </section>
-      </main>
-      </div>
-      </div>
-    </div>
+
+        {/* === GALLERY === */}
+        <section id="gallery">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold">Галерея</h2>
+            {isAdmin && <GalleryForm slug="shards" />}
+          </div>
           <GalleryLightbox
             images={gallery.map((g) => ({ id: g.id, url: g.url, caption: g.caption }))}
             kind="gallery"
@@ -250,34 +253,6 @@ export default async function ShardsPage() {
               ))}
             </div>
           )}
-        </section>
-
-        <section id="maps">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold">Карты</h2>
-            {isAdmin && <MapForm slug="shards" />}
-          </div>
-          {maps.length === 0 ? (
-            <p className="text-slate-400">Пока нет карт</p>
-          ) : (
-            <GalleryLightbox
-              images={maps.map((m) => ({ id: m.id, url: m.url, caption: m.name }))}
-              kind="map"
-              isAdmin={isAdmin}
-            />
-          )}
-        </section>
-
-        <section id="gallery">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold">Галерея</h2>
-            {isAdmin && <GalleryForm slug="shards" />}
-          </div>
-          <GalleryLightbox
-            images={gallery.map((g) => ({ id: g.id, url: g.url, caption: g.caption }))}
-            kind="gallery"
-            isAdmin={isAdmin}
-          />
         </section>
       </main>
       </div>
