@@ -74,10 +74,10 @@ export default async function ShardsPage() {
         <div className="flex flex-wrap gap-2">
           {[
             { id: "characters", label: "Персонажи", icon: Users },
-            { id: "statuses", label: "Летопись", icon: Scroll },
             { id: "rules", label: "Правила", icon: BookOpen },
             { id: "maps", label: "Карты", icon: MapIcon },
             { id: "gallery", label: "Галерея", icon: Image },
+            { id: "statuses", label: "Летопись", icon: Scroll },
           ].map((tab) => (
             <a key={tab.id} href={`#${tab.id}`} className="flex items-center gap-2 bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-lg transition">
               <tab.icon size={18} />
@@ -137,40 +137,6 @@ export default async function ShardsPage() {
           )}
         </section>
 
-        <section id="statuses">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold">Летопись</h2>
-            {isAdmin && <StatusForm slug="shards" />}
-          </div>
-          {statuses.length === 0 ? (
-            <p className="text-slate-400">Пока нет записей</p>
-          ) : (
-            <div className="space-y-6 relative before:absolute before:left-[15px] before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-700">
-              {statuses.map((s) => (
-                <div key={s.id} className="relative pl-10">
-                  <div className="absolute left-[9px] top-1.5 w-3 h-3 rounded-full bg-purple-600 border-2 border-slate-900" />
-                  <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
-                    <div className="flex items-start justify-between mb-3">
-                      <div>
-                        <time className="text-xs text-slate-500">{new Date(s.date).toLocaleDateString("ru-RU")}</time>
-                        <h3 className="text-lg font-bold mt-1">{s.title}</h3>
-                      </div>
-                      {isAdmin && <DeleteStatusButton statusId={s.id} />}
-                    </div>
-                    {s.essay && <p className="text-slate-300 text-sm whitespace-pre-wrap mb-3">{s.essay}</p>}
-                    {s.result && (
-                      <div className="bg-slate-900/50 rounded-lg p-3 border-l-2 border-purple-600">
-                        <span className="text-xs font-bold text-purple-400 uppercase">Результат:</span>
-                        <p className="text-sm text-slate-300 mt-1">{s.result}</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
-
         {isApproved && (
         <section id="rules">
           <div className="flex items-center justify-between mb-6">
@@ -215,6 +181,71 @@ export default async function ShardsPage() {
           {rules.length === 0 && <p className="text-slate-400">Пока нет правил</p>}
         </section>
         )}
+
+        {/* === MAPS === */}
+        <section id="maps">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold">Карты</h2>
+            {isAdmin && <MapForm slug="shards" />}
+          </div>
+          {maps.length === 0 ? (
+            <p className="text-slate-400">Пока нет карт</p>
+          ) : (
+            <GalleryLightbox
+              images={maps.map((m) => ({ id: m.id, url: m.url, caption: m.name }))}
+              kind="map"
+              isAdmin={isAdmin}
+            />
+          )}
+        </section>
+
+        {/* === GALLERY === */}
+        <section id="gallery">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold">Галерея</h2>
+            {isAdmin && <GalleryForm slug="shards" />}
+          </div>
+          <GalleryLightbox
+            images={gallery.map((g) => ({ id: g.id, url: g.url, caption: g.caption }))}
+            kind="gallery"
+            isAdmin={isAdmin}
+          />
+        </section>
+
+        {/* === STATUSES (ЛЕТОПИСЬ) === */}
+        <section id="statuses">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold">Летопись</h2>
+            {isAdmin && <StatusForm slug="shards" />}
+          </div>
+          {statuses.length === 0 ? (
+            <p className="text-slate-400">Пока нет записей</p>
+          ) : (
+            <div className="space-y-6 relative before:absolute before:left-[15px] before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-700">
+              {statuses.map((s) => (
+                <div key={s.id} className="relative pl-10">
+                  <div className="absolute left-[9px] top-1.5 w-3 h-3 rounded-full bg-purple-600 border-2 border-slate-900" />
+                  <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                    <div className="flex items-start justify-between mb-3">
+                      <div>
+                        <time className="text-xs text-slate-500">{new Date(s.date).toLocaleDateString("ru-RU")}</time>
+                        <h3 className="text-lg font-bold mt-1">{s.title}</h3>
+                      </div>
+                      {isAdmin && <DeleteStatusButton statusId={s.id} />}
+                    </div>
+                    {s.essay && <p className="text-slate-300 text-sm whitespace-pre-wrap mb-3">{s.essay}</p>}
+                    {s.result && (
+                      <div className="bg-slate-900/50 rounded-lg p-3 border-l-2 border-purple-600">
+                        <span className="text-xs font-bold text-purple-400 uppercase">Результат:</span>
+                        <p className="text-sm text-slate-300 mt-1">{s.result}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
 
         <section id="maps">
           <div className="flex items-center justify-between mb-6">
