@@ -2,9 +2,10 @@ import { redirect } from "next/navigation"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import Link from "next/link"
-import { ArrowLeft, Shield, Trash2 } from "lucide-react"
+import { ArrowLeft, Shield } from "lucide-react"
 import { ApproveButton } from "./approve-button"
 import { DeleteButton } from "./delete-button"
+import { setUserRole } from "./actions"
 
 export default async function AdminPage() {
   const session = await auth()
@@ -79,20 +80,41 @@ export default async function AdminPage() {
                     <td className="py-3 px-2 text-right">
                       <div className="flex gap-2 justify-end">
                         {user.role === "pending" && (
-                          <ApproveButton userId={user.id} />
+                          <>
+                            <ApproveButton userId={user.id} />
+                            <form action={setUserRole.bind(null, user.id, "admin")}>
+                              <button className="text-xs px-2 py-1 bg-amber-700 hover:bg-amber-600 rounded transition">
+                                Сделать админом
+                              </button>
+                            </form>
+                          </>
                         )}
                         {user.role === "user" && (
-                          <form
-                            action={async () => {
-                              "use server"
-                              await prisma.user.update({
-                                where: { id: user.id },
-                                data: { role: "pending" },
-                              })
-                            }}
-                          >
-                            <button className="text-xs px-2 py-1 bg-slate-600 hover:bg-slate-500 rounded transition">
-                              Заблокировать
+                          <>
+                            <form action={setUserRole.bind(null, user.id, "admin")}>
+                              <button className="text-xs px-2 py-1 bg-amber-700 hover:bg-amber-600 rounded transition">
+                                Сделать админом
+                              </button>
+                            </form>
+                            <form
+                              action={async () => {
+                                "use server"
+                                await prisma.user.update({
+                                  where: { id: user.id },
+                                  data: { role: "pending" },
+                                })
+                              }}
+                            >
+                              <button className="text-xs px-2 py-1 bg-slate-600 hover:bg-slate-500 rounded transition">
+                                Заблокировать
+                              </button>
+                            </form>
+                          </>
+                        )}
+                        {user.role === "admin" && session.user.id !== user.id && (
+                          <form action={setUserRole.bind(null, user.id, "user")}>
+                            <button className="text-xs px-2 py-1 bg-red-800 hover:bg-red-700 rounded transition">
+                              Забрать админа
                             </button>
                           </form>
                         )}

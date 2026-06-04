@@ -27,3 +27,19 @@ export async function deleteUser(userId: string) {
   await prisma.user.delete({ where: { id: userId } })
   revalidatePath("/admin")
 }
+
+export async function setUserRole(userId: string, role: "admin" | "user") {
+  const session = await auth()
+  if (!session?.user?.role || session.user.role !== "admin") {
+    throw new Error("Нет доступа")
+  }
+  if (session.user.id === userId && role !== "admin") {
+    throw new Error("Нельзя понизить себя")
+  }
+
+  await prisma.user.update({
+    where: { id: userId },
+    data: { role },
+  })
+  revalidatePath("/admin")
+}
