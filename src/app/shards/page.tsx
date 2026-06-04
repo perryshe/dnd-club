@@ -47,7 +47,7 @@ export default async function ShardsPage() {
       <div className="relative">
         <div className="absolute inset-0 pointer-events-none"
           style={{
-            backgroundImage: "linear-gradient(to bottom, rgba(88,28,135,0.85), rgba(88,28,135,0.55), rgba(15,23,42,0.9)), url('/images/Fon_SoNC.jpg')",
+            backgroundImage: "url('/images/Fon_SoNC.jpg')",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
