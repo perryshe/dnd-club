@@ -24,7 +24,7 @@ async function main() {
 
   const campaigns = [
     { name: "The Dead Band", slug: "dead-band" },
-    { name: "Shards of Night City", slug: "shards" },
+    { name: "", slug: "shards" },
   ]
 
   for (const c of campaigns) {
