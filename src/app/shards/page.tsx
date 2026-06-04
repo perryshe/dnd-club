@@ -50,7 +50,7 @@ export default async function ShardsPage() {
           backgroundBlendMode: "overlay",
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-purple-950/60 via-purple-950/40 to-slate-900" />
+        <div className="absolute inset-0 bg-gradient-to-b from-purple-950/60 via-purple-950/40 to-slate-900 pointer-events-none" />
       <header className="container mx-auto px-4 py-8">
         <Link href="/" className="inline-flex items-center gap-2 text-slate-400 hover:text-white mb-6 transition">
           <ArrowLeft size={20} />
