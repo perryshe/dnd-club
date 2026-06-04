@@ -185,12 +185,12 @@ export default async function ShardsPage() {
         <section id="gallery">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold">Галерея</h2>
-            {isAdmin && <GalleryForm slug="shards" />}
+            {isApproved && <GalleryForm slug="shards" />}
           </div>
           <GalleryLightbox
             images={gallery.map((g) => ({ id: g.id, url: g.url, caption: g.caption }))}
             kind="gallery"
-            isAdmin={isAdmin}
+            isAdmin={isApproved}
             maxVisible={4}
           />
         </section>

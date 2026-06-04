@@ -140,7 +140,7 @@ export async function deleteMap(mapId: string) {
 // --- Gallery ---
 
 export async function createGalleryImages(slug: string, formData: FormData) {
-  const session = await requireAdmin()
+  const session = await requireUser()
   const campaign = await prisma.campaign.findUnique({ where: { slug } })
   if (!campaign) throw new Error("Кампания не найдена")
 
@@ -161,7 +161,7 @@ export async function createGalleryImages(slug: string, formData: FormData) {
 }
 
 export async function deleteGalleryImage(imageId: string) {
-  await requireAdmin()
+  await requireUser()
   const image = await prisma.gallery.findUnique({ where: { id: imageId }, include: { campaign: true } })
   if (!image) throw new Error("Изображение не найдено")
   await prisma.gallery.delete({ where: { id: imageId } })
