@@ -2,8 +2,6 @@
 
 import { useState, useEffect, useCallback } from "react"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
-import { useState, useEffect, useCallback } from "react"
-import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import { DeleteGalleryButton, DeleteMapButton, DeleteRuleButton } from "./campaign-admin"
 
 interface ImageItem {
