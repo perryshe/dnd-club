@@ -1,16 +1,20 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, ReactNode } from "react"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
-import { DeleteGalleryButton } from "./campaign-admin"
 
-interface GalleryImage {
+interface ImageItem {
   id: string
   url: string
   caption: string | null
 }
 
-export default function GalleryLightbox({ images, isAdmin }: { images: GalleryImage[]; isAdmin: boolean }) {
+interface Props {
+  images: ImageItem[]
+  renderDelete?: (img: ImageItem) => ReactNode
+}
+
+export default function GalleryLightbox({ images, renderDelete }: Props) {
   const [selected, setSelected] = useState<number | null>(null)
 
   const close = useCallback(() => setSelected(null), [])
@@ -59,7 +63,7 @@ export default function GalleryLightbox({ images, isAdmin }: { images: GalleryIm
             </div>
             <div className="p-3 flex items-center justify-between">
               <p className="text-sm text-slate-300 truncate">{img.caption || "—"}</p>
-              {isAdmin && <DeleteGalleryButton imageId={img.id} />}
+              {renderDelete?.(img)}
             </div>
           </button>
         ))}
@@ -103,9 +107,9 @@ export default function GalleryLightbox({ images, isAdmin }: { images: GalleryIm
             {images[selected].caption && (
               <p className="text-white/80 text-center mt-3 text-lg">{images[selected].caption}</p>
             )}
-            {isAdmin && (
+            {renderDelete && (
               <div className="flex justify-center mt-2">
-                <DeleteGalleryButton imageId={images[selected].id} />
+                {renderDelete(images[selected])}
               </div>
             )}
           </div>

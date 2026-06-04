@@ -4,7 +4,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowLeft, Users, Map as MapIcon, Image, Scroll, Plus, BookOpen } from "lucide-react"
 import DeleteCharacterButton from "@/components/delete-character-button"
-import { StatusForm, DeleteStatusButton, MapForm, DeleteMapButton, GalleryForm, RuleForm, DeleteRuleButton } from "@/components/campaign-admin"
+import { StatusForm, DeleteStatusButton, MapForm, DeleteMapButton, GalleryForm, DeleteGalleryButton, RuleForm, DeleteRuleButton } from "@/components/campaign-admin"
 import GalleryLightbox from "@/components/gallery-lightbox"
 
 export default async function ShardsPage() {
@@ -190,22 +190,10 @@ export default async function ShardsPage() {
           {maps.length === 0 ? (
             <p className="text-slate-400">Пока нет карт</p>
           ) : (
-            <div className="grid md:grid-cols-2 gap-6">
-              {maps.map((m) => (
-                <div key={m.id} className="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 group">
-                  <a href={m.url} target="_blank" rel="noopener noreferrer">
-                    <div className="aspect-video bg-slate-700 flex items-center justify-center text-slate-500 overflow-hidden">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={m.url} alt={m.name} className="w-full h-full object-cover" loading="lazy" />
-                    </div>
-                  </a>
-                  <div className="p-4 flex items-center justify-between">
-                    <h3 className="font-semibold">{m.name}</h3>
-                    {isAdmin && <DeleteMapButton mapId={m.id} />}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <GalleryLightbox
+              images={maps.map((m) => ({ id: m.id, url: m.url, caption: m.name }))}
+              renderDelete={isAdmin ? (img) => <DeleteMapButton mapId={img.id} /> : undefined}
+            />
           )}
         </section>
 
@@ -216,7 +204,7 @@ export default async function ShardsPage() {
           </div>
           <GalleryLightbox
             images={gallery.map((g) => ({ id: g.id, url: g.url, caption: g.caption }))}
-            isAdmin={isAdmin}
+            renderDelete={isAdmin ? (img) => <DeleteGalleryButton imageId={img.id} /> : undefined}
           />
         </section>
       </main>
