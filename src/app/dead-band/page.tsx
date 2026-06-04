@@ -51,6 +51,7 @@ export default async function DeadBandPage() {
             backgroundPosition: "center",
           }}
         />
+      <div className="relative z-10">
       <header className="container mx-auto px-4 py-8">
         <Link href="/" className="inline-flex items-center gap-2 text-slate-400 hover:text-white mb-6 transition">
           <ArrowLeft size={20} />
@@ -249,6 +250,7 @@ export default async function DeadBandPage() {
           />
         </section>
       </main>
+      </div>
       </div>
     </div>
   )
