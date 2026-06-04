@@ -18,7 +18,7 @@ export default function Home() {
 
         <header className="relative container mx-auto px-4 py-24 text-center">
           <h1 className="text-6xl font-bold mb-4 bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">
-            d21 Клуб
+            d21 Club
           </h1>
           <p className="text-xl text-slate-300 mb-8">
             Настольные ролевые игры вживую
