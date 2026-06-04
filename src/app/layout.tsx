@@ -37,6 +37,7 @@ export default async function RootLayout({
                         Админ
                       </Link>
                     )}
+                    <Link href="/profile" className="text-slate-300 hover:text-white transition">Профиль</Link>
                     <span className="text-slate-400">{session.user.name}</span>
                     <SignOutButton />
                   </>

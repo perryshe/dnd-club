@@ -25,6 +25,7 @@ model User {
   gallery    Gallery[]
   maps       Map[]
   statuses   Status[]
+  rules      Rule[]
 
   @@map("users")
 }
@@ -38,6 +39,7 @@ model Campaign {
   gallery    Gallery[]
   maps       Map[]
   statuses   Status[]
+  rules      Rule[]
 
   @@map("campaigns")
 }
@@ -103,6 +105,21 @@ model Map {
   user     User     @relation(fields: [uploadedBy], references: [id])
 
   @@map("maps")
+}
+
+model Rule {
+  id         String   @id @default(cuid())
+  campaignId String   @map("campaign_id")
+  title      String
+  url        String
+  type       String   @default("pdf")
+  uploadedBy String   @map("uploaded_by")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [uploadedBy], references: [id])
+
+  @@map("rules")
 }
 
 model Status {

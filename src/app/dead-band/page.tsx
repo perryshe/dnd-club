@@ -2,9 +2,9 @@ import { prisma } from "@/lib/prisma"
 import { auth } from "@/lib/auth"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowLeft, Sword, Users, Map as MapIcon, Image, Scroll, Plus } from "lucide-react"
+import { ArrowLeft, Sword, Users, Map as MapIcon, Image, Scroll, Plus, BookOpen } from "lucide-react"
 import DeleteCharacterButton from "@/components/delete-character-button"
-import { StatusForm, DeleteStatusButton, MapForm, DeleteMapButton, GalleryForm } from "@/components/campaign-admin"
+import { StatusForm, DeleteStatusButton, MapForm, DeleteMapButton, GalleryForm, RuleForm, DeleteRuleButton } from "@/components/campaign-admin"
 import GalleryLightbox from "@/components/gallery-lightbox"
 
 export default async function DeadBandPage() {
@@ -14,7 +14,7 @@ export default async function DeadBandPage() {
 
   const isAdmin = session?.user?.role === "admin"
 
-  const [characters, maps, statuses, gallery] = await Promise.all([
+  const [characters, maps, statuses, gallery, rules] = await Promise.all([
     prisma.character.findMany({
       where: { campaignId: campaign.id },
       orderBy: { createdAt: "desc" },
@@ -28,6 +28,10 @@ export default async function DeadBandPage() {
       orderBy: { date: "desc" },
     }),
     prisma.gallery.findMany({
+      where: { campaignId: campaign.id },
+      orderBy: { createdAt: "desc" },
+    }),
+    prisma.rule.findMany({
       where: { campaignId: campaign.id },
       orderBy: { createdAt: "desc" },
     }),
@@ -56,6 +60,7 @@ export default async function DeadBandPage() {
           {[
             { id: "characters", label: "Персонажи", icon: Users },
             { id: "statuses", label: "Летопись", icon: Scroll },
+            { id: "rules", label: "Правила", icon: BookOpen },
             { id: "maps", label: "Карты", icon: MapIcon },
             { id: "gallery", label: "Галерея", icon: Image },
           ].map((tab) => (
@@ -141,6 +146,39 @@ export default async function DeadBandPage() {
                         <p className="text-sm text-slate-300 mt-1">{s.result}</p>
                       </div>
                     )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+
+        {/* === RULES === */}
+        <section id="rules">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold">Правила</h2>
+            {isAdmin && <RuleForm slug="dead-band" />}
+          </div>
+          {rules.length === 0 ? (
+            <p className="text-slate-400">Пока нет правил</p>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {rules.map((r) => (
+                <div key={r.id} className="bg-slate-800 rounded-xl p-4 border border-slate-700 flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <h3 className="font-semibold truncate">{r.title}</h3>
+                    <p className="text-xs text-slate-500 mt-1">{r.type === "pdf" ? "PDF" : "Изображение"}</p>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <a
+                      href={r.url}
+                      target={r.type === "pdf" ? "_blank" : undefined}
+                      download={r.type === "pdf"}
+                      className="text-sm bg-slate-700 hover:bg-slate-600 px-3 py-1 rounded-lg transition"
+                    >
+                      {r.type === "pdf" ? "Скачать" : "Открыть"}
+                    </a>
+                    {isAdmin && <DeleteRuleButton ruleId={r.id} />}
                   </div>
                 </div>
               ))}
