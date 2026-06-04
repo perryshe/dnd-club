@@ -6,7 +6,7 @@ import Link from "next/link"
 import SignOutButton from "@/components/signout-button"
 
 export const metadata: Metadata = {
-  title: "ДНД Клуб",
+  title: "d21 Клуб",
   description: "Настольные ролевые игры",
 }
 
@@ -24,7 +24,7 @@ export default async function RootLayout({
           <nav className="bg-slate-900/80 border-b border-slate-700">
             <div className="container mx-auto px-4 h-14 flex items-center justify-between">
               <Link href="/" className="font-bold text-amber-400">
-                ДНД Клуб
+                d21 Клуб
               </Link>
               <div className="flex items-center gap-4 text-sm">
                 {session?.user ? (

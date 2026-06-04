@@ -43,15 +43,14 @@ export default async function DeadBandPage() {
 
   return (
     <div className="min-h-screen text-white">
-      <div className="relative bg-gradient-to-b from-red-950/95 via-red-950/80 to-slate-900"
-        style={{
-          backgroundImage: "url('/images/Fon_TDB.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundBlendMode: "overlay",
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-red-950/60 via-red-950/40 to-slate-900 pointer-events-none" />
+      <div className="relative">
+        <div className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: "linear-gradient(to bottom, rgba(127,29,29,0.85), rgba(127,29,29,0.55), rgba(15,23,42,0.9)), url('/images/Fon_TDB.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
       <header className="container mx-auto px-4 py-8">
         <Link href="/" className="inline-flex items-center gap-2 text-slate-400 hover:text-white mb-6 transition">
           <ArrowLeft size={20} />
