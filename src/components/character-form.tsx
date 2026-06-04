@@ -164,7 +164,7 @@ export default function CharacterForm({
   const sectionClass = "bg-slate-800/50 rounded-xl p-6"
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
+      <form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-8">
       <div className={sectionClass}>
         <h2 className="text-lg font-bold mb-4 text-amber-400">Основная информация</h2>
         <div className="grid md:grid-cols-3 gap-4">
@@ -195,6 +195,10 @@ export default function CharacterForm({
           <div>
             <label className={labelClass}>Опыт (XP)</label>
             <input name="experiencePoints" type="number" min={0} defaultValue={character?.experiencePoints ?? 0} className={inputClass} />
+          </div>
+          <div>
+            <label className={labelClass}>Аватар</label>
+            <input name="avatar" type="file" accept="image/*" className="w-full text-sm text-slate-300 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-slate-700 file:text-white file:text-sm file:cursor-pointer hover:file:bg-slate-600" />
           </div>
         </div>
       </div>

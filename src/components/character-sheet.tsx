@@ -76,8 +76,16 @@ export default async function CharacterSheet({
         </Link>
 
         <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-4xl font-bold">{character.name}</h1>
+          <div className="flex items-center gap-4">
+            {character.avatarUrl ? (
+              <img src={character.avatarUrl} alt="" className="w-16 h-16 rounded-full object-cover bg-slate-700" />
+            ) : (
+              <div className="w-16 h-16 rounded-full bg-slate-700 flex items-center justify-center text-slate-400 text-2xl font-bold shrink-0">
+                {character.name[0]}
+              </div>
+            )}
+            <div>
+              <h1 className="text-4xl font-bold">{character.name}</h1>
             <p className="text-slate-400 text-lg">
               {character.race} {character.class} • Уровень {character.level}
               {character.background && ` • ${character.background}`}
@@ -86,6 +94,7 @@ export default async function CharacterSheet({
             {character.experiencePoints > 0 && (
               <p className="text-sm text-slate-500">Опыт: {character.experiencePoints}</p>
             )}
+          </div>
           </div>
           {(canDelete || character.userId === session?.user?.id) && (
             <div className="flex items-center gap-3">

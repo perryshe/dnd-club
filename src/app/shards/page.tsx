@@ -97,7 +97,16 @@ export default async function ShardsPage() {
                 return (
                   <div key={char.id} className="bg-slate-800 rounded-xl p-6 border border-slate-700 relative group">
                     <Link href={`/shards/characters/${char.id}`} className="block">
-                      <h3 className="text-xl font-bold mb-2">{char.name}</h3>
+                      <div className="flex items-center gap-3 mb-2">
+                        {char.avatarUrl ? (
+                          <img src={char.avatarUrl} alt="" className="w-10 h-10 rounded-full object-cover bg-slate-700" />
+                        ) : (
+                          <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-400 text-lg font-bold shrink-0">
+                            {char.name[0]}
+                          </div>
+                        )}
+                        <h3 className="text-xl font-bold">{char.name}</h3>
+                      </div>
                       <div className="text-sm text-slate-400 mb-4">
                         {char.race} • {char.class} • Уровень {char.level}
                         {char.background && ` • ${char.background}`}
@@ -169,7 +178,7 @@ export default async function ShardsPage() {
           {pdfRules.length > 0 && (
             <>
               {imageRules.length > 0 && <h3 className="text-lg font-semibold mt-8 mb-4 text-slate-300">PDF</h3>}
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {pdfRules.map((r) => (
                   <div key={r.id} className="bg-slate-800 rounded-xl p-4 border border-slate-700 flex items-start justify-between gap-3">
                     <div className="min-w-0">

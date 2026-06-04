@@ -13,7 +13,7 @@ async function requireAdmin() {
   return session
 }
 
-async function saveFile(file: File): Promise<string> {
+export async function saveFile(file: File): Promise<string> {
   const ext = file.name.split(".").pop()?.toLowerCase()
   if (!ext || !["jpg", "jpeg", "png", "webp", "gif", "avif", "pdf"].includes(ext)) {
     throw new Error("Недопустимый формат. Разрешены: jpg, png, webp, gif, avif, pdf")
@@ -64,6 +64,7 @@ export async function createMaps(slug: string, formData: FormData) {
 
   const files = formData.getAll("files") as File[]
   if (!files.length) throw new Error("Выберите файлы")
+  if (files.length > 10) throw new Error("Не более 10 файлов за раз")
 
   for (const file of files) {
     const url = await saveFile(file)
@@ -93,6 +94,7 @@ export async function createGalleryImages(slug: string, formData: FormData) {
 
   const files = formData.getAll("files") as File[]
   if (!files.length) throw new Error("Выберите файлы")
+  if (files.length > 10) throw new Error("Не более 10 файлов за раз")
 
   const caption = (formData.get("caption") as string) || ""
 
@@ -123,6 +125,7 @@ export async function createRules(slug: string, formData: FormData) {
 
   const files = formData.getAll("files") as File[]
   if (!files.length) throw new Error("Выберите файлы")
+  if (files.length > 10) throw new Error("Не более 10 файлов за раз")
 
   for (const file of files) {
     const url = await saveFile(file)

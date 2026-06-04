@@ -54,7 +54,7 @@ export default function GalleryLightbox({ images, kind = "gallery", isAdmin }: P
 
   return (
     <>
-      <div className="grid md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {images.map((img, i) => (
           <button
             key={img.id}

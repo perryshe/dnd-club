@@ -55,6 +55,7 @@ model Character {
   background       String   @default("")
   alignment        String   @default("")
   experiencePoints Int      @default(0) @map("experience_points")
+  avatarUrl        String   @default("") @map("avatar_url")
   hp               Int
   maxHp            Int      @default(0) @map("max_hp")
   tempHp           Int      @default(0) @map("temp_hp")

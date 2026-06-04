@@ -3,9 +3,16 @@
 import { prisma } from "@/lib/prisma"
 import { auth } from "@/lib/auth"
 import { revalidatePath } from "next/cache"
+import { saveFile } from "./admin-actions"
 
 function abilityModifier(score: number): number {
   return Math.floor((score - 10) / 2)
+}
+
+async function handleAvatar(formData: FormData): Promise<string> {
+  const avatarFile = formData.get("avatar") as File | null
+  if (!avatarFile || avatarFile.size === 0) return ""
+  return await saveFile(avatarFile)
 }
 
 export async function createCharacter(slug: string, formData: FormData) {
@@ -14,6 +21,11 @@ export async function createCharacter(slug: string, formData: FormData) {
 
   const campaign = await prisma.campaign.findUnique({ where: { slug } })
   if (!campaign) throw new Error("Кампания не найдена")
+
+  const count = await prisma.character.count({
+    where: { userId: session.user.id, campaignId: campaign.id },
+  })
+  if (count >= 3) throw new Error("Не более 3 персонажей на аккаунт в одной кампании")
 
   const getNum = (name: string, def = 0) => Number(formData.get(name)) || def
   const getStr = (name: string, def = "") => (formData.get(name) as string) || def
@@ -50,6 +62,8 @@ export async function createCharacter(slug: string, formData: FormData) {
     passivePerception: getNum("passivePerception", 10 + abilityModifier(wis)),
   }
 
+  const avatarUrl = await handleAvatar(formData)
+
   await prisma.character.create({
     data: {
       userId: session.user.id,
@@ -61,6 +75,7 @@ export async function createCharacter(slug: string, formData: FormData) {
       background: getStr("background"),
       alignment: getStr("alignment"),
       experiencePoints: getNum("experiencePoints"),
+      avatarUrl,
       hp: getNum("hp", 10),
       maxHp: getNum("maxHp", 10),
       tempHp: getNum("tempHp"),
@@ -131,6 +146,8 @@ export async function updateCharacter(characterId: string, formData: FormData) {
     passivePerception: getNum("passivePerception", 10 + abilityModifier(wis)),
   }
 
+  const avatarUrl = await handleAvatar(formData)
+
   await prisma.character.update({
     where: { id: characterId },
     data: {
@@ -141,6 +158,7 @@ export async function updateCharacter(characterId: string, formData: FormData) {
       background: getStr("background"),
       alignment: getStr("alignment"),
       experiencePoints: getNum("experiencePoints"),
+      ...(avatarUrl ? { avatarUrl } : {}),
       hp: getNum("hp", 10),
       maxHp: getNum("maxHp", 10),
       tempHp: getNum("tempHp"),
