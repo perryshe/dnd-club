@@ -131,7 +131,7 @@ export default async function CharacterSheet({
           </div>
           <div className={`${sectionCard} text-center`}>
             <div className="text-xs text-slate-400 uppercase">HP</div>
-            <div className="text-3xl font-bold text-red-400">{character.hp}</div>
+            <div className={character.hp >= character.maxHp ? "text-3xl font-bold text-green-400" : character.hp <= character.maxHp * 0.3 ? "text-3xl font-bold text-red-400" : "text-3xl font-bold text-yellow-400"}>{character.hp}</div>
             <div className="text-xs text-slate-500">/ {character.maxHp}</div>
           </div>
           <div className={`${sectionCard} text-center`}>
@@ -224,7 +224,7 @@ export default async function CharacterSheet({
             <div className={sectionCard}>
               <h2 className="text-lg font-bold mb-4 text-amber-400">Боевые х-ки</h2>
               <div className="space-y-2">
-                <div className="flex justify-between"><span className="text-slate-400">HP</span><span className="font-bold text-red-400">{character.hp} / {character.maxHp}</span></div>
+                <div className="flex justify-between"><span className="text-slate-400">HP</span><span className={character.hp >= character.maxHp ? "font-bold text-green-400" : character.hp <= character.maxHp * 0.3 ? "font-bold text-red-400" : "font-bold text-yellow-400"}>{character.hp} / {character.maxHp}</span></div>
                 <div className="flex justify-between"><span className="text-slate-400">Временные HP</span><span className="font-bold">{character.tempHp || 0}</span></div>
                 <div className="flex justify-between"><span className="text-slate-400">Кость хитов</span><span className="font-bold">{character.hitDice} ({character.hitDiceTotal})</span></div>
                 <div className="flex justify-between"><span className="text-slate-400">Бонус мастерства</span><span className="font-bold text-amber-400">{formatMod(pb)}</span></div>

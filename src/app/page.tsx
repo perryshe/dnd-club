@@ -8,7 +8,7 @@ export default function Home() {
       <div
         className="relative bg-gradient-to-b from-slate-900/95 via-slate-900/80 to-slate-900"
         style={{
-          backgroundImage: "url('/images/bg-hero.jpg')",
+          backgroundImage: "url('/images/Fon_prime.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundBlendMode: "overlay",

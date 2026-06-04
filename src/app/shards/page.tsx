@@ -41,7 +41,16 @@ export default async function ShardsPage() {
   const pdfRules = rules.filter((r) => r.type === "pdf")
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-950 to-slate-900 text-white">
+    <div className="min-h-screen text-white">
+      <div className="relative bg-gradient-to-b from-purple-950/95 via-purple-950/80 to-slate-900"
+        style={{
+          backgroundImage: "url('/images/Fon_SoNC.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundBlendMode: "overlay",
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-purple-950/60 via-purple-950/40 to-slate-900" />
       <header className="container mx-auto px-4 py-8">
         <Link href="/" className="inline-flex items-center gap-2 text-slate-400 hover:text-white mb-6 transition">
           <ArrowLeft size={20} />
@@ -112,7 +121,7 @@ export default async function ShardsPage() {
                         {char.background && ` • ${char.background}`}
                       </div>
                       <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
-                        <span className="text-red-400">HP: {char.hp}/{char.maxHp}</span>
+                        <span className={char.hp >= char.maxHp ? "text-green-400" : char.hp <= char.maxHp * 0.3 ? "text-red-400" : "text-yellow-400"}>HP: {char.hp}/{char.maxHp}</span>
                         <span className="text-blue-400">КД: {char.ac}</span>
                         <span className="text-slate-400">СИЛ:{s.str ?? 10} ЛВК:{s.dex ?? 10} ВЫН:{s.con ?? 10}</span>
                       </div>
@@ -233,6 +242,7 @@ export default async function ShardsPage() {
           />
         </section>
       </main>
+      </div>
     </div>
   )
 }
