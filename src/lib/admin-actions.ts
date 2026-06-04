@@ -71,8 +71,14 @@ export async function deleteStatus(statusId: string) {
   revalidatePath(`/${status.campaign.slug}`)
 }
 
+async function requireUser() {
+  const session = await auth()
+  if (!session?.user || session.user.role === "pending") throw new Error("Только для зарегистрированных")
+  return session
+}
+
 export async function uploadStatusImage(statusId: string, formData: FormData) {
-  await requireAdmin()
+  await requireUser()
   const status = await prisma.status.findUnique({ where: { id: statusId }, include: { campaign: true } })
   if (!status) throw new Error("Статус не найден")
 

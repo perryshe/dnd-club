@@ -4,7 +4,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowLeft, Users, Map as MapIcon, Image, Scroll, Plus, BookOpen } from "lucide-react"
 import DeleteCharacterButton from "@/components/delete-character-button"
-import { StatusForm, DeleteStatusButton, EditStatusButton, StatusImageUpload, StatusImages, MapForm, GalleryForm, RuleForm, DeleteRuleButton } from "@/components/campaign-admin"
+import { StatusForm, DeleteStatusButton, EditStatusButton, StatusImageUpload, StatusImages, MapForm, GalleryForm, RuleForm, DeleteRuleButton, PdfRuleList } from "@/components/campaign-admin"
 import GalleryLightbox from "@/components/gallery-lightbox"
 
 export default async function ShardsPage() {
@@ -148,34 +148,14 @@ export default async function ShardsPage() {
           {imageRules.length > 0 && (
             <>
               <h3 className="text-lg font-semibold mb-4 text-slate-300">Изображения</h3>
-              <GalleryLightbox images={imageRules.map((r) => ({ id: r.id, url: r.url, caption: r.title }))} kind="rule" isAdmin={isAdmin} />
+              <GalleryLightbox images={imageRules.map((r) => ({ id: r.id, url: r.url, caption: r.title }))} kind="rule" isAdmin={isAdmin} maxVisible={4} />
             </>
           )}
 
           {pdfRules.length > 0 && (
             <>
               {imageRules.length > 0 && <h3 className="text-lg font-semibold mt-8 mb-4 text-slate-300">PDF</h3>}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {pdfRules.map((r) => (
-                  <div key={r.id} className="bg-slate-800 rounded-xl p-4 border border-slate-700 flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <h3 className="font-semibold break-words">{r.title}</h3>
-                      <p className="text-xs text-slate-500 mt-1">PDF</p>
-                    </div>
-                    <div className="flex items-center gap-2 shrink-0">
-                      <a
-                        href={r.url}
-                        target="_blank"
-                        download
-                        className="text-sm bg-slate-700 hover:bg-slate-600 px-3 py-1 rounded-lg transition"
-                      >
-                        Скачать
-                      </a>
-                      {isAdmin && <DeleteRuleButton ruleId={r.id} />}
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <PdfRuleList rules={pdfRules} isAdmin={isAdmin} />
             </>
           )}
 
@@ -192,11 +172,25 @@ export default async function ShardsPage() {
           {maps.length === 0 ? (
             <p className="text-slate-400">Пока нет карт</p>
           ) : (
-            <GalleryLightbox
-              images={maps.map((m) => ({ id: m.id, url: m.url, caption: m.name }))}
-              kind="map"
-              isAdmin={isAdmin}
-            />
+              <GalleryLightbox
+                images={maps.map((m) => ({ id: m.id, url: m.url, caption: m.name }))}
+                kind="map"
+                isAdmin={isAdmin}
+                maxVisible={4}
+              />
+
+        {/* === GALLERY === */}
+        <section id="gallery">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold">Галерея</h2>
+            {isAdmin && <GalleryForm slug="shards" />}
+          </div>
+          <GalleryLightbox
+            images={gallery.map((g) => ({ id: g.id, url: g.url, caption: g.caption }))}
+            kind="gallery"
+            isAdmin={isAdmin}
+            maxVisible={4}
+          />
           )}
         </section>
 
@@ -247,7 +241,7 @@ export default async function ShardsPage() {
                     {(s.images as { id: string; url: string }[]).length > 0 && (
                       <StatusImages images={s.images as { id: string; url: string }[]} isAdmin={isAdmin} />
                     )}
-                    {isAdmin && <div className="mt-3"><StatusImageUpload statusId={s.id} /></div>}
+                    {isApproved && <div className="mt-3"><StatusImageUpload statusId={s.id} /></div>}
                   </div>
                 </div>
               ))}

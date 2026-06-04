@@ -14,13 +14,17 @@ interface Props {
   images: ImageItem[]
   kind?: "gallery" | "map" | "rule"
   isAdmin?: boolean
+  maxVisible?: number
 }
 
 const DELETE_PROPS = { gallery: "imageId", map: "mapId", rule: "ruleId" } as const
 const DELETE_BTNS = { gallery: DeleteGalleryButton, map: DeleteMapButton, rule: DeleteRuleButton } as const
 
-export default function GalleryLightbox({ images, kind = "gallery", isAdmin }: Props) {
+export default function GalleryLightbox({ images, kind = "gallery", isAdmin, maxVisible }: Props) {
   const [selected, setSelected] = useState<number | null>(null)
+  const [expanded, setExpanded] = useState(false)
+  const visible = maxVisible && !expanded ? images.slice(0, maxVisible) : images
+  const hiddenCount = images.length - (maxVisible || images.length)
 
   const close = useCallback(() => setSelected(null), [])
 
@@ -63,14 +67,14 @@ export default function GalleryLightbox({ images, kind = "gallery", isAdmin }: P
 
   return (
     <>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        {images.map((img, i) => (
+      <div className="grid grid-cols-3 md:grid-cols-6 gap-2">
+        {visible.map((img, i) => (
           <button
             key={img.id}
             onClick={() => setSelected(i)}
-            className="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 group cursor-pointer text-left"
+            className="bg-slate-800 rounded-lg overflow-hidden border border-slate-700 group cursor-pointer text-left"
           >
-            <div className="aspect-[4/3] bg-slate-700 overflow-hidden">
+            <div className="aspect-[3/2] bg-slate-700 overflow-hidden">
               <img
                 src={img.url}
                 alt={img.caption || ""}
@@ -78,13 +82,21 @@ export default function GalleryLightbox({ images, kind = "gallery", isAdmin }: P
                 loading="lazy"
               />
             </div>
-            <div className="p-3 flex items-center justify-between">
-              <p className="text-sm text-slate-300 truncate">{img.caption || "—"}</p>
+            <div className="p-2 flex items-center justify-between">
+              <p className="text-xs text-slate-300 truncate">{img.caption || "—"}</p>
               {isAdmin && <DeleteBtn {...({ [deleteProp]: img.id } as any)} />}
             </div>
           </button>
         ))}
       </div>
+
+      {hiddenCount > 0 && (
+        <div className="flex justify-center mt-4">
+          <button onClick={() => setExpanded(!expanded)} className="text-sm bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-lg transition">
+            {expanded ? "Скрыть" : `Показать ещё ${hiddenCount}`}
+          </button>
+        </div>
+      )}
 
       {selected !== null && (
         <div

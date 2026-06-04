@@ -128,6 +128,49 @@ export function EditStatusButton({ statusId, date, title, essay, result }: {
   )
 }
 
+export function PdfRuleList({ rules, isAdmin }: { rules: { id: string; title: string; url: string }[]; isAdmin: boolean }) {
+  const [expanded, setExpanded] = useState(false)
+  const first = rules[0]
+  const rest = rules.slice(1)
+  const hiddenCount = rest.length
+
+  return (
+    <div className="space-y-3">
+      <PdfRuleItem rule={first} isAdmin={isAdmin} />
+      {hiddenCount > 0 && !expanded && (
+        <div className="flex justify-center pt-2">
+          <button onClick={() => setExpanded(true)} className="text-sm bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-lg transition">
+            Показать ещё {hiddenCount}
+          </button>
+        </div>
+      )}
+      {expanded && rest.map((r) => <PdfRuleItem key={r.id} rule={r} isAdmin={isAdmin} />)}
+      {expanded && hiddenCount > 0 && (
+        <div className="flex justify-center pt-2">
+          <button onClick={() => setExpanded(false)} className="text-sm bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-lg transition">
+            Скрыть
+          </button>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function PdfRuleItem({ rule, isAdmin }: { rule: { id: string; title: string; url: string }; isAdmin: boolean }) {
+  return (
+    <div className="bg-slate-800 rounded-xl p-4 border border-slate-700">
+      <div className="text-sm font-semibold break-words mb-2">{rule.title}</div>
+      <div className="text-xs text-slate-500 mb-2">PDF</div>
+      <div className="flex items-center gap-3">
+        <a href={rule.url} target="_blank" download className="text-sm bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-lg transition">
+          Скачать
+        </a>
+        {isAdmin && <DeleteRuleButton ruleId={rule.id} />}
+      </div>
+    </div>
+  )
+}
+
 export function StatusImageUpload({ statusId }: { statusId: string }) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
@@ -157,37 +200,42 @@ export function StatusImageUpload({ statusId }: { statusId: string }) {
 }
 
 export function StatusImages({ images, isAdmin }: { images: { id: string; url: string }[]; isAdmin: boolean }) {
+  const router = useRouter()
   const [selected, setSelected] = useState<string | null>(null)
+
+  async function handleDelete(id: string) {
+    if (!confirm("Удалить фото?")) return
+    try {
+      await deleteStatusImage(id)
+      router.refresh()
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Ошибка")
+    }
+  }
 
   return (
     <>
       <div className="flex flex-wrap gap-2 mt-3">
         {images.map((img) => (
-          <button key={img.id} onClick={() => setSelected(img.url)} className="shrink-0">
-            <img src={img.url} alt="" className="w-20 h-20 object-cover rounded-lg border border-slate-600 hover:border-amber-400 transition" />
-          </button>
+          <div key={img.id} className="relative group shrink-0">
+            <button onClick={() => setSelected(img.url)}>
+              <img src={img.url} alt="" className="w-20 h-20 object-cover rounded-lg border border-slate-600 hover:border-amber-400 transition" />
+            </button>
+            {isAdmin && (
+              <button
+                onClick={() => handleDelete(img.id)}
+                className="absolute -top-2 -right-2 bg-red-600 hover:bg-red-700 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition"
+              >
+                &times;
+              </button>
+            )}
+          </div>
         ))}
       </div>
       {selected && (
         <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center" onClick={() => setSelected(null)}>
           <button onClick={() => setSelected(null)} className="absolute top-4 right-4 text-white text-2xl">&times;</button>
           <img src={selected} alt="" className="max-w-[90vw] max-h-[90vh] object-contain" onClick={(e) => e.stopPropagation()} />
-          {isAdmin && (
-            <form
-              onSubmit={async (e) => {
-                e.preventDefault()
-                const img = images.find((i) => i.url === selected)
-                if (img && confirm("Удалить фото?")) {
-                  await deleteStatusImage(img.id)
-                  setSelected(null)
-                  window.location.reload()
-                }
-              }}
-              className="absolute bottom-4 right-4"
-            >
-              <button type="submit" className="text-xs bg-red-600 hover:bg-red-700 px-3 py-1 rounded-lg">Удалить</button>
-            </form>
-          )}
         </div>
       )}
     </>
