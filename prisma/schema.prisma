@@ -133,8 +133,21 @@ model Status {
   createdBy  String   @map("created_by")
   createdAt  DateTime @default(now()) @map("created_at")
 
+  images StatusImage[]
+
   campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
   user     User     @relation(fields: [createdBy], references: [id])
 
   @@map("statuses")
+}
+
+model StatusImage {
+  id        String   @id @default(cuid())
+  statusId  String   @map("status_id")
+  url       String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  status Status @relation(fields: [statusId], references: [id], onDelete: Cascade)
+
+  @@map("status_images")
 }

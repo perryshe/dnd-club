@@ -4,7 +4,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowLeft, Users, Map as MapIcon, Image, Scroll, Plus, BookOpen } from "lucide-react"
 import DeleteCharacterButton from "@/components/delete-character-button"
-import { StatusForm, DeleteStatusButton, MapForm, GalleryForm, RuleForm, DeleteRuleButton } from "@/components/campaign-admin"
+import { StatusForm, DeleteStatusButton, EditStatusButton, StatusImageUpload, StatusImages, MapForm, GalleryForm, RuleForm, DeleteRuleButton } from "@/components/campaign-admin"
 import GalleryLightbox from "@/components/gallery-lightbox"
 
 export default async function ShardsPage() {
@@ -27,6 +27,7 @@ export default async function ShardsPage() {
     prisma.status.findMany({
       where: { campaignId: campaign.id },
       orderBy: { date: "desc" },
+      include: { images: { orderBy: { createdAt: "asc" } } },
     }),
     prisma.gallery.findMany({
       where: { campaignId: campaign.id },
@@ -198,13 +199,10 @@ export default async function ShardsPage() {
             />
           )}
         </section>
-
-        {/* === GALLERY === */}
-        <section id="gallery">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold">Галерея</h2>
-            {isAdmin && <GalleryForm slug="shards" />}
-          </div>
+      </main>
+      </div>
+      </div>
+    </div>
           <GalleryLightbox
             images={gallery.map((g) => ({ id: g.id, url: g.url, caption: g.caption }))}
             kind="gallery"
@@ -231,7 +229,10 @@ export default async function ShardsPage() {
                         <time className="text-xs text-slate-500">{new Date(s.date).toLocaleDateString("ru-RU")}</time>
                         <h3 className="text-lg font-bold mt-1">{s.title}</h3>
                       </div>
-                      {isAdmin && <DeleteStatusButton statusId={s.id} />}
+                      <div className="flex items-center gap-3 shrink-0">
+                        {isAdmin && <EditStatusButton statusId={s.id} date={new Date(s.date).toISOString().split("T")[0]} title={s.title} essay={s.essay} result={s.result} />}
+                        {isAdmin && <DeleteStatusButton statusId={s.id} />}
+                      </div>
                     </div>
                     {s.essay && <p className="text-slate-300 text-sm whitespace-pre-wrap mb-3">{s.essay}</p>}
                     {s.result && (
@@ -240,6 +241,10 @@ export default async function ShardsPage() {
                         <p className="text-sm text-slate-300 mt-1">{s.result}</p>
                       </div>
                     )}
+                    {(s.images as { id: string; url: string }[]).length > 0 && (
+                      <StatusImages images={s.images as { id: string; url: string }[]} isAdmin={isAdmin} />
+                    )}
+                    {isAdmin && <div className="mt-3"><StatusImageUpload statusId={s.id} /></div>}
                   </div>
                 </div>
               ))}

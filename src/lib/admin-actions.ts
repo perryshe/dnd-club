@@ -47,12 +47,58 @@ export async function createStatus(slug: string, formData: FormData) {
   revalidatePath(`/${slug}`)
 }
 
+export async function updateStatus(statusId: string, formData: FormData) {
+  await requireAdmin()
+  const status = await prisma.status.findUnique({ where: { id: statusId }, include: { campaign: true } })
+  if (!status) throw new Error("Статус не найден")
+  await prisma.status.update({
+    where: { id: statusId },
+    data: {
+      date: new Date(formData.get("date") as string || Date.now()),
+      title: (formData.get("title") as string) || "",
+      essay: (formData.get("essay") as string) || "",
+      result: (formData.get("result") as string) || "",
+    },
+  })
+  revalidatePath(`/${status.campaign.slug}`)
+}
+
 export async function deleteStatus(statusId: string) {
   await requireAdmin()
   const status = await prisma.status.findUnique({ where: { id: statusId }, include: { campaign: true } })
   if (!status) throw new Error("Статус не найден")
   await prisma.status.delete({ where: { id: statusId } })
   revalidatePath(`/${status.campaign.slug}`)
+}
+
+export async function uploadStatusImage(statusId: string, formData: FormData) {
+  await requireAdmin()
+  const status = await prisma.status.findUnique({ where: { id: statusId }, include: { campaign: true } })
+  if (!status) throw new Error("Статус не найден")
+
+  const files = formData.getAll("files") as File[]
+  if (!files.length) throw new Error("Выберите файлы")
+  if (files.length > 10) throw new Error("Не более 10 файлов за раз")
+
+  for (const file of files) {
+    const url = await saveFile(file)
+    await prisma.statusImage.create({
+      data: { statusId, url },
+    })
+  }
+
+  revalidatePath(`/${status.campaign.slug}`)
+}
+
+export async function deleteStatusImage(imageId: string) {
+  await requireAdmin()
+  const image = await prisma.statusImage.findUnique({
+    where: { id: imageId },
+    include: { status: { include: { campaign: true } } },
+  })
+  if (!image) throw new Error("Изображение не найдено")
+  await prisma.statusImage.delete({ where: { id: imageId } })
+  revalidatePath(`/${image.status.campaign.slug}`)
 }
 
 // --- Map ---
