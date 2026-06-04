@@ -196,7 +196,7 @@ export default async function DeadBandPage() {
                 {pdfRules.map((r) => (
                   <div key={r.id} className="bg-slate-800 rounded-xl p-4 border border-slate-700 flex items-start justify-between gap-3">
                     <div className="min-w-0">
-                      <h3 className="font-semibold truncate">{r.title}</h3>
+                      <h3 className="font-semibold break-words">{r.title}</h3>
                       <p className="text-xs text-slate-500 mt-1">PDF</p>
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
