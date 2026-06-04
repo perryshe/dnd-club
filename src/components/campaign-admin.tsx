@@ -46,9 +46,9 @@ export function StatusTimeline({
               color: accent,
               backgroundColor: "rgba(15,23,42,0.8)",
             }}
-            title={`#${i + 1}: ${s.title}`}
+            title={`#${statuses.length - i}: ${s.title}`}
           >
-            {i + 1}
+            {statuses.length - i}
           </button>
         ))}
         <div className="w-px flex-1 min-h-[24px] bg-gradient-to-b from-slate-600 to-transparent" />
@@ -71,7 +71,7 @@ export function StatusTimeline({
                   <span className="shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold"
                     style={{ backgroundColor: `rgba(${accentRgb},0.15)`, color: accent }}
                   >
-                    {i + 1}
+                    {statuses.length - i}
                   </span>
                   <div className="min-w-0">
                     <time className="text-xs text-slate-500 flex items-center gap-1">
