@@ -10,6 +10,72 @@ import {
   uploadStatusImage, deleteStatusImage,
 } from "@/lib/admin-actions"
 
+export function StatusTimeline({
+  statuses,
+  isAdmin,
+  isApproved,
+  color = "amber",
+}: {
+  statuses: { id: string; date: Date; title: string; essay: string; result: string; images: { id: string; url: string }[] }[]
+  isAdmin: boolean
+  isApproved: boolean
+  color?: "amber" | "purple"
+}) {
+  const dotColor = color === "purple" ? "bg-purple-600 border-purple-400" : "bg-amber-600 border-amber-400"
+  const lineColor = color === "purple" ? "bg-gradient-to-b from-purple-600 via-purple-800 to-slate-700" : "bg-gradient-to-b from-amber-500 via-amber-700 to-slate-700"
+  const resultBorder = color === "purple" ? "border-l-purple-600" : "border-l-amber-600"
+  const resultLabel = color === "purple" ? "text-purple-400" : "text-amber-400"
+
+  return (
+    <div className="relative pl-12">
+      <div className="absolute left-[17px] top-3 bottom-3 w-[2px] bg-gradient-to-b from-current via-current/50 to-transparent rounded-full"
+        style={{ color: color === "purple" ? "#a855f7" : "#f59e0b" }}
+      />
+      {statuses.map((s, i) => (
+        <div key={s.id} className="relative pb-8 last:pb-0 group">
+          <div
+            className={`absolute left-[11px] top-2 w-[15px] h-[15px] rounded-full border-[3px] ${dotColor} shadow-lg transition-transform duration-300 group-hover:scale-150 group-hover:shadow-xl`}
+            style={{ boxShadow: `0 0 12px ${color === "purple" ? "rgba(168,85,247,0.4)" : "rgba(245,158,11,0.4)"}` }}
+          />
+          <div className="bg-slate-800/80 backdrop-blur-sm rounded-xl p-6 border border-slate-700/80 ml-5 group-hover:border-slate-600 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-xl group-hover:shadow-black/30" style={{ borderLeftColor: color === "purple" ? "rgba(168,85,247,0.15)" : "rgba(245,158,11,0.15)", borderLeftWidth: "3px" }}>
+            <div className="flex items-start justify-between mb-3 gap-3">
+              <div className="flex items-center gap-3 min-w-0">
+                <span className="shrink-0 w-7 h-7 rounded-full bg-slate-700/80 flex items-center justify-center text-xs font-bold text-slate-400">
+                  {i + 1}
+                </span>
+                <div className="min-w-0">
+                  <time className="text-xs text-slate-500 flex items-center gap-1">
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                    {new Date(s.date).toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" })}
+                  </time>
+                  <h3 className="text-lg font-bold mt-0.5 text-white group-hover:text-current transition-colors"
+                    style={{ color: color === "purple" ? "#d8b4fe" : "#fbbf24" }}
+                  >{s.title}</h3>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 shrink-0">
+                {isAdmin && <EditStatusButton statusId={s.id} date={new Date(s.date).toISOString().split("T")[0]} title={s.title} essay={s.essay} result={s.result} />}
+                {isAdmin && <DeleteStatusButton statusId={s.id} />}
+              </div>
+            </div>
+            {s.essay && <p className="text-slate-300 text-sm whitespace-pre-wrap mb-3 leading-relaxed">{s.essay}</p>}
+            {s.result && (
+              <div className={`bg-slate-900/60 rounded-lg p-4 border-l-4 ${resultBorder} backdrop-blur-sm`}>
+                <span className={`text-xs font-bold uppercase tracking-wider ${resultLabel}`}>Результат</span>
+                <p className="text-sm text-slate-300 mt-1.5">{s.result}</p>
+              </div>
+            )}
+            {s.images.length > 0 && (
+              <StatusImages images={s.images} isAdmin={isAdmin} />
+            )}
+            {isApproved && <div className="mt-3"><StatusImageUpload statusId={s.id} /></div>}
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 export function StatusForm({ slug }: { slug: string }) {
   const router = useRouter()
   const [open, setOpen] = useState(false)

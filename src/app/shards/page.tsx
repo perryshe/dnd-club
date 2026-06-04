@@ -4,7 +4,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowLeft, Users, Map as MapIcon, Image, Scroll, Plus, BookOpen } from "lucide-react"
 import DeleteCharacterButton from "@/components/delete-character-button"
-import { StatusForm, DeleteStatusButton, EditStatusButton, StatusImageUpload, StatusImages, MapForm, GalleryForm, RuleForm, DeleteRuleButton, PdfRuleList } from "@/components/campaign-admin"
+import { StatusForm, StatusTimeline, MapForm, GalleryForm, RuleForm, PdfRuleList } from "@/components/campaign-admin"
 import GalleryLightbox from "@/components/gallery-lightbox"
 
 export default async function ShardsPage() {
@@ -204,36 +204,15 @@ export default async function ShardsPage() {
           {statuses.length === 0 ? (
             <p className="text-slate-400">Пока нет записей</p>
           ) : (
-            <div className="space-y-6 relative before:absolute before:left-[15px] before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-700">
-              {statuses.map((s) => (
-                <div key={s.id} className="relative pl-10">
-                  <div className="absolute left-[9px] top-1.5 w-3 h-3 rounded-full bg-purple-600 border-2 border-slate-900" />
-                  <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
-                    <div className="flex items-start justify-between mb-3">
-                      <div>
-                        <time className="text-xs text-slate-500">{new Date(s.date).toLocaleDateString("ru-RU")}</time>
-                        <h3 className="text-lg font-bold mt-1">{s.title}</h3>
-                      </div>
-                      <div className="flex items-center gap-3 shrink-0">
-                        {isAdmin && <EditStatusButton statusId={s.id} date={new Date(s.date).toISOString().split("T")[0]} title={s.title} essay={s.essay} result={s.result} />}
-                        {isAdmin && <DeleteStatusButton statusId={s.id} />}
-                      </div>
-                    </div>
-                    {s.essay && <p className="text-slate-300 text-sm whitespace-pre-wrap mb-3">{s.essay}</p>}
-                    {s.result && (
-                      <div className="bg-slate-900/50 rounded-lg p-3 border-l-2 border-purple-600">
-                        <span className="text-xs font-bold text-purple-400 uppercase">Результат:</span>
-                        <p className="text-sm text-slate-300 mt-1">{s.result}</p>
-                      </div>
-                    )}
-                    {(s.images as { id: string; url: string }[]).length > 0 && (
-                      <StatusImages images={s.images as { id: string; url: string }[]} isAdmin={isAdmin} />
-                    )}
-                    {isApproved && <div className="mt-3"><StatusImageUpload statusId={s.id} /></div>}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <StatusTimeline
+              statuses={statuses.map((s) => ({
+                ...s,
+                images: s.images as { id: string; url: string }[],
+              }))}
+              isAdmin={isAdmin}
+              isApproved={isApproved}
+              color="purple"
+            />
           )}
         </section>
       </main>
