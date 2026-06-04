@@ -236,16 +236,16 @@ export function PdfRuleList({ rules, isAdmin }: { rules: { id: string; title: st
       <PdfRuleItem rule={first} isAdmin={isAdmin} />
       {hiddenCount > 0 && !expanded && (
         <div className="flex justify-center pt-2">
-          <button onClick={() => setExpanded(true)} className="text-sm bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-lg transition">
-            Показать ещё {hiddenCount}
+          <button onClick={() => setExpanded(true)} className="text-xs bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-600 px-4 py-2 rounded-lg transition font-mono tracking-wide">
+            [+] Показать ещё {hiddenCount}
           </button>
         </div>
       )}
       {expanded && rest.map((r) => <PdfRuleItem key={r.id} rule={r} isAdmin={isAdmin} />)}
       {expanded && hiddenCount > 0 && (
         <div className="flex justify-center pt-2">
-          <button onClick={() => setExpanded(false)} className="text-sm bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-lg transition">
-            Скрыть
+          <button onClick={() => setExpanded(false)} className="text-xs bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-600 px-4 py-2 rounded-lg transition font-mono tracking-wide">
+            [-] Скрыть
           </button>
         </div>
       )}
@@ -255,11 +255,11 @@ export function PdfRuleList({ rules, isAdmin }: { rules: { id: string; title: st
 
 function PdfRuleItem({ rule, isAdmin }: { rule: { id: string; title: string; url: string }; isAdmin: boolean }) {
   return (
-    <div className="bg-slate-800 rounded-xl p-4 border border-slate-700">
-      <div className="text-sm font-semibold break-words mb-2">{rule.title}</div>
-      <div className="text-xs text-slate-500 mb-2">PDF</div>
+    <div className="bg-slate-800/60 backdrop-blur-sm rounded-xl p-4 border border-slate-700/60 hover:border-slate-600 transition">
+      <div className="text-sm font-semibold break-words mb-1">{rule.title}</div>
+      <div className="text-[10px] text-slate-600 font-mono tracking-widest uppercase mb-3">PDF</div>
       <div className="flex items-center gap-3">
-        <a href={rule.url} target="_blank" download className="text-sm bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-lg transition">
+        <a href={rule.url} target="_blank" download className="text-xs bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-lg transition">
           Скачать
         </a>
         {isAdmin && <DeleteRuleButton ruleId={rule.id} />}
