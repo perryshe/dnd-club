@@ -1,7 +1,8 @@
 "use client"
 
-import { useState, useEffect, useCallback, ReactNode } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
+import { DeleteGalleryButton, DeleteMapButton } from "./campaign-admin"
 
 interface ImageItem {
   id: string
@@ -11,10 +12,11 @@ interface ImageItem {
 
 interface Props {
   images: ImageItem[]
-  renderDelete?: (img: ImageItem) => ReactNode
+  kind?: "gallery" | "map"
+  isAdmin?: boolean
 }
 
-export default function GalleryLightbox({ images, renderDelete }: Props) {
+export default function GalleryLightbox({ images, kind = "gallery", isAdmin }: Props) {
   const [selected, setSelected] = useState<number | null>(null)
 
   const close = useCallback(() => setSelected(null), [])
@@ -44,6 +46,8 @@ export default function GalleryLightbox({ images, renderDelete }: Props) {
 
   if (images.length === 0) return <p className="text-slate-400">Пока нет изображений</p>
 
+  const DeleteBtn = kind === "map" ? DeleteMapButton : DeleteGalleryButton
+
   return (
     <>
       <div className="grid md:grid-cols-3 gap-4">
@@ -63,7 +67,7 @@ export default function GalleryLightbox({ images, renderDelete }: Props) {
             </div>
             <div className="p-3 flex items-center justify-between">
               <p className="text-sm text-slate-300 truncate">{img.caption || "—"}</p>
-              {renderDelete?.(img)}
+              {isAdmin && <DeleteBtn {...({ [kind === "map" ? "mapId" : "imageId"]: img.id } as any)} />}
             </div>
           </button>
         ))}
@@ -107,9 +111,9 @@ export default function GalleryLightbox({ images, renderDelete }: Props) {
             {images[selected].caption && (
               <p className="text-white/80 text-center mt-3 text-lg">{images[selected].caption}</p>
             )}
-            {renderDelete && (
+            {isAdmin && (
               <div className="flex justify-center mt-2">
-                {renderDelete(images[selected])}
+                <DeleteBtn {...({ [kind === "map" ? "mapId" : "imageId"]: images[selected].id } as any)} />
               </div>
             )}
           </div>

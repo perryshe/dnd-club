@@ -4,7 +4,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowLeft, Sword, Users, Map as MapIcon, Image, Scroll, Plus, BookOpen } from "lucide-react"
 import DeleteCharacterButton from "@/components/delete-character-button"
-import { StatusForm, DeleteStatusButton, MapForm, DeleteMapButton, GalleryForm, DeleteGalleryButton, RuleForm, DeleteRuleButton } from "@/components/campaign-admin"
+import { StatusForm, DeleteStatusButton, MapForm, GalleryForm, RuleForm, DeleteRuleButton } from "@/components/campaign-admin"
 import GalleryLightbox from "@/components/gallery-lightbox"
 
 export default async function DeadBandPage() {
@@ -197,7 +197,8 @@ export default async function DeadBandPage() {
           ) : (
             <GalleryLightbox
               images={maps.map((m) => ({ id: m.id, url: m.url, caption: m.name }))}
-              renderDelete={isAdmin ? (img) => <DeleteMapButton mapId={img.id} /> : undefined}
+              kind="map"
+              isAdmin={isAdmin}
             />
           )}
         </section>
@@ -210,7 +211,8 @@ export default async function DeadBandPage() {
           </div>
           <GalleryLightbox
             images={gallery.map((g) => ({ id: g.id, url: g.url, caption: g.caption }))}
-            renderDelete={isAdmin ? (img) => <DeleteGalleryButton imageId={img.id} /> : undefined}
+            kind="gallery"
+            isAdmin={isAdmin}
           />
         </section>
       </main>
