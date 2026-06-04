@@ -195,7 +195,8 @@ export default async function ShardsPage() {
                 <div key={m.id} className="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 group">
                   <a href={m.url} target="_blank" rel="noopener noreferrer">
                     <div className="aspect-video bg-slate-700 flex items-center justify-center text-slate-500 overflow-hidden">
-                      <img src={m.url} alt={m.name} className="w-full h-full object-cover" loading="lazy" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; (e.target as HTMLImageElement).parentElement!.innerHTML = '<span>Не удалось загрузить</span>' }} />
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={m.url} alt={m.name} className="w-full h-full object-cover" loading="lazy" />
                     </div>
                   </a>
                   <div className="p-4 flex items-center justify-between">

@@ -1,12 +1,12 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 import {
   createStatus, deleteStatus,
-  createMap, deleteMap,
-  createGalleryImage, deleteGalleryImage,
-  createRule, deleteRule,
+  createMaps, deleteMap,
+  createGalleryImages, deleteGalleryImage,
+  createRules, deleteRule,
 } from "@/lib/admin-actions"
 
 export function StatusForm({ slug }: { slug: string }) {
@@ -78,14 +78,12 @@ export function MapForm({ slug }: { slug: string }) {
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [imgPreview, setImgPreview] = useState<string | null>(null)
-  const fileRef = useRef<HTMLInputElement>(null)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setLoading(true)
     try {
-      await createMap(slug, new FormData(e.currentTarget))
+      await createMaps(slug, new FormData(e.currentTarget))
       setOpen(false)
       router.refresh()
     } catch (err) {
@@ -94,39 +92,21 @@ export function MapForm({ slug }: { slug: string }) {
     setLoading(false)
   }
 
-  if (!open) return <button onClick={() => setOpen(true)} className="text-sm bg-amber-600 hover:bg-amber-700 px-3 py-1 rounded-lg transition">+ Добавить карту</button>
+  if (!open) return <button onClick={() => setOpen(true)} className="text-sm bg-amber-600 hover:bg-amber-700 px-3 py-1 rounded-lg transition">+ Добавить карты</button>
 
   return (
     <form onSubmit={handleSubmit} className="bg-slate-800 rounded-xl p-6 space-y-4 border border-amber-500/30">
-      <h3 className="font-bold text-amber-400">Новая карта</h3>
+      <h3 className="font-bold text-amber-400">Новые карты</h3>
       <div>
-        <label className="text-xs text-slate-400 block mb-1">Название</label>
-        <input name="name" required className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm" />
-      </div>
-      <div>
-        <label className="text-xs text-slate-400 block mb-1">Файл</label>
+        <label className="text-xs text-slate-400 block mb-1">Файлы (можно выбрать несколько)</label>
         <input
-          ref={fileRef}
-          name="file"
+          name="files"
           type="file"
           accept="image/*,.pdf"
-          required
-          onChange={() => {
-            const f = fileRef.current?.files?.[0]
-            if (f?.type.startsWith("image/")) {
-              setImgPreview(URL.createObjectURL(f))
-            } else {
-              setImgPreview(null)
-            }
-          }}
+          multiple
           className="w-full text-sm text-slate-300 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-slate-700 file:text-white file:text-sm file:cursor-pointer hover:file:bg-slate-600"
         />
       </div>
-      {imgPreview && (
-        <div className="aspect-video bg-slate-700 rounded-lg overflow-hidden">
-          <img src={imgPreview} alt="" className="w-full h-full object-cover" />
-        </div>
-      )}
       <div className="flex gap-3">
         <button type="submit" disabled={loading} className="bg-amber-600 hover:bg-amber-700 disabled:opacity-50 px-4 py-2 rounded-lg text-sm transition">
           {loading ? "Загрузка..." : "Сохранить"}
@@ -155,14 +135,12 @@ export function GalleryForm({ slug }: { slug: string }) {
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [imgPreview, setImgPreview] = useState<string | null>(null)
-  const fileRef = useRef<HTMLInputElement>(null)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setLoading(true)
     try {
-      await createGalleryImage(slug, new FormData(e.currentTarget))
+      await createGalleryImages(slug, new FormData(e.currentTarget))
       setOpen(false)
       router.refresh()
     } catch (err) {
@@ -175,33 +153,19 @@ export function GalleryForm({ slug }: { slug: string }) {
 
   return (
     <form onSubmit={handleSubmit} className="bg-slate-800 rounded-xl p-6 space-y-4 border border-amber-500/30">
-      <h3 className="font-bold text-amber-400">Новое изображение</h3>
+      <h3 className="font-bold text-amber-400">Новые изображения</h3>
       <div>
-        <label className="text-xs text-slate-400 block mb-1">Файл</label>
+        <label className="text-xs text-slate-400 block mb-1">Файлы (можно выбрать несколько)</label>
         <input
-          ref={fileRef}
-          name="file"
+          name="files"
           type="file"
           accept="image/*"
-          required
-          onChange={() => {
-            const f = fileRef.current?.files?.[0]
-            if (f?.type.startsWith("image/")) {
-              setImgPreview(URL.createObjectURL(f))
-            } else {
-              setImgPreview(null)
-            }
-          }}
+          multiple
           className="w-full text-sm text-slate-300 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-slate-700 file:text-white file:text-sm file:cursor-pointer hover:file:bg-slate-600"
         />
       </div>
-      {imgPreview && (
-        <div className="aspect-video bg-slate-700 rounded-lg overflow-hidden">
-          <img src={imgPreview} alt="" className="w-full h-full object-cover" />
-        </div>
-      )}
       <div>
-        <label className="text-xs text-slate-400 block mb-1">Подпись</label>
+        <label className="text-xs text-slate-400 block mb-1">Подпись (для всех)</label>
         <input name="caption" className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm" />
       </div>
       <div className="flex gap-3">
@@ -232,14 +196,12 @@ export function RuleForm({ slug }: { slug: string }) {
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [imgPreview, setImgPreview] = useState<string | null>(null)
-  const fileRef = useRef<HTMLInputElement>(null)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setLoading(true)
     try {
-      await createRule(slug, new FormData(e.currentTarget))
+      await createRules(slug, new FormData(e.currentTarget))
       setOpen(false)
       router.refresh()
     } catch (err) {
@@ -248,39 +210,21 @@ export function RuleForm({ slug }: { slug: string }) {
     setLoading(false)
   }
 
-  if (!open) return <button onClick={() => setOpen(true)} className="text-sm bg-amber-600 hover:bg-amber-700 px-3 py-1 rounded-lg transition">+ Добавить правило</button>
+  if (!open) return <button onClick={() => setOpen(true)} className="text-sm bg-amber-600 hover:bg-amber-700 px-3 py-1 rounded-lg transition">+ Добавить правила</button>
 
   return (
     <form onSubmit={handleSubmit} className="bg-slate-800 rounded-xl p-6 space-y-4 border border-amber-500/30">
-      <h3 className="font-bold text-amber-400">Новое правило</h3>
+      <h3 className="font-bold text-amber-400">Новые правила</h3>
       <div>
-        <label className="text-xs text-slate-400 block mb-1">Название</label>
-        <input name="title" required className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm" />
-      </div>
-      <div>
-        <label className="text-xs text-slate-400 block mb-1">Файл (PDF или изображение)</label>
+        <label className="text-xs text-slate-400 block mb-1">Файлы (PDF или изображения, можно несколько)</label>
         <input
-          ref={fileRef}
-          name="file"
+          name="files"
           type="file"
           accept="image/*,.pdf"
-          required
-          onChange={() => {
-            const f = fileRef.current?.files?.[0]
-            if (f?.type.startsWith("image/")) {
-              setImgPreview(URL.createObjectURL(f))
-            } else {
-              setImgPreview(null)
-            }
-          }}
+          multiple
           className="w-full text-sm text-slate-300 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-slate-700 file:text-white file:text-sm file:cursor-pointer hover:file:bg-slate-600"
         />
       </div>
-      {imgPreview && (
-        <div className="aspect-video bg-slate-700 rounded-lg overflow-hidden">
-          <img src={imgPreview} alt="" className="w-full h-full object-cover" />
-        </div>
-      )}
       <div className="flex gap-3">
         <button type="submit" disabled={loading} className="bg-amber-600 hover:bg-amber-700 disabled:opacity-50 px-4 py-2 rounded-lg text-sm transition">
           {loading ? "Загрузка..." : "Сохранить"}

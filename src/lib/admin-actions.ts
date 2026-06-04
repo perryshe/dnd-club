@@ -57,23 +57,21 @@ export async function deleteStatus(statusId: string) {
 
 // --- Map ---
 
-export async function createMap(slug: string, formData: FormData) {
+export async function createMaps(slug: string, formData: FormData) {
   const session = await requireAdmin()
   const campaign = await prisma.campaign.findUnique({ where: { slug } })
   if (!campaign) throw new Error("Кампания не найдена")
 
-  const file = formData.get("file") as File
-  if (!file || !file.size) throw new Error("Выберите файл")
-  const url = await saveFile(file)
+  const files = formData.getAll("files") as File[]
+  if (!files.length) throw new Error("Выберите файлы")
 
-  await prisma.map.create({
-    data: {
-      campaignId: campaign.id,
-      name: (formData.get("name") as string) || "",
-      url,
-      uploadedBy: session.user.id!,
-    },
-  })
+  for (const file of files) {
+    const url = await saveFile(file)
+    const name = file.name.replace(/\.[^.]+$/, "")
+    await prisma.map.create({
+      data: { campaignId: campaign.id, name, url, uploadedBy: session.user.id! },
+    })
+  }
 
   revalidatePath(`/${slug}`)
 }
@@ -88,23 +86,22 @@ export async function deleteMap(mapId: string) {
 
 // --- Gallery ---
 
-export async function createGalleryImage(slug: string, formData: FormData) {
+export async function createGalleryImages(slug: string, formData: FormData) {
   const session = await requireAdmin()
   const campaign = await prisma.campaign.findUnique({ where: { slug } })
   if (!campaign) throw new Error("Кампания не найдена")
 
-  const file = formData.get("file") as File
-  if (!file || !file.size) throw new Error("Выберите файл")
-  const url = await saveFile(file)
+  const files = formData.getAll("files") as File[]
+  if (!files.length) throw new Error("Выберите файлы")
 
-  await prisma.gallery.create({
-    data: {
-      campaignId: campaign.id,
-      url,
-      caption: (formData.get("caption") as string) || "",
-      uploadedBy: session.user.id!,
-    },
-  })
+  const caption = (formData.get("caption") as string) || ""
+
+  for (const file of files) {
+    const url = await saveFile(file)
+    await prisma.gallery.create({
+      data: { campaignId: campaign.id, url, caption, uploadedBy: session.user.id! },
+    })
+  }
 
   revalidatePath(`/${slug}`)
 }
@@ -119,26 +116,22 @@ export async function deleteGalleryImage(imageId: string) {
 
 // --- Rules ---
 
-export async function createRule(slug: string, formData: FormData) {
+export async function createRules(slug: string, formData: FormData) {
   const session = await requireAdmin()
   const campaign = await prisma.campaign.findUnique({ where: { slug } })
   if (!campaign) throw new Error("Кампания не найдена")
 
-  const file = formData.get("file") as File
-  if (!file || !file.size) throw new Error("Выберите файл")
-  const url = await saveFile(file)
+  const files = formData.getAll("files") as File[]
+  if (!files.length) throw new Error("Выберите файлы")
 
-  const isPdf = file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf")
-
-  await prisma.rule.create({
-    data: {
-      campaignId: campaign.id,
-      title: (formData.get("title") as string) || file.name,
-      url,
-      type: isPdf ? "pdf" : "image",
-      uploadedBy: session.user.id!,
-    },
-  })
+  for (const file of files) {
+    const url = await saveFile(file)
+    const isPdf = file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf")
+    const title = file.name.replace(/\.[^.]+$/, "")
+    await prisma.rule.create({
+      data: { campaignId: campaign.id, title, url, type: isPdf ? "pdf" : "image", uploadedBy: session.user.id! },
+    })
+  }
 
   revalidatePath(`/${slug}`)
 }
