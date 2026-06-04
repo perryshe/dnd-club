@@ -117,13 +117,14 @@ export function MapForm({ slug }: { slug: string }) {
   )
 }
 
-export function DeleteMapButton({ mapId }: { mapId: string }) {
+export function DeleteMapButton({ mapId, onSuccess }: { mapId: string; onSuccess?: () => void }) {
   const router = useRouter()
   async function handleDelete() {
     if (!confirm("Удалить карту?")) return
     try {
       await deleteMap(mapId)
       router.refresh()
+      onSuccess?.()
     } catch (err) {
       alert(err instanceof Error ? err.message : "Ошибка")
     }
@@ -178,13 +179,14 @@ export function GalleryForm({ slug }: { slug: string }) {
   )
 }
 
-export function DeleteGalleryButton({ imageId }: { imageId: string }) {
+export function DeleteGalleryButton({ imageId, onSuccess }: { imageId: string; onSuccess?: () => void }) {
   const router = useRouter()
   async function handleDelete() {
     if (!confirm("Удалить изображение?")) return
     try {
       await deleteGalleryImage(imageId)
       router.refresh()
+      onSuccess?.()
     } catch (err) {
       alert(err instanceof Error ? err.message : "Ошибка")
     }
@@ -235,13 +237,14 @@ export function RuleForm({ slug }: { slug: string }) {
   )
 }
 
-export function DeleteRuleButton({ ruleId }: { ruleId: string }) {
+export function DeleteRuleButton({ ruleId, onSuccess }: { ruleId: string; onSuccess?: () => void }) {
   const router = useRouter()
   async function handleDelete() {
     if (!confirm("Удалить правило?")) return
     try {
       await deleteRule(ruleId)
       router.refresh()
+      onSuccess?.()
     } catch (err) {
       alert(err instanceof Error ? err.message : "Ошибка")
     }

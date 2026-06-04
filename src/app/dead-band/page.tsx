@@ -13,6 +13,7 @@ export default async function DeadBandPage() {
   if (!campaign) notFound()
 
   const isAdmin = session?.user?.role === "admin"
+  const isApproved = !!session?.user && session.user.role !== "pending"
 
   const [characters, maps, statuses, gallery, rules] = await Promise.all([
     prisma.character.findMany({
@@ -174,7 +175,7 @@ export default async function DeadBandPage() {
           )}
         </section>
 
-        {/* === RULES === */}
+        {isApproved && (
         <section id="rules">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold">Правила</h2>
@@ -217,6 +218,7 @@ export default async function DeadBandPage() {
 
           {rules.length === 0 && <p className="text-slate-400">Пока нет правил</p>}
         </section>
+        )}
 
         {/* === MAPS === */}
         <section id="maps">

@@ -52,6 +52,15 @@ export default function GalleryLightbox({ images, kind = "gallery", isAdmin }: P
   const DeleteBtn = DELETE_BTNS[kind]
   const deleteProp = DELETE_PROPS[kind]
 
+  function handleDeleteSuccess() {
+    const next = images.length - 1
+    if (next === 0) {
+      setSelected(null)
+    } else if (selected !== null && selected >= next) {
+      setSelected(selected - 1)
+    }
+  }
+
   return (
     <>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -117,7 +126,7 @@ export default function GalleryLightbox({ images, kind = "gallery", isAdmin }: P
             )}
             {isAdmin && (
               <div className="flex justify-center mt-2">
-                <DeleteBtn {...({ [deleteProp]: images[selected].id } as any)} />
+                <DeleteBtn {...({ [deleteProp]: images[selected].id, onSuccess: handleDeleteSuccess } as any)} />
               </div>
             )}
           </div>
