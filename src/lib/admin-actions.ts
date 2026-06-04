@@ -11,7 +11,9 @@ function decodeFilename(name: string): string {
   let s = name
   try { if (s.includes("%")) s = decodeURIComponent(s) } catch {}
 
-  if ([...s].some(c => c.charCodeAt(0) > 127)) {
+  let hasHigh = false
+  for (let i = 0; i < s.length; i++) { if (s.charCodeAt(i) > 127) { hasHigh = true; break } }
+  if (hasHigh) {
     try {
       const bytes = new Uint8Array(s.length)
       for (let i = 0; i < s.length; i++) bytes[i] = s.charCodeAt(i) & 0xFF
