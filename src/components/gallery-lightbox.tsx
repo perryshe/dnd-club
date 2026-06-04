@@ -2,7 +2,9 @@
 
 import { useState, useEffect, useCallback } from "react"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
-import { DeleteGalleryButton, DeleteMapButton } from "./campaign-admin"
+import { useState, useEffect, useCallback } from "react"
+import { ChevronLeft, ChevronRight, X } from "lucide-react"
+import { DeleteGalleryButton, DeleteMapButton, DeleteRuleButton } from "./campaign-admin"
 
 interface ImageItem {
   id: string
@@ -12,9 +14,12 @@ interface ImageItem {
 
 interface Props {
   images: ImageItem[]
-  kind?: "gallery" | "map"
+  kind?: "gallery" | "map" | "rule"
   isAdmin?: boolean
 }
+
+const DELETE_PROPS = { gallery: "imageId", map: "mapId", rule: "ruleId" } as const
+const DELETE_BTNS = { gallery: DeleteGalleryButton, map: DeleteMapButton, rule: DeleteRuleButton } as const
 
 export default function GalleryLightbox({ images, kind = "gallery", isAdmin }: Props) {
   const [selected, setSelected] = useState<number | null>(null)
@@ -46,7 +51,8 @@ export default function GalleryLightbox({ images, kind = "gallery", isAdmin }: P
 
   if (images.length === 0) return <p className="text-slate-400">Пока нет изображений</p>
 
-  const DeleteBtn = kind === "map" ? DeleteMapButton : DeleteGalleryButton
+  const DeleteBtn = DELETE_BTNS[kind]
+  const deleteProp = DELETE_PROPS[kind]
 
   return (
     <>
@@ -67,7 +73,7 @@ export default function GalleryLightbox({ images, kind = "gallery", isAdmin }: P
             </div>
             <div className="p-3 flex items-center justify-between">
               <p className="text-sm text-slate-300 truncate">{img.caption || "—"}</p>
-              {isAdmin && <DeleteBtn {...({ [kind === "map" ? "mapId" : "imageId"]: img.id } as any)} />}
+              {isAdmin && <DeleteBtn {...({ [deleteProp]: img.id } as any)} />}
             </div>
           </button>
         ))}
@@ -113,7 +119,7 @@ export default function GalleryLightbox({ images, kind = "gallery", isAdmin }: P
             )}
             {isAdmin && (
               <div className="flex justify-center mt-2">
-                <DeleteBtn {...({ [kind === "map" ? "mapId" : "imageId"]: images[selected].id } as any)} />
+                <DeleteBtn {...({ [deleteProp]: images[selected].id } as any)} />
               </div>
             )}
           </div>

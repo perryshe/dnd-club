@@ -37,6 +37,9 @@ export default async function DeadBandPage() {
     }),
   ])
 
+  const imageRules = rules.filter((r) => r.type === "image")
+  const pdfRules = rules.filter((r) => r.type === "pdf")
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-red-950 to-slate-900 text-white">
       <header className="container mx-auto px-4 py-8">
@@ -159,31 +162,42 @@ export default async function DeadBandPage() {
             <h2 className="text-2xl font-bold">Правила</h2>
             {isAdmin && <RuleForm slug="dead-band" />}
           </div>
-          {rules.length === 0 ? (
-            <p className="text-slate-400">Пока нет правил</p>
-          ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {rules.map((r) => (
-                <div key={r.id} className="bg-slate-800 rounded-xl p-4 border border-slate-700 flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <h3 className="font-semibold truncate">{r.title}</h3>
-                    <p className="text-xs text-slate-500 mt-1">{r.type === "pdf" ? "PDF" : "Изображение"}</p>
-                  </div>
-                  <div className="flex items-center gap-2 shrink-0">
-                    <a
-                      href={r.url}
-                      target={r.type === "pdf" ? "_blank" : undefined}
-                      download={r.type === "pdf"}
-                      className="text-sm bg-slate-700 hover:bg-slate-600 px-3 py-1 rounded-lg transition"
-                    >
-                      {r.type === "pdf" ? "Скачать" : "Открыть"}
-                    </a>
-                    {isAdmin && <DeleteRuleButton ruleId={r.id} />}
-                  </div>
-                </div>
-              ))}
-            </div>
+
+          {imageRules.length > 0 && (
+            <>
+              <h3 className="text-lg font-semibold mb-4 text-slate-300">Изображения</h3>
+              <GalleryLightbox images={imageRules.map((r) => ({ id: r.id, url: r.url, caption: r.title }))} kind="rule" isAdmin={isAdmin} />
+            </>
           )}
+
+          {pdfRules.length > 0 && (
+            <>
+              {imageRules.length > 0 && <h3 className="text-lg font-semibold mt-8 mb-4 text-slate-300">PDF</h3>}
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {pdfRules.map((r) => (
+                  <div key={r.id} className="bg-slate-800 rounded-xl p-4 border border-slate-700 flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <h3 className="font-semibold truncate">{r.title}</h3>
+                      <p className="text-xs text-slate-500 mt-1">PDF</p>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <a
+                        href={r.url}
+                        target="_blank"
+                        download
+                        className="text-sm bg-slate-700 hover:bg-slate-600 px-3 py-1 rounded-lg transition"
+                      >
+                        Скачать
+                      </a>
+                      {isAdmin && <DeleteRuleButton ruleId={r.id} />}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+
+          {rules.length === 0 && <p className="text-slate-400">Пока нет правил</p>}
         </section>
 
         {/* === MAPS === */}

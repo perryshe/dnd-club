@@ -32,11 +32,10 @@ services:
       - ADMIN_EMAIL=admin@dnd-club.ru
       - ADMIN_PASSWORD=admin123
     volumes:
-      - uploads:/app/public/uploads
+      - ./uploads:/app/public/uploads
     depends_on:
       db:
         condition: service_healthy
 
 volumes:
   pgdata:
-  uploads:
