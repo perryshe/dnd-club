@@ -116,7 +116,7 @@ export default async function ShardsPage() {
           </div>
           <div className="cyber-divider mb-6" />
           {characters.length === 0 ? (
-            <p className="text-slate-500 font-mono">// Система: персонажи не найдены</p>
+            <p className="text-slate-500 font-mono">// Система: персонажи не найдены, проверьте свой интерфейс</p>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {characters.map((char) => {
@@ -180,7 +180,7 @@ export default async function ShardsPage() {
             </>
           )}
 
-          {rules.length === 0 && <p className="text-slate-500 font-mono">// Правила не найдены</p>}
+          {rules.length === 0 && <p className="text-slate-500 font-mono">// Система: правила не найдены, проверьте свой интерфейс</p>}
         </section>
         )}
 
@@ -195,7 +195,7 @@ export default async function ShardsPage() {
           </div>
           <div className="cyber-divider mb-6" />
           {maps.length === 0 ? (
-            <p className="text-slate-500 font-mono">// Карты не найдены</p>
+            <p className="text-slate-500 font-mono">// Система: карты не найдены, проверьте свой интерфейс</p>
           ) : (
               <GalleryLightbox
                 images={maps.map((m) => ({ id: m.id, url: m.url, caption: m.name }))}
@@ -235,7 +235,7 @@ export default async function ShardsPage() {
           </div>
           <div className="cyber-divider mb-6" />
           {statuses.length === 0 ? (
-            <p className="text-slate-500 font-mono">// Записи не найдены</p>
+            <p className="text-slate-500 font-mono">// Система: записи не найдены, проверьте свой интерфейс</p>
           ) : (
             <StatusTimeline
               statuses={statuses.map((s) => ({

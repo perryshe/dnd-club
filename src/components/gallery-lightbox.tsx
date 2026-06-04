@@ -51,7 +51,7 @@ export default function GalleryLightbox({ images, kind = "gallery", isAdmin, max
     }
   }, [selected, close, prev, next])
 
-  if (images.length === 0) return <p className="text-slate-400">Пока нет изображений</p>
+  if (images.length === 0) return <p className="text-slate-500 font-mono">// Система: нет изображений, возможно вам отстрелили внешний диск?  00 11 00 11</p>
 
   const DeleteBtn = DELETE_BTNS[kind]
   const deleteProp = DELETE_PROPS[kind]
