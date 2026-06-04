@@ -27,7 +27,7 @@ COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/docker-entrypoint.sh ./
 COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/public/images /app/public/images
+COPY --from=builder /app/public /app/public
 RUN chmod +x docker-entrypoint.sh && mkdir -p /app/public/uploads && chown nextjs:nodejs /app/public/uploads
 
 EXPOSE 3000

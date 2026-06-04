@@ -8,6 +8,7 @@ import SignOutButton from "@/components/signout-button"
 export const metadata: Metadata = {
   title: "d21 Клуб",
   description: "Настольные ролевые игры",
+  icons: "/favicon21.jpg",
 }
 
 export default async function RootLayout({
@@ -21,7 +22,7 @@ export default async function RootLayout({
     <html lang="ru">
       <body className="antialiased">
         <SessionProvider session={session}>
-          <nav className="bg-slate-900/80 border-b border-slate-700">
+          <nav className="bg-black border-b border-slate-800">
             <div className="container mx-auto px-4 h-14 flex items-center justify-between">
               <Link href="/" className="font-bold text-amber-400">
                 d21 Клуб
