@@ -9,6 +9,3 @@ node_modules
 # Uploaded files (bind mount)
 uploads/*
 !uploads/.gitkeep
-
-# Backup dumps
-.backup-dumps
