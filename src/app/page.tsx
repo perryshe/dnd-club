@@ -115,10 +115,10 @@ export default function Home() {
                   <div className="min-w-0">
                     <h3 className="text-2xl font-black text-left">
                       <span className="bg-gradient-to-r from-cyan-300 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                        Shards of Night City
+                        {/* Shards of Night City  */}
                       </span>
                     </h3>
-                    <p className="text-xs text-cyan-600/80 font-mono tracking-widest uppercase text-left">Company</p>
+                    <p className="text-xs text-cyan-600/80 font-mono tracking-widest uppercase text-left">/*Company*/</p>
                   </div>
                 </div>
                 <div>
