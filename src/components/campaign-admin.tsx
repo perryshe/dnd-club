@@ -66,8 +66,8 @@ export function StatusTimeline({
               style={{ boxShadow: `0 0 12px rgba(${accentRgb},0.4)` }}
             />
             <div className="bg-slate-800/80 backdrop-blur-sm rounded-xl p-6 border border-slate-700/80 ml-4 group-hover:border-slate-600 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-xl group-hover:shadow-black/30" style={{ borderLeftColor: `rgba(${accentRgb},0.15)`, borderLeftWidth: "3px" }}>
-              <div className="flex items-start justify-between mb-3 gap-3">
-                <div className="flex items-center gap-3 min-w-0">
+              <div className="mb-3">
+                <div className="flex items-center gap-2 mb-2">
                   <span className="shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold"
                     style={{ backgroundColor: `rgba(${accentRgb},0.15)`, color: accent }}
                   >
@@ -83,10 +83,12 @@ export function StatusTimeline({
                     >{s.title}</h3>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 shrink-0">
-                  {isAdmin && <EditStatusButton statusId={s.id} date={new Date(s.date).toISOString().split("T")[0]} title={s.title} essay={s.essay} result={s.result} />}
-                  {isAdmin && <DeleteStatusButton statusId={s.id} />}
-                </div>
+                {isAdmin && (
+                  <div className="flex flex-wrap items-center gap-2 ml-9">
+                    <EditStatusButton statusId={s.id} date={new Date(s.date).toISOString().split("T")[0]} title={s.title} essay={s.essay} result={s.result} />
+                    <DeleteStatusButton statusId={s.id} />
+                  </div>
+                )}
               </div>
               {s.essay && <p className="text-slate-300 text-sm whitespace-pre-wrap mb-3 leading-relaxed">{s.essay}</p>}
               {s.result && (
