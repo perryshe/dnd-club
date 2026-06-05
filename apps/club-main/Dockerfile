@@ -15,7 +15,7 @@ COPY public/ ./public/
 COPY docker-entrypoint.sh ./
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN cd apps/club-main && npx prisma generate --schema=../../prisma/schema.prisma && npm run build
-RUN mkdir -p /app/.next && cp -r /app/apps/club-main/.next/standalone/. /app/.next/ && cp /app/apps/club-main/.next/standalone/server.js /app/server.js 2>/dev/null; echo "standalone files staged"
+RUN echo "=== DEBUG standalone ===" && ls -la /app/apps/club-main/.next/standalone/ 2>/dev/null || echo "standalone/ not found"
 
 FROM base AS runner
 ENV NODE_ENV=production
@@ -23,9 +23,8 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN apk add --no-cache libc6-compat
 RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nextjs
 
-COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
+COPY --from=builder --chown=nextjs:nodejs /app/apps/club-main/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/apps/club-main/.next/static ./.next/static
-COPY --from=builder --chown=nextjs:nodejs /app/server.js ./server.js
 COPY --from=builder /app/apps/club-main/node_modules ./node_modules
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/apps/club-main/package.json ./package.json
