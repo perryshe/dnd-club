@@ -1,13 +1,19 @@
 import Link from "next/link"
-import { Book, BookOpen, Cpu, MessageCircle, ScanLine, Sparkles } from "lucide-react"
+import { Cpu, Download, ExternalLink, MessageCircle, ScanLine, Sparkles } from "lucide-react"
 
 const books = [
-  { id: 6, title: "Понедельник начинается в субботу", author: "Аркадий и Борис Стругацкие", date: "13 июня 2026", status: "plan" as const, genre: "Фантастика" },
-  { id: 5, title: "Одноэтажная Америка", author: "Илья Ильф и Евгений Петров", date: "11 мая 2026", status: "done" as const, genre: "Нон-фикшн" },
-  { id: 4, title: "Похождения бравого солдата Швейка", author: "Ярослав Гашек", date: "29 марта 2026", status: "done" as const, genre: "Сатира" },
-  { id: 3, title: "Автостопом по Галактике", author: "Дуглас Адамс", date: "15 февраля 2026", status: "done" as const, genre: "Фантастика" },
-  { id: 2, title: "Маникюр для покойника", author: "Дарья Донцова", date: "30 ноября 2025", status: "done" as const, genre: "Детектив" },
-  { id: 1, title: "Бойцовский клуб", author: "Чак Паланик", date: "8 ноября 2025", status: "done" as const, genre: "Драма" },
+  { id: 6, title: "Понедельник начинается в субботу", author: "Аркадий и Борис Стругацкие", date: "13 июня 2026", status: "plan" as const, genre: "Фантастика", search: "Понедельник+начинается+в+субботу+Стругацкие" },
+  { id: 5, title: "Одноэтажная Америка", author: "Илья Ильф и Евгений Петров", date: "11 мая 2026", status: "done" as const, genre: "Нон-фикшн", search: "Одноэтажная+Америка+Ильф+Петров" },
+  { id: 4, title: "Похождения бравого солдата Швейка", author: "Ярослав Гашек", date: "29 марта 2026", status: "done" as const, genre: "Сатира", search: "Похождения+бравого+солдата+Швейка+Гашек" },
+  { id: 3, title: "Автостопом по Галактике", author: "Дуглас Адамс", date: "15 февраля 2026", status: "done" as const, genre: "Фантастика", search: "Автостопом+по+Галактике+Адамс" },
+  { id: 2, title: "Маникюр для покойника", author: "Дарья Донцова", date: "30 ноября 2025", status: "done" as const, genre: "Детектив", search: "Маникюр+для+покойника+Донцова" },
+  { id: 1, title: "Бойцовский клуб", author: "Чак Паланик", date: "8 ноября 2025", status: "done" as const, genre: "Драма", search: "Бойцовский+клуб+Паланик" },
+]
+
+const libraries = [
+  { name: "lib.ru", url: "https://lib.ru" },
+  { name: "flibusta", url: "https://flibusta.is" },
+  { name: "traumlibrary", url: "https://traumlibrary.net" },
 ]
 
 const genres = [...new Set(books.map(b => b.genre))]
@@ -164,8 +170,45 @@ export default function BookClubPage() {
                       </span>
                     </div>
                   </div>
+
+                  {/* Download */}
+                  <a
+                    href={`https://flibusta.is/booksearch?ask=${book.search}`}
+                    target="_blank"
+                    className={`
+                      relative z-10 flex-shrink-0 flex items-center gap-1.5 px-3 py-2 mt-1 rounded-lg
+                      text-[10px] font-mono tracking-wider uppercase border transition-all duration-300
+                      ${book.status === "plan"
+                        ? "text-cyan-400/70 border-cyan-500/20 hover:bg-cyan-950/40 hover:border-cyan-500/40"
+                        : "text-slate-600 border-slate-700/30 hover:bg-slate-800/50 hover:border-slate-600/50 hover:text-slate-400"
+                      }
+                    `}
+                  >
+                    <Download size={12} />
+                    <span className="hidden sm:inline">Читать</span>
+                  </a>
                 </div>
               ))}
+            </div>
+
+            {/* Libraries reference */}
+            <div className="mt-8 p-4 rounded-xl border border-slate-800/50 bg-slate-900/20">
+              <div className="flex items-center gap-2 mb-3">
+                <ExternalLink size={12} className="text-slate-600" />
+                <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-slate-600">Бесплатные библиотеки</span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {libraries.map((lib) => (
+                  <a
+                    key={lib.name}
+                    href={lib.url}
+                    target="_blank"
+                    className="text-[10px] font-mono tracking-wider text-slate-500 hover:text-cyan-400 transition px-2 py-1 rounded border border-slate-700/30 hover:border-cyan-700/30"
+                  >
+                    {lib.name}
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </div>
