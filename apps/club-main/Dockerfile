@@ -15,6 +15,7 @@ COPY public/ ./public/
 COPY docker-entrypoint.sh ./
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN cd apps/club-main && npx prisma generate --schema=../../prisma/schema.prisma && npm run build
+RUN echo "=== DEBUG standalone ===" && ls -la /app/apps/club-main/.next/standalone/ 2>/dev/null || echo "standalone/ not found"
 
 FROM base AS runner
 ENV NODE_ENV=production
