@@ -1,5 +1,16 @@
 import Link from "next/link"
-import { Book, BookOpen, Cpu, Library, ScanLine, Sparkles } from "lucide-react"
+import { Book, BookOpen, Cpu, MessageCircle, ScanLine, Sparkles } from "lucide-react"
+
+const books = [
+  { id: 6, title: "Понедельник начинается в субботу", author: "Аркадий и Борис Стругацкие", date: "13 июня 2026", status: "plan" as const, genre: "Фантастика" },
+  { id: 5, title: "Одноэтажная Америка", author: "Илья Ильф и Евгений Петров", date: "11 мая 2026", status: "done" as const, genre: "Нон-фикшн" },
+  { id: 4, title: "Похождения бравого солдата Швейка", author: "Ярослав Гашек", date: "29 марта 2026", status: "done" as const, genre: "Сатира" },
+  { id: 3, title: "Автостопом по Галактике", author: "Дуглас Адамс", date: "15 февраля 2026", status: "done" as const, genre: "Фантастика" },
+  { id: 2, title: "Маникюр для покойника", author: "Дарья Донцова", date: "30 ноября 2025", status: "done" as const, genre: "Детектив" },
+  { id: 1, title: "Бойцовский клуб", author: "Чак Паланик", date: "8 ноября 2025", status: "done" as const, genre: "Драма" },
+]
+
+const genres = [...new Set(books.map(b => b.genre))]
 
 export default function BookClubPage() {
   return (
@@ -37,7 +48,6 @@ export default function BookClubPage() {
       {/* Hero */}
       <section className="relative">
         <div className="container mx-auto px-4 pt-24 pb-20 text-center">
-          {/* Badge */}
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-cyan-500/20 bg-cyan-950/30 text-cyan-400/80 text-[10px] font-mono tracking-[0.25em] uppercase mb-12">
             <Sparkles size={12} />
             Module // reading division
@@ -54,87 +64,108 @@ export default function BookClubPage() {
             </span>
           </h1>
 
-          <p className="text-slate-500 text-base max-w-lg mx-auto leading-relaxed font-mono mb-12">
+          <p className="text-slate-500 text-base max-w-lg mx-auto leading-relaxed font-mono mb-8">
             <span className="text-cyan-500/60">[</span> digital library & reading collective <span className="text-cyan-500/60">]</span>
           </p>
 
+          <a
+            href="https://t.me/c/3035877322/2"
+            target="_blank"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-600 to-blue-700 hover:from-cyan-500 hover:to-blue-600 px-6 py-3 rounded-lg transition shadow-lg shadow-cyan-900/30 text-sm font-mono tracking-wider uppercase mb-16"
+          >
+            <MessageCircle size={18} />
+            Telegram
+          </a>
+
           {/* Holographic divider */}
-          <div className="relative w-32 h-px mx-auto mb-20">
+          <div className="relative w-32 h-px mx-auto mb-16">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-60" />
             <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 border border-cyan-400/40" />
           </div>
 
-          {/* Genre pods — futuristic book categories */}
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-3 max-w-3xl mx-auto mb-20">
-            {[
-              { icon: Book, label: "Классика", gradient: "from-cyan-900/40 to-blue-900/40", border: "border-cyan-700/30", iconColor: "text-cyan-400" },
-              { icon: BookOpen, label: "Современное", gradient: "from-purple-900/40 to-pink-900/40", border: "border-purple-700/30", iconColor: "text-purple-400" },
-              { icon: Library, label: "Нон-фикшн", gradient: "from-blue-900/40 to-cyan-900/40", border: "border-blue-700/30", iconColor: "text-blue-400" },
-              { icon: ScanLine, label: "Поэзия", gradient: "from-fuchsia-900/40 to-purple-900/40", border: "border-fuchsia-700/30", iconColor: "text-fuchsia-400" },
-              { icon: Sparkles, label: "Рассказы", gradient: "from-cyan-900/40 to-emerald-900/40", border: "border-cyan-700/30", iconColor: "text-emerald-400" },
-              { icon: Cpu, label: "Фантастика", gradient: "from-purple-900/40 to-indigo-900/40", border: "border-purple-700/30", iconColor: "text-indigo-400" },
-            ].map((item, i) => (
-              <div key={i} className="group cursor-default">
-                <div className={`
-                  aspect-[3/4] rounded-xl flex flex-col items-center justify-center gap-3 p-4
-                  border bg-gradient-to-b ${item.gradient} ${item.border}
-                  transition-all duration-300
-                  hover:shadow-lg hover:shadow-cyan-900/20 hover:-translate-y-1
-                  relative overflow-hidden
-                `}>
-                  {/* Corner glitch lines */}
-                  <div className="absolute top-0 left-0 w-4 h-px bg-gradient-to-r from-cyan-400/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="absolute top-0 left-0 w-px h-4 bg-gradient-to-b from-cyan-400/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <item.icon size={22} className={`${item.iconColor} transition-transform group-hover:scale-110`} />
-                  <span className="text-[9px] font-mono tracking-[0.2em] uppercase text-center leading-tight text-slate-500 group-hover:text-slate-300 transition-colors">
-                    {item.label}
-                  </span>
-                </div>
-              </div>
+          {/* Genre tags */}
+          <div className="flex flex-wrap justify-center gap-2 mb-16">
+            {genres.map((genre) => (
+              <span
+                key={genre}
+                className="px-3 py-1 rounded-md border border-slate-700/50 bg-slate-800/40 text-[10px] font-mono tracking-[0.2em] uppercase text-slate-500"
+              >
+                {genre}
+              </span>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Empty state — future content */}
+      {/* Timeline — Легенда встреч */}
       <section className="relative pb-24">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            {/* Section divider */}
-            <div className="flex items-center gap-4 mb-16">
+          <div className="max-w-3xl mx-auto">
+            {/* Section header */}
+            <div className="flex items-center gap-4 mb-12">
               <div className="flex-1 h-px bg-gradient-to-r from-transparent via-slate-700/50 to-transparent" />
-              <span className="text-slate-600 font-mono text-[10px] tracking-[0.3em] uppercase">// node_00</span>
+              <span className="text-slate-600 font-mono text-[10px] tracking-[0.3em] uppercase">// reading log</span>
               <div className="flex-1 h-px bg-gradient-to-r from-transparent via-slate-700/50 to-transparent" />
             </div>
 
-            <div className="text-center py-20 px-8 rounded-2xl border border-slate-800/60 bg-slate-900/30 relative overflow-hidden group">
-              {/* Hover scanline effect */}
-              <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+            <div className="space-y-2">
+              {books.map((book) => (
+                <div
+                  key={book.id}
+                  className={`
+                    group relative flex items-start gap-5 p-5 rounded-xl
+                    border transition-all duration-300
+                    ${book.status === "plan"
+                      ? "border-cyan-500/30 bg-cyan-950/20 hover:bg-cyan-950/30 hover:border-cyan-400/50"
+                      : "border-slate-800/60 bg-slate-900/30 hover:bg-slate-900/50 hover:border-slate-700/60"
+                    }
+                  `}
+                >
+                  {/* Timeline line */}
+                  <div className="absolute left-[27px] top-12 bottom-0 w-px bg-gradient-to-b from-slate-700/30 to-transparent" />
 
-              <div className="relative">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-xl border border-slate-700/50 bg-slate-800/50 mb-6 group-hover:border-cyan-700/30 transition-colors">
-                  <BookOpen size={26} className="text-slate-600 group-hover:text-cyan-500/60 transition-colors" />
+                  {/* Number badge */}
+                  <div className={`
+                    relative z-10 flex-shrink-0 w-11 h-11 rounded-full flex items-center justify-center
+                    text-xs font-mono border
+                    ${book.status === "plan"
+                      ? "border-cyan-500/40 bg-cyan-950/50 text-cyan-400 shadow-[0_0_12px_rgba(34,211,238,.15)]"
+                      : "border-slate-700/50 bg-slate-800/50 text-slate-500"
+                    }
+                  `}>
+                    {String(book.id).padStart(2, "0")}
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1 min-w-0 pt-1">
+                    <div className="flex items-start justify-between gap-4 mb-1">
+                      <h3 className={`font-semibold text-sm leading-tight ${book.status === "plan" ? "text-cyan-200" : "text-slate-300"}`}>
+                        {book.title}
+                      </h3>
+                      <span className={`
+                        flex-shrink-0 text-[9px] font-mono tracking-[0.2em] uppercase px-2 py-0.5 rounded
+                        ${book.status === "plan"
+                          ? "text-cyan-500/70 border border-cyan-500/20 bg-cyan-950/30"
+                          : "text-slate-600 border border-slate-700/30 bg-slate-800/30"
+                        }
+                      `}>
+                        {book.status === "plan" ? "plan" : "done"}
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-500 font-mono mb-2">
+                      {book.author}
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <span className="text-[10px] text-slate-600 font-mono">
+                        {book.date}
+                      </span>
+                      <span className="text-[9px] px-2 py-0.5 rounded border border-slate-700/30 text-slate-600 font-mono tracking-wider">
+                        {book.genre}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-
-                <div className="inline-block px-3 py-1 rounded border border-slate-700/30 bg-slate-800/30 text-[10px] font-mono tracking-[0.2em] uppercase text-slate-600 mb-6">
-                  status: empty
-                </div>
-
-                <h2 className="text-lg font-semibold text-slate-400 mb-3 font-mono">
-                  <span className="text-cyan-500/40">$</span> Контент не загружен
-                </h2>
-
-                <p className="text-slate-600 text-sm max-w-md mx-auto leading-relaxed font-mono">
-                  Модуль в разработке. Здесь появятся прочитанные книги,
-                  <br />
-                  обсуждения и материалы к встречам.
-                </p>
-
-                <div className="mt-8 flex items-center justify-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-500/40 animate-pulse" />
-                  <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-slate-700">awaiting data stream</span>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
