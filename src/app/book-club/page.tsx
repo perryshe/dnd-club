@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Cpu, Download, ExternalLink, MessageCircle, ScanLine, Sparkles } from "lucide-react"
+import { Cpu, Download, ExternalLink, MessageCircle, ScanLine, Sparkles, Plus, RotateCcw, Trash2 } from "lucide-react"
+import { auth } from "@/lib/auth"
+import { getBookEvents, createBookEvent, toggleBookEventStatus, deleteBookEvent } from "@/lib/book-actions"
 
 export const metadata: Metadata = {
   title: "b21 Club",
@@ -8,25 +10,32 @@ export const metadata: Metadata = {
   icons: "/book-favicon.svg",
 }
 
-const books = [
-  { id: 6, title: "Понедельник начинается в субботу", author: "Аркадий и Борис Стругацкие", date: "13 июня 2026", status: "plan" as const, genre: "Фантастика", search: "Понедельник+начинается+в+субботу+Стругацкие" },
-  { id: 5, title: "Одноэтажная Америка", author: "Илья Ильф и Евгений Петров", date: "11 мая 2026", status: "done" as const, genre: "Нон-фикшн", search: "Одноэтажная+Америка+Ильф+Петров" },
-  { id: 4, title: "Похождения бравого солдата Швейка", author: "Ярослав Гашек", date: "29 марта 2026", status: "done" as const, genre: "Сатира", search: "Похождения+бравого+солдата+Швейка+Гашек" },
-  { id: 3, title: "Автостопом по Галактике", author: "Дуглас Адамс", date: "15 февраля 2026", status: "done" as const, genre: "Фантастика", search: "Автостопом+по+Галактике+Адамс" },
-  { id: 2, title: "Маникюр для покойника", author: "Дарья Донцова", date: "30 ноября 2025", status: "done" as const, genre: "Детектив", search: "Маникюр+для+покойника+Донцова" },
-  { id: 1, title: "Бойцовский клуб", author: "Чак Паланик", date: "8 ноября 2025", status: "done" as const, genre: "Драма", search: "Бойцовский+клуб+Паланик" },
-]
-
 const libraries = [
   { name: "lib.ru", url: "https://lib.ru" },
   { name: "flibusta", url: "https://flibusta.is" },
   { name: "traumlibrary", url: "https://traumlibrary.net" },
 ]
 
-const allGenres = books.map(b => b.genre)
-const genres = allGenres.filter((g, i) => allGenres.indexOf(g) === i)
+const months = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"]
 
-export default function BookClubPage() {
+function formatDate(d: Date): string {
+  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`
+}
+
+function searchQuery(title: string, author: string): string {
+  return encodeURIComponent(`${title} ${author}`.replace(/\s+/g, "+"))
+}
+
+export default async function BookClubPage() {
+  const session = await auth()
+  const isAdmin = session?.user?.role === "admin"
+  const events = await getBookEvents()
+
+  const genreMap = new Map<string, number>()
+  for (const e of events) {
+    genreMap.set(e.genre, (genreMap.get(e.genre) || 0) + 1)
+  }
+
   return (
     <main className="min-h-screen text-slate-300 bg-slate-950 scanlines selection:bg-cyan-500/20 selection:text-cyan-200">
       {/* Digital grid overlay */}
@@ -97,33 +106,57 @@ export default function BookClubPage() {
             <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 border border-cyan-400/40" />
           </div>
 
-          {/* Genre tags */}
+          {/* Genre tags with counts */}
           <div className="flex flex-wrap justify-center gap-2 mb-16">
-            {genres.map((genre) => (
+            {[...genreMap.entries()].map(([genre, count]) => (
               <span
                 key={genre}
-                className="px-3 py-1 rounded-md border border-slate-700/50 bg-slate-800/40 text-[10px] font-mono tracking-[0.2em] uppercase text-slate-500"
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md border border-slate-700/50 bg-slate-800/40 text-[10px] font-mono tracking-[0.2em] uppercase text-slate-500"
               >
                 {genre}
+                <span className="text-cyan-500/50 text-[9px]">{count}</span>
               </span>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Timeline — Легенда встреч */}
+      {/* Timeline */}
       <section className="relative pb-24">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            {/* Section header */}
             <div className="flex items-center gap-4 mb-12">
               <div className="flex-1 h-px bg-gradient-to-r from-transparent via-slate-700/50 to-transparent" />
               <span className="text-slate-600 font-mono text-[10px] tracking-[0.3em] uppercase">// reading log</span>
               <div className="flex-1 h-px bg-gradient-to-r from-transparent via-slate-700/50 to-transparent" />
             </div>
 
+            {/* Admin form */}
+            {isAdmin && (
+              <form action={createBookEvent} className="mb-8 p-4 rounded-xl border border-dashed border-cyan-700/30 bg-cyan-950/10">
+                <div className="flex items-center gap-2 mb-4">
+                  <Plus size={14} className="text-cyan-500/60" />
+                  <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-cyan-500/60">Новое событие</span>
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+                  <input name="title" placeholder="Название" required
+                    className="col-span-2 px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs text-white font-mono placeholder:text-slate-600 outline-none focus:border-cyan-500/50" />
+                  <input name="author" placeholder="Автор" required
+                    className="px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs text-white font-mono placeholder:text-slate-600 outline-none focus:border-cyan-500/50" />
+                  <input name="genre" placeholder="Жанр" required
+                    className="px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs text-white font-mono placeholder:text-slate-600 outline-none focus:border-cyan-500/50" />
+                  <input name="date" type="date" required
+                    className="px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs text-white font-mono outline-none focus:border-cyan-500/50 [color-scheme:dark]" />
+                  <button type="submit"
+                    className="px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-xs font-mono tracking-wider uppercase text-white font-semibold transition">
+                    Добавить
+                  </button>
+                </div>
+              </form>
+            )}
+
             <div className="space-y-2">
-              {books.map((book) => (
+              {events.map((book, idx) => (
                 <div
                   key={book.id}
                   className={`
@@ -135,10 +168,8 @@ export default function BookClubPage() {
                     }
                   `}
                 >
-                  {/* Timeline line */}
                   <div className="absolute left-[27px] top-12 bottom-0 w-px bg-gradient-to-b from-slate-700/30 to-transparent" />
 
-                  {/* Number badge */}
                   <div className={`
                     relative z-10 flex-shrink-0 w-11 h-11 rounded-full flex items-center justify-center
                     text-xs font-mono border
@@ -147,10 +178,9 @@ export default function BookClubPage() {
                       : "border-slate-700/50 bg-slate-800/50 text-slate-500"
                     }
                   `}>
-                    {String(book.id).padStart(2, "0")}
+                    {String(events.length - idx).padStart(2, "0")}
                   </div>
 
-                  {/* Content */}
                   <div className="flex-1 min-w-0 pt-1">
                     <div className="flex items-start justify-between gap-4 mb-1">
                       <h3 className={`font-semibold text-sm leading-tight ${book.status === "plan" ? "text-cyan-200" : "text-slate-300"}`}>
@@ -177,7 +207,7 @@ export default function BookClubPage() {
                           : "bg-slate-700/50 border-slate-600/50 text-slate-300"
                         }
                       `}>
-                        {book.date}
+                        {formatDate(book.date)}
                       </span>
                       <span className="text-[9px] px-2 py-0.5 rounded border border-slate-700/30 text-slate-500 font-mono tracking-wider">
                         {book.genre}
@@ -185,22 +215,40 @@ export default function BookClubPage() {
                     </div>
                   </div>
 
-                  {/* Download */}
-                  <a
-                    href={`https://www.google.com/search?q=${book.search}+fb2+pdf`}
-                    target="_blank"
-                    className={`
-                      relative z-10 flex-shrink-0 flex items-center gap-1.5 px-3 py-2 mt-1 rounded-lg
-                      text-[10px] font-mono tracking-wider uppercase border transition-all duration-300
-                      ${book.status === "plan"
-                        ? "text-cyan-400/70 border-cyan-500/20 hover:bg-cyan-950/40 hover:border-cyan-500/40"
-                        : "text-slate-600 border-slate-700/30 hover:bg-slate-800/50 hover:border-slate-600/50 hover:text-slate-400"
-                      }
-                    `}
-                  >
-                    <Download size={12} />
-                    <span className="hidden sm:inline">Читать</span>
-                  </a>
+                  {/* Actions */}
+                  <div className="relative z-10 flex items-start gap-1 pt-1">
+                    {isAdmin && (
+                      <>
+                        <form action={toggleBookEventStatus.bind(null, book.id)}>
+                          <button type="submit" title={book.status === "plan" ? "Отметить прочитанным" : "Вернуть в план"}
+                            className="p-2 rounded-lg text-slate-600 hover:text-cyan-400 hover:bg-slate-800/50 transition">
+                            <RotateCcw size={13} />
+                          </button>
+                        </form>
+                        <form action={deleteBookEvent.bind(null, book.id)}>
+                          <button type="submit" title="Удалить"
+                            className="p-2 rounded-lg text-slate-600 hover:text-red-400 hover:bg-slate-800/50 transition">
+                            <Trash2 size={13} />
+                          </button>
+                        </form>
+                      </>
+                    )}
+                    <a
+                      href={`https://www.google.com/search?q=${searchQuery(book.title, book.author)}+fb2+pdf`}
+                      target="_blank"
+                      className={`
+                        flex items-center gap-1.5 px-3 py-2 rounded-lg
+                        text-[10px] font-mono tracking-wider uppercase border transition-all duration-300
+                        ${book.status === "plan"
+                          ? "text-cyan-400/70 border-cyan-500/20 hover:bg-cyan-950/40 hover:border-cyan-500/40"
+                          : "text-slate-600 border-slate-700/30 hover:bg-slate-800/50 hover:border-slate-600/50 hover:text-slate-400"
+                        }
+                      `}
+                    >
+                      <Download size={12} />
+                      <span className="hidden sm:inline">Читать</span>
+                    </a>
+                  </div>
                 </div>
               ))}
             </div>

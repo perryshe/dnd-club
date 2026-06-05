@@ -142,6 +142,21 @@ model Status {
   @@map("statuses")
 }
 
+model BookEvent {
+  id        String   @id @default(cuid())
+  title     String
+  author    String
+  date      DateTime
+  genre     String
+  status    String   @default("plan")
+  createdBy String   @map("created_by")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  creator User @relation(fields: [createdBy], references: [id])
+
+  @@map("book_events")
+}
+
 model StatusImage {
   id        String   @id @default(cuid())
   statusId  String   @map("status_id")
