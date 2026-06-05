@@ -16,7 +16,8 @@ const libraries = [
   { name: "traumlibrary", url: "https://traumlibrary.net" },
 ]
 
-const genres = [...new Set(books.map(b => b.genre))]
+const allGenres = books.map(b => b.genre)
+const genres = allGenres.filter((g, i) => allGenres.indexOf(g) === i)
 
 export default function BookClubPage() {
   return (
