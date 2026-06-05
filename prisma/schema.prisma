@@ -27,6 +27,7 @@ model User {
   maps       Map[]
   statuses   Status[]
   rules      Rule[]
+  bookEvents BookEvent[]
 
   @@map("users")
 }
