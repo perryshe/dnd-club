@@ -11,6 +11,6 @@ jobs:
       - name: Build and restart
         run: |
           cd /home/club/Club
-          git pull
+          git pull origin develop
           docker compose build
           docker compose up -d
