@@ -15,8 +15,4 @@ jobs:
           docker compose down --remove-orphans
           docker compose build
           docker compose up -d
-          sleep 3
-          docker compose ps
-          echo "--- Container logs ---"
-          docker compose logs --tail=50
           docker image prune -f
