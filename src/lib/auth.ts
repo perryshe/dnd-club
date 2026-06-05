@@ -19,9 +19,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       async authorize(credentials) {
         if (!credentials?.schoolNick || !credentials?.password) return null
 
-        const user = await prisma.user.findUnique({
-          where: { schoolNick: credentials.schoolNick as string },
-        })
+        const nick = credentials.schoolNick as string
+        let user = await prisma.user.findUnique({ where: { schoolNick: nick } })
+        if (!user) user = await prisma.user.findUnique({ where: { email: nick } })
 
         if (!user) return null
         if (user.role === "pending") return null

@@ -37,7 +37,7 @@ export default function LoginPage() {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="text-sm text-slate-400 block mb-1">Школьный ник</label>
+          <label className="text-sm text-slate-400 block mb-1">Школьный ник или Email</label>
           <input
             name="schoolNick"
             type="text"
