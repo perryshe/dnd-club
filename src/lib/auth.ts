@@ -20,7 +20,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (!credentials?.schoolNick || !credentials?.password) return null
 
         const nick = credentials.schoolNick as string
-        let user = await prisma.user.findUnique({ where: { schoolNick: nick } })
+        let user = await prisma.user.findFirst({ where: { schoolNick: nick } })
         if (!user) user = await prisma.user.findUnique({ where: { email: nick } })
 
         if (!user) return null

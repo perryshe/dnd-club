@@ -33,7 +33,7 @@ export async function POST(req: Request) {
     )
   }
 
-  const existingNick = await prisma.user.findUnique({ where: { schoolNick } })
+  const existingNick = await prisma.user.findFirst({ where: { schoolNick } })
   if (existingNick) {
     return NextResponse.json(
       { error: "Такой школьный ник уже занят" },
