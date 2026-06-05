@@ -31,9 +31,10 @@ export default async function RootLayout({
                 </Link>
                 <Link
                   href="/book-club"
-                  className="text-slate-400 hover:text-amber-300 transition font-mono text-xs tracking-widest uppercase"
+                  className="text-cyan-400/70 hover:text-cyan-300 transition font-mono text-xs tracking-[0.2em] uppercase relative group"
                 >
-                  Книжный клуб
+                  <span className="relative z-10">Книжный клуб</span>
+                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-gradient-to-r from-cyan-400 to-transparent group-hover:w-full transition-all duration-300" />
                 </Link>
               </div>
               <div className="flex items-center gap-4 text-sm">
