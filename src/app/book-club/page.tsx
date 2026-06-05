@@ -111,7 +111,7 @@ export default async function BookClubPage() {
 
           {/* Genre tags with counts */}
           <div className="flex flex-wrap justify-center gap-2 mb-16">
-            {[...genreMap.entries()].map(([genre, count]) => (
+            {Array.from(genreMap.entries()).map(([genre, count]) => (
               <span
                 key={genre}
                 className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md border border-slate-700/50 bg-slate-800/40 text-[10px] font-mono tracking-[0.2em] uppercase text-slate-500"
