@@ -12,6 +12,7 @@ jobs:
         run: |
           cd /home/club/Club
           git pull origin develop
+          docker compose down --remove-orphans
           docker compose build
           docker compose up -d
           docker image prune -f
