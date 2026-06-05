@@ -12,9 +12,9 @@ export async function POST(req: Request) {
     )
   }
 
-  const { email, name, password } = await req.json()
+  const { schoolNick, email, name, password } = await req.json()
 
-  if (!email || !name || !password) {
+  if (!schoolNick || !email || !name || !password) {
     return NextResponse.json({ error: "Все поля обязательны" }, { status: 400 })
   }
 
@@ -25,17 +25,25 @@ export async function POST(req: Request) {
     )
   }
 
-  const existing = await prisma.user.findUnique({ where: { email } })
-  if (existing) {
+  const existingEmail = await prisma.user.findUnique({ where: { email } })
+  if (existingEmail) {
     return NextResponse.json(
       { error: "Пользователь с таким email уже существует" },
       { status: 400 },
     )
   }
 
+  const existingNick = await prisma.user.findUnique({ where: { schoolNick } })
+  if (existingNick) {
+    return NextResponse.json(
+      { error: "Такой школьный ник уже занят" },
+      { status: 400 },
+    )
+  }
+
   const hashed = await hash(password, 12)
   await prisma.user.create({
-    data: { email, name, password: hashed, role: "pending" },
+    data: { schoolNick, email, name, password: hashed, role: "pending" },
   })
 
   return NextResponse.json({

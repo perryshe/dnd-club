@@ -16,6 +16,7 @@ enum Role {
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
+  schoolNick String  @unique @map("school_nick")
   name      String
   password  String
   role      Role     @default(pending)

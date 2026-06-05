@@ -17,13 +17,13 @@ export default function LoginPage() {
 
     const form = new FormData(e.currentTarget)
     const res = await signIn("credentials", {
-      email: form.get("email") as string,
+      schoolNick: form.get("schoolNick") as string,
       password: form.get("password") as string,
       redirect: false,
     })
 
     if (res?.error) {
-      setError("Неверный email или пароль, либо аккаунт ещё не подтверждён")
+      setError("Неверный ник или пароль, либо аккаунт ещё не подтверждён")
       setLoading(false)
     } else {
       router.push("/")
@@ -37,10 +37,10 @@ export default function LoginPage() {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="text-sm text-slate-400 block mb-1">Email</label>
+          <label className="text-sm text-slate-400 block mb-1">Школьный ник</label>
           <input
-            name="email"
-            type="email"
+            name="schoolNick"
+            type="text"
             required
             className="w-full px-4 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white focus:border-amber-500 outline-none"
           />
