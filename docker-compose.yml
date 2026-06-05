@@ -15,11 +15,11 @@ services:
       timeout: 5s
       retries: 5
 
-  club-main:
+  club:
     build:
       context: .
-      dockerfile: apps/club-main/Dockerfile
-    container_name: dnd-club-main
+      dockerfile: Dockerfile
+    container_name: dnd-club
     restart: always
     ports:
       - "3000:3000"
