@@ -1,5 +1,12 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import { Cpu, Download, ExternalLink, MessageCircle, ScanLine, Sparkles } from "lucide-react"
+
+export const metadata: Metadata = {
+  title: "b21 Club",
+  description: "Книжный клуб d21 Club",
+  icons: "/book-favicon.svg",
+}
 
 const books = [
   { id: 6, title: "Понедельник начинается в субботу", author: "Аркадий и Борис Стругацкие", date: "13 июня 2026", status: "plan" as const, genre: "Фантастика", search: "Понедельник+начинается+в+субботу+Стругацкие" },
@@ -174,7 +181,7 @@ export default function BookClubPage() {
 
                   {/* Download */}
                   <a
-                    href={`https://flibusta.is/booksearch?ask=${book.search}`}
+                    href={`https://www.google.com/search?q=${book.search}+fb2+pdf`}
                     target="_blank"
                     className={`
                       relative z-10 flex-shrink-0 flex items-center gap-1.5 px-3 py-2 mt-1 rounded-lg

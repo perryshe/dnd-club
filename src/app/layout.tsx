@@ -33,7 +33,7 @@ export default async function RootLayout({
                   href="/book-club"
                   className="text-cyan-400/70 hover:text-cyan-300 transition font-mono text-xs tracking-[0.2em] uppercase relative group"
                 >
-                  <span className="relative z-10">Книжный клуб</span>
+                  <span className="relative z-10">b21 Club</span>
                   <span className="absolute -bottom-1 left-0 w-0 h-px bg-gradient-to-r from-cyan-400 to-transparent group-hover:w-full transition-all duration-300" />
                 </Link>
               </div>
