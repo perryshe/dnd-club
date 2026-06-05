@@ -170,10 +170,16 @@ export default function BookClubPage() {
                       {book.author}
                     </p>
                     <div className="flex items-center gap-3">
-                      <span className="text-[10px] text-slate-600 font-mono">
+                      <span className={`
+                        inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-mono font-semibold tracking-wide border
+                        ${book.status === "plan"
+                          ? "bg-cyan-500/15 border-cyan-500/40 text-cyan-300 shadow-[0_0_10px_rgba(34,211,238,.15)]"
+                          : "bg-slate-700/50 border-slate-600/50 text-slate-300"
+                        }
+                      `}>
                         {book.date}
                       </span>
-                      <span className="text-[9px] px-2 py-0.5 rounded border border-slate-700/30 text-slate-600 font-mono tracking-wider">
+                      <span className="text-[9px] px-2 py-0.5 rounded border border-slate-700/30 text-slate-500 font-mono tracking-wider">
                         {book.genre}
                       </span>
                     </div>
