@@ -1,9 +1,5 @@
 #!/bin/sh
 set -e
-
-echo "=== DEBUG: Contents of /app ==="
-ls -la /app/
-
 SCHEMA="./prisma/schema.prisma"
 
 echo "Running Prisma generate..."
