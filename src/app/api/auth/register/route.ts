@@ -12,9 +12,9 @@ export async function POST(req: Request) {
     )
   }
 
-  const { schoolNick, email, name, password } = await req.json()
+  const { email, schoolNick, password } = await req.json()
 
-  if (!schoolNick || !email || !name || !password) {
+  if (!email || !schoolNick || !password) {
     return NextResponse.json({ error: "Все поля обязательны" }, { status: 400 })
   }
 
@@ -43,7 +43,7 @@ export async function POST(req: Request) {
 
   const hashed = await hash(password, 12)
   await prisma.user.create({
-    data: { schoolNick, email, name, password: hashed, role: "pending" },
+    data: { email, schoolNick, name: schoolNick, password: hashed, role: "pending" },
   })
 
   return NextResponse.json({

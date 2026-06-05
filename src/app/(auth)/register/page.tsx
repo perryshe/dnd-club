@@ -21,9 +21,8 @@ export default function RegisterPage() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        schoolNick: form.get("schoolNick"),
         email: form.get("email"),
-        name: form.get("name"),
+        schoolNick: form.get("schoolNick"),
         password: form.get("password"),
       }),
     })
@@ -47,15 +46,6 @@ export default function RegisterPage() {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="text-sm text-slate-400 block mb-1">Школьный ник</label>
-          <input
-            name="schoolNick"
-            type="text"
-            required
-            className="w-full px-4 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white focus:border-amber-500 outline-none"
-          />
-        </div>
-        <div>
           <label className="text-sm text-slate-400 block mb-1">Email</label>
           <input
             name="email"
@@ -65,9 +55,9 @@ export default function RegisterPage() {
           />
         </div>
         <div>
-          <label className="text-sm text-slate-400 block mb-1">Имя</label>
+          <label className="text-sm text-slate-400 block mb-1">Школьный ник</label>
           <input
-            name="name"
+            name="schoolNick"
             type="text"
             required
             className="w-full px-4 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white focus:border-amber-500 outline-none"
