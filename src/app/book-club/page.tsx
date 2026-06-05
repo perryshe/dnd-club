@@ -3,6 +3,7 @@ import Link from "next/link"
 import { Cpu, Download, ExternalLink, MessageCircle, ScanLine, Sparkles, Plus, RotateCcw, Trash2 } from "lucide-react"
 import { auth } from "@/lib/auth"
 import { getBookEvents, createBookEvent, toggleBookEventStatus, deleteBookEvent } from "@/lib/book-actions"
+import Countdown from "@/components/countdown"
 
 export const metadata: Metadata = {
   title: "b21 Club",
@@ -19,7 +20,9 @@ const libraries = [
 const months = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"]
 
 function formatDate(d: Date): string {
-  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`
+  const hh = String(d.getHours()).padStart(2, "0")
+  const mm = String(d.getMinutes()).padStart(2, "0")
+  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}, ${hh}:${mm}`
 }
 
 function searchQuery(title: string, author: string): string {
@@ -145,7 +148,7 @@ export default async function BookClubPage() {
                     className="px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs text-white font-mono placeholder:text-slate-600 outline-none focus:border-cyan-500/50" />
                   <input name="genre" placeholder="Жанр" required
                     className="px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs text-white font-mono placeholder:text-slate-600 outline-none focus:border-cyan-500/50" />
-                  <input name="date" type="date" required
+                  <input name="date" type="datetime-local" required
                     className="px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs text-white font-mono outline-none focus:border-cyan-500/50 [color-scheme:dark]" />
                   <button type="submit"
                     className="px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-xs font-mono tracking-wider uppercase text-white font-semibold transition">
@@ -212,6 +215,7 @@ export default async function BookClubPage() {
                       <span className="text-[9px] px-2 py-0.5 rounded border border-slate-700/30 text-slate-500 font-mono tracking-wider">
                         {book.genre}
                       </span>
+                      {book.status === "plan" && <Countdown target={new Date(book.date)} />}
                     </div>
                   </div>
 
