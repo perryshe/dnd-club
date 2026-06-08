@@ -71,7 +71,7 @@ export default function Home() {
                         The Dead Band
                       </span>
                     </h3>
-                    <p className="text-xs text-amber-600/80 font-mono tracking-widest uppercase text-left">Company</p>
+                    <p className="text-xs text-amber-600/80 font-mono tracking-widest uppercase text-left"><br></br>Company</p>
                   </div>
                 </div>
                 <div>
