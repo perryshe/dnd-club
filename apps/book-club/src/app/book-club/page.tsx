@@ -8,7 +8,6 @@ import Countdown from "@/components/countdown"
 export const metadata: Metadata = {
   title: "b21 Club",
   description: "Книжный клуб d21 Club",
-  icons: "/book-favicon.svg",
 }
 
 const libraries = [
@@ -60,13 +59,13 @@ export default async function BookClubPage() {
       <div className="relative border-b border-slate-800/60">
         <div className="container mx-auto px-4 h-14 flex items-center justify-between">
           <Link href="/" className="text-slate-500 hover:text-cyan-400 transition flex items-center gap-2 text-sm font-mono group">
-            <span className="group-hover:-translate-x-1 transition-transform">←</span>
+            <span className="group-hover:-translate-x-1 transition-transform"></span>
             <Cpu size={14} />
             b21 Club
           </Link>
           <div className="flex items-center gap-2 text-cyan-500/50">
             <ScanLine size={14} />
-            <span className="text-[10px] font-mono tracking-[0.3em] uppercase">v.0.1 — Book Club</span>
+            <span className="text-[10px] font-mono tracking-[0.3em] uppercase">v.0.2 — Book Club</span>
           </div>
         </div>
       </div>

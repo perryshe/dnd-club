@@ -66,12 +66,12 @@ export default function Home() {
                     <Sword className="text-amber-400" size={28} />
                   </div>
                   <div className="min-w-0">
+                    <p className="text-xs text-amber-600/80 font-mono tracking-widest uppercase text-left">Company</p>
                     <h3 className="text-2xl font-black text-left">
                       <span className="bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent">
                         The Dead Band
                       </span>
                     </h3>
-                    <p className="text-xs text-amber-600/80 font-mono tracking-widest uppercase text-left">Company</p>
                   </div>
                 </div>
                 <div>
