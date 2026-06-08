@@ -1,0 +1,65 @@
+services:
+  dnd-club:
+    build:
+      context: ./apps/dnd-club
+      dockerfile: Dockerfile
+    container_name: dnd-club-v1-02
+    restart: always
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+      - DATABASE_URL=postgresql://dndclub:dndclub_pass@dnd-club-db:5432/dndclub
+      - NEXTAUTH_SECRET=change-me-to-a-random-secret
+      - NEXTAUTH_URL=https://d21-club.ru
+      - NEXT_PUBLIC_DND_CLUB_URL=https://d21-club.ru
+      - NEXT_PUBLIC_BOOK_CLUB_URL=https://d21-club.ru/b21
+      - NEXT_PUBLIC_T21_GAME_URL=https://d21-club.ru/t21
+      - ADMIN_EMAIL=admin@dnd-club.ru
+      - ADMIN_PASSWORD=admin123
+    volumes:
+      - ./uploads:/app/public/uploads
+    networks:
+      - club_default
+
+  book-club:
+    build:
+      context: ./apps/book-club
+      dockerfile: Dockerfile
+    container_name: dnd-book-club-v1-02
+    restart: always
+    ports:
+      - "3002:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+      - DATABASE_URL=postgresql://dndclub:dndclub_pass@dnd-club-db:5432/dndclub
+      - NEXTAUTH_SECRET=change-me-to-a-random-secret
+      - NEXTAUTH_URL=https://d21-club.ru/b21
+      - NEXT_PUBLIC_DND_CLUB_URL=https://d21-club.ru
+      - NEXT_PUBLIC_BOOK_CLUB_URL=https://d21-club.ru/b21
+      - NEXT_PUBLIC_T21_GAME_URL=https://d21-club.ru/t21
+      - ADMIN_EMAIL=admin@dnd-club.ru
+      - ADMIN_PASSWORD=admin123
+    networks:
+      - club_default
+
+  t21-game:
+    build:
+      context: .
+      dockerfile: apps/tic-tac/Dockerfile
+    container_name: t21-game-v1-02
+    restart: always
+    ports:
+      - "3003:8080"
+    environment:
+      - ConnectionStrings__AdminConnection=Host=dnd-club-db;Port=5432;Database=postgres;Username=dndclub;Password=dndclub_pass
+      - ConnectionStrings__DefaultConnection=Host=dnd-club-db;Port=5432;Database=tic_tac;Username=dndclub;Password=dndclub_pass
+      - ASPNETCORE_ENVIRONMENT=Production
+    networks:
+      - club_default
+
+networks:
+  club_default:
+    external: true

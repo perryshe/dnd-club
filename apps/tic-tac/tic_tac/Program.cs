@@ -1,6 +1,7 @@
-using tic_tac.di;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using tic_tac.datasource;
+using tic_tac.di;
 
 /// <summary>
 /// Точка входа в приложение.
@@ -26,7 +27,13 @@ builder.Services.AddSwaggerGen();
 
 // Добавляем наши сервисы (DI) — регистрация dependency injection
 builder.Services.AddTicTacToeServices();
-
+using (var conn = new NpgsqlConnection(builder.Configuration.GetConnectionString("AdminConnection")))
+{
+    conn.Open();
+    using var cmd = conn.CreateCommand();
+    cmd.CommandText = "CREATE DATABASE tic_tac OWNER dndclub";
+    try { cmd.ExecuteNonQuery(); } catch (Npgsql.PostgresException ex) when (ex.SqlState == "42P04") { }
+}
 // === СБОРКА ПРИЛОЖЕНИЯ ===
 
 var app = builder.Build();
