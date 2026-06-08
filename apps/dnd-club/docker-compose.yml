@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:16
+    image: postgres:16-alpine
     container_name: dnd-club-db
     restart: always
     environment:
@@ -9,7 +9,6 @@ services:
       POSTGRES_DB: dndclub
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U dndclub"]
       interval: 5s
@@ -30,9 +29,6 @@ services:
       - DATABASE_URL=postgresql://dndclub:dndclub_pass@db:5432/dndclub
       - NEXTAUTH_SECRET=change-me-to-a-random-secret
       - NEXTAUTH_URL=http://localhost:3001
-      - NEXT_PUBLIC_DND_CLUB_URL=http://localhost:3001
-      - NEXT_PUBLIC_BOOK_CLUB_URL=http://localhost:3002
-      - NEXT_PUBLIC_T21_GAME_URL=http://localhost:3003
       - ADMIN_EMAIL=admin@dnd-club.ru
       - ADMIN_PASSWORD=admin123
     volumes:
@@ -52,29 +48,11 @@ services:
     environment:
       - NODE_ENV=production
       - NEXT_TELEMETRY_DISABLED=1
-      - DATABASE_URL=postgresql://dndclub:dndclub_pass@db:5432/bookclub
+      - DATABASE_URL=postgresql://dndclub:dndclub_pass@db:5432/dndclub
       - NEXTAUTH_SECRET=change-me-to-a-random-secret
       - NEXTAUTH_URL=http://localhost:3002
-      - NEXT_PUBLIC_DND_CLUB_URL=http://localhost:3001
-      - NEXT_PUBLIC_BOOK_CLUB_URL=http://localhost:3002
-      - NEXT_PUBLIC_T21_GAME_URL=http://localhost:3003
       - ADMIN_EMAIL=admin@dnd-club.ru
       - ADMIN_PASSWORD=admin123
-    depends_on:
-      db:
-        condition: service_healthy
-
-  t21-game:
-    build:
-      context: .
-      dockerfile: apps/tic-tac/Dockerfile
-    container_name: t21-game
-    restart: always
-    ports:
-      - "3003:8080"
-    environment:
-      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=tic_tac;Username=dndclub;Password=dndclub_pass
-      - ASPNETCORE_ENVIRONMENT=Production
     depends_on:
       db:
         condition: service_healthy
