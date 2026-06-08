@@ -290,9 +290,6 @@ export default async function BookClubPage() {
             </span>
             <div className="w-px h-3 bg-cyan-500/30" />
           </div>
-          <p className="text-slate-700 text-[10px] font-mono tracking-[0.2em]">
-            <span className="text-cyan-500/30">[</span> built with curiosity <span className="text-cyan-500/30">]</span>
-          </p>
         </div>
       </footer>
     </main>

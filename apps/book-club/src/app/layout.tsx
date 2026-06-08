@@ -7,10 +7,12 @@ import Link from "next/link"
 import SignOutButton from "@/components/signout-button"
 import GameModal from "@/components/GameModal"
 
+const basePath = "/b21"
+
 export const metadata: Metadata = {
   title: "b21 Club — Книжный клуб",
   description: "Книжный клуб d21 Club",
-  icons: "/book-favicon.svg",
+  icons: `${basePath}/book-favicon.svg`,
 }
 
 export default async function RootLayout({
@@ -28,11 +30,11 @@ export default async function RootLayout({
             <div className="container mx-auto px-4 h-14 flex items-center justify-between">
               <div className="flex items-center gap-6">
                 <a href={process.env.NEXT_PUBLIC_DND_CLUB_URL} className="flex items-center gap-2 font-bold text-amber-400 hover:text-amber-300 transition">
-                  <Image src="/favicon21.jpg" alt="" width={24} height={24} className="w-6 h-6 rounded" unoptimized />
+                  <Image src={`${basePath}/favicon21.jpg`} alt="" width={24} height={24} className="w-6 h-6 rounded" unoptimized />
                   d21 Club
                 </a>
                 <Link href="/book-club" className="flex items-center gap-2 font-bold text-cyan-400">
-                  <Image src="/book-favicon.svg" alt="" width={24} height={24} className="w-6 h-6" unoptimized />
+                  <Image src={`${basePath}/book-favicon.svg`} alt="" width={24} height={24} className="w-6 h-6" unoptimized />
                   b21 Club
                 </Link>
                 <GameModal url={process.env.NEXT_PUBLIC_T21_GAME_URL ?? ""} />
