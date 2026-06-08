@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: #1a1a2e;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -23,31 +23,31 @@
         }
 
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
+            font-size: 1.25rem;
+            margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .game-container {
             background: rgba(255,255,255,0.1);
-            padding: 30px;
-            border-radius: 20px;
+            padding: 15px;
+            border-radius: 12px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
         }
 
         .board {
             display: grid;
-            grid-template-columns: repeat(3, 100px);
-            grid-template-rows: repeat(3, 100px);
-            gap: 5px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(3, 50px);
+            grid-template-rows: repeat(3, 50px);
+            gap: 3px;
+            margin-bottom: 10px;
         }
 
         .cell {
             background: rgba(255,255,255,0.15);
             border: none;
-            border-radius: 10px;
-            font-size: 3rem;
+            border-radius: 6px;
+            font-size: 1.5rem;
             font-weight: bold;
             color: #fff;
             cursor: pointer;
@@ -74,10 +74,10 @@
         }
 
         .status {
-            font-size: 1.3rem;
+            font-size: 0.65rem;
             text-align: center;
-            margin-bottom: 20px;
-            min-height: 30px;
+            margin-bottom: 10px;
+            min-height: 16px;
         }
 
         .status.win { color: #4ade80; }
@@ -88,9 +88,9 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 12px 30px;
-            font-size: 1rem;
-            border-radius: 25px;
+            padding: 6px 15px;
+            font-size: 0.5rem;
+            border-radius: 14px;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
         }
@@ -108,9 +108,9 @@
 
         .loading {
             display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,0.3);
+            width: 10px;
+            height: 10px;
+            border: 2px solid rgba(255,255,255,0.3);
             border-radius: 50%;
             border-top-color: #fff;
             animation: spin 1s ease-in-out infinite;

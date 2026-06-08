@@ -6,6 +6,7 @@ import Image from "next/image"
 import Link from "next/link"
 import SignOutButton from "@/components/signout-button"
 import GameModal from "@/components/GameModal"
+import { Cpu } from "lucide-react"
 
 const basePath = "/b21"
 
@@ -67,6 +68,13 @@ export default async function RootLayout({
               </div>
             </div>
           </nav>
+          <div className="border-b border-slate-800/40 bg-slate-950/50">
+            <div className="container mx-auto px-4 h-8 flex items-center gap-2 text-slate-600">
+              <Cpu size={12} />
+              <span className="text-[10px] font-mono tracking-[0.25em] uppercase">v.{Math.ceil(Math.random() * 9)}.{Math.floor(Math.random() * 20)} — T21 Network</span>
+              <span className="text-[8px] text-slate-700 ml-auto font-mono">system online</span>
+            </div>
+          </div>
           {children}
         </SessionProvider>
       </body>
