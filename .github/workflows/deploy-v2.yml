@@ -7,10 +7,16 @@ jobs:
   deploy:
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v4
+      - name: Clone or pull
+        run: |
+          if [ -d /root/dnd-club-v2 ]; then
+            cd /root/dnd-club-v2
+            git pull origin refactor/split-services
+          else
+            git clone -b refactor/split-services https://github.com/perryshe/dnd-club.git /root/dnd-club-v2
+          fi
       - name: Build and start microservices
         run: |
           cd /root/dnd-club-v2
-          git pull origin refactor/split-services
           docker compose -f docker-compose.prod.yml build
           docker compose -f docker-compose.prod.yml up -d

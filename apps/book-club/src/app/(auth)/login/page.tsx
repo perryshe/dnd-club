@@ -1,4 +1,5 @@
 import { auth, signIn } from "@/lib/auth"
+import Link from "next/link"
 import { redirect } from "next/navigation"
 import { checkRateLimit } from "@/lib/rate-limit"
 import { Cpu, ScanLine, Sparkles } from "lucide-react"
@@ -84,9 +85,9 @@ export default async function LoginPage({
 
           <p className="text-center text-[10px] font-mono text-slate-600">
             Нет аккаунта?{" "}
-            <a href="/register" className="text-cyan-400 hover:text-cyan-300 transition">
+            <Link href="/register" className="text-cyan-400 hover:text-cyan-300 transition">
               Зарегистрироваться
-            </a>
+            </Link>
           </p>
         </form>
 

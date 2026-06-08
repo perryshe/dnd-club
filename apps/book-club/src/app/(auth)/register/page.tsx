@@ -1,6 +1,49 @@
 import { auth } from "@/lib/auth"
+import { prisma } from "@/lib/prisma"
+import { hash } from "bcryptjs"
+import Link from "next/link"
 import { redirect } from "next/navigation"
 import { Cpu, ScanLine, Sparkles } from "lucide-react"
+import { checkRateLimit } from "@/lib/rate-limit"
+
+async function registerUser(formData: FormData) {
+  "use server"
+  const ip = "global"
+  if (!checkRateLimit(ip)) {
+    throw new Error("Слишком много попыток. Попробуйте позже.")
+  }
+
+  const schoolNick = formData.get("schoolNick") as string
+  const name = formData.get("name") as string
+  const email = (formData.get("email") as string) || `${schoolNick}@local.club`
+  const password = formData.get("password") as string
+
+  if (!schoolNick || !name || !password) {
+    throw new Error("Заполните все поля")
+  }
+
+  const existingNick = await prisma.user.findFirst({ where: { schoolNick } })
+  if (existingNick) {
+    throw new Error("Такой ник уже занят")
+  }
+
+  const existingEmail = await prisma.user.findUnique({ where: { email } })
+  if (existingEmail) {
+    throw new Error("Такой email уже зарегистрирован")
+  }
+
+  await prisma.user.create({
+    data: {
+      schoolNick,
+      name,
+      email,
+      password: await hash(password, 12),
+      role: "pending",
+    },
+  })
+
+  redirect("/login")
+}
 
 export default async function RegisterPage() {
   const session = await auth()
@@ -33,7 +76,7 @@ export default async function RegisterPage() {
           <p className="text-slate-500 text-xs font-mono">присоединяйся к чтению</p>
         </div>
 
-        <form action="/api/auth/register" method="POST" className="space-y-4">
+        <form action={registerUser} className="space-y-4">
           <div className="space-y-1">
             <label className="text-[10px] font-mono tracking-[0.2em] uppercase text-slate-500">Школьный ник</label>
             <input name="schoolNick" type="text" required
@@ -67,7 +110,7 @@ export default async function RegisterPage() {
 
           <p className="text-center text-[10px] font-mono text-slate-600">
             Уже есть аккаунт?{" "}
-            <a href="/login" className="text-cyan-400 hover:text-cyan-300 transition">Войти</a>
+            <Link href="/login" className="text-cyan-400 hover:text-cyan-300 transition">Войти</Link>
           </p>
         </form>
 

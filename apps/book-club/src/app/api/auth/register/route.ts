@@ -40,7 +40,9 @@ export async function POST(req: Request) {
       },
     })
 
-    return NextResponse.redirect(new URL("/login", req.url))
+    const url = new URL(req.url)
+    const basePath = url.pathname.startsWith("/b21") ? "/b21" : ""
+    return NextResponse.redirect(new URL(`${basePath}/login`, req.url))
   } catch {
     return NextResponse.json({ error: "Ошибка сервера" }, { status: 500 })
   }
