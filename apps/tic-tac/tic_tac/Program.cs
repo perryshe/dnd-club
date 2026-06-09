@@ -41,6 +41,24 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.EnsureCreated();
+    // Создаём новые таблицы если БД уже существовала (EnsureCreated не добавляет их)
+    db.Database.ExecuteSqlRaw("""
+        CREATE TABLE IF NOT EXISTS users (
+            "Id" uuid PRIMARY KEY,
+            "Login" text NOT NULL,
+            "PasswordHash" text NOT NULL,
+            "CreatedAt" timestamptz NOT NULL
+        )
+    """);
+    db.Database.ExecuteSqlRaw("""
+        CREATE TABLE IF NOT EXISTS game_results (
+            "Id" uuid PRIMARY KEY,
+            "UserId" uuid NOT NULL,
+            "Result" integer NOT NULL,
+            "Timestamp" timestamptz NOT NULL
+        )
+    """);
+    try { db.Database.ExecuteSqlRaw("""CREATE UNIQUE INDEX IF NOT EXISTS "IX_users_Login" ON users ("Login")"""); } catch { }
 }
 // === MIDDLEWARE (порядок важен!) ===
 
