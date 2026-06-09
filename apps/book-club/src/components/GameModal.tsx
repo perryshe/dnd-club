@@ -7,8 +7,8 @@ export default function GameModal({ url }: { url: string }) {
 
   return (
     <>
-      <button onClick={() => setOpen(true)} className="flex items-center gap-2 font-bold text-indigo-400 hover:text-indigo-300 transition bg-transparent border-none cursor-pointer">
-        <span className="w-4 h-4 rounded flex items-center justify-center bg-indigo-600 text-white text-[8px] font-bold">t</span>
+      <button onClick={() => setOpen(true)} className="flex items-center gap-2 font-bold text-indigo-400 hover:text-indigo-300 transition bg-transparent border-none cursor-pointer text-base">
+        <span className="w-4 h-4 rounded flex items-center justify-center bg-indigo-600 text-white text-[8px] font-bold">#</span>
         <span className="text-xs">t21 Club</span>
       </button>
       {open && (
@@ -17,7 +17,7 @@ export default function GameModal({ url }: { url: string }) {
           onClick={() => setOpen(false)}
         >
           <div
-            className="relative w-[360px] h-[480px] mt-16 ml-4 bg-[#1a1a2e] rounded-lg overflow-hidden shadow-2xl"
+            className="relative w-[400px] h-[600px] mt-16 ml-4 bg-[#1a1a2e] overflow-hidden shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <button

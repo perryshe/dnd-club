@@ -56,21 +56,6 @@ export default async function BookClubPage() {
       <div className="fixed top-0 left-1/3 w-[500px] h-[500px] rounded-full bg-cyan-500/5 blur-3xl pointer-events-none" />
       <div className="fixed bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-purple-500/5 blur-3xl pointer-events-none" />
 
-      {/* Nav */}
-      <div className="relative border-b border-slate-800/60">
-        <div className="container mx-auto px-4 h-14 flex items-center justify-between">
-          <Link href="/" className="text-slate-500 hover:text-cyan-400 transition flex items-center gap-2 text-sm font-mono group">
-            <span className="group-hover:-translate-x-1 transition-transform">←</span>
-            <Cpu size={14} />
-            d21 Club
-          </Link>
-          <div className="flex items-center gap-2 text-cyan-500/50">
-            <ScanLine size={14} />
-            <span className="text-[10px] font-mono tracking-[0.3em] uppercase">v.0.1 — Book Club</span>
-          </div>
-        </div>
-      </div>
-
       {/* Hero */}
       <section className="relative">
         <div className="container mx-auto px-4 pt-24 pb-20 text-center">
