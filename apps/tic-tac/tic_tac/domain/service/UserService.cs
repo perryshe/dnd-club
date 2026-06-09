@@ -40,6 +40,9 @@ public class UserService : IUserService
         if (userModel == null)
             return null;
 
+        if (string.IsNullOrEmpty(userModel.PasswordHash))
+            return userModel.Id;
+
         if (!BCrypt.Net.BCrypt.Verify(password, userModel.PasswordHash))
             return null;
 
@@ -53,5 +56,23 @@ public class UserService : IUserService
             return null;
 
         return new User(userModel.Id, userModel.Login);
+    }
+
+    public User? FindOrCreate(string login)
+    {
+        var existing = _dbContext.Users.FirstOrDefault(u => u.Login == login);
+        if (existing != null)
+            return new User(existing.Id, existing.Login);
+
+        var user = new UserModel
+        {
+            Id = Guid.NewGuid(),
+            Login = login,
+            PasswordHash = "",
+            CreatedAt = DateTime.UtcNow
+        };
+        _dbContext.Users.Add(user);
+        _dbContext.SaveChanges();
+        return new User(user.Id, user.Login);
     }
 }

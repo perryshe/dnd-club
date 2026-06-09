@@ -486,9 +486,15 @@
                     body: JSON.stringify({ result })
                 });
                 if (res.status === 401) { logout(); return; }
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({ error: 'Failed to save result' }));
+                    renderStatus('Error: ' + (err.error || 'save failed'));
+                    return;
+                }
                 loadLeaderboard();
             } catch (err) {
-                console.error('Failed to record result:', err);
+                renderStatus('Error saving result');
+                console.error(err);
             }
         }
 
@@ -597,8 +603,31 @@
         });
 
         updateAuthUI();
-        if (token) { newGame(); }
-        loadLeaderboard();
+        (async () => {
+            try {
+                const res = await fetch('/api/auth/session');
+                if (!res.ok) return;
+                const session = await res.json();
+                if (!session?.user?.name) return;
+                const linkRes = await fetch(`${AUTH_URL}/auto-login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ login: session.user.name })
+                });
+                if (!linkRes.ok) return;
+                const user = await linkRes.json();
+                token = btoa(user.login + ':');
+                currentLogin = user.login;
+                localStorage.setItem(TOKEN_KEY, token);
+                localStorage.setItem(LOGIN_KEY, currentLogin);
+                updateAuthUI();
+                newGame();
+            } catch (e) {
+                // Not logged into main site — fall through to login form
+            }
+            if (token) { newGame(); }
+            loadLeaderboard();
+        })();
     </script>
 </body>
 </html>

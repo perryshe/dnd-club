@@ -64,4 +64,18 @@ public class AuthController : ControllerBase
             return Unauthorized(new { error = "Invalid Authorization header" });
         }
     }
+
+    [AllowAnonymous]
+    [HttpPost("auto-login")]
+    public ActionResult AutoLogin([FromBody] AutoLoginRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(request.Login))
+            return BadRequest(new { error = "Login is required" });
+
+        var user = _userService.FindOrCreate(request.Login);
+        if (user == null)
+            return BadRequest(new { error = "Failed to create user" });
+
+        return Ok(new UserResponse { Id = user.Id, Login = user.Login });
+    }
 }
