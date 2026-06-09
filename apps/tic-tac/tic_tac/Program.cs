@@ -59,6 +59,34 @@ using (var scope = app.Services.CreateScope())
         )
     """);
     try { db.Database.ExecuteSqlRaw("""CREATE UNIQUE INDEX IF NOT EXISTS "IX_users_Login" ON users ("Login")"""); } catch { }
+    // Sync existing users: replace email logins with school nicknames from main DB
+    try
+    {
+        var clubConnStr = app.Configuration.GetConnectionString("ClubConnection");
+        if (!string.IsNullOrEmpty(clubConnStr))
+        {
+            var emailUsers = db.Users.Where(u => u.Login.Contains("@")).ToList();
+            foreach (var user in emailUsers)
+            {
+                using var clubConn = new NpgsqlConnection(clubConnStr);
+                clubConn.Open();
+                using var cmd = clubConn.CreateCommand();
+                cmd.CommandText = "SELECT school_nick FROM users WHERE email = @email";
+                cmd.Parameters.AddWithValue("@email", NpgsqlTypes.NpgsqlDbType.Text, user.Login);
+                var schoolNick = cmd.ExecuteScalar() as string;
+                if (!string.IsNullOrEmpty(schoolNick))
+                {
+                    Console.WriteLine($"Syncing user: {user.Login} -> {schoolNick}");
+                    user.Login = schoolNick;
+                }
+            }
+            db.SaveChanges();
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"User sync error (non-fatal): {ex.Message}");
+    }
 }
 // === MIDDLEWARE (порядок важен!) ===
 

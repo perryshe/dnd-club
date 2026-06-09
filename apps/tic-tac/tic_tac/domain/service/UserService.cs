@@ -1,3 +1,4 @@
+using Npgsql;
 using tic_tac.datasource;
 using tic_tac.datasource.model;
 using tic_tac.domain.model;
@@ -7,10 +8,12 @@ namespace tic_tac.domain.service;
 public class UserService : IUserService
 {
     private readonly AppDbContext _dbContext;
+    private readonly string _clubConnectionString;
 
-    public UserService(AppDbContext dbContext)
+    public UserService(AppDbContext dbContext, IConfiguration configuration)
     {
         _dbContext = dbContext;
+        _clubConnectionString = configuration.GetConnectionString("ClubConnection") ?? "";
     }
 
     public bool Register(string login, string password)
@@ -60,19 +63,45 @@ public class UserService : IUserService
 
     public User? FindOrCreate(string login)
     {
-        var existing = _dbContext.Users.FirstOrDefault(u => u.Login == login);
+        // If login looks like an email, try to resolve to school nickname
+        var resolvedLogin = login;
+        if (login.Contains('@') && !string.IsNullOrEmpty(_clubConnectionString))
+        {
+            var schoolNick = GetSchoolNick(login);
+            if (!string.IsNullOrEmpty(schoolNick))
+                resolvedLogin = schoolNick;
+        }
+
+        var existing = _dbContext.Users.FirstOrDefault(u => u.Login == resolvedLogin);
         if (existing != null)
             return new User(existing.Id, existing.Login);
 
         var user = new UserModel
         {
             Id = Guid.NewGuid(),
-            Login = login,
+            Login = resolvedLogin,
             PasswordHash = "",
             CreatedAt = DateTime.UtcNow
         };
         _dbContext.Users.Add(user);
         _dbContext.SaveChanges();
         return new User(user.Id, user.Login);
+    }
+
+    private string? GetSchoolNick(string email)
+    {
+        try
+        {
+            using var conn = new NpgsqlConnection(_clubConnectionString);
+            conn.Open();
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT school_nick FROM users WHERE email = @email";
+            cmd.Parameters.AddWithValue("@email", NpgsqlTypes.NpgsqlDbType.Text, email);
+            return cmd.ExecuteScalar() as string;
+        }
+        catch
+        {
+            return null;
+        }
     }
 }
