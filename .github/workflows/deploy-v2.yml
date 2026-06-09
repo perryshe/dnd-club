@@ -2,6 +2,7 @@ name: Deploy v2 (microservices)
 on:
   push:
     branches: [refactor/split-services]
+    paths-ignore: ['*.md']
 
 jobs:
   deploy:
