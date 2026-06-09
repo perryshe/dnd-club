@@ -67,9 +67,13 @@ app.MapControllers();
 // Выводим информацию в консоль
 Console.WriteLine("Tic-Tac-Toe Server running on http://localhost:5000");
 Console.WriteLine("API endpoints:");
-Console.WriteLine("  GET  /api/game       - Create new game");
-Console.WriteLine("  GET  /api/game/{id}  - Get game by ID");
-Console.WriteLine("  POST /api/game/{id}  - Make move");
+Console.WriteLine("  POST /api/auth/register   - Register new user");
+Console.WriteLine("  POST /api/auth/login      - Login (Basic Auth)");
+Console.WriteLine("  GET  /api/game            - Create new game [Auth]");
+Console.WriteLine("  GET  /api/game/{id}       - Get game by ID [Auth]");
+Console.WriteLine("  POST /api/game/{id}       - Make move [Auth]");
+Console.WriteLine("  POST /api/stats/record    - Record game result [Auth]");
+Console.WriteLine("  GET  /api/stats/leaderboard - Leaderboard");
 
 // Запускаем сервер (блокирующий вызов)
 app.Run();

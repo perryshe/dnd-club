@@ -20,12 +20,131 @@
             align-items: center;
             justify-content: center;
             color: #fff;
+            padding: 10px;
         }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            max-width: 800px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .game-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .leaderboard-column {
+            min-width: 260px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .leaderboard-column h2 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #fbbf24;
+            text-align: center;
+        }
+
+        .leaderboard-column table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.75rem;
+        }
+
+        .leaderboard-column th {
+            text-align: left;
+            color: #94a3b8;
+            padding: 4px 6px;
+            border-bottom: 1px solid #334155;
+            font-weight: 600;
+        }
+
+        .leaderboard-column td {
+            padding: 4px 6px;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        .leaderboard-column .highlight {
+            background: rgba(251, 191, 36, 0.1);
+        }
+
+        .leaderboard-column .rank { color: #64748b; width: 20px; }
+        .leaderboard-column .login { color: #e2e8f0; }
+        .leaderboard-column .num { color: #94a3b8; text-align: center; }
+        .leaderboard-column .wins { color: #4ade80; }
+        .leaderboard-column .losses { color: #f87171; }
+        .leaderboard-column .draws { color: #fbbf24; }
 
         h1 {
             font-size: 1.25rem;
             margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .auth-section {
+            margin-bottom: 10px;
+            text-align: center;
+            min-height: 36px;
+        }
+
+        .auth-section input {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid #334155;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            width: 110px;
+            margin: 0 3px;
+        }
+
+        .auth-section input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .auth-section button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            font-size: 0.7rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 0 2px;
+            transition: transform 0.2s;
+        }
+
+        .auth-section button:hover {
+            transform: translateY(-1px);
+        }
+
+        .auth-section .user-info {
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+
+        .auth-section .user-info span {
+            color: #4ade80;
+        }
+
+        .auth-section .logout-btn {
+            background: #475569;
+            margin-left: 8px;
+        }
+
+        .auth-section .auth-error {
+            color: #f87171;
+            font-size: 0.7rem;
+            margin-top: 4px;
         }
 
         .game-container {
@@ -119,40 +238,197 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
+        @media (max-width: 600px) {
+            .container { flex-direction: column; align-items: center; }
+            .leaderboard-column { width: 100%; }
+        }
     </style>
 </head>
 <body>
-    <h1>Tic-Tac-Toe</h1>
-    
-    <div class="game-container">
-        <div class="status" id="status">Loading...</div>
-        
-        <div class="board" id="board">
-            <button class="cell" data-index="0"></button>
-            <button class="cell" data-index="1"></button>
-            <button class="cell" data-index="2"></button>
-            <button class="cell" data-index="3"></button>
-            <button class="cell" data-index="4"></button>
-            <button class="cell" data-index="5"></button>
-            <button class="cell" data-index="6"></button>
-            <button class="cell" data-index="7"></button>
-            <button class="cell" data-index="8"></button>
+    <div class="container">
+        <div class="game-column">
+            <div class="auth-section" id="authSection">
+                <div id="authForm">
+                    <input type="text" id="loginInput" placeholder="Login" maxlength="20">
+                    <input type="password" id="passwordInput" placeholder="Password">
+                    <button id="loginBtn">Login</button>
+                    <button id="registerBtn">Register</button>
+                </div>
+                <div id="userInfo" style="display:none">
+                    <span class="user-info">Playing as: <span id="displayName"></span></span>
+                    <button class="logout-btn" id="logoutBtn">Logout</button>
+                </div>
+                <div class="auth-error" id="authError"></div>
+            </div>
+
+            <h1>Tic-Tac-Toe</h1>
+
+            <div class="game-container">
+                <div class="status" id="status">Please login to play</div>
+
+                <div class="board" id="board">
+                    <button class="cell" data-index="0"></button>
+                    <button class="cell" data-index="1"></button>
+                    <button class="cell" data-index="2"></button>
+                    <button class="cell" data-index="3"></button>
+                    <button class="cell" data-index="4"></button>
+                    <button class="cell" data-index="5"></button>
+                    <button class="cell" data-index="6"></button>
+                    <button class="cell" data-index="7"></button>
+                    <button class="cell" data-index="8"></button>
+                </div>
+
+                <button id="newGameBtn" disabled>New Game</button>
+            </div>
         </div>
-        
-        <button id="newGameBtn">New Game</button>
+
+        <div class="leaderboard-column">
+            <h2>&#127942; Leaderboard</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="rank">#</th>
+                        <th class="login">Player</th>
+                        <th class="num wins">W</th>
+                        <th class="num losses">L</th>
+                        <th class="num draws">D</th>
+                        <th class="num">T</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboardBody">
+                    <tr><td colspan="6" style="text-align:center;color:#64748b;font-size:0.7rem">No games played yet</td></tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script>
         const base = window.location.pathname.replace(/\/$/, '');
         const API_URL = base + '/api/game';
-        
+        const AUTH_URL = base + '/api/auth';
+        const STATS_URL = base + '/api/stats';
+
+        const TOKEN_KEY = 'tictac_token';
+        const LOGIN_KEY = 'tictac_login';
+
         let gameId = null;
         let currentBoard = null;
         let isProcessing = false;
+        let token = localStorage.getItem(TOKEN_KEY);
+        let currentLogin = localStorage.getItem(LOGIN_KEY);
 
         const statusEl = document.getElementById('status');
         const newGameBtn = document.getElementById('newGameBtn');
         const cells = document.querySelectorAll('.cell');
+        const authForm = document.getElementById('authForm');
+        const userInfo = document.getElementById('userInfo');
+        const displayName = document.getElementById('displayName');
+        const loginInput = document.getElementById('loginInput');
+        const passwordInput = document.getElementById('passwordInput');
+        const authError = document.getElementById('authError');
+
+        function showError(msg) {
+            authError.textContent = msg;
+            setTimeout(() => authError.textContent = '', 3000);
+        }
+
+        function updateAuthUI() {
+            if (token && currentLogin) {
+                authForm.style.display = 'none';
+                userInfo.style.display = 'block';
+                displayName.textContent = currentLogin;
+                newGameBtn.disabled = false;
+                statusEl.textContent = 'Click "New Game" or a cell to start!';
+            } else {
+                authForm.style.display = 'block';
+                userInfo.style.display = 'none';
+                newGameBtn.disabled = true;
+                statusEl.textContent = 'Please login to play';
+            }
+        }
+
+        async function apiFetch(url, options = {}) {
+            const headers = options.headers || {};
+            if (token) {
+                headers['Authorization'] = 'Basic ' + token;
+            }
+            if (options.body && typeof options.body === 'object' && !(options.body instanceof FormData)) {
+                headers['Content-Type'] = 'application/json';
+            }
+            return fetch(url, { ...options, headers });
+        }
+
+        async function handleAuth(mode) {
+            const login = loginInput.value.trim();
+            const password = passwordInput.value;
+
+            if (!login || !password) {
+                showError('Enter login and password');
+                return;
+            }
+
+            try {
+                let response;
+                if (mode === 'register') {
+                    response = await apiFetch(`${AUTH_URL}/register`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ login, password })
+                    });
+                    if (!response.ok) {
+                        const err = await response.json().catch(() => ({ error: 'Registration failed' }));
+                        showError(err.error || 'Registration failed');
+                        return;
+                    }
+                }
+
+                const authHeader = btoa(login + ':' + password);
+                response = await fetch(`${AUTH_URL}/login`, {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Basic ' + authHeader }
+                });
+
+                if (!response.ok) {
+                    const err = await response.json().catch(() => ({ error: 'Login failed' }));
+                    showError(err.error || 'Invalid credentials');
+                    return;
+                }
+
+                const user = await response.json();
+                token = authHeader;
+                currentLogin = user.login;
+                localStorage.setItem(TOKEN_KEY, token);
+                localStorage.setItem(LOGIN_KEY, currentLogin);
+                loginInput.value = '';
+                passwordInput.value = '';
+                updateAuthUI();
+                loadLeaderboard();
+                newGame();
+            } catch (err) {
+                showError('Network error');
+                console.error(err);
+            }
+        }
+
+        function logout() {
+            token = null;
+            currentLogin = null;
+            localStorage.removeItem(TOKEN_KEY);
+            localStorage.removeItem(LOGIN_KEY);
+            gameId = null;
+            currentBoard = null;
+            isProcessing = false;
+            updateAuthUI();
+            renderBoard([[0,0,0],[0,0,0],[0,0,0]]);
+            loadLeaderboard();
+        }
+
+        document.getElementById('loginBtn').addEventListener('click', () => handleAuth('login'));
+        document.getElementById('registerBtn').addEventListener('click', () => handleAuth('register'));
+        loginInput.addEventListener('keydown', e => { if (e.key === 'Enter') passwordInput.focus(); });
+        passwordInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleAuth('login'); });
+        document.getElementById('logoutBtn').addEventListener('click', logout);
 
         function indexToCoords(index) {
             return { row: Math.floor(index / 3), col: index % 3 };
@@ -177,22 +453,22 @@
         }
 
         async function newGame() {
-            if (isProcessing) return;
-            
+            if (isProcessing || !token) return;
+
             isProcessing = true;
             newGameBtn.disabled = true;
             renderStatus('Creating game...');
 
             try {
-                const response = await fetch(API_URL);
+                const response = await apiFetch(API_URL);
                 if (!response.ok) throw new Error('Failed to create game');
-                
+
                 const game = await response.json();
                 gameId = game.id;
                 currentBoard = game.board.board;
                 renderBoard(currentBoard);
                 renderStatus('Your turn! Click a cell to place X');
-                
+
             } catch (error) {
                 renderStatus('Error: ' + error.message);
                 console.error(error);
@@ -202,19 +478,31 @@
             }
         }
 
+        async function recordResult(result) {
+            try {
+                await apiFetch(`${STATS_URL}/record`, {
+                    method: 'POST',
+                    body: JSON.stringify({ result })
+                });
+                loadLeaderboard();
+            } catch (err) {
+                console.error('Failed to record result:', err);
+            }
+        }
+
         async function makeMove(index) {
-            if (isProcessing || !gameId) return;
-            
+            if (isProcessing || !gameId || !token) return;
+
             const { row, col } = indexToCoords(index);
             if (currentBoard[row][col] !== 0) return;
-            
+
             isProcessing = true;
             newGameBtn.disabled = true;
             renderStatus('Computer thinking...');
 
             try {
                 currentBoard[row][col] = 1;
-                
+
                 const moveDto = {
                     id: gameId,
                     board: { board: currentBoard, size: 3 },
@@ -222,8 +510,8 @@
                     winner: 0,
                     message: null
                 };
-                
-                const response = await fetch(`${API_URL}/${gameId}`, {
+
+                const response = await apiFetch(`${API_URL}/${gameId}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(moveDto)
@@ -233,28 +521,33 @@
                     const error = await response.json().catch(() => ({ error: 'Unknown error' }));
                     throw new Error(error.error || 'Move failed');
                 }
-                
+
                 const game = await response.json();
                 currentBoard = game.board.board;
                 renderBoard(currentBoard);
-                
+
                 if (game.isOver) {
+                    gameId = null;
                     if (game.winner === 1) {
                         renderStatus(game.message, 'win');
+                        recordResult(1);
                     } else if (game.winner === 2) {
                         renderStatus(game.message, 'lose');
+                        recordResult(-1);
                     } else {
                         renderStatus(game.message, 'draw');
+                        recordResult(0);
                     }
                     statusEl.textContent += ' Press "New Game" to play again';
-                    gameId = null;
                 } else {
                     renderStatus('Your turn! Click a cell to place X');
                 }
-                
+
             } catch (error) {
-                currentBoard[row][col] = 0;
-                renderBoard(currentBoard);
+                if (currentBoard) {
+                    currentBoard[row][col] = 0;
+                    renderBoard(currentBoard);
+                }
                 renderStatus('Error: ' + error.message);
             } finally {
                 isProcessing = false;
@@ -262,12 +555,48 @@
             }
         }
 
+        async function loadLeaderboard() {
+            try {
+                const response = await fetch(`${STATS_URL}/leaderboard`);
+                if (!response.ok) return;
+                const data = await response.json();
+                const tbody = document.getElementById('leaderboardBody');
+
+                if (!data || data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#64748b;font-size:0.7rem">No games played yet</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = data.map((entry, i) => {
+                    const highlight = currentLogin && entry.login === currentLogin ? ' class="highlight"' : '';
+                    return `<tr${highlight}>
+                        <td class="rank">${i + 1}</td>
+                        <td class="login">${escapeHtml(entry.login)}</td>
+                        <td class="num wins">${entry.wins}</td>
+                        <td class="num losses">${entry.losses}</td>
+                        <td class="num draws">${entry.draws}</td>
+                        <td class="num">${entry.total}</td>
+                    </tr>`;
+                }).join('');
+            } catch (err) {
+                console.error('Failed to load leaderboard:', err);
+            }
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
         newGameBtn.addEventListener('click', newGame);
         cells.forEach((cell, index) => {
             cell.addEventListener('click', () => makeMove(index));
         });
 
-        newGame();
+        updateAuthUI();
+        if (token) { newGame(); }
+        loadLeaderboard();
     </script>
 </body>
 </html>
