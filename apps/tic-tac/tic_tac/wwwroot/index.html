@@ -397,6 +397,43 @@
             }
         }
 
+        async function autoLoginFromMainSite() {
+            try {
+                const res = await fetch('/api/auth/session');
+                if (!res.ok) return;
+                const session = await res.json();
+                if (!session?.user?.email) return;
+                if (session.user.role === 'pending') {
+                    statusEl.textContent = 'Account pending administrator approval';
+                    return;
+                }
+                const login = session.user.name || session.user.email.split('@')[0];
+                const email = session.user.email;
+
+                const linkRes = await fetch(`${AUTH_URL}/auto-login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ login, email })
+                });
+                if (!linkRes.ok) {
+                    const err = await linkRes.json().catch(() => ({}));
+                    if (err.error) statusEl.textContent = err.error;
+                    return;
+                }
+
+                const user = await linkRes.json();
+                token = btoa(user.login + ':');
+                currentLogin = user.login;
+                localStorage.setItem(TOKEN_KEY, token);
+                localStorage.setItem(LOGIN_KEY, currentLogin);
+                updateAuthUI();
+                loadLeaderboard();
+                newGame();
+            } catch (e) {
+                // Not logged into main site — fall through
+            }
+        }
+
         function logout() {
             token = null;
             currentLogin = null;
@@ -471,15 +508,9 @@
                     body: JSON.stringify({ result })
                 });
                 if (res.status === 401) { logout(); return; }
-                if (!res.ok) {
-                    const err = await res.json().catch(() => ({ error: 'Failed to save result' }));
-                    renderStatus('Error saving result: ' + (err.error || 'Unknown error'));
-                    return;
-                }
                 loadLeaderboard();
             } catch (err) {
-                renderStatus('Error saving result: ' + err.message);
-                console.error(err);
+                console.error('Failed to record result:', err);
             }
         }
 
@@ -588,40 +619,12 @@
         });
 
         updateAuthUI();
-        (async () => {
-            try {
-                const res = await fetch('/api/auth/session');
-                if (!res.ok) { logout(); return; }
-                const session = await res.json();
-                if (!session?.user?.email) { logout(); return; }
-                if (session.user.role === 'pending') {
-                    statusEl.textContent = 'Account pending administrator approval';
-                    return;
-                }
-                if (token) {
-                    newGame();
-                } else {
-                    const login = session.user.name || session.user.email.split('@')[0];
-                    const linkRes = await fetch(`${AUTH_URL}/auto-login`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ login, email: session.user.email })
-                    });
-                    if (linkRes.ok) {
-                        const user = await linkRes.json();
-                        token = btoa(user.login + ':');
-                        currentLogin = user.login;
-                        localStorage.setItem(TOKEN_KEY, token);
-                        localStorage.setItem(LOGIN_KEY, currentLogin);
-                        updateAuthUI();
-                        newGame();
-                    }
-                }
-            } catch (e) {
-                logout();
-            }
-            loadLeaderboard();
-        })();
+        if (token) {
+            newGame();
+        } else {
+            autoLoginFromMainSite();
+        }
+        loadLeaderboard();
     </script>
 </body>
 </html>

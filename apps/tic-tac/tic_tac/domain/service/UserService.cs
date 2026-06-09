@@ -66,7 +66,7 @@ public class UserService : IUserService
         using var conn = new NpgsqlConnection(_clubConnectionString);
         conn.Open();
         using var cmd = new NpgsqlCommand(
-            "SELECT school_nick, email, password, role FROM users WHERE school_nick = @login OR email = @login LIMIT 1",
+            "SELECT school_nick, email, password, role FROM users WHERE school_nick = @login",
             conn
         );
         cmd.Parameters.AddWithValue("@login", NpgsqlTypes.NpgsqlDbType.Text, login);
