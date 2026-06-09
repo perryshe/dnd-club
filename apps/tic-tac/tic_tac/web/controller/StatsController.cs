@@ -33,8 +33,9 @@ public class StatsController : ControllerBase
                 Draws = g.Count(r => r.Result == 0),
                 Total = g.Count()
             })
-            .OrderByDescending(s => s.Wins)
-            .ThenBy(s => s.Total)
+            .OrderByDescending(s => s.Total)
+            .ThenByDescending(s => s.Wins)
+            .Take(3)
             .ToList();
 
         var userIds = stats.Select(s => s.UserId).ToList();
