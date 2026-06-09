@@ -46,6 +46,7 @@ using (var scope = app.Services.CreateScope())
         CREATE TABLE IF NOT EXISTS users (
             "Id" uuid PRIMARY KEY,
             "Login" text NOT NULL,
+            "Email" text,
             "PasswordHash" text NOT NULL,
             "CreatedAt" timestamptz NOT NULL
         )
@@ -59,6 +60,7 @@ using (var scope = app.Services.CreateScope())
         )
     """);
     try { db.Database.ExecuteSqlRaw("""CREATE UNIQUE INDEX IF NOT EXISTS "IX_users_Login" ON users ("Login")"""); } catch { }
+    try { db.Database.ExecuteSqlRaw("""CREATE UNIQUE INDEX IF NOT EXISTS "IX_users_Email" ON users ("Email") WHERE "Email" IS NOT NULL"""); } catch { }
 }
 // === MIDDLEWARE (порядок важен!) ===
 
@@ -87,6 +89,7 @@ Console.WriteLine("Tic-Tac-Toe Server running on http://localhost:5000");
 Console.WriteLine("API endpoints:");
 Console.WriteLine("  POST /api/auth/register   - Register new user");
 Console.WriteLine("  POST /api/auth/login      - Login (Basic Auth)");
+Console.WriteLine("  POST /api/auth/auto-login - Auto-login from main site session");
 Console.WriteLine("  GET  /api/game            - Create new game [Auth]");
 Console.WriteLine("  GET  /api/game/{id}       - Get game by ID [Auth]");
 Console.WriteLine("  POST /api/game/{id}       - Make move [Auth]");
