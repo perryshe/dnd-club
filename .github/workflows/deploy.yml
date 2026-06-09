@@ -2,15 +2,22 @@ name: Deploy
 on:
   push:
     branches: [develop]
+    paths-ignore: ['*.md']
 
 jobs:
   deploy:
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v4
-      - name: Build and restart
+      - name: Pull latest code
         run: |
           cd /home/club/Club
           git pull origin develop
-          docker compose build
-          docker compose up -d
+      - name: Build and restart
+        run: |
+          cd /home/club/Club
+          docker compose -f docker-compose.prod.yml build
+          docker compose -f docker-compose.prod.yml up -d
+      - name: Update nginx and reload
+        run: |
+          sudo cp /home/club/Club/dnd-club-nginx.conf /etc/nginx/sites-enabled/dnd-club
+          sudo nginx -t && sudo systemctl reload nginx
