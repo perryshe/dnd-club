@@ -40,8 +40,6 @@ services:
         condition: service_healthy
     volumes:
       - ./uploads:/app/public/uploads
-    networks:
-      - club_default
 
   book-club:
     build:
@@ -65,8 +63,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    networks:
-      - club_default
 
   t21-game:
     build:
@@ -83,11 +79,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    networks:
-      - club_default
 
 volumes:
   pgdata:
-
-networks:
-  club_default:
