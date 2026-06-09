@@ -23,7 +23,6 @@ namespace tic_tac.datasource
                 entity.ToTable("users");
                 entity.HasKey(e => e.Id);
                 entity.HasIndex(e => e.Login).IsUnique();
-                entity.HasIndex(e => e.Email).IsUnique();
             });
 
             modelBuilder.Entity<GameResultModel>(entity =>

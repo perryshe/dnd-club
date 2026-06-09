@@ -53,46 +53,15 @@ public class AuthController : ControllerBase
             if (parts.Length != 2)
                 return Unauthorized(new { error = "Invalid credentials format" });
 
-            var clubUser = _userService.FindClubUser(parts[0]);
-            if (clubUser == null)
+            var userId = _userService.Authorize(parts[0], parts[1]);
+            if (userId == null)
                 return Unauthorized(new { error = "Invalid login or password" });
 
-            if (clubUser.Role == "pending")
-                return Unauthorized(new { error = "Account not yet approved by administrator" });
-
-            if (!BCrypt.Net.BCrypt.Verify(parts[1], clubUser.Password))
-                return Unauthorized(new { error = "Invalid login or password" });
-
-            var user = _userService.AutoLink(parts[0], clubUser.Email);
-            if (user == null)
-                return Unauthorized(new { error = "Failed to link account" });
-
-            return Ok(new UserResponse { Id = user.Id, Login = user.Login });
+            return Ok(new UserResponse { Id = userId.Value, Login = parts[0] });
         }
         catch
         {
             return Unauthorized(new { error = "Invalid Authorization header" });
         }
-    }
-
-    [AllowAnonymous]
-    [HttpPost("auto-login")]
-    public ActionResult AutoLogin([FromBody] AutoLoginRequest request)
-    {
-        if (string.IsNullOrWhiteSpace(request.Login) || string.IsNullOrWhiteSpace(request.Email))
-            return BadRequest(new { error = "Login and email are required" });
-
-        var clubUser = _userService.FindClubUser(request.Login);
-        if (clubUser == null)
-            return BadRequest(new { error = "Account not found on main site" });
-
-        if (clubUser.Role == "pending")
-            return BadRequest(new { error = "Account not yet approved by administrator" });
-
-        var user = _userService.AutoLink(request.Login, request.Email);
-        if (user == null)
-            return BadRequest(new { error = "Failed to link account" });
-
-        return Ok(new UserResponse { Id = user.Id, Login = user.Login });
     }
 }

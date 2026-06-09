@@ -9,7 +9,6 @@ public class UserModel
     [Key]
     public Guid Id { get; set; }
     public string Login { get; set; }
-    public string? Email { get; set; }
     public string PasswordHash { get; set; }
     public DateTime CreatedAt { get; set; }
 
@@ -21,11 +20,10 @@ public class UserModel
         PasswordHash = string.Empty;
     }
 
-    public UserModel(Guid id, string login, string? email, string passwordHash, DateTime createdAt)
+    public UserModel(Guid id, string login, string passwordHash, DateTime createdAt)
     {
         Id = id;
         Login = login;
-        Email = email;
         PasswordHash = passwordHash;
         CreatedAt = createdAt;
     }

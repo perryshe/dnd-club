@@ -253,8 +253,8 @@
                     <input type="text" id="loginInput" placeholder="Login" maxlength="20">
                     <input type="password" id="passwordInput" placeholder="Password">
                     <button id="loginBtn">Login</button>
+                    <button id="registerBtn">Register</button>
                 </div>
-                <div style="font-size:0.6rem;color:#64748b;margin-top:4px">Register at d21-club.ru</div>
                 <div id="userInfo" style="display:none">
                     <span class="user-info">Playing as: <span id="displayName"></span></span>
                     <button class="logout-btn" id="logoutBtn">Logout</button>
@@ -359,7 +359,7 @@
             return fetch(url, { ...options, headers });
         }
 
-        async function handleAuth() {
+        async function handleAuth(mode) {
             const login = loginInput.value.trim();
             const password = passwordInput.value;
 
@@ -369,8 +369,22 @@
             }
 
             try {
+                let response;
+                if (mode === 'register') {
+                    response = await apiFetch(`${AUTH_URL}/register`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ login, password })
+                    });
+                    if (!response.ok) {
+                        const err = await response.json().catch(() => ({ error: 'Registration failed' }));
+                        showError(err.error || 'Registration failed');
+                        return;
+                    }
+                }
+
                 const authHeader = btoa(login + ':' + password);
-                const response = await fetch(`${AUTH_URL}/login`, {
+                response = await fetch(`${AUTH_URL}/login`, {
                     method: 'POST',
                     headers: { 'Authorization': 'Basic ' + authHeader }
                 });
@@ -397,43 +411,6 @@
             }
         }
 
-        async function autoLoginFromMainSite() {
-            try {
-                const res = await fetch('/api/auth/session');
-                if (!res.ok) return;
-                const session = await res.json();
-                if (!session?.user?.email) return;
-                if (session.user.role === 'pending') {
-                    statusEl.textContent = 'Account pending administrator approval';
-                    return;
-                }
-                const login = session.user.name || session.user.email.split('@')[0];
-                const email = session.user.email;
-
-                const linkRes = await fetch(`${AUTH_URL}/auto-login`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ login, email })
-                });
-                if (!linkRes.ok) {
-                    const err = await linkRes.json().catch(() => ({}));
-                    if (err.error) statusEl.textContent = err.error;
-                    return;
-                }
-
-                const user = await linkRes.json();
-                token = btoa(user.login + ':');
-                currentLogin = user.login;
-                localStorage.setItem(TOKEN_KEY, token);
-                localStorage.setItem(LOGIN_KEY, currentLogin);
-                updateAuthUI();
-                loadLeaderboard();
-                newGame();
-            } catch (e) {
-                // Not logged into main site — fall through
-            }
-        }
-
         function logout() {
             token = null;
             currentLogin = null;
@@ -447,9 +424,10 @@
             loadLeaderboard();
         }
 
-        document.getElementById('loginBtn').addEventListener('click', handleAuth);
+        document.getElementById('loginBtn').addEventListener('click', () => handleAuth('login'));
+        document.getElementById('registerBtn').addEventListener('click', () => handleAuth('register'));
         loginInput.addEventListener('keydown', e => { if (e.key === 'Enter') passwordInput.focus(); });
-        passwordInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleAuth(); });
+        passwordInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleAuth('login'); });
         document.getElementById('logoutBtn').addEventListener('click', logout);
 
         function indexToCoords(index) {
@@ -619,11 +597,7 @@
         });
 
         updateAuthUI();
-        if (token) {
-            newGame();
-        } else {
-            autoLoginFromMainSite();
-        }
+        if (token) { newGame(); }
         loadLeaderboard();
     </script>
 </body>
