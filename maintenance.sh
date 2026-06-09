@@ -38,10 +38,7 @@ server {
     location / {
         try_files /maintenance.html =503;
         add_header Retry-After "600";
-        return 503;
     }
-
-    error_page 503 /maintenance.html;
 }
 NGINX
 
