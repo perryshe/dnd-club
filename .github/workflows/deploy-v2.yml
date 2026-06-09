@@ -12,6 +12,13 @@ jobs:
         run: |
           cd /home/club/Club
           git pull origin refactor/split-services
+      - name: Copy maintenance page
+        run: |
+          sudo cp /home/club/Club/maintenance.html /usr/share/nginx/html/maintenance.html
+      - name: Enable maintenance mode
+        run: |
+          cd /home/club/Club
+          sudo ./maintenance.sh on
       - name: Backup database before cleanup
         run: |
           mkdir -p /home/club/Club/backups
@@ -29,10 +36,12 @@ jobs:
           cd /home/club/Club
           docker compose -f docker-compose.prod.yml build
           docker compose -f docker-compose.prod.yml up -d
-      - name: Copy maintenance page
-        run: |
-          sudo cp /home/club/Club/maintenance.html /usr/share/nginx/html/maintenance.html
       - name: Update nginx and reload
         run: |
           sudo cp /home/club/Club/dnd-club-nginx.conf /etc/nginx/sites-enabled/dnd-club
           sudo nginx -t && sudo systemctl reload nginx
+      - name: Disable maintenance mode
+        if: always()
+        run: |
+          cd /home/club/Club
+          sudo ./maintenance.sh off
