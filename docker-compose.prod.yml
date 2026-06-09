@@ -3,10 +3,10 @@ services:
     build:
       context: ./apps/dnd-club
       dockerfile: Dockerfile
-    container_name: dnd-club-v1-02
+    container_name: dnd-club
     restart: always
     ports:
-      - "3001:3000"
+      - "3000:3000"
     environment:
       - NODE_ENV=production
       - NEXT_TELEMETRY_DISABLED=1
@@ -27,7 +27,7 @@ services:
     build:
       context: ./apps/book-club
       dockerfile: Dockerfile
-    container_name: dnd-book-club-v1-02
+    container_name: dnd-book-club
     restart: always
     ports:
       - "3002:3000"
@@ -49,7 +49,7 @@ services:
     build:
       context: .
       dockerfile: apps/tic-tac/Dockerfile
-    container_name: t21-game-v1-02
+    container_name: t21-game
     restart: always
     ports:
       - "3003:8080"
