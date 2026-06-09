@@ -1,16 +1,36 @@
-import { auth, signIn } from "@/lib/auth"
+"use client"
+
+import { useState } from "react"
+import { signIn } from "next-auth/react"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { redirect } from "next/navigation"
-import { checkRateLimit } from "@/lib/rate-limit"
 import { Cpu, ScanLine, Sparkles } from "lucide-react"
 
-export default async function LoginPage({
-  searchParams,
-}: {
-  searchParams: { error?: string }
-}) {
-  const session = await auth()
-  if (session?.user) redirect("/book-club")
+export default function LoginPage() {
+  const router = useRouter()
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setLoading(true)
+    setError("")
+
+    const form = new FormData(e.currentTarget)
+    const res = await signIn("credentials", {
+      schoolNick: form.get("schoolNick") as string,
+      password: form.get("password") as string,
+      redirect: false,
+    })
+
+    if (res?.error) {
+      setError("Неверный ник или пароль, либо аккаунт ещё не подтверждён")
+      setLoading(false)
+    } else {
+      router.push("/book-club")
+      router.refresh()
+    }
+  }
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-slate-950 scanlines">
@@ -39,17 +59,7 @@ export default async function LoginPage({
           <p className="text-slate-500 text-xs font-mono">чтение — это диалог</p>
         </div>
 
-        <form
-          action={async (formData: FormData) => {
-            "use server"
-            const ip = "global"
-            if (!checkRateLimit(ip)) {
-              throw new Error("Слишком много попыток. Попробуйте позже.")
-            }
-            await signIn("credentials", formData)
-          }}
-          className="space-y-4"
-        >
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1">
             <label className="text-[10px] font-mono tracking-[0.2em] uppercase text-slate-500">Школьный ник или email</label>
             <input
@@ -71,16 +81,17 @@ export default async function LoginPage({
             />
           </div>
 
-          {searchParams?.error && (
-            <p className="text-red-400 text-xs font-mono text-center">{searchParams.error}</p>
+          {error && (
+            <p className="text-red-400 text-xs font-mono text-center">{error}</p>
           )}
 
           <button
             type="submit"
-            className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-700 hover:from-cyan-500 hover:to-blue-600 text-sm font-mono tracking-wider uppercase font-semibold transition shadow-lg shadow-cyan-900/30"
+            disabled={loading}
+            className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-700 hover:from-cyan-500 hover:to-blue-600 text-sm font-mono tracking-wider uppercase font-semibold transition shadow-lg shadow-cyan-900/30 disabled:opacity-50"
           >
             <ScanLine size={14} className="inline mr-2" />
-            Войти
+            {loading ? "Вход..." : "Войти"}
           </button>
 
           <p className="text-center text-[10px] font-mono text-slate-600">
