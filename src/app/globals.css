@@ -3,23 +3,155 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-rgb: 226, 232, 240;
+  --background-start-rgb: 15, 23, 42;
+  --background-end-rgb: 30, 41, 59;
+
+  --medieval-gold: #f59e0b;
+  --medieval-amber: #d97706;
+  --medieval-blood: #7f1d1d;
+  --medieval-parchment: #fef3c7;
+
+  --neon-cyan: #22d3ee;
+  --neon-magenta: #ec4899;
+  --neon-purple: #a855f7;
+  --neon-blue: #3b82f6;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: linear-gradient(to bottom, rgb(var(--background-start-rgb)), rgb(var(--background-end-rgb)));
+  min-height: 100vh;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #0f172a; }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+/* ===== NEON GLOW ===== */
+@keyframes neon-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+@keyframes neon-flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+  20%, 24%, 55% { opacity: 0.4; }
+}
+.neon-cyan { text-shadow: 0 0 7px #22d3ee, 0 0 14px #22d3ee, 0 0 28px #22d3ee; }
+.neon-magenta { text-shadow: 0 0 7px #ec4899, 0 0 14px #ec4899, 0 0 28px #ec4899; }
+.neon-purple { text-shadow: 0 0 7px #a855f7, 0 0 14px #a855f7, 0 0 28px #a855f7; }
+.animate-neon-pulse { animation: neon-pulse 2s ease-in-out infinite; }
+.animate-neon-flicker { animation: neon-flicker 3s linear infinite; }
+
+/* ===== CYBERPUNK GRID ===== */
+.cyber-grid {
+  background-image:
+    linear-gradient(rgba(34, 211, 238, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ===== SCAN LINES ===== */
+.scanlines::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.08) 2px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
+  z-index: 9999;
+}
+
+/* ===== MEDIEVAL DECORATIVE ===== */
+@keyframes rune-glow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+.rune-border {
+  position: relative;
+}
+.rune-border::before,
+.rune-border::after {
+  content: "⚜";
+  position: absolute;
+  font-size: 14px;
+  color: var(--medieval-gold);
+  opacity: 0.4;
+}
+.rune-border::before { top: -8px; left: 12px; }
+.rune-border::after { bottom: -8px; right: 12px; }
+
+/* ===== CYBER DIVIDER ===== */
+.cyber-divider {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--neon-cyan), var(--neon-magenta), transparent);
+  box-shadow: 0 0 10px rgba(34, 211, 238, 0.5), 0 0 20px rgba(236, 72, 153, 0.3);
+}
+
+/* ===== MEDIEVAL DIVIDER ===== */
+.medieval-divider {
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--medieval-gold), var(--medieval-amber), transparent);
+  position: relative;
+}
+.medieval-divider::before {
+  content: "⚔";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  color: var(--medieval-gold);
+  background: #0f172a;
+  padding: 0 12px;
+}
+
+/* ===== CARD GLOW ===== */
+.card-glow-medieval {
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.1), inset 0 0 15px rgba(245, 158, 11, 0.03);
+}
+.card-glow-neon {
+  box-shadow: 0 0 15px rgba(34, 211, 238, 0.1), inset 0 0 15px rgba(34, 211, 238, 0.03);
+}
+
+/* ===== SECTION TITLE ===== */
+.section-title-medieval {
+  font-weight: 800;
+  background: linear-gradient(135deg, #fbbf24, #d97706, #92400e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.section-title-neon {
+  font-weight: 800;
+  background: linear-gradient(135deg, #22d3ee, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== GLITCH EFFECT ===== */
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+.glitch:hover {
+  animation: glitch 0.3s ease-in-out;
 }

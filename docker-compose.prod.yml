@@ -1,0 +1,84 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: dnd-club-db
+    restart: always
+    environment:
+      POSTGRES_USER: dndclub
+      POSTGRES_PASSWORD: dndclub_pass
+      POSTGRES_DB: dndclub
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dndclub"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  dnd-club:
+    build:
+      context: ./apps/dnd-club
+      dockerfile: Dockerfile
+    container_name: dnd-club
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+      - DATABASE_URL=postgresql://dndclub:dndclub_pass@dnd-club-db:5432/dndclub
+      - NEXTAUTH_SECRET=change-me-to-a-random-secret
+      - NEXTAUTH_URL=https://d21-club.ru
+      - NEXT_PUBLIC_DND_CLUB_URL=https://d21-club.ru
+      - NEXT_PUBLIC_BOOK_CLUB_URL=https://d21-club.ru/b21
+      - NEXT_PUBLIC_T21_GAME_URL=https://d21-club.ru/t21
+      - ADMIN_EMAIL=admin@dnd-club.ru
+      - ADMIN_PASSWORD=admin123
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./uploads:/app/public/uploads
+
+  book-club:
+    build:
+      context: ./apps/book-club
+      dockerfile: Dockerfile
+    container_name: dnd-book-club
+    restart: always
+    ports:
+      - "3002:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+      - DATABASE_URL=postgresql://dndclub:dndclub_pass@dnd-club-db:5432/dndclub
+      - NEXTAUTH_SECRET=change-me-to-a-random-secret
+      - NEXTAUTH_URL=https://d21-club.ru/b21
+      - NEXT_PUBLIC_DND_CLUB_URL=https://d21-club.ru
+      - NEXT_PUBLIC_BOOK_CLUB_URL=https://d21-club.ru/b21
+      - NEXT_PUBLIC_T21_GAME_URL=https://d21-club.ru/t21
+      - ADMIN_EMAIL=admin@dnd-club.ru
+      - ADMIN_PASSWORD=admin123
+    depends_on:
+      db:
+        condition: service_healthy
+
+  t21-game:
+    build:
+      context: .
+      dockerfile: apps/tic-tac/Dockerfile
+    container_name: t21-game
+    restart: always
+    ports:
+      - "3003:8080"
+    environment:
+      - ConnectionStrings__AdminConnection=Host=dnd-club-db;Port=5432;Database=postgres;Username=dndclub;Password=dndclub_pass
+      - ConnectionStrings__DefaultConnection=Host=dnd-club-db;Port=5432;Database=tic_tac;Username=dndclub;Password=dndclub_pass
+      - ASPNETCORE_ENVIRONMENT=Production
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:

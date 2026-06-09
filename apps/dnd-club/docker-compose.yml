@@ -1,0 +1,67 @@
+services:
+  db:
+    image: postgres:16
+    container_name: dnd-club-db
+    restart: always
+    environment:
+      POSTGRES_USER: dndclub
+      POSTGRES_PASSWORD: dndclub_pass
+      POSTGRES_DB: dndclub
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dndclub"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  dnd-club:
+    build:
+      context: ./apps/dnd-club
+      dockerfile: Dockerfile
+    container_name: dnd-club
+    restart: always
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+      - DATABASE_URL=postgresql://dndclub:dndclub_pass@db:5432/dndclub
+      - NEXTAUTH_SECRET=change-me-to-a-random-secret
+      - NEXTAUTH_URL=http://localhost:3001
+      - NEXT_PUBLIC_DND_CLUB_URL=http://localhost:3001
+      - NEXT_PUBLIC_BOOK_CLUB_URL=http://localhost:3002/b21
+      - NEXT_PUBLIC_T21_GAME_URL=http://localhost:3003
+      - ADMIN_EMAIL=admin@dnd-club.ru
+      - ADMIN_PASSWORD=admin123
+    volumes:
+      - ./uploads:/app/public/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+
+  book-club:
+    build:
+      context: ./apps/book-club
+      dockerfile: Dockerfile
+    container_name: dnd-book-club
+    restart: always
+    ports:
+      - "3002:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+      - DATABASE_URL=postgresql://dndclub:dndclub_pass@db:5432/bookclub
+      - NEXTAUTH_SECRET=change-me-to-a-random-secret
+      - NEXTAUTH_URL=http://localhost:3002/b21
+      - NEXT_PUBLIC_DND_CLUB_URL=http://localhost:3001
+      - NEXT_PUBLIC_BOOK_CLUB_URL=http://localhost:3002/b21
+      - NEXT_PUBLIC_T21_GAME_URL=http://localhost:3003
+      - ADMIN_EMAIL=admin@dnd-club.ru
+      - ADMIN_PASSWORD=admin123
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:

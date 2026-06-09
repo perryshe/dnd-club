@@ -1,0 +1,35 @@
+name: Deploy v2 (microservices)
+on:
+  push:
+    branches: [refactor/split-services]
+    paths-ignore: ['*.md']
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Pull latest code
+        run: |
+          cd /home/club/Club
+          git pull origin refactor/split-services
+      - name: Backup database before cleanup
+        run: |
+          mkdir -p /home/club/Club/backups
+          docker exec dnd-club-db pg_dump -U dndclub dndclub | gzip > /home/club/Club/backups/dndclub-$(date +%Y%m%d_%H%M%S).sql.gz || echo "WARNING: dndclub backup failed"
+          docker exec dnd-club-db pg_dump -U dndclub tic_tac | gzip > /home/club/Club/backups/tic_tac-$(date +%Y%m%d_%H%M%S).sql.gz || echo "WARNING: tic_tac backup failed"
+          find /home/club/Club/backups -name "*.sql.gz" -mtime +7 -delete
+      - name: Full cleanup
+        run: |
+          cd /home/club/Club
+          docker compose -f docker-compose.prod.yml down --remove-orphans 2>/dev/null || true
+          docker network rm club_default 2>/dev/null || true
+          docker system prune -a --volumes -f
+      - name: Build and start
+        run: |
+          cd /home/club/Club
+          docker compose -f docker-compose.prod.yml build
+          docker compose -f docker-compose.prod.yml up -d
+      - name: Update nginx and reload
+        run: |
+          cp /home/club/Club/dnd-club-nginx.conf /home/club/dnd-club-nginx.conf
+          sudo nginx -t && sudo systemctl reload nginx

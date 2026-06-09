@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+
+        h1 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .game-container {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 50px);
+            grid-template-rows: repeat(3, 50px);
+            gap: 3px;
+            margin-bottom: 10px;
+        }
+
+        .cell {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            border-radius: 6px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cell:hover:not(.taken) {
+            background: rgba(255,255,255,0.25);
+            transform: scale(1.05);
+        }
+
+        .cell.taken {
+            cursor: not-allowed;
+        }
+
+        .cell.x {
+            color: #4ade80;
+            text-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
+        }
+
+        .cell.o {
+            color: #f87171;
+            text-shadow: 0 0 10px rgba(248, 113, 113, 0.5);
+        }
+
+        .status {
+            font-size: 0.65rem;
+            text-align: center;
+            margin-bottom: 10px;
+            min-height: 16px;
+        }
+
+        .status.win { color: #4ade80; }
+        .status.lose { color: #f87171; }
+        .status.draw { color: #fbbf24; }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 6px 15px;
+            font-size: 0.5rem;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Tic-Tac-Toe</h1>
+    
+    <div class="game-container">
+        <div class="status" id="status">Loading...</div>
+        
+        <div class="board" id="board">
+            <button class="cell" data-index="0"></button>
+            <button class="cell" data-index="1"></button>
+            <button class="cell" data-index="2"></button>
+            <button class="cell" data-index="3"></button>
+            <button class="cell" data-index="4"></button>
+            <button class="cell" data-index="5"></button>
+            <button class="cell" data-index="6"></button>
+            <button class="cell" data-index="7"></button>
+            <button class="cell" data-index="8"></button>
+        </div>
+        
+        <button id="newGameBtn">New Game</button>
+    </div>
+
+    <script>
+        const base = window.location.pathname.replace(/\/$/, '');
+        const API_URL = base + '/api/game';
+        
+        let gameId = null;
+        let currentBoard = null;
+        let isProcessing = false;
+
+        const statusEl = document.getElementById('status');
+        const newGameBtn = document.getElementById('newGameBtn');
+        const cells = document.querySelectorAll('.cell');
+
+        function indexToCoords(index) {
+            return { row: Math.floor(index / 3), col: index % 3 };
+        }
+
+        function renderBoard(board) {
+            cells.forEach((cell, index) => {
+                const { row, col } = indexToCoords(index);
+                const value = board[row][col];
+                cell.textContent = value === 1 ? 'X' : value === 2 ? 'O' : '';
+                cell.classList.remove('x', 'o', 'taken');
+                if (value !== 0) {
+                    cell.classList.add('taken', value === 1 ? 'x' : 'o');
+                }
+            });
+        }
+
+        function renderStatus(message, type = '') {
+            statusEl.textContent = message;
+            statusEl.classList.remove('win', 'lose', 'draw');
+            if (type) statusEl.classList.add(type);
+        }
+
+        async function newGame() {
+            if (isProcessing) return;
+            
+            isProcessing = true;
+            newGameBtn.disabled = true;
+            renderStatus('Creating game...');
+
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) throw new Error('Failed to create game');
+                
+                const game = await response.json();
+                gameId = game.id;
+                currentBoard = game.board.board;
+                renderBoard(currentBoard);
+                renderStatus('Your turn! Click a cell to place X');
+                
+            } catch (error) {
+                renderStatus('Error: ' + error.message);
+                console.error(error);
+            } finally {
+                isProcessing = false;
+                newGameBtn.disabled = false;
+            }
+        }
+
+        async function makeMove(index) {
+            if (isProcessing || !gameId) return;
+            
+            const { row, col } = indexToCoords(index);
+            if (currentBoard[row][col] !== 0) return;
+            
+            isProcessing = true;
+            newGameBtn.disabled = true;
+            renderStatus('Computer thinking...');
+
+            try {
+                currentBoard[row][col] = 1;
+                
+                const moveDto = {
+                    id: gameId,
+                    board: { board: currentBoard, size: 3 },
+                    isOver: false,
+                    winner: 0,
+                    message: null
+                };
+                
+                const response = await fetch(`${API_URL}/${gameId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(moveDto)
+                });
+
+                if (!response.ok) {
+                    const error = await response.json().catch(() => ({ error: 'Unknown error' }));
+                    throw new Error(error.error || 'Move failed');
+                }
+                
+                const game = await response.json();
+                currentBoard = game.board.board;
+                renderBoard(currentBoard);
+                
+                if (game.isOver) {
+                    if (game.winner === 1) {
+                        renderStatus(game.message, 'win');
+                    } else if (game.winner === 2) {
+                        renderStatus(game.message, 'lose');
+                    } else {
+                        renderStatus(game.message, 'draw');
+                    }
+                    statusEl.textContent += ' Press "New Game" to play again';
+                    gameId = null;
+                } else {
+                    renderStatus('Your turn! Click a cell to place X');
+                }
+                
+            } catch (error) {
+                currentBoard[row][col] = 0;
+                renderBoard(currentBoard);
+                renderStatus('Error: ' + error.message);
+            } finally {
+                isProcessing = false;
+                newGameBtn.disabled = false;
+            }
+        }
+
+        newGameBtn.addEventListener('click', newGame);
+        cells.forEach((cell, index) => {
+            cell.addEventListener('click', () => makeMove(index));
+        });
+
+        newGame();
+    </script>
+</body>
+</html>

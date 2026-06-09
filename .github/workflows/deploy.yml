@@ -1,0 +1,16 @@
+name: Deploy
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and restart
+        run: |
+          cd /home/club/Club
+          git pull origin develop
+          docker compose build
+          docker compose up -d
