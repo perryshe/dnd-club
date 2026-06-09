@@ -11,10 +11,10 @@ case "${1:-status}" in
     if [ -f "$NGINX_BAK" ]; then
       echo "Maintenance mode is already ON. Reloading..."
     else
-      cp "$NGINX_CONF" "$NGINX_BAK"
+      sudo cp "$NGINX_CONF" "$NGINX_BAK"
     fi
 
-    cp "$PROJECT_DIR/maintenance.html" "$MAINT_HTML"
+    sudo cp "$PROJECT_DIR/maintenance.html" "$MAINT_HTML"
 
     cat > "$NGINX_CONF" << 'NGINX'
 server {

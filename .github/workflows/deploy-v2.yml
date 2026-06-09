@@ -29,7 +29,10 @@ jobs:
           cd /home/club/Club
           docker compose -f docker-compose.prod.yml build
           docker compose -f docker-compose.prod.yml up -d
+      - name: Copy maintenance page
+        run: |
+          sudo cp /home/club/Club/maintenance.html /usr/share/nginx/html/maintenance.html
       - name: Update nginx and reload
         run: |
-          cp /home/club/Club/dnd-club-nginx.conf /home/club/dnd-club-nginx.conf
+          sudo cp /home/club/Club/dnd-club-nginx.conf /etc/nginx/sites-enabled/dnd-club
           sudo nginx -t && sudo systemctl reload nginx
