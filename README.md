@@ -218,6 +218,19 @@ docker compose -f docker-compose.prod.yml build
 docker compose -f docker-compose.prod.yml up -d
 ```
 
+### Maintenance mode
+
+Показывает всем посетителям страницу с таймером обратного отсчёта (10 минут).
+
+```bash
+cd /home/club/Club
+./maintenance.sh on     # включить
+./maintenance.sh off    # выключить
+./maintenance.sh status # проверить статус
+```
+
+Страница сохраняет таймер в localStorage — при перезагрузке отсчёт продолжается.
+
 ### Обновление nginx отдельно
 
 ```bash
@@ -269,6 +282,8 @@ docker system prune -a --volumes -f
 | `docker-compose.prod.yml` | Production Compose: db, dnd-club, book-club, t21-game |
 | `dnd-club-nginx.conf` | Reverse proxy конфиг nginx |
 | `postgres/init.sql` | Создание баз tic_tac и bookclub при первом запуске |
+| `maintenance.html` | Статическая страница с таймером для регламентных работ |
+| `maintenance.sh` | Скрипт включения/выключения maintenance mode |
 | `.github/workflows/deploy-v2.yml` | CI/CD pipeline (push → деплой) |
 | `setup.sh` | Скрипт первичной настройки сервера |
 | `docker-entrypoint.sh` | Entrypoint контейнера: prisma generate → db push → seed → старт |
