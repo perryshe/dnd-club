@@ -13,9 +13,11 @@ public class GameService : IGameService
     private const int COMPUTER = 2;  // Нолик
     private const int EMPTY = 0;     // Пустая клетка
 
+    private static readonly Random _rng = new();
+
     /// <summary>
-    /// Возвращает оптимальный ход компьютера.
-    /// Алгоритм: перебирает все возможные ходы и выбирает лучший по Minimax.
+    /// Возвращает ход компьютера.
+    /// С вероятностью ~30% выбирает случайную пустую клетку, иначе — оптимальный ход по Minimax.
     /// </summary>
     public (int row, int col) GetNextMove(Game game)
     {
@@ -25,6 +27,12 @@ public class GameService : IGameService
         // Если поле заполнено — ход невозможен
         if (emptyCells.Count == 0)
             return (-1, -1);
+
+        // Случайный ход с вероятностью ~30%
+        if (_rng.Next(100) < 30)
+        {
+            return emptyCells[_rng.Next(emptyCells.Count)];
+        }
 
         int bestScore = int.MinValue;  // Начальное значение — минус бесконечность
         (int, int) bestMove = emptyCells[0];  // Первый ход по умолчанию
