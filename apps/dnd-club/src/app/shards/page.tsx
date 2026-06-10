@@ -52,7 +52,7 @@ export default async function ShardsPage() {
             backgroundPosition: "center",
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900/80 to-slate-950 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 pointer-events-none" />
       <div className="relative z-10">
       <header className="container mx-auto px-4 py-8">
         <Link href="/" className="inline-flex items-center gap-2 text-cyan-700/70 hover:text-cyan-400 mb-6 transition font-mono text-sm">
