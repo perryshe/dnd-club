@@ -45,13 +45,6 @@ export default async function ShardsPage() {
   return (
     <div className="min-h-screen text-white">
       <div className="relative">
-        <div className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage: "url('/images/Fon_SoNC.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 pointer-events-none" />
       <div className="relative z-10">
       <header className="container mx-auto px-4 py-8">
