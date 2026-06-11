@@ -1,5 +1,6 @@
 name: Deploy v2 (microservices)
 on:
+  workflow_dispatch:
   push:
     branches: [refactor/split-services]
     paths-ignore: ['*.md']
