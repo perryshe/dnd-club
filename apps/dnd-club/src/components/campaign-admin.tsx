@@ -44,6 +44,8 @@ export function StatusTimeline({
   isApproved: boolean
   color?: "amber" | "purple"
 }) {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null)
+
   const dotColor = color === "purple" ? "bg-purple-600 border-purple-400" : "bg-amber-600 border-amber-400"
   const resultBorder = color === "purple" ? "border-l-purple-600" : "border-l-amber-600"
   const resultLabel = color === "purple" ? "text-purple-400" : "text-amber-400"
@@ -128,7 +130,7 @@ export function StatusTimeline({
                 </div>
               )}
               {s.images.length > 0 && (
-                <StatusImages images={s.images} isAdmin={isAdmin} />
+                <StatusImages images={s.images} isAdmin={isAdmin} onImageClick={setSelectedImage} />
               )}
               {isApproved && <div className="mt-3"><StatusImageUpload statusId={s.id} /></div>}
             </div>
@@ -136,6 +138,12 @@ export function StatusTimeline({
         ))}
       </div>
     </div>
+    {selectedImage && (
+      <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center" onClick={() => setSelectedImage(null)}>
+        <button onClick={() => setSelectedImage(null)} className="absolute top-4 right-4 text-white text-2xl">&times;</button>
+        <img src={selectedImage} alt="" className="max-w-[90vw] max-h-[90vh] object-contain" onClick={(e) => e.stopPropagation()} />
+      </div>
+    )}
   )
 }
 
@@ -342,9 +350,8 @@ export function StatusImageUpload({ statusId }: { statusId: string }) {
   )
 }
 
-export function StatusImages({ images, isAdmin }: { images: { id: string; url: string }[]; isAdmin: boolean }) {
+export function StatusImages({ images, isAdmin, onImageClick }: { images: { id: string; url: string }[]; isAdmin: boolean; onImageClick: (url: string) => void }) {
   const router = useRouter()
-  const [selected, setSelected] = useState<string | null>(null)
 
   async function handleDelete(id: string) {
     if (!confirm("Удалить фото?")) return
@@ -357,31 +364,23 @@ export function StatusImages({ images, isAdmin }: { images: { id: string; url: s
   }
 
   return (
-    <>
-      <div className="flex flex-wrap gap-2 mt-3">
-        {images.map((img) => (
-          <div key={img.id} className="relative group shrink-0">
-            <button onClick={() => setSelected(img.url)}>
-              <img src={img.url} alt="" className="w-20 h-20 object-cover rounded-lg border border-slate-600 hover:border-amber-400 transition" />
+    <div className="flex flex-wrap gap-2 mt-3">
+      {images.map((img) => (
+        <div key={img.id} className="relative group shrink-0">
+          <button onClick={() => onImageClick(img.url)}>
+            <img src={img.url} alt="" className="w-20 h-20 object-cover rounded-lg border border-slate-600 hover:border-amber-400 transition" />
+          </button>
+          {isAdmin && (
+            <button
+              onClick={() => handleDelete(img.id)}
+              className="absolute -top-2 -right-2 bg-red-600 hover:bg-red-700 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition"
+            >
+              &times;
             </button>
-            {isAdmin && (
-              <button
-                onClick={() => handleDelete(img.id)}
-                className="absolute -top-2 -right-2 bg-red-600 hover:bg-red-700 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition"
-              >
-                &times;
-              </button>
-            )}
-          </div>
-        ))}
-      </div>
-      {selected && (
-        <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center" onClick={() => setSelected(null)}>
-          <button onClick={() => setSelected(null)} className="absolute top-4 right-4 text-white text-2xl">&times;</button>
-          <img src={selected} alt="" className="max-w-[90vw] max-h-[90vh] object-contain" onClick={(e) => e.stopPropagation()} />
+          )}
         </div>
-      )}
-    </>
+      ))}
+    </div>
   )
 }
 
