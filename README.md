@@ -292,3 +292,10 @@ docker system prune -a --volumes -f
 | `apps/dnd-club/` | Исходники DnD Club |
 | `apps/book-club/` | Исходники Book Club |
 | `apps/tic-tac/` | Исходники Tic-Tac-Toe (.NET) |
+
+---
+
+## Правила
+
+1. **Rollback:** при проблемах на сайте — откат до `stable` (git checkout stable → docker compose build → up -d)
+2. **Commit:** `dnd_ветка_версия_суть` — без пробелов, без заглавных букв. Пример: `dnd_refactor/split-services_v2_commit_rules_readme`
