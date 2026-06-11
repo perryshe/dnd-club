@@ -59,6 +59,11 @@ using (var scope = app.Services.CreateScope())
         )
     """);
     try { db.Database.ExecuteSqlRaw("""CREATE UNIQUE INDEX IF NOT EXISTS "IX_users_Login" ON users ("Login")"""); } catch { }
+    // Add new columns to existing games table if missing
+    try { db.Database.ExecuteSqlRaw("""ALTER TABLE games ADD COLUMN IF NOT EXISTS "State" text NOT NULL DEFAULT 'WaitingForPlayers'"""); } catch { }
+    try { db.Database.ExecuteSqlRaw("""ALTER TABLE games ADD COLUMN IF NOT EXISTS "GameType" text NOT NULL DEFAULT 'VsPlayer'"""); } catch { }
+    try { db.Database.ExecuteSqlRaw("""ALTER TABLE games ADD COLUMN IF NOT EXISTS "PlayerXId" uuid"""); } catch { }
+    try { db.Database.ExecuteSqlRaw("""ALTER TABLE games ADD COLUMN IF NOT EXISTS "PlayerOId" uuid"""); } catch { }
     // Sync existing users: replace email logins with school nicknames from main DB
     try
     {
