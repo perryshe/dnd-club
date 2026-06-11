@@ -99,7 +99,7 @@ export function StatusTimeline({
                   <div className="min-w-0">
                     <time className="text-xs text-slate-500 flex items-center gap-1">
                       <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                      {new Date(s.date).toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" })}
+                      {new Date(s.date).toLocaleString("ru-RU", { day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit", timeZone: "Europe/Moscow" })} МСК
                       {s.status === "plan" ? (
                         <span className="ml-2 px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-900/60 text-amber-300 border border-amber-700/50">ПЛАН</span>
                       ) : (
@@ -114,7 +114,7 @@ export function StatusTimeline({
                 </div>
                 {isAdmin && (
                   <div className="flex flex-wrap items-center gap-2 ml-9">
-                    <EditStatusButton statusId={s.id} date={new Date(s.date).toISOString().split("T")[0]} title={s.title} essay={s.essay} result={s.result} />
+                    <EditStatusButton statusId={s.id} date={new Date(s.date).toLocaleString("sv-SE", { timeZone: "Europe/Moscow", hour12: false }).replace(" ", "T").slice(0, 16)} title={s.title} essay={s.essay} result={s.result} />
                     <ToggleStatusButton statusId={s.id} currentStatus={s.status} />
                     <DeleteStatusButton statusId={s.id} />
                   </div>
@@ -164,8 +164,8 @@ export function StatusForm({ slug }: { slug: string }) {
       <h3 className="font-bold text-amber-400">Новая запись</h3>
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <label className="text-xs text-slate-400 block mb-1">Дата</label>
-          <input name="date" type="date" required className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm" />
+          <label className="text-xs text-slate-400 block mb-1">Дата и время (МСК)</label>
+          <input name="date" type="datetime-local" required className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm" />
         </div>
         <div>
           <label className="text-xs text-slate-400 block mb-1">Название</label>
@@ -245,8 +245,8 @@ export function EditStatusButton({ statusId, date, title, essay, result }: {
       <h3 className="font-bold text-amber-400">Редактирование записи</h3>
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <label className="text-xs text-slate-400 block mb-1">Дата</label>
-          <input name="date" type="date" defaultValue={date} required className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm" />
+          <label className="text-xs text-slate-400 block mb-1">Дата и время (МСК)</label>
+          <input name="date" type="datetime-local" defaultValue={date} required className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm" />
         </div>
         <div>
           <label className="text-xs text-slate-400 block mb-1">Название</label>

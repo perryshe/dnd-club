@@ -18,7 +18,7 @@ log() { echo "$1"; echo "$1" >> "$REPORT"; }
 req() {
     local method="$1" url="$2"; shift 2
     local tf=$(mktemp /tmp/smoke-XXXX)
-    local code=$(curl -s -o "$tf" -w "%{http_code}" -m 6 -X "$method" "$@" "$url" 2>/dev/null)
+    local code=$(curl -sL -o "$tf" -w "%{http_code}" -m 6 -X "$method" "$@" "$url" 2>/dev/null)
     local body=$(cat "$tf" 2>/dev/null); rm -f "$tf"
     echo "$code||$body"
 }

@@ -50,7 +50,8 @@ export async function createStatus(slug: string, formData: FormData) {
   const campaign = await prisma.campaign.findUnique({ where: { slug } })
   if (!campaign) throw new Error("Кампания не найдена")
 
-  const date = new Date(formData.get("date") as string || Date.now())
+  const raw = formData.get("date") as string
+  const date = new Date(raw ? raw + "+03:00" : Date.now())
 
   await prisma.status.create({
     data: {
@@ -74,7 +75,7 @@ export async function updateStatus(statusId: string, formData: FormData) {
   await prisma.status.update({
     where: { id: statusId },
     data: {
-      date: new Date(formData.get("date") as string || Date.now()),
+      date: new Date((formData.get("date") as string) + "+03:00" || Date.now()),
       title: (formData.get("title") as string) || "",
       essay: (formData.get("essay") as string) || "",
       result: (formData.get("result") as string) || "",
