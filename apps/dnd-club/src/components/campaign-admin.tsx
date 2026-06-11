@@ -114,7 +114,7 @@ export function StatusTimeline({
                       {s.title}
                       {s.questUrl && (
                         <a href={s.questUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-[10px] tracking-wider font-mono text-rose-400 hover:text-rose-300 border border-rose-700/50 px-1.5 py-0.5 rounded" onClick={(e) => e.stopPropagation()} title="Секретный квест">
-                          &#x1F3AD; секрет
+                          &#x1F3AD; Quest
                         </a>
                       )}
                     </h3>
@@ -195,7 +195,7 @@ export function StatusForm({ slug }: { slug: string }) {
         <textarea name="result" rows={2} className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm resize-none" />
       </div>
       <div>
-        <label className="text-xs text-slate-400 block mb-1">Ссылка на квест</label>
+        <label className="text-xs text-slate-400 block mb-1">Ссылка</label>
         <input name="questUrl" type="url" className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm" />
       </div>
       <div className="flex gap-3">
@@ -280,7 +280,7 @@ export function EditStatusButton({ statusId, date, title, essay, result, questUr
         <textarea name="result" defaultValue={result} rows={2} className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm resize-none" />
       </div>
       <div>
-        <label className="text-xs text-slate-400 block mb-1">Ссылка на квест</label>
+        <label className="text-xs text-slate-400 block mb-1">Ссылка</label>
         <input name="questUrl" type="url" defaultValue={questUrl} className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm" />
       </div>
       <div className="flex gap-3">
