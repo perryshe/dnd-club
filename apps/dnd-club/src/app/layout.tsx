@@ -4,7 +4,6 @@ import { auth } from "@/lib/auth"
 import "./globals.css"
 import Link from "next/link"
 import SignOutButton from "@/components/signout-button"
-import GameModal from "@/components/GameModal"
 
 export const metadata: Metadata = {
   title: "d21 Club",
@@ -34,7 +33,10 @@ export default async function RootLayout({
                   <img src="/book-favicon.svg" alt="" className="w-6 h-6" />
                   b21 Club
                 </a>
-                <GameModal url={process.env.NEXT_PUBLIC_T21_GAME_URL ?? ""} />
+                <a href={process.env.NEXT_PUBLIC_T21_GAME_URL ?? "/t21/"} className="flex items-center gap-2 font-bold text-indigo-400 hover:text-indigo-300 transition">
+                  <span className="w-4 h-4 rounded flex items-center justify-center bg-indigo-600 text-white text-[8px] font-bold">#</span>
+                  <span className="text-xs">t21 Club</span>
+                </a>
               </div>
               <div className="flex items-center gap-4 text-sm">
                 {session?.user ? (
