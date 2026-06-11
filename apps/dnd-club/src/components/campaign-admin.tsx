@@ -1,14 +1,37 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import {
-  createStatus, deleteStatus, updateStatus,
+  createStatus, deleteStatus, updateStatus, toggleStatus,
   createMaps, deleteMap,
   createGalleryImages, deleteGalleryImage,
   createRules, deleteRule,
   uploadStatusImage, deleteStatusImage,
 } from "@/lib/admin-actions"
+
+function CountdownTimer({ targetDate }: { targetDate: Date }) {
+  const [now, setNow] = useState(new Date())
+
+  useEffect(() => {
+    const t = setInterval(() => setNow(new Date()), 1000)
+    return () => clearInterval(t)
+  }, [])
+
+  const diff = targetDate.getTime() - now.getTime()
+  if (diff <= 0) return <span className="text-xs text-green-400 font-mono">Проведено</span>
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000)
+
+  return (
+    <span className="text-xs text-amber-400 font-mono tabular-nums">
+      {days}д {hours.toString().padStart(2, "0")}:{minutes.toString().padStart(2, "0")}:{seconds.toString().padStart(2, "0")}
+    </span>
+  )
+}
 
 export function StatusTimeline({
   statuses,
@@ -16,7 +39,7 @@ export function StatusTimeline({
   isApproved,
   color = "amber",
 }: {
-  statuses: { id: string; date: Date; title: string; essay: string; result: string; images: { id: string; url: string }[] }[]
+  statuses: { id: string; date: Date; title: string; essay: string; result: string; status: string; images: { id: string; url: string }[] }[]
   isAdmin: boolean
   isApproved: boolean
   color?: "amber" | "purple"
@@ -77,7 +100,13 @@ export function StatusTimeline({
                     <time className="text-xs text-slate-500 flex items-center gap-1">
                       <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                       {new Date(s.date).toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" })}
+                      {s.status === "plan" ? (
+                        <span className="ml-2 px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-900/60 text-amber-300 border border-amber-700/50">ПЛАН</span>
+                      ) : (
+                        <span className="ml-2 px-1.5 py-0.5 rounded text-[10px] font-bold bg-green-900/60 text-green-300 border border-green-700/50">ПРОВЕДЕНО</span>
+                      )}
                     </time>
+                    {s.status === "plan" && <CountdownTimer targetDate={new Date(s.date)} />}
                     <h3 className="text-lg font-bold mt-0.5 text-white group-hover:text-current transition-colors"
                       style={{ color: color === "purple" ? "#d8b4fe" : "#fbbf24" }}
                     >{s.title}</h3>
@@ -86,6 +115,7 @@ export function StatusTimeline({
                 {isAdmin && (
                   <div className="flex flex-wrap items-center gap-2 ml-9">
                     <EditStatusButton statusId={s.id} date={new Date(s.date).toISOString().split("T")[0]} title={s.title} essay={s.essay} result={s.result} />
+                    <ToggleStatusButton statusId={s.id} currentStatus={s.status} />
                     <DeleteStatusButton statusId={s.id} />
                   </div>
                 )}
@@ -158,6 +188,20 @@ export function StatusForm({ slug }: { slug: string }) {
       </div>
     </form>
   )
+}
+
+export function ToggleStatusButton({ statusId, currentStatus }: { statusId: string; currentStatus: string }) {
+  const router = useRouter()
+  async function handleToggle() {
+    try {
+      await toggleStatus(statusId)
+      router.refresh()
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Ошибка")
+    }
+  }
+  const label = currentStatus === "plan" ? "Отметить проведённым" : "Вернуть в план"
+  return <button onClick={handleToggle} className="text-xs text-cyan-400 hover:text-cyan-300">{label}</button>
 }
 
 export function DeleteStatusButton({ statusId }: { statusId: string }) {

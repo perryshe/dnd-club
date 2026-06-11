@@ -132,6 +132,7 @@ model Status {
   title      String
   essay      String   @default("")
   result     String   @default("")
+  status     String   @default("done")
   createdBy  String   @map("created_by")
   createdAt  DateTime @default(now()) @map("created_at")
 
