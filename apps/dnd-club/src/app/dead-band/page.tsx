@@ -53,7 +53,7 @@ export default async function DeadBandPage() {
           ← На главную
         </Link>
         <div className="flex items-center gap-4 mb-4">
-          <div className="p-3 bg-gradient-to-br from-amber-900/50 to-red-900/50 rounded-xl border border-amber-700/30">
+          <div className="p-3 bg-gradient-to-br from-amber-900 to-red-900 rounded-xl border border-amber-700/30">
             <Sword size={36} className="text-amber-400" />
           </div>
           <div>
@@ -80,7 +80,7 @@ export default async function DeadBandPage() {
             <a
               key={tab.id}
               href={`#${tab.id}`}
-              className="flex items-center gap-2 border border-amber-900/30 hover:border-amber-700/50 bg-slate-900/60 hover:bg-slate-800/60 px-3 py-1.5 rounded-lg transition text-sm text-slate-400 hover:text-amber-300"
+              className="flex items-center gap-2 border border-amber-900/30 hover:border-amber-700/50 bg-slate-900 hover:bg-slate-800 px-3 py-1.5 rounded-lg transition text-sm text-slate-400 hover:text-amber-300"
             >
               <tab.icon size={15} />
               {tab.label}
@@ -111,7 +111,7 @@ export default async function DeadBandPage() {
               {characters.map((char) => {
                 const s = char.stats as Record<string, number>
                 return (
-                  <div key={char.id} className="bg-slate-800/80 backdrop-blur-sm rounded-xl p-6 border border-amber-900/30 hover:border-amber-700/50 transition-all duration-300 group hover:shadow-xl hover:shadow-amber-900/10 card-glow-medieval relative">
+                  <div key={char.id} className="bg-slate-800 rounded-xl p-6 border border-amber-900/30 hover:border-amber-700/50 transition-all duration-300 group hover:shadow-xl hover:shadow-amber-900/10 card-glow-medieval relative">
                     <Link href={`/dead-band/characters/${char.id}`} className="block">
                       <div className="flex items-center gap-3 mb-2">
                         {char.avatarUrl ? (
