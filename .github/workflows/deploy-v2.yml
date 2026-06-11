@@ -31,7 +31,7 @@ jobs:
           cd /home/club/Club
           docker compose -f docker-compose.prod.yml down --remove-orphans 2>/dev/null || true
           docker network rm club_default 2>/dev/null || true
-          docker system prune -a --volumes -f
+          docker system prune -a -f
       - name: Build and start
         run: |
           cd /home/club/Club
