@@ -27,7 +27,7 @@ export default async function RootLayout({
   return (
     <html lang="ru">
       <body className="antialiased">
-        <link rel="icon" href={`${basePath}/gear-favicon.svg`} type="image/svg+xml" />
+        <link rel="icon" href={`${basePath}/club-logo.svg`} type="image/svg+xml" />
         <SessionProvider session={session}>
           <nav className="bg-black border-b border-slate-800">
             <div className="container mx-auto px-4 h-14 flex items-center justify-between">
