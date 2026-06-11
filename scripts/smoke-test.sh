@@ -9,6 +9,7 @@ PASSED=0
 FAILED=0
 TOTAL=0
 TEST_USER="smoke_$TIMESTAMP"
+TEST_EMAIL="smoke_$TIMESTAMP@test.tt"
 
 mkdir -p "$REPORT_DIR"
 
@@ -63,7 +64,7 @@ check "GET /" "$(echo "$r" | cut -d'|' -f1)" "200" "$r"
 
 r=$(req "POST" "$BASE_URL/api/auth/register" \
     -H "Content-Type: application/json" \
-    -d "{\"email\":\"smoke@test.tt\",\"schoolNick\":\"$TEST_USER\",\"password\":\"test1234\"}")
+    -d "{\"email\":\"$TEST_EMAIL\",\"schoolNick\":\"$TEST_USER\",\"password\":\"test1234\"}")
 check "POST /api/auth/register" "$(echo "$r" | cut -d'|' -f1)" "200" "$r"
 
 # ===== book-club =====
