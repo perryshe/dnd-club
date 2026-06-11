@@ -11,7 +11,13 @@ public class GameMapper : IGameMapper
     {
         var boardModel = new DataBoardModel(game.Board.Board);
         var json = JsonSerializer.Serialize(boardModel);
-        return new DataGameModel(game.Id, json);
+        return new DataGameModel(game.Id, json)
+        {
+            State = game.State.ToString(),
+            GameType = game.GameType.ToString(),
+            PlayerXId = game.PlayerXId,
+            PlayerOId = game.PlayerOId
+        };
     }
 
     public Game ToDomain(DataGameModel gameModel)
@@ -24,6 +30,9 @@ public class GameMapper : IGameMapper
             for (int j = 0; j < size; j++)
                 array[i, j] = BoardData[i][j];
         var domainBoard = new GameBoard(array);
-        return new Game(gameModel.Id, domainBoard);
+        return new Game(gameModel.Id, domainBoard,
+            Enum.Parse<GameState>(gameModel.State),
+            Enum.Parse<GameType>(gameModel.GameType),
+            gameModel.PlayerXId, gameModel.PlayerOId);
     }
 }
