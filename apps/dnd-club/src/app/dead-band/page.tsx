@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma"
 import { auth } from "@/lib/auth"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowLeft, Sword, Users, Map as MapIcon, Image, Scroll, BookOpen } from "lucide-react"
+import { ArrowLeft, Sword } from "lucide-react"
 import DeleteCharacterButton from "@/components/delete-character-button"
 import { StatusForm, StatusTimeline, MapForm, GalleryForm, RuleForm, PdfRuleList } from "@/components/campaign-admin"
 import GalleryLightbox from "@/components/gallery-lightbox"
@@ -68,21 +68,20 @@ export default async function DeadBandPage() {
         </div>
       </header>
 
-      <nav className="container mx-auto px-4 mb-10">
-        <div className="flex flex-wrap gap-2">
+      <nav className="container mx-auto px-4 mb-10 overflow-x-auto">
+        <div className="flex gap-2 min-w-max">
           {[
-            { id: "characters", label: "Персонажи", icon: Users },
-            { id: "rules", label: "Правила", icon: BookOpen },
-            { id: "maps", label: "Карты", icon: MapIcon },
-            { id: "gallery", label: "Галерея", icon: Image },
-            { id: "statuses", label: "Летопись", icon: Scroll },
+            { id: "characters", label: "Персонажи" },
+            { id: "rules", label: "Правила" },
+            { id: "maps", label: "Карты" },
+            { id: "gallery", label: "Галерея" },
+            { id: "statuses", label: "Летопись" },
           ].map((tab) => (
             <a
               key={tab.id}
               href={`#${tab.id}`}
-              className="flex items-center gap-2 border border-amber-900/30 hover:border-amber-700/50 bg-slate-900 hover:bg-slate-800 px-3 py-1.5 rounded-lg transition text-sm text-slate-400 hover:text-amber-300"
+              className="flex items-center gap-1 border border-amber-900 hover:border-amber-700 bg-slate-900 hover:bg-slate-800 px-2 py-1 rounded-lg transition text-xs text-slate-400 hover:text-amber-300"
             >
-              <tab.icon size={15} />
               {tab.label}
             </a>
           ))}
