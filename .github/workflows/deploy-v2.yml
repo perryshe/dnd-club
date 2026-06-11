@@ -12,7 +12,7 @@ jobs:
       - name: Pull latest code
         run: |
           cd /home/club/Club
-          git pull origin refactor/split-services
+          git fetch --force origin develop && git reset --hard origin/develop
       - name: Copy maintenance page
         run: |
           sudo cp /home/club/Club/maintenance.html /usr/share/nginx/html/maintenance.html
