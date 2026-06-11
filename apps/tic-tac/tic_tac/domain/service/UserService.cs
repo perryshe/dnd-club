@@ -88,12 +88,6 @@ public class UserService : IUserService
         return new User(user.Id, user.Login);
     }
 
-    public string? GetUserLogin(Guid userId)
-    {
-        var user = _dbContext.Users.Find(userId);
-        return user?.Login;
-    }
-
     private string? GetSchoolNick(string email)
     {
         try
