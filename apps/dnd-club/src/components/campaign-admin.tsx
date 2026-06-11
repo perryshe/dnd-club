@@ -39,7 +39,7 @@ export function StatusTimeline({
   isApproved,
   color = "amber",
 }: {
-  statuses: { id: string; date: Date; title: string; essay: string; result: string; status: string; images: { id: string; url: string }[] }[]
+  statuses: { id: string; date: Date; title: string; essay: string; result: string; status: string; questUrl: string; images: { id: string; url: string }[] }[]
   isAdmin: boolean
   isApproved: boolean
   color?: "amber" | "purple"
@@ -108,14 +108,21 @@ export function StatusTimeline({
                       )}
                     </time>
                     {s.status === "plan" && <CountdownTimer targetDate={new Date(s.date)} />}
-                    <h3 className="text-lg font-bold mt-0.5 text-white group-hover:text-current transition-colors"
+                    <h3 className="text-lg font-bold mt-0.5 text-white group-hover:text-current transition-colors flex items-center gap-2"
                       style={{ color: color === "purple" ? "#d8b4fe" : "#fbbf24" }}
-                    >{s.title}</h3>
+                    >
+                      {s.title}
+                      {s.questUrl && (
+                        <a href={s.questUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-[10px] tracking-wider font-mono text-rose-400 hover:text-rose-300 border border-rose-700/50 px-1.5 py-0.5 rounded" onClick={(e) => e.stopPropagation()} title="Секретный квест">
+                          &#x1F3AD; секрет
+                        </a>
+                      )}
+                    </h3>
                   </div>
                 </div>
                 {isAdmin && (
                   <div className="flex flex-wrap items-center gap-2 ml-9">
-                    <EditStatusButton statusId={s.id} date={new Date(s.date).toLocaleString("sv-SE", { timeZone: "Europe/Moscow", hour12: false }).replace(" ", "T").slice(0, 16)} title={s.title} essay={s.essay} result={s.result} />
+                    <EditStatusButton statusId={s.id} date={new Date(s.date).toLocaleString("sv-SE", { timeZone: "Europe/Moscow", hour12: false }).replace(" ", "T").slice(0, 16)} title={s.title} essay={s.essay} result={s.result} questUrl={s.questUrl} />
                     <ToggleStatusButton statusId={s.id} currentStatus={s.status} />
                     <DeleteStatusButton statusId={s.id} />
                   </div>
@@ -187,6 +194,10 @@ export function StatusForm({ slug }: { slug: string }) {
         <label className="text-xs text-slate-400 block mb-1">Результат</label>
         <textarea name="result" rows={2} className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm resize-none" />
       </div>
+      <div>
+        <label className="text-xs text-slate-400 block mb-1">Ссылка на квест</label>
+        <input name="questUrl" type="url" className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm" />
+      </div>
       <div className="flex gap-3">
         <button type="submit" disabled={loading} className="bg-amber-600 hover:bg-amber-700 disabled:opacity-50 px-4 py-2 rounded-lg text-sm transition">
           {loading ? "Сохранение..." : "Сохранить"}
@@ -225,8 +236,8 @@ export function DeleteStatusButton({ statusId }: { statusId: string }) {
   return <button onClick={handleDelete} className="text-xs text-red-400 hover:text-red-300">Удалить</button>
 }
 
-export function EditStatusButton({ statusId, date, title, essay, result }: {
-  statusId: string; date: string; title: string; essay: string; result: string
+export function EditStatusButton({ statusId, date, title, essay, result, questUrl }: {
+  statusId: string; date: string; title: string; essay: string; result: string; questUrl: string
 }) {
   const router = useRouter()
   const [open, setOpen] = useState(false)
@@ -267,6 +278,10 @@ export function EditStatusButton({ statusId, date, title, essay, result }: {
       <div>
         <label className="text-xs text-slate-400 block mb-1">Результат</label>
         <textarea name="result" defaultValue={result} rows={2} className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm resize-none" />
+      </div>
+      <div>
+        <label className="text-xs text-slate-400 block mb-1">Ссылка на квест</label>
+        <input name="questUrl" type="url" defaultValue={questUrl} className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm" />
       </div>
       <div className="flex gap-3">
         <button type="submit" disabled={loading} className="bg-amber-600 hover:bg-amber-700 disabled:opacity-50 px-4 py-2 rounded-lg text-sm transition">

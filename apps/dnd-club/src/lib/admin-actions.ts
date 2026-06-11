@@ -60,6 +60,7 @@ export async function createStatus(slug: string, formData: FormData) {
       title: (formData.get("title") as string) || "",
       essay: (formData.get("essay") as string) || "",
       result: (formData.get("result") as string) || "",
+      questUrl: (formData.get("questUrl") as string) || "",
       status: date > new Date() ? "plan" : "done",
       createdBy: session.user.id!,
     },
@@ -79,6 +80,7 @@ export async function updateStatus(statusId: string, formData: FormData) {
       title: (formData.get("title") as string) || "",
       essay: (formData.get("essay") as string) || "",
       result: (formData.get("result") as string) || "",
+      questUrl: (formData.get("questUrl") as string) || "",
     },
   })
   revalidatePath(`/${status.campaign.slug}`)
