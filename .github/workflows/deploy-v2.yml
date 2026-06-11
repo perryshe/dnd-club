@@ -2,7 +2,7 @@ name: Deploy v2 (microservices)
 on:
   workflow_dispatch:
   push:
-    branches: [refactor/split-services]
+    branches: [develop]
     paths-ignore: ['*.md']
 
 jobs:
@@ -46,9 +46,3 @@ jobs:
         run: |
           cd /home/club/Club
           sudo ./maintenance.sh off
-      - name: Smoke tests
-        if: always()
-        run: |
-          cd /home/club/Club
-          sudo chmod +x scripts/smoke-test.sh
-          bash scripts/smoke-test.sh

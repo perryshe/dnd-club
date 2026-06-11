@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\YD\\General\\3_Programming_2\\Club\\apps\\tic-tac+\\tic_tac\\tic_tac.csproj": {}
+    "d:\\YD\\General\\3_Programming_2\\Club\\apps\\tic-tac+\\tic_tac\\tic_tac.csproj": {}
   },
   "projects": {
-    "D:\\YD\\General\\3_Programming_2\\Club\\apps\\tic-tac+\\tic_tac\\tic_tac.csproj": {
+    "d:\\YD\\General\\3_Programming_2\\Club\\apps\\tic-tac+\\tic_tac\\tic_tac.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\YD\\General\\3_Programming_2\\Club\\apps\\tic-tac+\\tic_tac\\tic_tac.csproj",
+        "projectUniqueName": "d:\\YD\\General\\3_Programming_2\\Club\\apps\\tic-tac+\\tic_tac\\tic_tac.csproj",
         "projectName": "tic_tac",
-        "projectPath": "D:\\YD\\General\\3_Programming_2\\Club\\apps\\tic-tac+\\tic_tac\\tic_tac.csproj",
+        "projectPath": "d:\\YD\\General\\3_Programming_2\\Club\\apps\\tic-tac+\\tic_tac\\tic_tac.csproj",
         "packagesPath": "C:\\Users\\perryshe\\.nuget\\packages\\",
-        "outputPath": "D:\\YD\\General\\3_Programming_2\\Club\\apps\\tic-tac+\\tic_tac\\obj\\",
+        "outputPath": "d:\\YD\\General\\3_Programming_2\\Club\\apps\\tic-tac+\\tic_tac\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
