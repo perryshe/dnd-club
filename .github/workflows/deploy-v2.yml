@@ -20,28 +20,25 @@ jobs:
         run: |
           cd /home/club/Club
           sudo ./maintenance.sh on
-      - name: Backup database before cleanup
-        run: |
-          mkdir -p /home/club/Club/backups
-          docker exec dnd-club-db pg_dump -U dndclub dndclub | gzip > /home/club/Club/backups/dndclub-$(date +%Y%m%d_%H%M%S).sql.gz || echo "WARNING: dndclub backup failed"
-          docker exec dnd-club-db pg_dump -U dndclub tic_tac | gzip > /home/club/Club/backups/tic_tac-$(date +%Y%m%d_%H%M%S).sql.gz || echo "WARNING: tic_tac backup failed"
-          find /home/club/Club/backups -name "*.sql.gz" -mtime +7 -delete
-      - name: Full cleanup
+      - name: Build app images
         run: |
           cd /home/club/Club
-          docker compose -f docker-compose.prod.yml down --remove-orphans 2>/dev/null || true
-          docker network rm club_default 2>/dev/null || true
-          docker system prune -a -f
-      - name: Build and start
+          docker compose -f docker-compose.prod.yml build dnd-club book-club quest t21-game
+      - name: Restart app services (db untouched)
         run: |
           cd /home/club/Club
-          docker compose -f docker-compose.prod.yml build
           docker compose -f docker-compose.prod.yml up -d
-      - name: Sync Prisma schema and restart
+      - name: Sync Prisma schema
         run: |
           cd /home/club/Club
-          docker compose -f docker-compose.prod.yml exec -T dnd-club npx prisma db push --accept-data-loss || echo "WARNING: dnd-club sync failed"
-          docker compose -f docker-compose.prod.yml restart dnd-club book-club
+          for i in $(seq 1 30); do
+            docker compose -f docker-compose.prod.yml exec -T dnd-club-db \
+              sh -c "PGPASSWORD=dndclub_pass pg_isready -U dndclub -d dndclub" && break
+            sleep 2
+          done
+          docker compose -f docker-compose.prod.yml exec -T dnd-club \
+            npx prisma db push --accept-data-loss
+          docker compose -f docker-compose.prod.yml restart dnd-club
       - name: Update nginx and reload
         run: |
           sudo cp /home/club/Club/dnd-club-nginx.conf /etc/nginx/sites-enabled/dnd-club
