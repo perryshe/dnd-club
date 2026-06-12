@@ -81,5 +81,14 @@ services:
       db:
         condition: service_healthy
 
+  quest:
+    build:
+      context: ./apps/Quest/quest-app
+      dockerfile: Dockerfile
+    container_name: quest
+    restart: always
+    ports:
+      - "3004:3004"
+
 volumes:
   pgdata:
