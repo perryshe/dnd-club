@@ -1,7 +1,87 @@
 const express = require('express')
 const path = require('path')
 const crypto = require('crypto')
+const { Pool } = require('pg')
 const { items, heroes, nodes } = require('./quest-data')
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  connectionTimeoutMillis: 3000,
+})
+
+const heroesCache = new Map()
+const heroTraits = new Map()
+
+const featurePool = [
+  '+1 к ловкости. Атака из тени: +1к6 урона.',
+  '+1 к урону в ближнем бою.',
+  'Ярость — 1 раз за квест: +1к4 урона, +2 временных HP.',
+  'Меткий выстрел — +2 к дальним атакам.',
+  'Подкуп — +1 к харизме при переговорах.',
+  'Живучесть — +2 к спасброскам от смерти.',
+  'Скрытность — +2 к стелсу в тёмных локациях.',
+  'Звериное чутьё — +1 к мудрости при поиске.',
+]
+
+const weaknessPool = [
+  'Хрупкий — штраф к силе.',
+  'Неуклюжий — штраф к ловкости.',
+  'Шумный — штраф к скрытности.',
+  'Самонадеянный — игнорирует очевидные угрозы.',
+  'Боязнь темноты — штраф в тёмных локациях.',
+  'Алчный — не может пройти мимо сокровища.',
+  'Медлительный — штраф к инициативе.',
+  'Слабый желудок — еда восстанавливает меньше HP.',
+]
+
+function abilityMod(score) {
+  if (score == null) return 0
+  return Math.floor((Number(score) - 10) / 2)
+}
+
+async function loadHeroesFromDB() {
+  try {
+    const result = await pool.query(`
+      SELECT c.id, c.name, c.race, c.class, c.level, c.hp, c.max_hp, c.ac, c.stats
+      FROM characters c
+      JOIN campaigns cmp ON cmp.id = c.campaign_id
+      WHERE cmp.slug = 'dead-band'
+      ORDER BY c.created_at DESC
+    `)
+    if (result.rows.length === 0) return false
+    for (const row of result.rows) {
+      const heroId = row.id
+      const rawStats = typeof row.stats === 'string' ? JSON.parse(row.stats) : (row.stats || {})
+      if (!heroTraits.has(heroId)) {
+        const fi = crypto.randomInt(featurePool.length)
+        const wi = crypto.randomInt(weaknessPool.length)
+        heroTraits.set(heroId, { feature: featurePool[fi], weakness: weaknessPool[wi] })
+      }
+      const t = heroTraits.get(heroId)
+      heroesCache.set(heroId, {
+        id: heroId, name: row.name, class: row.class, race: row.race,
+        baseHp: row.max_hp || row.hp || 10,
+        startHp: Math.max(1, Math.floor((row.max_hp || row.hp || 10) / 4)),
+        ac: row.ac || 10,
+        stats: {
+          str: abilityMod(rawStats.str),
+          dex: abilityMod(rawStats.dex),
+          con: abilityMod(rawStats.con),
+          int: abilityMod(rawStats.int),
+          wis: abilityMod(rawStats.wis),
+          cha: abilityMod(rawStats.cha),
+        },
+        desc: `${row.race} ${row.class}, уровень ${row.level}`,
+        feature: t.feature,
+        weakness: t.weakness,
+      })
+    }
+    return true
+  } catch (e) {
+    console.error('[Quest] DB load failed:', e.message)
+    return false
+  }
+}
 
 const app = express()
 const PORT = process.env.PORT || 3004
@@ -27,7 +107,7 @@ function rollDamage(expr) {
 }
 
 function createSession(heroId, defeatCount = 0) {
-  const hero = heroes.find(h => h.id === heroId)
+  const hero = heroesCache.get(heroId) || heroes.find(h => h.id === heroId)
   if (!hero) return null
   const id = crypto.randomUUID()
   const session = {
@@ -426,8 +506,20 @@ function resolveCombatRound(s, passTurn = false) {
 
 // ── API ─────────────────────────────────────────────────────────
 
-app.get('/api/heroes', (req, res) => {
-  res.json(heroes.map(h => ({
+app.get('/api/heroes', async (req, res) => {
+  let list
+  if (heroesCache.size > 0) {
+    list = Array.from(heroesCache.values())
+  } else {
+    const dbOk = await loadHeroesFromDB()
+    if (dbOk && heroesCache.size > 0) {
+      list = Array.from(heroesCache.values())
+    }
+  }
+  if (!list) {
+    list = heroes
+  }
+  res.json(list.map(h => ({
     id: h.id, name: h.name, class: h.class, race: h.race,
     baseHp: h.baseHp, ac: h.ac,
     desc: h.desc, feature: h.feature, weakness: h.weakness
@@ -856,6 +948,11 @@ app.get('/api/sessions/:id/debug', (req, res) => {
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'))
 })
+
+loadHeroesFromDB().then(ok => {
+  if (ok) console.log(`[Quest] Loaded ${heroesCache.size} heroes from DB`)
+  else console.log('[Quest] Using static heroes (DB unavailable)')
+}).catch(() => {})
 
 app.listen(PORT, () => {
   console.log(`[Quest] Dead Band: Cage in the Clouds`)

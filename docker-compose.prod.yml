@@ -89,6 +89,8 @@ services:
     restart: always
     ports:
       - "3004:3004"
+    environment:
+      - DATABASE_URL=postgresql://dndclub:dndclub_pass@dnd-club-db:5432/dndclub
 
 volumes:
   pgdata:

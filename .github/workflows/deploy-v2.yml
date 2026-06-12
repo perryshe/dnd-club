@@ -41,7 +41,7 @@ jobs:
         run: |
           cd /home/club/Club
           docker compose -f docker-compose.prod.yml exec -T dnd-club npx prisma db push --accept-data-loss || echo "WARNING: dnd-club sync failed"
-          docker compose -f docker-compose.prod.yml restart dnd-club dnd-book-club
+          docker compose -f docker-compose.prod.yml restart dnd-club book-club
       - name: Update nginx and reload
         run: |
           sudo cp /home/club/Club/dnd-club-nginx.conf /etc/nginx/sites-enabled/dnd-club

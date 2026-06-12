@@ -1,1 +1,1 @@
-{"name":"quest-app","private":true,"version":"1.0.0","dependencies":{"express":"^4"}}
+{"name":"quest-app","private":true,"version":"1.0.0","dependencies":{"express":"^4","pg":"^8"}}
