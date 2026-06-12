@@ -193,8 +193,9 @@ const nodes = [
       { id: 'Sb', text: '— Кто ты? Откуда знаешь про ракету?', action: 'goto', target: 2, result: { text: 'Сосед кашляет, откашливается и хрипит: «Меня Корбут зовут. Я старый вор. Зелёную ракету? Я сам её пускал, дурак. Сигнал для Старого Друга... Но меня кинули — вместо награды заперли здесь.»', items: [], heal: 0, flags: { neighbor_talked: true } }, forbiddenFlags: ['neighbor_talked'] },
       { id: 'Sc', text: 'Позвать стражу', action: 'combat', ac: 10, combatStartText: 'Крик эхом разносится по пустым коридорам. Слышны тяжёлые шаги — орк-надзиратель идёт проверить, кто шумит. Он подходит к камере, скалит клыки: «Ах ты, крыса! Проснулся и уже шумишь? Сейчас я тебе помогу уснуть обратно... навсегда!» — он отпирает дверь и входит с дубинкой.',
         enemies: [{ name: 'Орк-надзиратель', count: 1, hp: 15, ac: 13, attack: '1d6+2' }],
-        onWin: { target: 2, text: 'Орк с глухим стуком оседает на пол. Вы обыскиваете тело — на поясе связка ключей.', items: ['keys'], heal: 0, damage: 0, flags: {} },
-        onLose: { target: 0, heal: 2, flags: { died_to_guard: true } }
+        onWin: { target: 2, text: 'Орк с глухим стуком оседает на пол. Вы обыскиваете тело — на поясе связка ключей.', items: ['keys'], heal: 0, damage: 0, flags: { sc_done: true } },
+        onLose: { target: 0, heal: 2, flags: { died_to_guard: true } },
+        forbiddenFlags: ['sc_done']
       },
       { id: 'Sd', text: 'Обшарить камеру', action: 'roll', stat: 'wis', dc: 10,
         success: { target: 2, text: 'Пальцы нащупывают в стене тайник — старая монета, пустой мешок и ржавая пряжка.', items: ['old_coin', 'empty_sack', 'rusted_buckle'], heal: 0, damage: 0, flags: { alert: 1, sd_searched: true } },
@@ -224,18 +225,19 @@ const nodes = [
     choices: [
       { id: 'R2a', text: 'Атаковать орка', action: 'combat', ac: 10,
         enemies: [{ name: 'Орк-надзиратель', count: 1, hp: 15, ac: 13, attack: '1d6+2' }],
-        onWin: { target: 4, text: 'Орк заваливается на бок, роняя дубинку. Вы снимаете с его пояса связку ключей.', items: ['keys'], heal: 0, damage: 0, flags: {} },
-        onLose: { target: 0, heal: 2, flags: { died_to_guard: true } }
+        onWin: { target: 4, text: 'Орк заваливается на бок, роняя дубинку. Вы снимаете с его пояса связку ключей.', items: ['keys'], heal: 0, damage: 0, flags: { r2a_done: true } },
+        onLose: { target: 0, heal: 2, flags: { died_to_guard: true } },
+        forbiddenFlags: ['r2a_done']
       },
       { id: 'R2b', text: 'Обмануть — выдать себя за нового стражника', action: 'roll', stat: 'cha', dc: 12,
-        success: { target: 4, text: 'Орк недоверчиво щурится, но отворачивается к мешку. Вы незаметно стягиваете ключи.', items: ['keys'], heal: 0, damage: 0, flags: {} },
+        success: { target: 4, text: 'Орк недоверчиво щурится, но отворачивается к мешку. Вы незаметно стягиваете ключи.', items: ['keys'], heal: 0, damage: 0, flags: { r2b_done: true } },
         fail: { target: 3, text: 'Орк вглядывается в ваше лицо и скалится: «Ты не из наших...» — он поднимается, перехватывая дубинку. Придётся драться.', items: [], heal: 0, damage: 0, flags: { orc_alerted: true },
           autoCombat: { enemies: [{ name: 'Орк-надзиратель', count: 1, hp: 15, ac: 13, attack: '1d6+2' }],
-            onWin: { target: 4, text: 'Орк заваливается на бок, роняя дубинку. Вы снимаете с его пояса связку ключей.', items: ['keys'], heal: 0, flags: {} },
+            onWin: { target: 4, text: 'Орк заваливается на бок, роняя дубинку. Вы снимаете с его пояса связку ключей.', items: ['keys'], heal: 0, flags: { r2b_done: true } },
             onLose: { target: 0, heal: 2, flags: { died_to_guard: true } }
           }
         },
-        forbiddenFlags: ['orc_alerted']
+        forbiddenFlags: ['orc_alerted', 'r2b_done']
       },
       { id: 'R2c', text: 'Спрятаться и дождаться, пока орк уйдёт', action: 'goto', target: 4, result: { items: [], heal: 0, flags: { shadow_strike_ready: true } }, forbiddenFlags: ['orc_alerted'] },
       { id: 'R2d', text: 'Обшарить коридор', action: 'roll', stat: 'wis', dc: 12,
@@ -279,20 +281,16 @@ const nodes = [
     id: 7, title: 'Вход в кухню', area: 'Кухня',
     text: 'Тяжёлый запах гнили и варёного мяса. На полках вдоль стен — банки с приправами, связки трав и... засохшие пальцы?\n\nЗа длинным столом стоит горбатый гоблин-повар, что-то помешивая в котле. На соседней полке — вяленое мясо и бурдюк с водой.',
     choices: [
-      { id: 'P1_1a', text: 'Напасть скрытно', action: 'combat', ac: 10, surprise_dc: 8,
-        enemies: [{ name: 'Гоблин-повар', count: 1, hp: 6, ac: 11, attack: '1d4' }],
-        onWin: { target: 8, text: 'Повар валится на пол. Вы забираете нож, мясо и воду.', items: ['chefs_knife', 'dried_meat', 'waterskin'], heal: 0, flags: {} },
-        onLose: { target: 0, heal: 2, flags: { died_to_cook: true } }
-      },
+      { id: 'P1_1a', text: 'Напасть скрытно', action: 'goto', target: 8, result: { items: ['chefs_knife', 'dried_meat', 'waterskin'], heal: 0, flags: { p1_1a_done: true } }, forbiddenFlags: ['p1_1a_done'] },
       { id: 'P1_1b', text: 'Попытаться договориться', action: 'roll', stat: 'cha', dc: 12,
-        success: { target: 8, text: 'Повар трясётся, отдаёт мясо и воду, умоляя не убивать.', items: ['dried_meat', 'waterskin'], heal: 0, damage: 0, flags: {} },
+        success: { target: 8, text: 'Повар трясётся, отдаёт мясо и воду, умоляя не убивать.', items: ['dried_meat', 'waterskin'], heal: 0, damage: 0, flags: { p1_1b_done: true } },
         fail: { target: 7, text: 'Повар взвизгивает и кидается на вас с ножом! Придётся защищаться.', items: [], heal: 0, damage: 0, flags: { cook_alerted: true },
           autoCombat: { enemies: [{ name: 'Гоблин-повар', count: 1, hp: 6, ac: 11, attack: '1d4' }],
-            onWin: { target: 8, text: 'Повар валится на пол. Вы забираете нож, мясо и воду.', items: ['chefs_knife', 'dried_meat', 'waterskin'], heal: 0, flags: {} },
+            onWin: { target: 8, text: 'Повар валится на пол. Вы забираете нож, мясо и воду.', items: ['chefs_knife', 'dried_meat', 'waterskin'], heal: 0, flags: { p1_1b_done: true } },
             onLose: { target: 0, heal: 2, flags: { died_to_cook: true } }
           }
         },
-        forbiddenFlags: ['cook_alerted']
+        forbiddenFlags: ['cook_alerted', 'p1_1b_done']
       },
       { id: 'P1_1c', text: 'Проскользнуть мимо, пока он отвернулся', action: 'goto', target: 8, result: null, forbiddenFlags: ['cook_alerted'] },
       { id: 'P1_1d', text: 'Осмотреться', action: 'roll', stat: 'wis', dc: 10,
@@ -307,11 +305,12 @@ const nodes = [
     id: 8, title: 'Кладовая', area: 'Подсобное помещение',
     text: 'Небольшая кладовая, заставленная бочонками и ящиками. Пахнет плесенью.\n\nВ одном из бочонков слышен шорох и характерный писк — крысиный рой обосновался внутри.',
     choices: [
-      { id: 'P1_2a', text: 'Забрать припасы с полок', action: 'goto', target: 9, result: { items: ['dried_meat', 'waterskin'], heal: 0, flags: {} } },
+      { id: 'P1_2a', text: 'Забрать припасы с полок', action: 'goto', target: 9, result: { items: ['dried_meat', 'waterskin'], heal: 0, flags: { p1_2a_done: true } }, forbiddenFlags: ['p1_2a_done'] },
       { id: 'P1_2b', text: 'Открыть шумящий бочонок', action: 'combat', ac: 10,
         enemies: [{ name: 'Крысиный рой', count: 1, hp: 10, ac: 10, attack: '1d2' }],
-        onWin: { target: 9, text: 'Крысы разбегаются во все стороны. В пустом бочонке остаётся только крысиный хвост.', items: ['rat_tail'], heal: 0, flags: {} },
-        onLose: { target: 0, heal: 2, flags: { eaten_by_rats: true } }
+        onWin: { target: 9, text: 'Крысы разбегаются во все стороны. В пустом бочонке остаётся только крысиный хвост.', items: ['rat_tail'], heal: 0, flags: { p1_2b_done: true } },
+        onLose: { target: 0, heal: 2, flags: { eaten_by_rats: true } },
+        forbiddenFlags: ['p1_2b_done']
       },
       { id: 'P1_2c', text: 'Обшарить кладовку', action: 'roll', stat: 'wis', dc: 12,
         success: { target: 9, text: 'За бочкой припрятана фляга самогона.', items: ['flask'], heal: 0, damage: 0, flags: { alert: 1, p1_2c_searched: true } },
@@ -358,13 +357,15 @@ const nodes = [
     choices: [
       { id: 'P2_1a', text: 'Устранить спящих, пока не проснулись', action: 'combat', ac: 10, surprise_dc: 6,
         enemies: [{ name: 'Гоблин-страж', count: 2, hp: 7, ac: 12, attack: '1d4+1' }],
-        onWin: { target: 12, text: 'Гоблины не успевают и пикнуть. Вы забираете меч и арбалет.', items: ['short_sword', 'crossbow', 'crossbow_bolts'], heal: 0, flags: {} },
-        onLose: { target: 0, heal: 2, flags: { died_to_goblins: true } }
+        onWin: { target: 12, text: 'Гоблины не успевают и пикнуть. Вы забираете меч и арбалет.', items: ['short_sword', 'crossbow', 'crossbow_bolts'], heal: 0, flags: { p2_1a_done: true } },
+        onLose: { target: 0, heal: 2, flags: { died_to_goblins: true } },
+        forbiddenFlags: ['p2_1a_done']
       },
       { id: 'P2_1b', text: 'Разбудить и атаковать в открытую', action: 'combat', ac: 10,
         enemies: [{ name: 'Гоблин-страж', count: 2, hp: 7, ac: 12, attack: '1d4+1' }],
-        onWin: { target: 12, text: 'Гоблины повержены. Лязг оружия наверняка привлёк внимание.', items: ['short_sword', 'crossbow', 'crossbow_bolts'], heal: 0, flags: { alarm_raised: true } },
-        onLose: { target: 0, heal: 2, flags: { died_to_goblins: true } }
+        onWin: { target: 12, text: 'Гоблины повержены. Лязг оружия наверняка привлёк внимание.', items: ['short_sword', 'crossbow', 'crossbow_bolts'], heal: 0, flags: { alarm_raised: true, p2_1b_done: true } },
+        onLose: { target: 0, heal: 2, flags: { died_to_goblins: true } },
+        forbiddenFlags: ['p2_1b_done']
       },
       { id: 'P2_1c', text: 'Обшарить койки', action: 'roll', stat: 'wis', dc: 12,
         success: { target: 11, text: 'Под матрасом — верёвка и фляга.', items: ['rotten_rope', 'flask'], heal: 0, damage: 0, flags: { alert: 1, p2_1c_searched: true } },
@@ -380,21 +381,24 @@ const nodes = [
     choices: [
       { id: 'P2_2a', text: 'Напасть из тени', action: 'combat', ac: 10, surprise_dc: 10,
         enemies: [{ name: 'Орк-надзиратель', count: 1, hp: 15, ac: 13, attack: '1d6+2' }],
-        onWin: { target: 13, text: 'Орк заваливается на пол. Ключи и дубинка ваши.', items: ['keys', 'club'], heal: 0, flags: {} },
-        onLose: { target: 0, heal: 2, flags: { died_to_guard: true } }
+        onWin: { target: 13, text: 'Орк заваливается на пол. Ключи и дубинка ваши.', items: ['keys', 'club'], heal: 0, flags: { p2_2a_done: true } },
+        onLose: { target: 0, heal: 2, flags: { died_to_guard: true } },
+        forbiddenFlags: ['p2_2a_done']
       },
       { id: 'P2_2b', text: 'Атаковать в лоб', action: 'combat', ac: 10,
         enemies: [{ name: 'Орк-надзиратель', count: 1, hp: 15, ac: 13, attack: '1d6+2' }],
-        onWin: { target: 13, text: 'Орк повержен. Грохот наверняка поднял тревогу.', items: ['keys', 'club'], heal: 0, flags: { alarm_raised: true } },
-        onLose: { target: 0, heal: 2, flags: { died_to_guard: true } }
+        onWin: { target: 13, text: 'Орк повержен. Грохот наверняка поднял тревогу.', items: ['keys', 'club'], heal: 0, flags: { alarm_raised: true, p2_2b_done: true } },
+        onLose: { target: 0, heal: 2, flags: { died_to_guard: true } },
+        forbiddenFlags: ['p2_2b_done']
       },
       { id: 'P2_2c', text: 'Ударить в левое колено (из записки)', action: 'combat', ac: 10,
         enemies: [{ name: 'Орк-надзиратель', count: 1, hp: 15, ac: 13, attack: '1d6+2' }],
-        onWin: { target: 13, text: 'Орк с воем оседает на колено. Вы добиваете его. Ключи у вас.', items: ['keys', 'club'], heal: 0, flags: {} },
+        onWin: { target: 13, text: 'Орк с воем оседает на колено. Вы добиваете его. Ключи у вас.', items: ['keys', 'club'], heal: 0, flags: { p2_2c_done: true } },
         onLose: { target: 0, heal: 2, flags: { died_to_guard: true } },
-        requiredItems: ['note']
+        requiredItems: ['note'],
+        forbiddenFlags: ['p2_2c_done']
       },
-      { id: 'P2_2d', text: 'Напугать стеклянным глазом', action: 'goto', target: 13, result: { items: ['keys'], heal: 0, flags: {} }, requiredItems: ['glass_eye'] },
+      { id: 'P2_2d', text: 'Напугать стеклянным глазом', action: 'goto', target: 13, result: { items: ['keys'], heal: 0, flags: { p2_2d_done: true } }, requiredItems: ['glass_eye'], forbiddenFlags: ['p2_2d_done'] },
       { id: 'P2_2e', text: 'Обшарить кабинет', action: 'roll', stat: 'wis', dc: 12,
         success: { target: 12, text: 'В ящике стола — монета и стеклянный глаз.', items: ['old_coin', 'glass_eye'], heal: 0, damage: 0, flags: { alert: 1, p2_2e_searched: true } },
         fail: { target: 12, text: 'Только бумаги и мусор.', items: [], heal: 0, damage: 0, flags: { alert: 1, p2_2e_searched: true } },
@@ -407,11 +411,12 @@ const nodes = [
     id: 13, title: 'Оружейная', area: 'Оружейная комната',
     text: 'Небольшая оружейная. На стойках вдоль стен — короткие мечи, арбалеты, колчаны с болтами. В углу стоит старый окованный сундук.\n\nВ комнате тихо, но от сундука исходит странное ощущение — будто он сам смотрит на вас.',
     choices: [
-      { id: 'P2_3a', text: 'Забрать оружие со стоек', action: 'goto', target: 14, result: { items: ['short_sword', 'crossbow', 'crossbow_bolts'], heal: 0, flags: {} } },
+      { id: 'P2_3a', text: 'Забрать оружие со стоек', action: 'goto', target: 14, result: { items: ['short_sword', 'crossbow', 'crossbow_bolts'], heal: 0, flags: { p2_3a_done: true } }, forbiddenFlags: ['p2_3a_done'] },
       { id: 'P2_3b', text: 'Открыть сундук', action: 'combat', ac: 10,
         enemies: [{ name: 'Мимик', count: 1, hp: 18, ac: 12, attack: '1d6+2' }],
-        onWin: { target: 14, text: 'Сундук — не сундук, а зубастая тварь! Мимик мёртв. Внутри — древний шлем.', items: ['ancient_helm'], heal: 0, flags: {} },
-        onLose: { target: 0, heal: 2, flags: { died_to_mimic: true } }
+        onWin: { target: 14, text: 'Сундук — не сундук, а зубастая тварь! Мимик мёртв. Внутри — древний шлем.', items: ['ancient_helm'], heal: 0, flags: { p2_3b_done: true } },
+        onLose: { target: 0, heal: 2, flags: { died_to_mimic: true } },
+        forbiddenFlags: ['p2_3b_done']
       },
       { id: 'P2_3c', text: 'Обшарить оружейную', action: 'roll', stat: 'wis', dc: 12,
         success: { target: 13, text: 'За стойкой висит карта тюрьмы со всеми ходами.', items: ['prison_map'], heal: 0, damage: 0, flags: { alert: 1, p2_3c_searched: true } },
@@ -474,8 +479,9 @@ const nodes = [
       { id: 'P3_3a', text: 'Пройти тихо, не тревожа', action: 'goto', target: 18, result: { items: [], heal: 0, flags: { shadow_strike_ready: true } } },
       { id: 'P3_3b', text: 'Атаковать крыс', action: 'combat', ac: 10,
         enemies: [{ name: 'Крысиный рой', count: 1, hp: 10, ac: 10, attack: '1d2' }],
-        onWin: { target: 18, text: 'Крысы разбегаются. Вы отрезаете хвост на удачу.', items: ['rat_tail'], heal: 0, flags: {} },
-        onLose: { target: 0, heal: 2, flags: { eaten_by_rats: true } }
+        onWin: { target: 18, text: 'Крысы разбегаются. Вы отрезаете хвост на удачу.', items: ['rat_tail'], heal: 0, flags: { p3_3b_done: true } },
+        onLose: { target: 0, heal: 2, flags: { eaten_by_rats: true } },
+        forbiddenFlags: ['p3_3b_done']
       },
       { id: 'P3_3c', text: 'Показать крысиный хвост — знак «своего»', action: 'goto', target: 18, result: null, requiredItems: ['rat_tail'] },
       { id: 'P3_3d', text: 'Обшарить пещеру', action: 'roll', stat: 'wis', dc: 12,
@@ -509,29 +515,33 @@ const nodes = [
           { name: 'Гоблин-страж', count: 2, hp: 7, ac: 12, attack: '1d4+1' },
           { name: 'Орк-надзиратель', count: 1, hp: 15, ac: 13, attack: '1d6+2' }
         ],
-        onWin: { target: 20, text: 'Пост зачищен. Ключ от выхода у вас.', items: ['exit_key'], heal: 0, flags: {} },
-        onLose: { target: 0, heal: 2, flags: { died_to_guards: true } }
+        onWin: { target: 20, text: 'Пост зачищен. Ключ от выхода у вас.', items: ['exit_key'], heal: 0, flags: { merge_a_done: true } },
+        onLose: { target: 0, heal: 2, flags: { died_to_guards: true } },
+        forbiddenFlags: ['merge_a_done']
       },
       { id: 'Merge_b', text: 'Подкупить гоблинов монетой — орк заметит и нападёт', action: 'combat', ac: 10, combatStartText: 'Гоблины довольно брякают монетой и отходят в сторону, пропуская вас к двери. Но орк замечает это, скалится и идёт на вас с дубинкой — теперь он один против вас.',
         enemies: [{ name: 'Орк-надзиратель', count: 1, hp: 15, ac: 13, attack: '1d6+2' }],
-        onWin: { target: 20, text: 'Гоблины, довольно брякая монетой, уходят. Орк повержен — ключ у вас.', items: ['exit_key'], heal: 0, flags: {} },
+        onWin: { target: 20, text: 'Гоблины, довольно брякая монетой, уходят. Орк повержен — ключ у вас.', items: ['exit_key'], heal: 0, flags: { merge_b_done: true } },
         onLose: { target: 0, heal: 2, flags: { died_to_guard: true } },
-        requiredOr: ['old_coin', 'unbreakable_coin']
+        requiredOr: ['old_coin', 'unbreakable_coin'],
+        forbiddenFlags: ['merge_b_done']
       },
       { id: 'Merge_c', text: 'Напугать гоблинов стеклянным глазом', action: 'combat', ac: 10,
         enemies: [{ name: 'Орк-надзиратель', count: 1, hp: 15, ac: 13, attack: '1d6+2' }],
-        onWin: { target: 20, text: 'Гоблины с визгом разбегаются. Орк повержен.', items: ['exit_key'], heal: 0, flags: {} },
+        onWin: { target: 20, text: 'Гоблины с визгом разбегаются. Орк повержен.', items: ['exit_key'], heal: 0, flags: { merge_c_done: true } },
         onLose: { target: 0, heal: 2, flags: { died_to_guard: true } },
-        requiredItems: ['glass_eye']
+        requiredItems: ['glass_eye'],
+        forbiddenFlags: ['merge_c_done']
       },
       { id: 'Merge_d', text: 'Бить в левое колено (из записки)', action: 'combat', ac: 10,
         enemies: [
           { name: 'Гоблин-страж', count: 2, hp: 7, ac: 12, attack: '1d4+1' },
           { name: 'Орк-надзиратель', count: 1, hp: 15, ac: 13, attack: '1d6+2' }
         ],
-        onWin: { target: 20, text: 'Точный удар в колено — орк рушится. Гоблины в панике. Ключ у вас.', items: ['exit_key'], heal: 0, flags: {} },
+        onWin: { target: 20, text: 'Точный удар в колено — орк рушится. Гоблины в панике. Ключ у вас.', items: ['exit_key'], heal: 0, flags: { merge_d_done: true } },
         onLose: { target: 0, heal: 2, flags: { died_to_guards: true } },
-        requiredItems: ['note']
+        requiredItems: ['note'],
+        forbiddenFlags: ['merge_d_done']
       },
       { id: 'Merge_e', text: 'Проскользнуть незаметно', action: 'roll', stat: 'dex', dc: 15,
         success: { target: 20, text: 'Вы проскальзываете тенью. Охрана ничего не замечает.', items: [], heal: 0, damage: 0, flags: { shadow_strike_ready: true } },
