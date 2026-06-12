@@ -23,7 +23,7 @@ function questApp() {
     async init() {
       this.phase = 'loading'
       try {
-        const res = await fetch('/api/heroes')
+        const res = await fetch('api/heroes')
         this.heroes = await res.json()
         this.phase = 'intro'
       } catch (_) {
@@ -39,7 +39,7 @@ function questApp() {
     async startQuest(heroId) {
       this.phase = 'loading'
       try {
-        const res = await fetch('/api/sessions', {
+        const res = await fetch('api/sessions', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ heroId })
         })
@@ -53,7 +53,7 @@ function questApp() {
       const ch = this.node?.choices?.find(c => c.id === choiceId)
       if (ch?.disabled) return
       try {
-        const res = await fetch(`/api/sessions/${this.sessionId}/action`, {
+        const res = await fetch(`api/sessions/${this.sessionId}/action`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ choiceId })
         })
@@ -90,7 +90,7 @@ function questApp() {
     async doRoll() {
       if (!this.rollPending) return
       try {
-        const res = await fetch(`/api/sessions/${this.sessionId}/roll`, {
+        const res = await fetch(`api/sessions/${this.sessionId}/roll`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ choiceId: this.rollPending.choiceId })
         })
@@ -117,7 +117,7 @@ function questApp() {
       if (this.attackPending) return
       this.attackPending = true
       try {
-        const res = await fetch(`/api/sessions/${this.sessionId}/attack`, {
+        const res = await fetch(`api/sessions/${this.sessionId}/attack`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' }
         })
         const data = await res.json()
@@ -165,7 +165,7 @@ function questApp() {
 
     async continueDialog() {
       try {
-        const res = await fetch(`/api/sessions/${this.sessionId}/continue-dialog`, { method: 'POST' })
+        const res = await fetch(`api/sessions/${this.sessionId}/continue-dialog`, { method: 'POST' })
         const data = await res.json()
         if (data.error) { this.dialogText = ''; return }
         this.dialogText = ''
@@ -176,7 +176,7 @@ function questApp() {
 
     async useAbility(abilityId) {
       try {
-        const res = await fetch(`/api/sessions/${this.sessionId}/ability`, {
+        const res = await fetch(`api/sessions/${this.sessionId}/ability`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ abilityId })
         })
@@ -189,7 +189,7 @@ function questApp() {
 
     async useItem(itemId) {
       try {
-        const res = await fetch(`/api/sessions/${this.sessionId}/use`, {
+        const res = await fetch(`api/sessions/${this.sessionId}/use`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ itemId })
         })
@@ -201,7 +201,7 @@ function questApp() {
 
     async equipItem(itemId, toSlot) {
       try {
-        const res = await fetch(`/api/sessions/${this.sessionId}/equip`, {
+        const res = await fetch(`api/sessions/${this.sessionId}/equip`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ itemId, toSlot })
         })
@@ -218,7 +218,7 @@ function questApp() {
 
     async unequipItem(slot) {
       try {
-        const res = await fetch(`/api/sessions/${this.sessionId}/unequip`, {
+        const res = await fetch(`api/sessions/${this.sessionId}/unequip`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ slot })
         })
@@ -230,7 +230,7 @@ function questApp() {
 
     async dropItem(itemId) {
       try {
-        const res = await fetch(`/api/sessions/${this.sessionId}/drop`, {
+        const res = await fetch(`api/sessions/${this.sessionId}/drop`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ itemId })
         })
@@ -244,7 +244,7 @@ function questApp() {
       if (this.attackPending) return
       this.attackPending = true
       try {
-        const res = await fetch(`/api/sessions/${this.sessionId}/combat-pass`, {
+        const res = await fetch(`api/sessions/${this.sessionId}/combat-pass`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' }
         })
         const data = await res.json()
@@ -280,7 +280,7 @@ function questApp() {
 
     async restartQuest() {
       try {
-        const res = await fetch(`/api/sessions/${this.sessionId}/restart`, {
+        const res = await fetch(`api/sessions/${this.sessionId}/restart`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' }
         })
         const data = await res.json()
