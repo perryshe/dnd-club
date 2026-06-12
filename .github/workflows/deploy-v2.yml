@@ -37,11 +37,6 @@ jobs:
           cd /home/club/Club
           docker compose -f docker-compose.prod.yml build
           docker compose -f docker-compose.prod.yml up -d
-      - name: Sync Prisma schema
-        run: |
-          cd /home/club/Club
-          docker compose -f docker-compose.prod.yml exec -T dnd-club npx prisma db push --accept-data-loss
-          docker compose -f docker-compose.prod.yml exec -T dnd-book-club npx prisma db push --accept-data-loss
       - name: Update nginx and reload
         run: |
           sudo cp /home/club/Club/dnd-club-nginx.conf /etc/nginx/sites-enabled/dnd-club
