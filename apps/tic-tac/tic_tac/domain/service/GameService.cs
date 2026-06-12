@@ -28,8 +28,8 @@ public class GameService : IGameService
         if (emptyCells.Count == 0)
             return (-1, -1);
 
-        // Случайный ход с вероятностью ~30%
-        if (_rng.Next(100) < 30)
+        // Случайный ход с вероятностью ~5%
+        if (_rng.Next(100) < 5)
         {
             return emptyCells[_rng.Next(emptyCells.Count)];
         }
