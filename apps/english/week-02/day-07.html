@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 07 — Handling Complaints</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.7; padding: 20px; max-width: 800px; margin: 0 auto; }
+h1 { font-size: 1.5em; color: #58a6ff; }
+h2 { font-size: 1.15em; color: #f0883e; margin: 24px 0 10px; border-bottom: 1px solid #21262d; padding-bottom: 6px; }
+h3 { font-size: 1em; color: #e6edf3; margin: 16px 0 6px; }
+p, li { color: #c9d1d9; font-size: 0.95em; }
+ul, ol { padding-left: 20px; margin: 6px 0; }
+li { margin: 3px 0; }
+.back { color: #8b949e; text-decoration: none; font-size: 0.85em; display: inline-block; margin-bottom: 12px; }
+.back:hover { color: #58a6ff; }
+.phrase { background: #161b22; border: 1px solid #21262d; border-radius: 8px; padding: 10px 14px; margin: 8px 0; }
+.phrase strong { color: #58a6ff; font-size: 1.02em; }
+.phrase .ru { color: #8b949e; font-size: 0.85em; display: block; margin-top: 3px; }
+.phrase .example { color: #3fb950; font-size: 0.85em; display: block; margin-top: 2px; }
+.dialog { background: #161b22; border-left: 3px solid #f85149; border-radius: 0 8px 8px 0; padding: 12px 14px; margin: 10px 0; }
+.dialog .speaker { color: #f0883e; font-weight: 600; }
+.dialog .you { color: #58a6ff; font-weight: 600; }
+.checkbox-item { display: flex; align-items: flex-start; gap: 10px; margin: 8px 0; }
+.checkbox-item input { margin-top: 4px; accent-color: #3fb950; width: 18px; min-width: 18px; height: 18px; }
+.checkbox-item label { font-size: 0.92em; color: #c9d1d9; }
+.prompt-box { background: #0d1117; border: 1px solid #21262d; border-left: 3px solid #d29922; border-radius: 0 8px 8px 0; padding: 10px 14px; margin: 8px 0; font-size: 0.88em; color: #f0c674; white-space: pre-wrap; }
+.tag { display: inline-block; padding: 0 8px; border-radius: 10px; font-size: 0.7em; font-weight: 600; margin: 0 4px 4px 0; }
+.tag-blue { background: #1f6feb33; color: #58a6ff; }
+.tag-green { background: #23863633; color: #3fb950; }
+.tag-red { background: #da363333; color: #f85149; }
+nav { margin-top: 30px; padding-top: 16px; border-top: 1px solid #21262d; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 0.85em; }
+nav a { color: #8b949e; text-decoration: none; }
+nav a:hover { color: #58a6ff; }
+</style>
+</head>
+<body>
+
+<a class="back" href="../index.html">← На главную</a>
+<h1>Day 07 · Handling Complaints &amp; Escalation</h1>
+<p style="color:#8b949e;font-size:0.9em;">Пт 26 июн 2026 · Week 2 — Soft skills · Повтор D6 + Новое</p>
+
+<div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
+  <strong>🎯 Фокус дня:</strong> Научиться принимать жалобы, деэскалировать конфликт и переводить в конструктивное русло.
+</div>
+
+<h2>🔁 Повторение — Day 06 (30 мин)</h2>
+<ul>
+  <li>Повтори фразы D06 + small talk на 2 мин</li>
+  <li><strong>AI Voice:</strong> <em>"You are a colleague. Make small talk with me for 2 minutes, then I will transition to business."</em></li>
+</ul>
+
+<h2>📘 Новые фразы — Handling Complaints</h2>
+
+<div class="phrase"><strong>I understand your frustration. Let's look at what we can do.</strong><span class="ru">Я понимаю ваше разочарование. Давайте посмотрим, что можно сделать.</span></div>
+<div class="phrase"><strong>I'm sorry to hear that. Can you walk me through what happened?</strong><span class="ru">Мне жаль это слышать. Можете рассказать, что произошло?</span></div>
+<div class="phrase"><strong>Let me investigate and get back to you with a solution.</strong><span class="ru">Давайте я разберусь и вернусь к вам с решением.</span></div>
+<div class="phrase"><strong>I appreciate you bringing this to my attention.</strong><span class="ru">Я ценю, что вы обратили на это моё внимание.</span></div>
+<div class="phrase"><strong>We'll prioritize this and keep you updated.</strong><span class="ru">Мы сделаем это приоритетом и будем держать вас в курсе.</span></div>
+
+<div class="phrase"><strong>What would be an acceptable resolution for you?</strong><span class="ru">Какое решение было бы для вас приемлемым?</span></div>
+<div class="phrase"><strong>I'll escalate this to the relevant team and follow up personally.</strong><span class="ru">Я эскалирую это в соответствующую команду и проконтролирую лично.</span></div>
+<div class="phrase"><strong>Let me set expectations — this might take [timeframe].</strong><span class="ru">Позвольте обозначить ожидания — это может занять [время].</span></div>
+<div class="phrase"><strong>Thank you for your patience while we work on this.</strong><span class="ru">Спасибо за ваше терпение, пока мы работаем над этим.</span></div>
+<div class="phrase"><strong>I've noted your concern and will include it in our action plan.</strong><span class="ru">Я зафиксировал вашу проблему и включу её в план действий.</span></div>
+
+<h2>🎭 AI-практика</h2>
+
+<h3>Scenario 1 — Angry end-user</h3>
+<div class="prompt-box">You are a logistics specialist who is very frustrated because the Mercury system has been down for 2 hours and production can't ship. Call me (the manager) and complain. I need to acknowledge your frustration and propose a solution. You stay angry until I handle it well. Start.</div>
+
+<h3>Scenario 2 — Vendor complaint</h3>
+<div class="prompt-box">You are a vendor (CRPT support) calling me. You are unhappy because our team keeps sending incorrect requests. Complain politely but firmly. I am the manager — I need to listen, acknowledge, and commit to fixing the process. Start.</div>
+
+<h2>🗣️ Диалог для отработки</h2>
+
+<div class="dialog">
+<span class="speaker">Logistics (angry):</span> I need to talk to someone. Mercury has been down for two hours now. We have three trucks waiting to ship and we can't generate VSDs. This is costing us money!<br><br>
+
+<span class="you">Manager (You):</span> I understand your frustration. Let me look into it right now. Can you tell me exactly when it started and what error you're seeing?<br><br>
+
+<span class="speaker">Logistics:</span> About 9 AM. The system just shows "Connection timeout" when we try to create a VSD. We've tried restarting the client — nothing.<br><br>
+
+<span class="you">Manager:</span> I'm sorry to hear that. Let me check the integration log from my side. Give me two minutes.<br><br>
+
+<span class="speaker">Logistics:</span> Okay, but please hurry. The dispatcher is calling me every 10 minutes.<br><br>
+
+<span class="you">Manager:</span> I understand the urgency. I've checked the logs — the Mercury API is returning HTTP 504 errors. This looks like a service outage on their side. I'll contact Mercury support immediately and escalate. In the meantime, can you use the web interface to manually create at least one VSD?<br><br>
+
+<span class="speaker">Logistics:</span> I tried, it's also slow but it works. I'll do what I can.<br><br>
+
+<span class="you">Manager:</span> Thank you. I'll call Mercury support now and update you within 30 minutes. I appreciate your patience while we handle this.
+</div>
+
+<h2>📝 Самодиктант</h2>
+<ol>
+  <li>Я понимаю ваше разочарование.</li>
+  <li>Мне жаль это слышать. Расскажите, что произошло.</li>
+  <li>Я разберусь и вернусь к вам.</li>
+  <li>Какое решение было бы для вас приемлемым?</li>
+  <li>Спасибо за ваше терпение.</li>
+</ol>
+
+<h2>Reading: Handling Complaints</h2>
+<div style="background:#161b22; border:1px solid #21262d; border-radius:8px; padding:12px 14px; margin:10px 0;">
+  <p style="color:#c9d1d9;">A complaint is a gift — it tells you what needs fixing. When someone complains, first listen without interrupting. Acknowledge their feeling: "I understand why you are frustrated." Apologize if appropriate. Then focus on solutions. Never get defensive. A well-handled complaint can actually strengthen the relationship more than if the problem never occurred. Follow up after resolving to close the loop.</p>
+  <hr style="border: none; border-top: 1px solid #21262d; margin: 8px 0;">
+  <p style="color:#8b949e; font-size:0.9em;">Жалоба — это подарок: она говорит о том, что нужно исправить. Когда кто-то жалуется, сначала выслушайте, не перебивая. Признайте его чувства. Извинитесь, если уместно. Затем сосредоточьтесь на решениях. Хорошо обработанная жалоба укрепляет отношения.</p>
+</div>
+
+<h2>✅ Self-check</h2>
+<div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу принять жалобу и не переходить в защиту</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc2"><label for="sc2">Я умею переводить эмоции в конструктивные действия</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc3"><label for="sc3">Я могу установить ожидания по срокам решения</label></div>
+
+<script>(function() {
+  var saved = localStorage.getItem('eng-day07');
+  if (saved) { var arr = JSON.parse(saved);
+    document.querySelectorAll('.checkbox-item input').forEach(function(c, i) { if (arr[i]) c.checked = true; }); }
+  document.querySelectorAll('.checkbox-item input').forEach(function(c, i) {
+    c.addEventListener('change', function() {
+      var all = document.querySelectorAll('.checkbox-item input');
+      var arr = Array.from(all).map(function(x) { return x.checked; });
+      localStorage.setItem('eng-day07', JSON.stringify(arr));
+    });
+  });
+})();</script>
+
+<nav>
+  <a href="day-06.html">← Day 06</a>
+  <a href="../index.html">Главная</a>
+  <a href="day-08.html">Day 08 →</a>
+</nav>
+
+</body>
+</html>

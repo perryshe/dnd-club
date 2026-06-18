@@ -35,6 +35,9 @@ export default async function RootLayout({
                   b21 Club
                 </a>
                 <GameModal url={process.env.NEXT_PUBLIC_T21_GAME_URL ?? ""} />
+                <a href="/e21/" className="flex items-center gap-2 font-bold text-green-400 hover:text-green-300 transition">
+                  e21 Club
+                </a>
               </div>
               <div className="flex items-center gap-4 text-sm">
                 {session?.user ? (

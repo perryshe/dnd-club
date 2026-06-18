@@ -92,5 +92,14 @@ services:
     environment:
       - DATABASE_URL=postgresql://dndclub:dndclub_pass@dnd-club-db:5432/dndclub
 
+  english:
+    build:
+      context: ./apps/english
+      dockerfile: Dockerfile
+    container_name: english
+    restart: always
+    ports:
+      - "3005:3005"
+
 volumes:
   pgdata:

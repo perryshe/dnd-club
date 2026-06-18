@@ -1,0 +1,121 @@
+{
+  "days": [
+    {
+      "id": "day-01",
+      "title": "Day 01 - Opening a Meeting",
+      "phrases": ["Good morning everyone, thanks for joining.", "Let's get started. Today's agenda is...", "Can everyone hear me well? Please mute yourselves.", "I'd like to kick off with the first item.", "The main goal of this meeting is to review the status.", "Let me share my screen to walk you through the updates.", "I'll keep the meeting to thirty minutes.", "Feel free to jump in with questions at any point.", "Is there anything you'd like to add to the agenda?", "Let's do a quick round of introductions."],
+      "dialog": "Manager: Good morning everyone, thanks for joining. Let's get started. Today's agenda has three items. First, the SAP-MES interface status. Second, batch job monitoring. Third, new access requests.\nDeveloper: Yes, loud and clear.\nManager: Great. Let's kick off with the first item. Nikolay, could you give us an update on the SAP-MES IDoc sync?",
+      "dictation": ["Good morning everyone, thanks for joining.", "Let's get started. Today's agenda is...", "Can everyone hear me well?", "Feel free to jump in with questions.", "I'd like to kick off with the first item."]
+    },
+    {
+      "id": "day-02",
+      "title": "Day 02 - Asking for Updates",
+      "phrases": ["What's the current status of the SAP interface?", "Can you give us an update on where we are?", "Are there any blockers or dependencies?", "What's the timeline or ETA for this?", "Is this on track, or are there any risks?", "What progress has been made since our last meeting?", "Could you walk me through the steps you've taken?", "Has the issue been resolved or is it still ongoing?", "Do you need any support from my side?", "Let's set a checkpoint for next week."],
+      "dialog": "Manager: Let's move to status updates. Nikolay, where are we with the SAP IDoc fix?\nDeveloper: Root cause identified. Partner profile was missing after transport. I'll move it to production today.\nManager: What's the ETA?\nDeveloper: By three PM including testing.\nManager: Good. And the MES batch job? Any progress?\nSupport: Still blocked. RFC timeout. I opened a ticket with basis team.",
+      "dictation": ["What's the current status?", "Are there any blockers?", "What's the ETA for this?", "Has the issue been resolved?", "Do you need any support?"]
+    },
+    {
+      "id": "day-03",
+      "title": "Day 03 - Reporting Issues",
+      "phrases": ["We're seeing an issue with the batch job.", "The error message says partner profile not found.", "This started at approximately 9 40 AM.", "We need to escalate this to the integration team.", "Can we put a workaround in place while we investigate?", "Let me check the logs and get back to you.", "How long has this been happening?", "Is this a recurring issue or a one time occurrence?", "I'll open a ticket and assign it to the team.", "Let's schedule a separate call to troubleshoot."],
+      "dialog": "Operator: Hello, we have an urgent problem on packaging line 2. MES won't print Data Matrix codes.\nManager: Let me check the log. The error reads CRPT service returned code pool exhausted. When did you last order codes?\nOperator: We ordered ten thousand on Monday.\nManager: We need to place a new emission order. Can you access the CRPT portal?",
+      "dictation": ["We're seeing an issue with the batch job.", "The error message says code pool exhausted.", "This started at 9 40 AM.", "We need to escalate this.", "I'll open a ticket and get back to you."]
+    },
+    {
+      "id": "day-04",
+      "title": "Day 04 - Q&A and Clarifications",
+      "phrases": ["Sorry, could you repeat that please? The line broke up.", "Just to clarify, do you mean the production order or the sales order?", "Could you spell that or share the error code?", "I want to make sure I understand correctly. You're saying that...", "Could you elaborate on that point?", "In other words, the partner profile needs updating. Is that right?", "Let me rephrase that to make sure we're aligned.", "Does anyone have any questions on this point?", "I didn't quite catch the last part.", "Let me check if I've got this right."],
+      "dialog": "Developer: The IDoc was stuck because the logical system name changed.\nManager: Sorry, just to clarify - you mean the logical system name, not the RFC destination? Correct?\nDeveloper: Both actually.\nManager: I want to make sure I understand. The transport changed the logical system name, which broke the partner profile. Is that the sequence?",
+      "dictation": ["Sorry, could you repeat that please?", "Just to clarify, do you mean X or Y?", "Could you spell the error code?", "In other words, the fix is done. Is that right?", "Let me rephrase that to be clear."]
+    },
+    {
+      "id": "day-05",
+      "title": "Day 05 - Assigning and Wrap-up",
+      "phrases": ["Let me quickly summarize what we discussed today.", "Action items. Nikolay will fix the partner profile by end of day.", "Let's reconvene on Friday at 10 AM to follow up.", "I'll send the meeting minutes via email within the hour.", "If there are no further questions, thanks everyone. Bye.", "Who will take ownership of this task?", "Can you commit to this deadline?", "To recap, we agreed on the fix and the timeline.", "Does everyone agree with the next steps?", "Thank you all for your time and input."],
+      "dialog": "Manager: Let me quickly summarize. First, SAP IDoc root cause identified. Second, MES batch job still blocked. Third, code order in progress. Action items. Nikolay, deploy the fix by end of day.\nDeveloper: Yes, by 5 PM.\nManager: Maria, follow up with basis team. Let's reconvene Friday at 10. I'll send the minutes.",
+      "dictation": ["Let me quickly summarize.", "Action items for today.", "Let's reconvene on Friday.", "I'll send the meeting minutes.", "Thanks everyone for your time."]
+    },
+    {
+      "id": "day-06",
+      "title": "Day 06 - Small Talk",
+      "phrases": ["How's everyone doing today?", "Did everyone have a good weekend?", "Thanks for making the time for this call.", "Good to see you all. How are things on your end?", "Before we dive in, how's the weather where you are?", "I hope everyone had a good break.", "Let's wait another minute for latecomers.", "Okay, let's get down to business.", "It's great to have everyone here.", "How's your day going so far?"],
+      "dialog": "Colleague: Hey, good to see you!\nManager: Hey! Good to see you too. How was your weekend?\nColleague: It was good, pretty relaxed. We went for a hike.\nManager: Nice! Anyway, let's get down to business.",
+      "dictation": ["How's everyone doing today?", "Did everyone have a good weekend?", "Thanks for making the time.", "Okay, let's get down to business.", "How's your day going?"]
+    },
+    {
+      "id": "day-07",
+      "title": "Day 07 - Handling Complaints",
+      "phrases": ["I understand your frustration. Let's see what we can do.", "I'm sorry to hear that. Walk me through what happened.", "Let me investigate and get back to you with a solution.", "I appreciate you bringing this to my attention.", "We'll prioritize this and keep you updated.", "What would be an acceptable resolution for you?", "I'll escalate this to the relevant team.", "Let me set expectations. This might take two hours.", "Thank you for your patience while we work on this.", "I've noted your concern and will include it in our plan."],
+      "dialog": "Logistics: Mercury has been down for two hours. Three trucks waiting. This is costing us money!\nManager: I understand your frustration. Let me look into it. When did it start?\nLogistics: About 9 AM. Connection timeout.\nManager: I'm sorry to hear that. I'll contact Mercury support and escalate.",
+      "dictation": ["I understand your frustration.", "I'm sorry to hear that. Walk me through it.", "Let me investigate and get back to you.", "What would be an acceptable resolution?", "Thank you for your patience."]
+    },
+    {
+      "id": "day-08",
+      "title": "Day 08 - Conflict Resolution",
+      "phrases": ["I see your point, but let me offer a different perspective.", "Let's not get stuck on this. We can take it offline.", "I hear you. Let's focus on finding a solution.", "Let's agree to disagree and move forward.", "I appreciate both perspectives.", "Can we pause this discussion and come back to it later?", "I suggest we ask for a decision from management.", "Let me reframe the question.", "We're all aiming for the same goal.", "We don't have to solve everything today."],
+      "dialog": "Developer: We can't push this feature now. The interface isn't stable.\nBusiness User: We can't wait. The deadline is next month.\nManager: I appreciate both perspectives. Let's find a middle ground. What's the minimum time you need? What's the minimum feature set?",
+      "dictation": ["I see your point, but let me offer another view.", "Let's not get stuck on this.", "I appreciate both perspectives.", "Let's find a middle ground.", "We don't have to solve everything today."]
+    },
+    {
+      "id": "day-09",
+      "title": "Day 09 - Summarizing and Closing",
+      "phrases": ["Let me quickly summarize what we've covered.", "To recap the main points. First, second, third.", "Let me capture the key decisions we made today.", "To make sure I haven't missed anything, any other points?", "So to bring it all together, what we agreed is...", "Before we finish, any final comments?", "Let's put the decisions in writing by end of day.", "I'll take the minutes and distribute them.", "Thank you all for a productive discussion.", "Let's pick this up again at our next meeting."],
+      "dialog": "Manager: We've covered a lot. Let me recap. First, the batch job is fixed. Second, the code order is pending. Third, the access request is approved. Any final comments?\nDeveloper: None.\nManager: Great. I'll send the minutes within the hour.",
+      "dictation": ["Let me quickly summarize.", "To recap the main points.", "So to bring it all together.", "Any final comments?", "Thank you all for a productive discussion."]
+    },
+    {
+      "id": "day-10",
+      "title": "Day 10 - Follow-up",
+      "phrases": ["I'm calling to follow up on the action items.", "What's the progress on the tasks we assigned?", "I noticed the task hasn't been started. Any blockers?", "Just checking in, was anything unclear?", "Is there anything I can do to help move this forward?", "I'll send a summary email with the updated status.", "Please confirm once the task is completed.", "Let's close out this item.", "I'll update the tracking sheet.", "Let's keep this on the radar for next meeting."],
+      "dialog": "Manager: Hi Nikolay, following up on Tuesday's action items. First, the IDoc fix. Deployed?\nDeveloper: Yes, deployed Tuesday. All successful.\nManager: Great. Second item, the Mercury timeout increase?\nDeveloper: Not started yet.\nManager: Can you do it today? By end of day? Please confirm by email.",
+      "dictation": ["I'm calling to follow up.", "I noticed the task hasn't been started.", "Is there anything I can do to help?", "Please confirm once completed.", "Let's close out this item."]
+    },
+    {
+      "id": "day-11",
+      "title": "Day 11 - Full Meeting SAP Status",
+      "phrases": ["Let's start with the SAP-MES sync status.", "Three IDocs failed last night. What's the error code?", "The job is running slow. Let's analyze the performance.", "We need a new report for production tracking.", "Let me note that request and prioritize it.", "Action items from today's meeting.", "Nikolay, investigate the failed IDocs by tomorrow.", "Maria, document the reporting requirements.", "Let's reconvene on Monday for a status check.", "I'll send the minutes with all details."],
+      "dictation": ["Let's start with the SAP-MES sync status.", "Three IDocs failed last night.", "We need a new report.", "Let me note that request.", "I'll send the minutes."]
+    },
+    {
+      "id": "day-12",
+      "title": "Day 12 - Full Meeting MES Incident",
+      "phrases": ["This is a priority incident. I'm declaring an escalation.", "We need to assemble the response team immediately.", "What's the estimated time to restore service?", "Let's define the severity and impact first.", "I'll coordinate communication between teams.", "Please send a status update every thirty minutes.", "Let's document everything for the post mortem.", "Who needs to be informed about this?", "The production line is stopped. We need a fix now.", "Let me check the root cause in the logs."],
+      "dictation": ["This is a priority incident.", "What's the estimated time to restore?", "Let's define the severity.", "Please send status updates every 30 minutes.", "Who needs to be informed?"]
+    },
+    {
+      "id": "day-13",
+      "title": "Day 13 - Full Meeting CZ and Mercury",
+      "phrases": ["That covers the first issue. Let's move to the Mercury topic.", "Now I'd like to switch gears and talk about the VSD problem.", "We have fifteen minutes left for the Mercury topic.", "Before we run out of time, let's cover the resolution.", "Let's pause this thread and pick it up offline.", "Two topics today. First, code emission. Second, VSD acknowledgement.", "Let's make sure we give each topic enough time.", "Transitioning to our next agenda item.", "We'll split the action items between both topics.", "I'll combine both status updates in one summary email."],
+      "dictation": ["That covers the first topic. Let's move on.", "Now I'd like to switch gears.", "We have fifteen minutes left.", "Let's pause this and pick it up offline.", "I'll combine both updates in one email."]
+    },
+    {
+      "id": "day-14",
+      "title": "Day 14 - Admin and Access Review",
+      "phrases": ["Let's review user access rights for the shop floor.", "Five operators currently have supervisor roles.", "According to policy, only shift supervisors should have that role.", "We need to revoke access for inactive users.", "I've prepared a change request for the role changes.", "Let's implement a monthly access review process.", "Please document all changes in the ticket.", "Who needs to approve this change?", "Let's run an audit on current permissions.", "I'll assign the new roles by end of week."],
+      "dictation": ["Let's review user access rights.", "We need to revoke access for inactive users.", "Let's implement a monthly review.", "Who needs to approve this?", "Let's run an audit on permissions."]
+    },
+    {
+      "id": "day-15",
+      "title": "Day 15 - Final Unprepared Meeting",
+      "phrases": ["Thanks everyone for joining. Let's get started.", "First item on the agenda is the integration status.", "Let me summarize what we discussed.", "Action items. I'll send the minutes shortly.", "Thank you all for a productive meeting.", "I'm confident we can resolve this by end of week.", "Let's schedule a follow up for next Tuesday.", "Please reach out if you have any questions.", "I appreciate everyone's input today.", "Looking forward to our next meeting."],
+      "dictation": ["Thanks everyone for joining. Let's start.", "First item on the agenda is...", "Let me summarize what we discussed.", "Action items. I'll send the minutes.", "Thank you all for your input."]
+    }
+  ],
+  "digests": [
+    {
+      "id": "weekend-digest-01",
+      "title": "Weekend Digest - Week 1",
+      "phrases": ["Good morning everyone, thanks for joining.", "What's the current status?", "We're seeing an issue with the batch job.", "Sorry, could you repeat that please?", "Action items for today.", "Let's reconvene on Friday.", "The error message says code pool exhausted.", "Let me check the logs.", "I'll send the meeting minutes.", "Thanks everyone for your time."]
+    },
+    {
+      "id": "weekend-digest-02",
+      "title": "Weekend Digest - Week 2",
+      "phrases": ["How's everyone doing today?", "I understand your frustration.", "Let's find a middle ground.", "Let me quickly summarize.", "I'm calling to follow up.", "I appreciate your patience.", "Let me reframe the question.", "What would be an acceptable resolution?", "Any final comments?", "I'll update the tracking sheet."]
+    },
+    {
+      "id": "weekend-digest-03",
+      "title": "Weekend Digest - Week 3",
+      "phrases": ["Let's start with the SAP status.", "This is a priority incident.", "That covers the first topic. Let's move on.", "Let's review user access rights.", "Thanks everyone for joining.", "I'll coordinate between teams.", "Let's document everything.", "Let's implement a monthly review.", "I'm confident we can resolve this.", "Looking forward to our next meeting."]
+    }
+  ]
+}

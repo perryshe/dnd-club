@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 11 — Full Meeting: SAP Status</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.7; padding: 20px; max-width: 800px; margin: 0 auto; }
+h1 { font-size: 1.5em; color: #58a6ff; }
+h2 { font-size: 1.15em; color: #f0883e; margin: 24px 0 10px; border-bottom: 1px solid #21262d; padding-bottom: 6px; }
+h3 { font-size: 1em; color: #e6edf3; margin: 16px 0 6px; }
+p, li { color: #c9d1d9; font-size: 0.95em; }
+ul, ol { padding-left: 20px; margin: 6px 0; }
+li { margin: 3px 0; }
+.back { color: #8b949e; text-decoration: none; font-size: 0.85em; display: inline-block; margin-bottom: 12px; }
+.back:hover { color: #58a6ff; }
+.dialog { background: #161b22; border-left: 3px solid #58a6ff; border-radius: 0 8px 8px 0; padding: 12px 14px; margin: 10px 0; }
+.dialog .speaker { color: #f0883e; font-weight: 600; }
+.dialog .you { color: #58a6ff; font-weight: 600; }
+.checkbox-item { display: flex; align-items: flex-start; gap: 10px; margin: 8px 0; }
+.checkbox-item input { margin-top: 4px; accent-color: #3fb950; width: 18px; min-width: 18px; height: 18px; }
+.checkbox-item label { font-size: 0.92em; color: #c9d1d9; }
+.prompt-box { background: #0d1117; border: 1px solid #21262d; border-left: 3px solid #d29922; border-radius: 0 8px 8px 0; padding: 10px 14px; margin: 8px 0; font-size: 0.88em; color: #f0c674; white-space: pre-wrap; }
+.tag { display: inline-block; padding: 0 8px; border-radius: 10px; font-size: 0.7em; font-weight: 600; margin: 0 4px 4px 0; }
+.tag-blue { background: #1f6feb33; color: #58a6ff; }
+.tag-green { background: #23863633; color: #3fb950; }
+.tag-orange { background: #d2992233; color: #d29922; }
+nav { margin-top: 30px; padding-top: 16px; border-top: 1px solid #21262d; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 0.85em; }
+nav a { color: #8b949e; text-decoration: none; }
+nav a:hover { color: #58a6ff; }
+</style>
+</head>
+<body>
+
+<a class="back" href="../index.html">← На главную</a>
+<h1>Day 11 · Full Meeting: SAP-MES Integration Status</h1>
+<p style="color:#8b949e;font-size:0.9em;">Чт 2 июл 2026 · Week 3 — Сквозная практика · Повтор D10 + Полная встреча</p>
+
+<div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
+  <strong>🎯 Фокус дня:</strong> Провести полную встречу от открытия до закрытия с 2 участниками AI. Минимум подсказок — максимум самостоятельности.
+</div>
+
+<h2>🔁 Повторение — Day 10 (30 мин)</h2>
+<ul>
+  <li>Повтори ключевые фразы Weeks 1–2 (10 шт на выбор)</li>
+  <li><strong>AI Voice:</strong> <em>"I am a developer with overdue action items. Call me for a follow-up and push me on the incomplete tasks."</em></li>
+</ul>
+
+<h2>📘 Освежение — Meeting Flow Checklist</h2>
+<p style="color:#8b949e;font-size:0.9em;">Держи в голове последовательность встречи:</p>
+<ol>
+  <li><strong>Open:</strong> Greet → Agenda → Set expectations</li>
+  <li><strong>Status:</strong> Ask for updates → Dig into blockers → Check timelines</li>
+  <li><strong>Issues:</strong> Clarify → Document → Decide on next steps</li>
+  <li><strong>Close:</strong> Summarize → Assign actions → Confirm deadlines → Next meeting → Thanks</li>
+</ol>
+
+<h2>🎭 AI-практика — Full Meeting (30–40 мин)</h2>
+<h3>Single long scenario</h3>
+<div class="prompt-box">You play two roles: Developer (Nikolay) and Business User (Maria). I am the manager running a weekly status meeting. Agenda: 1) SAP-MES IDoc sync — Nikolay reports 3 IDocs failed last night, 2) batch job monitoring — Maria says one job is running slow, 3) new functional requests — Maria needs a new report. I will open, ask for updates, handle issues, assign actions, and close. Both of you speak when I call on you. If I handle each point well, move forward. If I'm unclear, ask questions. Start with me opening the meeting.</div>
+
+<p style="color:#8b949e;font-size:0.85em;margin-top:8px;">💡 <strong>Подсказка:</strong> Не читай сценарий — действуй по ситуации. Если AI говорит что-то неожиданное — используй фразы из cheat-sheet.</p>
+
+<h2>📝 После встречи — Self-review</h2>
+<p style="font-size:0.88em;color:#8b949e;">Запиши (или запиши на диктофон) ответы на 3 вопроса:</p>
+<ol>
+  <li>Что получилось лучше всего в этой встрече?</li>
+  <li>Где я запнулся / забыл фразу?</li>
+  <li>Что сделаю иначе в следующий раз?</li>
+</ol>
+
+<h2>Reading: SAP-MES Integration</h2>
+<div style="background:#161b22; border:1px solid #21262d; border-radius:8px; padding:12px 14px; margin:10px 0;">
+  <p style="color:#c9d1d9;">SAP and MES integration is the backbone of modern manufacturing. SAP ERP handles planning and orders, while MES manages real-time production on the shop floor. The two systems communicate through IDocs. When an IDoc fails, orders can be delayed or duplicated. A status meeting for this integration should cover: IDoc error rates, batch job health, and any pending change requests.</p>
+  <hr style="border: none; border-top: 1px solid #21262d; margin: 8px 0;">
+  <p style="color:#8b949e; font-size:0.9em;">Интеграция SAP и MES — это основа современного производства. SAP ERP отвечает за планирование и заказы, а MES управляет производством в реальном времени. Две системы обмениваются через IDoc.</p>
+</div>
+
+<h2>✅ Self-check</h2>
+<div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я провёл полную встречу с открытием, статусом и закрытием</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc2"><label for="sc2">Я справился с неожиданными ответами AI</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc3"><label for="sc3">Я зафиксировал 1-2 слабых места для улучшения</label></div>
+
+<script>(function() {
+  var saved = localStorage.getItem('eng-day11');
+  if (saved) { var arr = JSON.parse(saved);
+    document.querySelectorAll('.checkbox-item input').forEach(function(c, i) { if (arr[i]) c.checked = true; }); }
+  document.querySelectorAll('.checkbox-item input').forEach(function(c, i) {
+    c.addEventListener('change', function() {
+      var all = document.querySelectorAll('.checkbox-item input');
+      var arr = Array.from(all).map(function(x) { return x.checked; });
+      localStorage.setItem('eng-day11', JSON.stringify(arr));
+    });
+  });
+})();</script>
+
+<nav>
+  <a href="../week-02/day-10.html">← Day 10</a>
+  <a href="../index.html">Главная</a>
+  <a href="day-12.html">Day 12 →</a>
+</nav>
+
+</body>
+</html>

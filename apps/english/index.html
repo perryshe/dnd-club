@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English for Manager — Главная</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.7; padding: 20px; max-width: 800px; margin: 0 auto; }
+h1 { font-size: 1.5em; color: #58a6ff; }
+h2 { font-size: 1.15em; color: #f0883e; margin: 24px 0 10px; border-bottom: 1px solid #21262d; padding-bottom: 6px; }
+.subtitle { color: #8b949e; font-size: 0.9em; margin-bottom: 20px; }
+.card { background: #161b22; border: 1px solid #21262d; border-radius: 10px; padding: 14px 16px; margin: 10px 0; }
+.card a { color: #58a6ff; text-decoration: none; font-weight: 500; display: block; }
+.card a:hover { color: #79c0ff; }
+.card small { color: #8b949e; font-size: 0.8em; display: block; margin-top: 2px; }
+.week-grid { display: flex; flex-direction: column; gap: 8px; }
+.week-header { background: #1c2128; border-radius: 8px; padding: 10px 14px; margin-top: 6px; font-weight: 600; color: #f0883e; font-size: 0.9em; }
+.day-row { display: flex; align-items: center; gap: 10px; padding: 6px 14px; border-radius: 6px; background: #0d1117; border: 1px solid #21262d; }
+.day-row:hover { border-color: #30363d; }
+.day-num { min-width: 28px; font-weight: 700; color: #58a6ff; font-size: 0.9em; }
+.day-date { min-width: 70px; color: #8b949e; font-size: 0.8em; }
+.day-link { flex: 1; }
+.day-link a { color: #e6edf3; text-decoration: none; font-size: 0.9em; display: block; }
+.day-link a:hover { color: #58a6ff; }
+.day-theme { color: #8b949e; font-size: 0.78em; }
+.status-done { color: #3fb950; font-size: 0.8em; }
+.status-todo { color: #484f58; font-size: 0.8em; }
+.tag { display: inline-block; padding: 0 8px; border-radius: 10px; font-size: 0.7em; font-weight: 600; margin-right: 4px; }
+.tag-blue { background: #1f6feb33; color: #58a6ff; }
+.tag-green { background: #23863633; color: #3fb950; }
+.tag-orange { background: #d2992233; color: #d29922; }
+.progress-bar { background: #21262d; border-radius: 12px; height: 8px; overflow: hidden; margin: 8px 0; }
+.progress-fill { background: linear-gradient(90deg, #58a6ff, #3fb950); height: 100%; width: 0%; border-radius: 12px; transition: width 0.3s; }
+.links-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0; }
+.links-row a { color: #8b949e; text-decoration: none; font-size: 0.85em; padding: 4px 10px; border: 1px solid #21262d; border-radius: 16px; }
+.links-row a:hover { color: #58a6ff; border-color: #58a6ff; }
+input[type="checkbox"] { accent-color: #3fb950; width: 18px; height: 18px; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<h1>English for Manager</h1>
+<p class="subtitle">15 дней · 18 июн – 8 июл 2026 · Подготовка к ведению рабочих встреч на английском</p>
+
+<div class="card" style="padding:12px 16px;">
+  <div style="display:flex;justify-content:space-between;align-items:center;">
+    <span style="font-size:0.9em;font-weight:600;">Прогресс</span>
+    <span id="progress-text" style="font-size:0.85em;color:#8b949e;">0 / 15</span>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+</div>
+
+<div class="links-row">
+  <a href="schedule/schedule.html">📅 Расписание</a>
+  <a href="common/cheat-sheet.html">📋 Шпаргалка</a>
+  <a href="common/glossary.html">📖 Глоссарий</a>
+  <a href="common/meeting-phrases.html">💬 Фразы для встреч</a>
+  <a href="common/ai-scenarios.html">🤖 AI-сценарии</a>
+  <a href="common/email-templates.html">✉️ Шаблоны писем</a>
+  <a href="audio/results.html">🎧 Аудио-итоги</a>
+  <a href="tor.html">📄 TOR</a>
+</div>
+
+<h2>Week 1 — База встреч</h2>
+<div class="week-grid">
+  <div class="day-row" id="day-01">
+    <input type="checkbox" class="day-check" data-day="1">
+    <span class="day-num">01</span>
+    <span class="day-date">18 июн</span>
+    <div class="day-link"><a href="week-01/day-01.html">Opening a meeting <span class="day-theme">— структура, приветствие, agenda</span></a></div>
+    <a href="audio/day-01.mp3" style="color:#8b949e;font-size:0.78em;text-decoration:none;" title="Аудио для дороги">🎧</a>
+  </div>
+  <div class="day-row" id="day-02">
+    <input type="checkbox" class="day-check" data-day="2">
+    <span class="day-num">02</span>
+    <span class="day-date">19 июн</span>
+    <div class="day-link"><a href="week-01/day-02.html">Asking for updates <span class="day-theme">— статус, прогресс, блокеры</span></a></div>
+    <a href="audio/day-02.mp3" style="color:#8b949e;font-size:0.78em;text-decoration:none;" title="Аудио для дороги">🎧</a>
+  </div>
+  <div class="day-row" id="day-03">
+    <input type="checkbox" class="day-check" data-day="3">
+    <span class="day-num">03</span>
+    <span class="day-date">22 июн</span>
+    <div class="day-link"><a href="week-01/day-03.html">Reporting issues <span class="day-theme">— проблемы, ошибки, инциденты</span></a></div>
+    <a href="audio/day-03.mp3" style="color:#8b949e;font-size:0.78em;text-decoration:none;" title="Аудио для дороги">🎧</a>
+  </div>
+  <div class="day-row" id="day-04">
+    <input type="checkbox" class="day-check" data-day="4">
+    <span class="day-num">04</span>
+    <span class="day-date">23 июн</span>
+    <div class="day-link"><a href="week-01/day-04.html">Q&A, Clarifications <span class="day-theme">— уточнение, переспрос, паузы</span></a></div>
+    <a href="audio/day-04.mp3" style="color:#8b949e;font-size:0.78em;text-decoration:none;" title="Аудио для дороги">🎧</a>
+  </div>
+  <div class="day-row" id="day-05">
+    <input type="checkbox" class="day-check" data-day="5">
+    <span class="day-num">05</span>
+    <span class="day-date">24 июн</span>
+    <div class="day-link"><a href="week-01/day-05.html">Assigning &amp; Wrap-up <span class="day-theme">— задачи, дедлайны, закрытие</span></a></div>
+    <a href="audio/day-05.mp3" style="color:#8b949e;font-size:0.78em;text-decoration:none;" title="Аудио для дороги">🎧</a>
+  </div>
+</div>
+
+<h2>Week 2 — Soft Skills</h2>
+<div class="week-grid">
+  <div class="day-row" id="day-06">
+    <input type="checkbox" class="day-check" data-day="6">
+    <span class="day-num">06</span>
+    <span class="day-date">25 июн</span>
+    <div class="day-link"><a href="week-02/day-06.html">Small Talk <span class="day-theme">— разогрев, icebreakers, переход к делу</span></a></div>
+    <a href="audio/day-06.mp3" style="color:#8b949e;font-size:0.78em;text-decoration:none;" title="Аудио для дороги">🎧</a>
+  </div>
+  <div class="day-row" id="day-07">
+    <input type="checkbox" class="day-check" data-day="7">
+    <span class="day-num">07</span>
+    <span class="day-date">26 июн</span>
+    <div class="day-link"><a href="week-02/day-07.html">Handling Complaints <span class="day-theme">— жалобы, эскалация, деэскалация</span></a></div>
+    <a href="audio/day-07.mp3" style="color:#8b949e;font-size:0.78em;text-decoration:none;" title="Аудио для дороги">🎧</a>
+  </div>
+  <div class="day-row" id="day-08">
+    <input type="checkbox" class="day-check" data-day="8">
+    <span class="day-num">08</span>
+    <span class="day-date">29 июн</span>
+    <div class="day-link"><a href="week-02/day-08.html">Conflict &amp; Difficult Situations <span class="day-theme">— спор, несогласие, медиация</span></a></div>
+    <a href="audio/day-08.mp3" style="color:#8b949e;font-size:0.78em;text-decoration:none;" title="Аудио для дороги">🎧</a>
+  </div>
+  <div class="day-row" id="day-09">
+    <input type="checkbox" class="day-check" data-day="9">
+    <span class="day-num">09</span>
+    <span class="day-date">30 июн</span>
+    <div class="day-link"><a href="week-02/day-09.html">Summarizing &amp; Closing <span class="day-theme">— резюме, decisions, next steps</span></a></div>
+    <a href="audio/day-09.mp3" style="color:#8b949e;font-size:0.78em;text-decoration:none;" title="Аудио для дороги">🎧</a>
+  </div>
+  <div class="day-row" id="day-10">
+    <input type="checkbox" class="day-check" data-day="10">
+    <span class="day-num">10</span>
+    <span class="day-date">1 июл</span>
+    <div class="day-link"><a href="week-02/day-10.html">Follow-up &amp; Action Tracking <span class="day-theme">— письма, minutes, контроль</span></a></div>
+    <a href="audio/day-10.mp3" style="color:#8b949e;font-size:0.78em;text-decoration:none;" title="Аудио для дороги">🎧</a>
+  </div>
+</div>
+
+<h2>Week 3 — Сквозная практика</h2>
+<div class="week-grid">
+  <div class="day-row" id="day-11">
+    <input type="checkbox" class="day-check" data-day="11">
+    <span class="day-num">11</span>
+    <span class="day-date">2 июл</span>
+    <div class="day-link"><a href="week-03/day-11.html">Full Meeting: SAP Status <span class="day-theme">— полная встреча по SAP интеграции</span></a></div>
+    <a href="audio/day-11.mp3" style="color:#8b949e;font-size:0.78em;text-decoration:none;" title="Аудио для дороги">🎧</a>
+  </div>
+  <div class="day-row" id="day-12">
+    <input type="checkbox" class="day-check" data-day="12">
+    <span class="day-num">12</span>
+    <span class="day-date">3 июл</span>
+    <div class="day-link"><a href="week-03/day-12.html">Full Meeting: MES Incident <span class="day-theme">— инцидент, root cause, escalation</span></a></div>
+    <a href="audio/day-12.mp3" style="color:#8b949e;font-size:0.78em;text-decoration:none;" title="Аудио для дороги">🎧</a>
+  </div>
+  <div class="day-row" id="day-13">
+    <input type="checkbox" class="day-check" data-day="13">
+    <span class="day-num">13</span>
+    <span class="day-date">6 июл</span>
+    <div class="day-link"><a href="week-03/day-13.html">Full Meeting: ЧЗ + Mercury <span class="day-theme">— две темы, переходы, тайминг</span></a></div>
+    <a href="audio/day-13.mp3" style="color:#8b949e;font-size:0.78em;text-decoration:none;" title="Аудио для дороги">🎧</a>
+  </div>
+  <div class="day-row" id="day-14">
+    <input type="checkbox" class="day-check" data-day="14">
+    <span class="day-num">14</span>
+    <span class="day-date">7 июл</span>
+    <div class="day-link"><a href="week-03/day-14.html">Full Meeting: Admin &amp; Access <span class="day-theme">— права доступа, роли, аудит</span></a></div>
+    <a href="audio/day-14.mp3" style="color:#8b949e;font-size:0.78em;text-decoration:none;" title="Аудио для дороги">🎧</a>
+  </div>
+  <div class="day-row" id="day-15">
+    <input type="checkbox" class="day-check" data-day="15">
+    <span class="day-num">15</span>
+    <span class="day-date">8 июл</span>
+    <div class="day-link"><a href="week-03/day-15.html">FINAL — Unprepared Meeting <span class="day-theme">— AI agenda, self-record, итоги</span></a></div>
+    <a href="audio/day-15.mp3" style="color:#8b949e;font-size:0.78em;text-decoration:none;" title="Аудио для дороги">🎧</a>
+  </div>
+</div>
+
+<p style="margin-top:30px;font-size:0.8em;color:#484f58;text-align:center;">
+  English for Manager · v1.0 · 18.06.2026
+</p>
+
+<script>
+(function() {
+  var checks = document.querySelectorAll('.day-check');
+  var fill = document.getElementById('progress-fill');
+  var text = document.getElementById('progress-text');
+  function update() {
+    var done = 0;
+    for (var i = 0; i < checks.length; i++) {
+      if (checks[i].checked) done++;
+      var row = checks[i].closest('.day-row');
+      if (checks[i].checked) {
+        row.style.borderLeft = '3px solid #3fb950';
+      } else {
+        row.style.borderLeft = '3px solid #21262d';
+      }
+    }
+    var pct = (done / checks.length) * 100;
+    fill.style.width = pct + '%';
+    text.textContent = done + ' / ' + checks.length;
+    localStorage.setItem('eng-progress', JSON.stringify(
+      Array.from(checks).map(function(c) { return c.checked; })
+    ));
+  }
+  // restore
+  var saved = localStorage.getItem('eng-progress');
+  if (saved) {
+    var arr = JSON.parse(saved);
+    for (var i = 0; i < checks.length && i < arr.length; i++) {
+      checks[i].checked = arr[i];
+    }
+  }
+  update();
+  for (var i = 0; i < checks.length; i++) {
+    checks[i].addEventListener('change', update);
+  }
+})();
+</script>
+
+</body>
+</html>
