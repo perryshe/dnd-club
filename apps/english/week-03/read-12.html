@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading Day 12 вЂ” MES Incidents</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.7; padding: 20px; max-width: 800px; margin: 0 auto; }
+h1 { font-size: 1.5em; color: #58a6ff; }
+h2 { font-size: 1.15em; color: #f0883e; margin: 24px 0 10px; border-bottom: 1px solid #21262d; padding-bottom: 6px; }
+h3 { font-size: 1em; color: #e6edf3; margin: 16px 0 6px; }
+p { color: #c9d1d9; font-size: 0.95em; margin: 8px 0; }
+.back { color: #8b949e; text-decoration: none; font-size: 0.85em; display: inline-block; margin-bottom: 12px; }
+.back:hover { color: #58a6ff; }
+.card { background: #161b22; border: 1px solid #21262d; border-radius: 8px; padding: 12px 14px; margin: 10px 0; }
+.ru { color: #8b949e; font-size: 0.9em; }
+.note { color: #8b949e; font-size: 0.85em; margin: 4px 0; }
+ul, ol { padding-left: 20px; margin: 6px 0; }
+li { color: #c9d1d9; margin: 4px 0; }
+table { width: 100%; border-collapse: collapse; margin: 8px 0; }
+td, th { padding: 6px 10px; border-bottom: 1px solid #21262d; text-align: left; font-size: 0.9em; }
+details { background: #161b22; border: 1px solid #21262d; border-radius: 8px; padding: 10px 14px; margin: 10px 0; }
+summary { color: #58a6ff; font-weight: 600; cursor: pointer; padding: 4px 0; }
+summary:hover { color: #79c0ff; }
+details .answer { color: #3fb950; padding: 4px 0; }
+.tag { display: inline-block; padding: 0 8px; border-radius: 10px; font-size: 0.7em; font-weight: 600; margin: 0 4px 4px 0; }
+.tag-blue { background: #1f6feb33; color: #58a6ff; }
+nav { margin-top: 30px; padding-top: 16px; border-top: 1px solid #21262d; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 0.85em; }
+nav a { color: #8b949e; text-decoration: none; }
+nav a:hover { color: #58a6ff; }
+</style>
+</head>
+<body>
+
+<a class="back" href="../index.html">в†ђ РќР° РіР»Р°РІРЅСѓСЋ</a>
+<h1>Reading Day 12 В· MES Incidents</h1>
+<p class="note">Week 3 В· Р§С‚РµРЅРёРµ Рё РїРѕРЅРёРјР°РЅРёРµ С‚РµРєСЃС‚Р°</p>
+
+<div class="card">
+  <p>MES incidents disrupt production and require swift action. Common issues include printer failures on the line, label template errors, batch job timeouts, and data sync delays. Your role as a manager is to triage: Is this a production stop? Can we work around it? Who has the expertise to fix it? After resolution, a root cause analysis should be written to prevent recurrence. When an MES incident occurs, the first question is business impact. How many lines are affected? Is any regulatory reporting at risk? Then determine whether a workaround exists. For example, if the label printer is down, can the operator print from a backup station? If MES is completely down, can production continue with manual data entry until recovery? As a manager, you need to escalate appropriately. Not every incident needs to go to senior management, but any incident that stops production for more than 30 minutes should be communicated upward. Always include the estimated fix time and the workaround status in your escalation.</p>
+</div>
+
+<h2>РџРµСЂРµРІРѕРґ</h2>
+<div class="card ru">
+  <p>РРЅС†РёРґРµРЅС‚С‹ MES РЅР°СЂСѓС€Р°СЋС‚ РїСЂРѕРёР·РІРѕРґСЃС‚РІРѕ Рё С‚СЂРµР±СѓСЋС‚ Р±С‹СЃС‚СЂС‹С… РґРµР№СЃС‚РІРёР№. Р§Р°СЃС‚С‹Рµ РїСЂРѕР±Р»РµРјС‹ РІРєР»СЋС‡Р°СЋС‚ РѕС‚РєР°Р· РїСЂРёРЅС‚РµСЂР° РЅР° Р»РёРЅРёРё, РѕС€РёР±РєРё С€Р°Р±Р»РѕРЅРѕРІ СЌС‚РёРєРµС‚РѕРє, С‚Р°Р№РјР°СѓС‚С‹ РїР°РєРµС‚РЅС‹С… Р·Р°РґР°РЅРёР№ Рё Р·Р°РґРµСЂР¶РєРё СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё РґР°РЅРЅС‹С…. Р’Р°С€Р° СЂРѕР»СЊ РєР°Рє РјРµРЅРµРґР¶РµСЂР° вЂ” РїСЂРѕРІРµСЃС‚Рё С‚СЂРёР°Р¶: Р­С‚Рѕ РѕСЃС‚Р°РЅРѕРІРєР° РїСЂРѕРёР·РІРѕРґСЃС‚РІР°? РњРѕР¶РµРј Р»Рё РјС‹ РѕР±РѕР№С‚Рё СЌС‚Рѕ? РЈ РєРѕРіРѕ РµСЃС‚СЊ СЌРєСЃРїРµСЂС‚РёР·Р° РґР»СЏ РёСЃРїСЂР°РІР»РµРЅРёСЏ? РџРѕСЃР»Рµ СѓСЃС‚СЂР°РЅРµРЅРёСЏ РЅР°РїРёС€РёС‚Рµ Р°РЅР°Р»РёР· РєРѕСЂРЅРµРІС‹С… РїСЂРёС‡РёРЅ. РљРѕРіРґР° РїСЂРѕРёСЃС…РѕРґРёС‚ РёРЅС†РёРґРµРЅС‚ MES, РїРµСЂРІС‹Р№ РІРѕРїСЂРѕСЃ вЂ” РІР»РёСЏРЅРёРµ РЅР° Р±РёР·РЅРµСЃ. РљР°Рє РјРµРЅРµРґР¶РµСЂ, РІС‹ РґРѕР»Р¶РЅС‹ РїСЂР°РІРёР»СЊРЅРѕ СЌСЃРєР°Р»РёСЂРѕРІР°С‚СЊ.</p>
+</div>
+
+<h2>РЎР»РѕРІР°СЂСЊ</h2>
+<table>
+  <tr><th style="color:#f0883e;">English</th><th style="color:#f0883e;">Р СѓСЃСЃРєРёР№</th></tr>
+<tr><td style='color:#58a6ff;'>backup</td><td style='color:#8b949e;'>...</td></tr>
+<tr><td style='color:#58a6ff;'>station</td><td style='color:#8b949e;'>...</td></tr>
+<tr><td style='color:#58a6ff;'>production</td><td style='color:#8b949e;'>...</td></tr>
+<tr><td style='color:#58a6ff;'>occurs</td><td style='color:#8b949e;'>...</td></tr>
+<tr><td style='color:#58a6ff;'>include</td><td style='color:#8b949e;'>...</td></tr>
+<tr><td style='color:#58a6ff;'>written</td><td style='color:#8b949e;'>...</td></tr>
+<tr><td style='color:#58a6ff;'>should</td><td style='color:#8b949e;'>...</td></tr>
+<tr><td style='color:#58a6ff;'>regulatory</td><td style='color:#8b949e;'>...</td></tr>
+<tr><td style='color:#58a6ff;'>determine</td><td style='color:#8b949e;'>...</td></tr>
+<tr><td style='color:#58a6ff;'>management</td><td style='color:#8b949e;'>...</td></tr>
+<tr><td style='color:#58a6ff;'>business</td><td style='color:#8b949e;'>...</td></tr>
+<tr><td style='color:#58a6ff;'>example</td><td style='color:#8b949e;'>...</td></tr>
+
+</table>
+
+<h2>Р’РѕРїСЂРѕСЃС‹ РЅР° РїРѕРЅРёРјР°РЅРёРµ</h2>
+<ol>
+  <li>What is the main idea of this text?</li>
+  <li>Why is this topic important for a manager?</li>
+  <li>What practical advice does the text give?</li>
+  <li>How would you apply this in your work?</li>
+  <li>What phrase from this text will you use today?</li>
+</ol>
+
+<h2>РџРµСЂРµРІРѕРґ СѓРїСЂР°Р¶РЅРµРЅРёРµ</h2>
+<p class="note">РџРµСЂРµРІРµРґРё РЅР° Р°РЅРіР»РёР№СЃРєРёР№:</p>
+<ol>
+  <li>Р­С‚Рѕ РІР°Р¶РЅС‹Р№ РЅР°РІС‹Рє РґР»СЏ РјРµРЅРµРґР¶РµСЂР°.</li>
+  <li>РњС‹ РґРѕР»Р¶РЅС‹ РїСЂР°РєС‚РёРєРѕРІР°С‚СЊСЃСЏ РєР°Р¶РґС‹Р№ РґРµРЅСЊ.</li>
+  <li>РњРЅРµ РЅСѓР¶РЅРѕ СѓР»СѓС‡С€РёС‚СЊ СЃРІРѕРё РєРѕРјРјСѓРЅРёРєР°С‚РёРІРЅС‹Рµ РЅР°РІС‹РєРё.</li>
+  <li>Р­С‚Рѕ РїРѕРјРѕР¶РµС‚ РєРѕРјР°РЅРґРµ СЂР°Р±РѕС‚Р°С‚СЊ СЌС„С„РµРєС‚РёРІРЅРµРµ.</li>
+  <li>РЇ Р±СѓРґСѓ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ СЌС‚Сѓ С„СЂР°Р·Сѓ РЅР° СЃР»РµРґСѓСЋС‰РµР№ РІСЃС‚СЂРµС‡Рµ.</li>
+</ol>
+
+<h2>РћС‚РІРµС‚С‹</h2>
+<details>
+  <summary>РџРѕРєР°Р·Р°С‚СЊ РѕС‚РІРµС‚С‹</summary>
+  <div style="margin-top:8px;">
+    <p><strong>Р’РѕРїСЂРѕСЃС‹ РЅР° РїРѕРЅРёРјР°РЅРёРµ (РїСЂРёРјРµСЂРЅС‹Рµ РѕС‚РІРµС‚С‹):</strong></p>
+    <div class="answer">1. The text explains MES Incidents and its role in meetings.</div>
+    <div class="answer">2. It helps a manager communicate more effectively.</div>
+    <div class="answer">3. The text advises to practice key phrases and listen actively.</div>
+    <div class="answer">4. I will apply this in my weekly status meetings.</div>
+    <div class="answer">5. "..." вЂ” the specific phrase from this reading.</div>
+    <p style="margin-top:8px;"><strong>РџРµСЂРµРІРѕРґ:</strong></p>
+    <div class="answer">1. This is an important skill for a manager.</div>
+    <div class="answer">2. We should practice every day.</div>
+    <div class="answer">3. I need to improve my communication skills.</div>
+    <div class="answer">4. This will help the team work more efficiently.</div>
+    <div class="answer">5. I will use this phrase at the next meeting.</div>
+  </div>
+</details>
+
+<nav>
+  <a href='day-11.html'>в†ђ day-11.html</a>
+
+  <a href="../index.html">Р“Р»Р°РІРЅР°СЏ</a>
+  <a href="day-12.html">в†’ day-12.html</a>
+</nav>
+
+</body>
+</html>
