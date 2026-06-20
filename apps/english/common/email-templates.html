@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Email Templates — English for Manager</title>
+<title>Email Templates — English for Customer (SAP)</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.7; padding: 20px; max-width: 800px; margin: 0 auto; }
@@ -23,178 +23,179 @@ p, li { color: #c9d1d9; font-size: 0.95em; }
 <body>
 
 <a class="back" href="../index.html">← На главную</a>
-<h1>✉️ Шаблоны писем</h1>
-<p style="color:#8b949e;font-size:0.9em;margin-bottom:12px;">Готовые шаблоны для деловой переписки. Замени [в скобках] на свои данные.</p>
+<h1>✉️ Шаблоны писем (заказчик → подрядчик)</h1>
+<p style="color:#8b949e;font-size:0.9em;margin-bottom:12px;">Готовые шаблоны для переписки с SAP-вендором. Замени [в скобках] на свои данные.</p>
 
 <div class="email">
-<h3>1. Meeting Minutes — протокол встречи</h3>
-<p style="font-size:0.8em;color:#8b949e;">Использовать: после каждой встречи</p>
-<pre><strong>Subject:</strong> Meeting Minutes — [Topic] — [Date]
+<h3>1. Meeting Minutes — протокол встречи с подрядчиком</h3>
+<p style="font-size:0.8em;color:#8b949e;">Отправить после каждой встречи</p>
+<pre><strong>Subject:</strong> Meeting Minutes — [Project/Topic] — [Date]
 
-Hi Team,
+Dear [Vendor Team],
 
-Thank you for the productive meeting today.
+Thank you for the productive call today.
 
 <strong>Attendees:</strong> [Names]
 
 <strong>Topics discussed:</strong>
 1. [Topic 1] — [brief summary]
 2. [Topic 2] — [brief summary]
-3. [Topic 3] — [brief summary]
 
 <strong>Key decisions:</strong>
 - [Decision 1]
 - [Decision 2]
 
 <strong>Action items:</strong>
-- [Name]: [Task] — due [Date]
-- [Name]: [Task] — due [Date]
+- [Vendor]: [Task] — due [Date]
+- [Customer]: [Task] — due [Date]
 
 <strong>Next meeting:</strong> [Date/Time]
 
-Please let me know if I missed anything.
-
-Best regards,
-[Your Name]</pre>
-</div>
-
-<div class="email">
-<h3>2. Issue Report — сообщение об инциденте</h3>
-<p style="font-size:0.8em;color:#8b949e;">Использовать: критическая проблема</p>
-<pre><strong>Subject:</strong> URGENT — [System] issue — [incident #]
-
-Hi Team,
-
-We are facing a critical issue with [System].
-
-<strong>Description:</strong>
-[Describe the problem — what, when, impact]
-
-<strong>Error details:</strong>
-[Error message / code / log excerpt]
-
-<strong>Impact:</strong>
-Affecting [number] users / [process] is blocked
-
-<strong>Actions taken so far:</strong>
-- [Action 1]
-- [Action 2]
-
-<strong>Next steps:</strong>
-- [Name] will [task] by [time]
-- Escalation to [vendor/team]
-
-I'll keep you updated on progress.
-
-Regards,
-[Your Name]</pre>
-</div>
-
-<div class="email">
-<h3>3. Status Request — запрос статуса</h3>
-<p style="font-size:0.8em;color:#8b949e;">Использовать: follow-up по задаче</p>
-<pre><strong>Subject:</strong> Follow-up: [Task name] status
-
-Hi [Name],
-
-Could you please provide an update on [task]?
-
-Specifically:
-- What is the current status?
-- Are there any blockers?
-- What is the ETA for completion?
-
-Let me know if you need any support from my side.
-
-Best regards,
-[Your Name]</pre>
-</div>
-
-<div class="email">
-<h3>4. Escalation — эскалация к вендору/поддержке</h3>
-<p style="font-size:0.8em;color:#8b949e;">Использовать: нужна помощь внешней команды</p>
-<pre><strong>Subject:</strong> Escalation: [System] — [Issue] — [incident #]
-
-Dear [Support Team / Vendor],
-
-We are escalating the following issue:
-
-<strong>System:</strong> [System name]
-<strong>Issue:</strong> [Brief description]
-<strong>Incident #:</strong> [Number]
-<strong>Priority:</strong> High / Critical
-
-<strong>Details:</strong>
-- Started at: [Time/Date]
-- Error: [Error message/code]
-- What we've tried: [Steps taken]
-
-<strong>Requested action:</strong>
-[What we need from you — investigation, fix, access, etc.]
-
-Please confirm receipt and provide an estimated response time.
+Please confirm that I have captured everything correctly.
 
 Best regards,
 [Your Name]
-[Company]
-[Phone]</pre>
+[Your Company]</pre>
 </div>
 
 <div class="email">
-<h3>5. Change Request — запрос на изменение</h3>
-<p style="font-size:0.8em;color:#8b949e;">Использовать: изменение прав доступа, ролей, конфигурации</p>
-<pre><strong>Subject:</strong> Change Request: [Description] — [CR #]
+<h3>2. New Requirement — новое требование к подрядчику</h3>
+<p style="font-size:0.8em;color:#8b949e;">Отправить при появлении нового требования регулятора</p>
+<pre><strong>Subject:</strong> New Requirement: [Regulatory change] — impact assessment needed
 
-Hi Team,
+Dear [Vendor Contact],
 
-Please find below a change request for approval.
+We have received a new requirement from [government body / CRPT / Mercury] regarding [description].
+
+<strong>Summary of the requirement:</strong>
+[Brief description of what changed and by when it must be implemented]
+
+<strong>Request:</strong>
+Please assess the impact on our current SAP system and provide:
+1. Implementation options
+2. Estimated timeline
+3. Resource requirements
+4. Cost estimate
+
+<strong>Deadline for proposal:</strong> [Date]
+
+Let me know if you need any additional information from our side.
+
+Best regards,
+[Your Name]
+[Your Company]</pre>
+</div>
+
+<div class="email">
+<h3>3. Change Request — запрос на изменение</h3>
+<p style="font-size:0.8em;color:#8b949e;">Когда меняется объём работ</p>
+<pre><strong>Subject:</strong> Change Request #[Number] — [Description]
+
+Dear [Vendor PM],
+
+We request the following change to the current project scope.
 
 <strong>Change description:</strong>
-[What needs to change]
+[What needs to change and why]
 
-<strong>Reason:</strong>
-[Why this change is needed]
+<strong>Reason for change:</strong>
+[Regulatory update / process change / new requirement]
 
-<strong>Systems affected:</strong>
+<strong>Affected systems:</strong>
 [System names]
 
-<strong>Risk assessment:</strong>
-[Low / Medium / High] — [Explanation]
+<strong>Requested action:</strong>
+Please provide a revised proposal including:
+- Updated timeline
+- Impact on current budget
+- Any risks or dependencies
 
-<strong>Implementation plan:</strong>
-1. [Step 1]
-2. [Step 2]
-3. Rollback plan: [if needed]
-
-<strong>Proposed date:</strong> [Date/Time]
-
-Please review and approve by [Date].
+We would appreciate your response by [Date].
 
 Best regards,
-[Your Name]</pre>
+[Your Name]
+[Your Company]</pre>
 </div>
 
 <div class="email">
-<h3>6. User Notification — уведомление пользователей</h3>
-<p style="font-size:0.8em;color:#8b949e;">Использовать: оповестить о плановых работах / изменениях</p>
-<pre><strong>Subject:</strong> Notification: [System] — [Action] — [Date]
+<h3>4. Escalation — задержка / проблема</h3>
+<p style="font-size:0.8em;color:#8b949e;">Когда подрядчик срывает сроки</p>
+<pre><strong>Subject:</strong> Escalation: [Project] — [Issue] — URGENT
 
-Dear users,
+Dear [Vendor Management],
 
-This is to inform you about [planned maintenance / system change / new feature].
+We are escalating the following issue that requires your immediate attention.
 
-<strong>What:</strong> [Description]
-<strong>When:</strong> [Date/Time]
-<strong>Expected downtime:</strong> [Duration]
-<strong>Impact:</strong> [What users will experience]
-<strong>Action required:</strong> [If any]
+<strong>Project:</strong> [Project name]
+<strong>Issue:</strong> [Brief description of the delay/problem]
+<strong>Impact:</strong> [Business impact — production, compliance, etc.]
 
-We apologize for any inconvenience.
+<strong>What we need:</strong>
+1. Root cause explanation
+2. Recovery plan with updated timeline
+3. Measures to prevent recurrence
 
-Please contact [support contact] if you have questions.
+<strong>Deadline for response:</strong> [Date/Time]
+
+Please treat this as urgent.
 
 Best regards,
-[Your Name]</pre>
+[Your Name]
+[Your Company]</pre>
+</div>
+
+<div class="email">
+<h3>5. Follow-up — напоминание о задачах</h3>
+<p style="font-size:0.8em;color:#8b949e;">Мягкое напоминание подрядчику</p>
+<pre><strong>Subject:</strong> Follow-up: [Action item] — status update
+
+Dear [Vendor Contact],
+
+I am following up on the action item from our meeting on [Date].
+
+<strong>Action item:</strong>
+[Description of the task]
+
+<strong>Original deadline:</strong>
+[Date]
+
+Could you please provide a status update? Let us know if you need any support from our side to complete this.
+
+Best regards,
+[Your Name]
+[Your Company]</pre>
+</div>
+
+<div class="email">
+<h3>6. Proposal Request — запрос коммерческого предложения</h3>
+<p style="font-size:0.8em;color:#8b949e;">Для нового проекта / этапа</p>
+<pre><strong>Subject:</strong> Request for Proposal: [Project name]
+
+Dear [Vendor Contact],
+
+We would like to request a proposal for the following work.
+
+<strong>Scope:</strong>
+[Description of the required work]
+
+<strong>Background:</strong>
+[Relevant context — regulatory requirement, business need]
+
+<strong>Required deliverables:</strong>
+1. [Deliverable 1]
+2. [Deliverable 2]
+3. [Deliverable 3]
+
+<strong>Preferred timeline:</strong>
+- Proposal due: [Date]
+- Project start: [Date]
+- Go-live deadline: [Date]
+
+Please include timeline, cost breakdown, and resource plan in your proposal.
+
+Best regards,
+[Your Name]
+[Your Company]</pre>
 </div>
 
 </body>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Day 12 — Full Meeting: MES Incident</title>
+<title>Day 12 — Full Meeting: Critical SAP Incident</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.7; padding: 20px; max-width: 800px; margin: 0 auto; }
@@ -18,6 +18,11 @@ li { margin: 3px 0; }
 .phrase { background: #161b22; border: 1px solid #21262d; border-radius: 8px; padding: 10px 14px; margin: 8px 0; }
 .phrase strong { color: #58a6ff; font-size: 1.02em; }
 .phrase .ru { color: #8b949e; font-size: 0.85em; display: block; margin-top: 3px; }
+.phrase .example { color: #3fb950; font-size: 0.85em; display: block; margin-top: 2px; }
+.dialog { background: #161b22; border-left: 3px solid #58a6ff; border-radius: 0 8px 8px 0; padding: 12px 14px; margin: 10px 0; }
+.dialog .speaker { color: #f0883e; font-weight: 600; }
+.dialog .vendor { color: #d29922; font-weight: 600; }
+.dialog .you { color: #58a6ff; font-weight: 600; }
 .checkbox-item { display: flex; align-items: flex-start; gap: 10px; margin: 8px 0; }
 .checkbox-item input { margin-top: 4px; accent-color: #3fb950; width: 18px; min-width: 18px; height: 18px; }
 .checkbox-item label { font-size: 0.92em; color: #c9d1d9; }
@@ -25,81 +30,93 @@ li { margin: 3px 0; }
 .tag { display: inline-block; padding: 0 8px; border-radius: 10px; font-size: 0.7em; font-weight: 600; margin: 0 4px 4px 0; }
 .tag-blue { background: #1f6feb33; color: #58a6ff; }
 .tag-green { background: #23863633; color: #3fb950; }
-.tag-red { background: #da363333; color: #f85149; }
+.tag-orange { background: #d2992233; color: #d29922; }
 nav { margin-top: 30px; padding-top: 16px; border-top: 1px solid #21262d; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 0.85em; }
 nav a { color: #8b949e; text-decoration: none; }
-nav a:hover { color: #58a6ff; }
-</style>
+nav a:hover { color: #58a6ff; }</style>
 </head>
 <body>
 
 <a class="back" href="../index.html">← На главную</a>
-<h1>Day 12 · Full Meeting: MES Critical Incident</h1>
-<p style="color:#8b949e;font-size:0.9em;">Пт 3 июл 2026 · Week 3 — Сквозная практика · Повтор D11 + Полная встреча</p>
+<h1>Day 12 · Full Meeting: Critical SAP Incident</h1>
+<p style="color:#8b949e;font-size:0.9em;">Пт 3 июл 2026 · Week 3 — Заказчик → Подрядчик · Новый материал</p>
 
 <div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
-  <strong>🎯 Фокус дня:</strong> Провести встречу по критическому инциденту. Один участник в панике, второй — технический. Ты — связующее звено.
+  <strong>🎯 Фокус дня:</strong> Экстренная встреча по критическому инциденту с подрядчиком
 </div>
 
-<h2>🔁 Повторение — Day 11 (30 мин)</h2>
-<ul>
-  <li>Просмотри self-review с Day 11 — учти ошибки</li>
-  <li>Повтори фразы для complaints (D07) + escalation</li>
-  <li><strong>AI Voice:</strong> <em>"I am a business user requesting a new report. I'm not technical — explain simply."</em></li>
-</ul>
+<h2>🔁 Повторение</h2>
+<p style="color:#8b949e;font-size:0.9em;">Повторение D11: Открой встречу с повесткой из 2 тем.</p>
 
-<h2>📘 Новые фразы — для эскалации инцидента</h2>
-<div class="phrase"><strong>This is a priority incident. I'm declaring an escalation.</strong><span class="ru">Это приоритетный инцидент. Объявляю эскалацию.</span></div>
-<div class="phrase"><strong>We need to assemble the response team immediately.</strong><span class="ru">Нужно собрать команду реагирования немедленно.</span></div>
-<div class="phrase"><strong>What's the estimated time to restore service?</strong><span class="ru">Какое примерное время восстановления сервиса?</span></div>
-<div class="phrase"><strong>Let's define the severity and impact first.</strong><span class="ru">Давайте сначала определим критичность и влияние.</span></div>
-<div class="phrase"><strong>I'll coordinate communication between teams.</strong><span class="ru">Я буду координировать коммуникацию между командами.</span></div>
+<h2>📘 Новые фразы — Full Meeting: Critical SAP Incident</h2>
 
-<div class="phrase"><strong>Please send a status update every 30 minutes.</strong><span class="ru">Пожалуйста, отправляйте обновление статуса каждые 30 минут.</span></div>
-<div class="phrase"><strong>Let's document everything for the post-mortem.</strong><span class="ru">Давайте документируем всё для последующего разбора.</span></div>
-<div class="phrase"><strong>Who needs to be informed about this?</strong><span class="ru">Кого нужно проинформировать об этом?</span></div>
+<div class="phrase"><strong>We have a critical incident. The SAP interface is down.</strong><span class="ru">У нас критический инцидент. Интерфейс SAP не работает.</span></div>
+<div class="phrase"><strong>The DataMatrix label generation stopped at 8 AM this morning.</strong><span class="ru">Генерация кодов DataMatrix остановилась в 8 утра.</span></div>
+<div class="phrase"><strong>Our warehouse cannot ship without labels.</strong><span class="ru">Наш склад не может отгружать без маркировки.</span></div>
+<div class="phrase"><strong>What is the root cause? How long to fix?</strong><span class="ru">В чём первопричина? Сколько времени на исправление?</span></div>
+<div class="phrase"><strong>Is there a workaround while you fix the root cause?</strong><span class="ru">Есть временное решение на время починки?</span></div>
+<div class="phrase"><strong>Who is working on this right now?</strong><span class="ru">Кто сейчас этим занимается?</span></div>
+<div class="phrase"><strong>Please escalate to your senior engineers immediately.</strong><span class="ru">Немедленно эскалируйте старшим инженерам.</span></div>
+<div class="phrase"><strong>I want a status update every hour until resolved.</strong><span class="ru">Я хочу отчёт каждый час до устранения.</span></div>
+<div class="phrase"><strong>Document the incident and steps for a post-mortem.</strong><span class="ru">Задокументируйте инцидент для разбора.</span></div>
+<div class="phrase"><strong>Once fixed, we need a root cause analysis report.</strong><span class="ru">После исправления нужен отчёт с анализом первопричин.</span></div>
 
-<h2>🎭 AI-практика — Full Incident Meeting</h2>
-<div class="prompt-box">You play two roles: Shop Floor Operator (urgent, stressed) and Support Specialist (calm, technical). I am the manager. The operator reports that MES is down on line 3 — codes not printing, production stopped. I need to: understand the issue, ask the support specialist for technical details, decide on escalation, assign actions, and communicate clearly. Challenge me if I'm unclear or slow. Start with the operator calling me urgently.</div>
 
-<h2>Reading: MES Incidents</h2>
+<h2>🎭 AI-практика</h2>
+<p style="font-size:0.88em;color:#8b949e;">Запусти ChatGPT Voice Mode и вставь этот промпт (см. <a href="../common/ai-scenarios.html" style="color:#58a6ff;">AI-сценарии</a>):</p>
+<div class="prompt-box">You are a SAP consultant / vendor representative. I am a customer (process automation manager) with intermediate English. Speak clearly. Topic: Full Meeting: Critical SAP Incident. Context: Экстренная встреча по критическому инциденту с подрядчиком. Follow my lead in the conversation.</div>
+
+<h2>🗣️ Диалог для отработки</h2>
+<p style="font-size:0.88em;color:#8b949e;">Прочитай вслух по ролям (ты — Customer). Потом перескажи от своего лица.</p>
+<div class="dialog"><span class="you">You (Customer):</span> John, we have a critical incident. The SAP interface for DataMatrix label generation is down since 8 AM. Our warehouse cannot ship. What is the root cause? How long to fix?<br><br><span class="vendor">Vendor:</span> We identified a database connection issue on the PI server. Our team is working on it. Estimated fix in 4 hours.<br><br><span class="you">Customer:</span> Is there a workaround while you fix it? Please escalate to your senior engineers. I want a status update every hour until resolved. After the fix, I expect a root cause analysis report.</div>
+
+<h2>📝 Самодиктант</h2>
+<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски. Потом проверь себя.</p>
+<ol>
+<li>У нас критический инцидент. Интерфейс SAP не работает.</li>
+<li>Генерация кодов DataMatrix остановилась в 8 утра.</li>
+<li>В чём первопричина? Сколько времени на исправление?</li>
+<li>Я хочу отчёт каждый час до устранения.</li>
+<li>После исправления нужен отчёт с анализом первопричин.</li>
+</ol>
+
+<h2>Reading: Handling Critical SAP Incidents with Your Vendor</h2>
 <div style="background:#161b22; border:1px solid #21262d; border-radius:8px; padding:12px 14px; margin:10px 0;">
-  <p style="color:#c9d1d9;">MES incidents disrupt production and require swift action. Common issues include: printer failures on the line, label template errors, batch job timeouts, and data sync delays. Your role as a manager is to triage: Is this a production stop? Can we work around it? Who has the expertise to fix it? After resolution, a root cause analysis should be written to prevent recurrence.</p>
+  <p style="color:#c9d1d9;">Critical incidents happen in SAP projects. The key is response speed. When an incident occurs, call the vendor immediately. Start with: 'We have a critical incident.' Describe the impact on business operations. Ask three questions: root cause, estimated fix time, workaround. Demand hourly updates. Require escalation if needed. After resolution, request a formal root cause analysis report. Keep a calm but firm tone. The vendor should feel the urgency without panic. Document the entire incident timeline for your records and to prevent recurrence.</p>
   <hr style="border: none; border-top: 1px solid #21262d; margin: 8px 0;">
-  <p style="color:#8b949e; font-size:0.9em;">Инциденты MES нарушают производство и требуют быстрых действий. Частые проблемы: отказ принтера на линии, ошибки шаблонов этикеток, таймауты пакетных заданий. Ваша роль как менеджера — провести триаж.</p>
+  <p style="color:#8b949e; font-size:0.9em;">При критическом инциденте звоните подрядчику немедленно. Спрашивайте причину, срок и обходное решение. Требуйте часовой отчёт и RCA.</p>
 </div>
-
 <p><a href="read-12.html" style="color:#58a6ff;">📖 Полная страница для чтения →</a></p>
 
 <h2>✅ Self-check</h2>
-<div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я справился с паникующим участником и сохранил контроль</label></div>
-<div class="checkbox-item"><input type="checkbox" id="sc2"><label for="sc2">Я собрал достаточно инфы для эскалации</label></div>
-<div class="checkbox-item"><input type="checkbox" id="sc3"><label for="sc3">Я назначил чёткие задачи в стрессовой ситуации</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу быстро организовать экстренную встречу по инциденту</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc2"><label for="sc2">Я могу запросить первопричину, время исправления и временное решение</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc3"><label for="sc3">Я могу требовать часовой отчёт и RCA после устранения</label></div>
 
-<h2>📝 Заметки после встречи</h2>
-<p style="font-size:0.88em;color:#8b949e;">Запиши 1-2 фразы, которые пригодятся в реальном инциденте:</p>
-<ul style="color:#c9d1d9;">
-  <li>___________________________</li>
-  <li>___________________________</li>
-</ul>
 
-<script>(function() {
-  var saved = localStorage.getItem('eng-day12');
-  if (saved) { var arr = JSON.parse(saved);
-    document.querySelectorAll('.checkbox-item input').forEach(function(c, i) { if (arr[i]) c.checked = true; }); }
-  document.querySelectorAll('.checkbox-item input').forEach(function(c, i) {
-    c.addEventListener('change', function() {
-      var all = document.querySelectorAll('.checkbox-item input');
+<script>
+(function() {
+  var saved = localStorage.getItem("eng-day12");
+  if (saved) {
+    var arr = JSON.parse(saved);
+    document.querySelectorAll(".checkbox-item input").forEach(function(c, i) {
+      if (arr[i]) c.checked = true;
+    });
+  }
+  document.querySelectorAll(".checkbox-item input").forEach(function(c, i) {
+    c.addEventListener("change", function() {
+      var all = document.querySelectorAll(".checkbox-item input");
       var arr = Array.from(all).map(function(x) { return x.checked; });
-      localStorage.setItem('eng-day12', JSON.stringify(arr));
+      localStorage.setItem("eng-day12", JSON.stringify(arr));
     });
   });
-})();</script>
+})();
+</script>
 
 <nav>
-  <a href="day-11.html">← Day 11</a>
+  <a href="day-11.html">← day-11.html</a>
   <a href="../index.html">Главная</a>
-  <a href="day-13.html">Day 13 →</a>
+  <a href="day-13.html">day-13.html →</a>
 </nav>
 
 </body>

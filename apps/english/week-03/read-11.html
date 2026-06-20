@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reading Day 11 — SAP-MES Integration</title>
+<title>Reading Day 11 — Managing New Regulatory Requirements</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.7; padding: 20px; max-width: 800px; margin: 0 auto; }
@@ -34,53 +34,50 @@ nav a:hover { color: #58a6ff; }
 <body>
 
 <a class="back" href="../index.html">← На главную</a>
-<h1>Reading Day 11 · SAP-MES Integration</h1>
+<h1>Reading Day 11 · Managing New Regulatory Requirements</h1>
 <p class="note">Week 3 · Чтение и понимание текста</p>
 
 <div class="card">
-  <p>SAP and MES integration is the backbone of modern manufacturing. SAP ERP handles planning and orders, while MES manages real-time production on the shop floor. The two systems communicate through IDoc messages. When an IDoc fails, orders can be delayed or duplicated. A status meeting for this integration should cover IDoc error rates, batch job health, and pending change requests. The SAP-MES interface is typically bi-directional. SAP sends production orders and master data to MES. MES sends back actual production data, material consumption, and quality results. If the interface goes down, production may continue but reporting becomes manual and error-prone. As a manager leading this meeting, you need to know the key technical terms: IDoc, RFC, BAPI, RFC destination, and middleware. You do not need to be a technical expert, but understanding the high-level data flow helps you ask better questions. Common issues include network interruptions, incorrect mapping, and authorization errors.</p>
+  <p>The lifecycle of a regulatory requirement in SAP starts when the government publishes a new decree. First, you must read and understand the requirement. Then assess the impact on your SAP system. Does it affect Chestny Znak, Mercury, or another system? What new data fields are needed? What reports must the system generate? Next, write a formal requirement document and share it with your SAP vendor. Discuss the implementation approach, timeline, and cost. After the vendor completes the work, test everything thoroughly. For DataMatrix codes, check that the labels scan correctly. For Mercury, verify that VSD certificates are generated and transmitted without errors. Finally, prepare for the government audit. Keep all documentation organized. A structured lifecycle approach ensures you never miss a critical step when new regulations appear, which happens several times a year in Russia.</p>
 </div>
 
 <h2>Перевод</h2>
 <div class="card ru">
-  <p>Интеграция SAP и MES — это основа современного производства. SAP ERP отвечает за планирование и заказы, а MES управляет производством в реальном времени на цеховом уровне. Две системы обмениваются через IDoc-сообщения. Когда IDoc падает, заказы могут задерживаться или дублироваться. Встреча по статусу интеграции должна охватывать частоту ошибок IDoc, здоровье пакетных заданий и ожидающие запросы на изменения. Интерфейс SAP-MES обычно двунаправленный. Как менеджер, ведущий эту встречу, вам нужно знать ключевые технические термины: IDoc, RFC, BAPI, middleware.</p>
+  <p>Жизненный цикл регуляторного требования в SAP начинается, когда правительство публикует новый указ. Сначала вы должны прочитать и понять требование. Затем оценить влияние на вашу SAP-систему. Это влияет на Честный Знак, Меркурий или другую систему? Какие новые поля данных нужны? Какие отчёты должна генерировать система? Затем напишите формальный документ с требованиями и отправьте его SAP-подрядчику. Обсудите подход к внедрению, сроки и стоимость. После завершения работ подрядчиком тщательно всё протестируйте. Для DataMatrix-кодов проверьте, что метки сканируются корректно. Для Меркурия убедитесь, что ВСД генерируются и передаются без ошибок. Наконец, подготовьтесь к проверке государственных органов. Храните всю документацию в порядке. Структурированный подход к жизненному циклу гарантирует, что вы никогда не пропустите критический шаг, когда появляются новые регламенты, что происходит несколько раз в год в России.</p>
 </div>
 
 <h2>Словарь</h2>
 <table>
   <tr><th style="color:#f0883e;">English</th><th style="color:#f0883e;">Русский</th></tr>
-<tr><td style='color:#58a6ff;'>bidirectional</td><td style='color:#8b949e;'>...</td></tr>
-<tr><td style='color:#58a6ff;'>interface</td><td style='color:#8b949e;'>...</td></tr>
-<tr><td style='color:#58a6ff;'>network</td><td style='color:#8b949e;'>...</td></tr>
-<tr><td style='color:#58a6ff;'>production</td><td style='color:#8b949e;'>...</td></tr>
-<tr><td style='color:#58a6ff;'>errorprone</td><td style='color:#8b949e;'>...</td></tr>
-<tr><td style='color:#58a6ff;'>include</td><td style='color:#8b949e;'>...</td></tr>
-<tr><td style='color:#58a6ff;'>orders</td><td style='color:#8b949e;'>...</td></tr>
-<tr><td style='color:#58a6ff;'>destination</td><td style='color:#8b949e;'>...</td></tr>
-<tr><td style='color:#58a6ff;'>through</td><td style='color:#8b949e;'>...</td></tr>
-<tr><td style='color:#58a6ff;'>technical</td><td style='color:#8b949e;'>...</td></tr>
-<tr><td style='color:#58a6ff;'>mapping</td><td style='color:#8b949e;'>...</td></tr>
-<tr><td style='color:#58a6ff;'>errors</td><td style='color:#8b949e;'>...</td></tr>
-
+<tr><td style='color:#58a6ff;'>lifecycle</td><td style='color:#8b949e;'>жизненный цикл</td></tr>
+<tr><td style='color:#58a6ff;'>decree</td><td style='color:#8b949e;'>указ, постановление</td></tr>
+<tr><td style='color:#58a6ff;'>assess</td><td style='color:#8b949e;'>оценивать</td></tr>
+<tr><td style='color:#58a6ff;'>formal document</td><td style='color:#8b949e;'>официальный документ</td></tr>
+<tr><td style='color:#58a6ff;'>implementation approach</td><td style='color:#8b949e;'>подход к внедрению</td></tr>
+<tr><td style='color:#58a6ff;'>test</td><td style='color:#8b949e;'>тестировать</td></tr>
+<tr><td style='color:#58a6ff;'>scan</td><td style='color:#8b949e;'>сканировать</td></tr>
+<tr><td style='color:#58a6ff;'>audit</td><td style='color:#8b949e;'>аудит, проверка</td></tr>
+<tr><td style='color:#58a6ff;'>transmit</td><td style='color:#8b949e;'>передавать</td></tr>
+<tr><td style='color:#58a6ff;'>documentation</td><td style='color:#8b949e;'>документация</td></tr>
 </table>
 
 <h2>Вопросы на понимание</h2>
 <ol>
-  <li>What is the main idea of this text?</li>
-  <li>Why is this topic important for a manager?</li>
-  <li>What practical advice does the text give?</li>
-  <li>How would you apply this in your work?</li>
-  <li>What phrase from this text will you use today?</li>
+  <li>What starts the lifecycle of a regulatory requirement in SAP?</li>
+  <li>What questions should you ask when assessing impact on SAP?</li>
+  <li>What should you test after the vendor completes work on DataMatrix codes?</li>
+  <li>What should you verify for Mercury VSD certificates?</li>
+  <li>How often do new regulations appear in Russia according to the text?</li>
 </ol>
 
 <h2>Перевод упражнение</h2>
 <p class="note">Переведи на английский:</p>
 <ol>
-  <li>Это важный навык для менеджера.</li>
-  <li>Мы должны практиковаться каждый день.</li>
-  <li>Мне нужно улучшить свои коммуникативные навыки.</li>
-  <li>Это поможет команде работать эффективнее.</li>
-  <li>Я буду использовать эту фразу на следующей встрече.</li>
+  <li>Правительство опубликовало новый указ о Честном Знаке.</li>
+  <li>Нам нужно оценить влияние на нашу SAP-систему.</li>
+  <li>Пожалуйста, проверьте, что DataMatrix-метки сканируются корректно.</li>
+  <li>Мы должны подготовиться к проверке государственных органов.</li>
+  <li>Храните всю документацию по проекту в порядке.</li>
 </ol>
 
 <h2>Ответы</h2>
@@ -88,23 +85,21 @@ nav a:hover { color: #58a6ff; }
   <summary>Показать ответы</summary>
   <div style="margin-top:8px;">
     <p><strong>Вопросы на понимание (примерные ответы):</strong></p>
-    <div class="answer">1. The text explains SAP-MES Integration and its role in meetings.</div>
-    <div class="answer">2. It helps a manager communicate more effectively.</div>
-    <div class="answer">3. The text advises to practice key phrases and listen actively.</div>
-    <div class="answer">4. I will apply this in my weekly status meetings.</div>
-    <div class="answer">5. "..." — the specific phrase from this reading.</div>
+    <div class="answer">1. The government publishes a new decree.</div>
+    <div class="answer">2. Which system is affected (CZ, Mercury, etc.)? What new data fields and reports are needed?</div>
+    <div class="answer">3. That the labels scan correctly.</div>
+    <div class="answer">4. That VSD certificates are generated and transmitted without errors.</div>
+    <div class="answer">5. Several times a year.</div>
     <p style="margin-top:8px;"><strong>Перевод:</strong></p>
-    <div class="answer">1. This is an important skill for a manager.</div>
-    <div class="answer">2. We should practice every day.</div>
-    <div class="answer">3. I need to improve my communication skills.</div>
-    <div class="answer">4. This will help the team work more efficiently.</div>
-    <div class="answer">5. I will use this phrase at the next meeting.</div>
+    <div class="answer">1. The government published a new decree on Chestny Znak.</div>
+    <div class="answer">2. We need to assess the impact on our SAP system.</div>
+    <div class="answer">3. Please verify that the DataMatrix labels scan correctly.</div>
+    <div class="answer">4. We must prepare for the government audit.</div>
+    <div class="answer">5. Keep all project documentation organized.</div>
   </div>
 </details>
 
 <nav>
-  <a href='day-10.html'>← day-10.html</a>
-
   <a href="../index.html">Главная</a>
   <a href="day-11.html">→ day-11.html</a>
 </nav>

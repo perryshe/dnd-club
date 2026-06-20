@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Day 13 — Full Meeting: ЧЗ + Mercury</title>
+<title>Day 13 — Full Meeting: Two Regulatory Changes</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.7; padding: 20px; max-width: 800px; margin: 0 auto; }
@@ -15,6 +15,14 @@ ul, ol { padding-left: 20px; margin: 6px 0; }
 li { margin: 3px 0; }
 .back { color: #8b949e; text-decoration: none; font-size: 0.85em; display: inline-block; margin-bottom: 12px; }
 .back:hover { color: #58a6ff; }
+.phrase { background: #161b22; border: 1px solid #21262d; border-radius: 8px; padding: 10px 14px; margin: 8px 0; }
+.phrase strong { color: #58a6ff; font-size: 1.02em; }
+.phrase .ru { color: #8b949e; font-size: 0.85em; display: block; margin-top: 3px; }
+.phrase .example { color: #3fb950; font-size: 0.85em; display: block; margin-top: 2px; }
+.dialog { background: #161b22; border-left: 3px solid #58a6ff; border-radius: 0 8px 8px 0; padding: 12px 14px; margin: 10px 0; }
+.dialog .speaker { color: #f0883e; font-weight: 600; }
+.dialog .vendor { color: #d29922; font-weight: 600; }
+.dialog .you { color: #58a6ff; font-weight: 600; }
 .checkbox-item { display: flex; align-items: flex-start; gap: 10px; margin: 8px 0; }
 .checkbox-item input { margin-top: 4px; accent-color: #3fb950; width: 18px; min-width: 18px; height: 18px; }
 .checkbox-item label { font-size: 0.92em; color: #c9d1d9; }
@@ -25,69 +33,90 @@ li { margin: 3px 0; }
 .tag-orange { background: #d2992233; color: #d29922; }
 nav { margin-top: 30px; padding-top: 16px; border-top: 1px solid #21262d; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 0.85em; }
 nav a { color: #8b949e; text-decoration: none; }
-nav a:hover { color: #58a6ff; }
-</style>
+nav a:hover { color: #58a6ff; }</style>
 </head>
 <body>
 
 <a class="back" href="../index.html">← На главную</a>
-<h1>Day 13 · Full Meeting: ЧЗ + Mercury Combined</h1>
-<p style="color:#8b949e;font-size:0.9em;">Пн 6 июл 2026 · Week 3 — Сквозная практика · Повтор D12 + Полная встреча</p>
+<h1>Day 13 · Full Meeting: Two Regulatory Changes</h1>
+<p style="color:#8b949e;font-size:0.9em;">Пн 6 июл 2026 · Week 3 — Заказчик → Подрядчик · Новый материал</p>
 
 <div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
-  <strong>🎯 Фокус дня:</strong> Провести встречу с двумя разными темами и разными участниками. Фокус на переходах между темами и тайминге.
+  <strong>🎯 Фокус дня:</strong> Встреча по двум регуляторным изменениям: ЧЗ и Меркурий
 </div>
 
-<h2>🔁 Повторение — Day 12 (30 мин)</h2>
-<ul>
-  <li>Повтори фразы escalation (D12)</li>
-  <li><strong>AI Voice:</strong> <em>"I am a support specialist. A critical MES incident just came in. I will report it to you. Handle it."</em></li>
-</ul>
+<h2>🔁 Повторение</h2>
+<p style="color:#8b949e;font-size:0.9em;">Повторение D12: Скажи: 'We have a critical incident. The SAP interface is down...'</p>
 
-<h2>📘 Освежение — Transition phrases</h2>
-<p style="color:#8b949e;font-size:0.9em;">Плавный переход между темами — ключевой навык менеджера:</p>
-<ul>
-  <li>"That covers [topic]. Let's move on to the next item."</li>
-  <li>"Now I'd like to switch gears and talk about…"</li>
-  <li>"We have 15 minutes left — let's use them for [topic]."</li>
-  <li>"Before we run out of time, let's quickly cover…"</li>
-  <li>"Let's pause this thread and pick it up offline if needed."</li>
-</ul>
+<h2>📘 Новые фразы — Full Meeting: Two Regulatory Changes</h2>
 
-<h2>🎭 AI-практика — Full Combined Meeting</h2>
-<div class="prompt-box">You play two roles: Business User (reports Честный ЗНАК issue — code emission failed) and Logistics Specialist (reports Mercury VSD problem — VSD acknowledgement timeout). I am the manager handling both topics in one meeting. I must: open with agenda covering both topics, transition smoothly between them, keep each person focused, summarize both, assign separate action items, and close. Start with me opening the meeting.</div>
+<div class="phrase"><strong>Today's agenda has two topics: Chestny Znak and Mercury updates.</strong><span class="ru">Сегодня две темы: обновления ЧЗ и Меркурия.</span></div>
+<div class="phrase"><strong>Let's start with Chestny Znak. The CRPT changed the DataMatrix format.</strong><span class="ru">Начнём с ЧЗ. ЦРПТ изменила формат DataMatrix.</span></div>
+<div class="phrase"><strong>The new format adds a GS1 application identifier for the batch number.</strong><span class="ru">Новый формат добавляет GS1-идентификатор номера партии.</span></div>
+<div class="phrase"><strong>When does this change take effect?</strong><span class="ru">Когда вступает в силу?</span></div>
+<div class="phrase"><strong>Now the second topic: Mercury VSD format update.</strong><span class="ru">Теперь вторая тема: обновление формата VSD.</span></div>
+<div class="phrase"><strong>The Mercury system now requires electronic signatures on VSDs.</strong><span class="ru">Система Меркурий теперь требует ЭЦП на VSD.</span></div>
+<div class="phrase"><strong>Can we combine both changes into one SAP release?</strong><span class="ru">Можем объединить оба изменения в один релиз?</span></div>
+<div class="phrase"><strong>Both deadlines are in September. We need a combined plan.</strong><span class="ru">Оба дедлайна в сентябре. Нужен объединённый план.</span></div>
+<div class="phrase"><strong>Let me summarize both changes and next steps.</strong><span class="ru">Подведём итог обоих изменений.</span></div>
+<div class="phrase"><strong>We'll have one combined proposal by July 20th.</strong><span class="ru">У нас будет одно объединённое предложение к 20 июля.</span></div>
 
-<h2>Reading: Chestny Znak and Mercury</h2>
+
+<h2>🎭 AI-практика</h2>
+<p style="font-size:0.88em;color:#8b949e;">Запусти ChatGPT Voice Mode и вставь этот промпт (см. <a href="../common/ai-scenarios.html" style="color:#58a6ff;">AI-сценарии</a>):</p>
+<div class="prompt-box">You are a SAP consultant / vendor representative. I am a customer (process automation manager) with intermediate English. Speak clearly. Topic: Full Meeting: Two Regulatory Changes. Context: Встреча по двум регуляторным изменениям: ЧЗ и Меркурий. Follow my lead in the conversation.</div>
+
+<h2>🗣️ Диалог для отработки</h2>
+<p style="font-size:0.88em;color:#8b949e;">Прочитай вслух по ролям (ты — Customer). Потом перескажи от своего лица.</p>
+<div class="dialog"><span class="you">You (Customer):</span> Good morning. Today's agenda has two topics: Chestny Znak and Mercury updates. Let's start with Chestny Znak. The CRPT changed the DataMatrix format — it adds a GS1 identifier for batch number. When does this take effect?<br><br><span class="vendor">Vendor:</span> September 1st for dairy products. We need to update the label layout in ECC and the PI mapping.<br><br><span class="you">Customer:</span> Now the second topic. The Mercury system now requires electronic signatures on VSDs. Can we combine both changes into one SAP release?<br><br><span class="vendor">Vendor:</span> Yes, that makes sense. Both affect the PI layer.<br><br><span class="you">Customer:</span> Let me summarize: both changes, one combined proposal by July 20th. John, you'll coordinate.</div>
+
+<h2>📝 Самодиктант</h2>
+<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски. Потом проверь себя.</p>
+<ol>
+<li>Сегодня две темы: обновления ЧЗ и Меркурия.</li>
+<li>Начнём с ЧЗ. ЦРПТ изменила формат DataMatrix.</li>
+<li>Когда вступает в силу?</li>
+<li>Можем объединить оба изменения в один релиз?</li>
+<li>Подведём итог обоих изменений.</li>
+</ol>
+
+<h2>Reading: Managing Multiple Regulatory Changes with a Vendor</h2>
 <div style="background:#161b22; border:1px solid #21262d; border-radius:8px; padding:12px 14px; margin:10px 0;">
-  <p style="color:#c9d1d9;">Chestny Znak (Honest Sign) and Mercury are Russian government traceability systems. Chestny Znak tracks products using DataMatrix codes — essential for pharmaceuticals, tobacco, and dairy. Mercury tracks animal products. Both systems integrate with your ERP and MES. Cross-functional meetings for these projects involve IT, production, logistics, and compliance teams.</p>
+  <p style="color:#c9d1d9;">When two regulatory changes happen simultaneously, efficiency is critical. Hold one meeting with a clear two-topic agenda. Start with topic one: explain the change, ask for impact, discuss timeline. Then topic two: same structure. Ask if the vendor can combine both into one release to save cost and time. Request a single combined proposal. Summarize both topics together. This approach saves meeting time, reduces administrative overhead, and helps the vendor plan resources more efficiently across both changes.</p>
   <hr style="border: none; border-top: 1px solid #21262d; margin: 8px 0;">
-  <p style="color:#8b949e; font-size:0.9em;">Честный Знак и Меркурий — это российские государственные системы прослеживаемости. Честный Знак отслеживает товары через коды DataMatrix. Меркурий отслеживает животные продукты. Обе интегрируются с вашими ERP и MES.</p>
+  <p style="color:#8b949e; font-size:0.9em;">Когда два регуляторных изменения происходят одновременно, проводите одну встречу. Объедините изменения в один релиз для экономии.</p>
 </div>
-
 <p><a href="read-13.html" style="color:#58a6ff;">📖 Полная страница для чтения →</a></p>
 
 <h2>✅ Self-check</h2>
-<div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я сделал плавный переход между темами</label></div>
-<div class="checkbox-item"><input type="checkbox" id="sc2"><label for="sc2">Я уложился по таймингу и не ушёл в дебри</label></div>
-<div class="checkbox-item"><input type="checkbox" id="sc3"><label for="sc3">Я разделил задачи по двум темам</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу вести встречу по двум регуляторным темам одновременно</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc2"><label for="sc2">Я могу предложить объединить изменения в один релиз</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc3"><label for="sc3">Я могу резюмировать обе темы и назначить задачи</label></div>
 
-<script>(function() {
-  var saved = localStorage.getItem('eng-day13');
-  if (saved) { var arr = JSON.parse(saved);
-    document.querySelectorAll('.checkbox-item input').forEach(function(c, i) { if (arr[i]) c.checked = true; }); }
-  document.querySelectorAll('.checkbox-item input').forEach(function(c, i) {
-    c.addEventListener('change', function() {
-      var all = document.querySelectorAll('.checkbox-item input');
+
+<script>
+(function() {
+  var saved = localStorage.getItem("eng-day13");
+  if (saved) {
+    var arr = JSON.parse(saved);
+    document.querySelectorAll(".checkbox-item input").forEach(function(c, i) {
+      if (arr[i]) c.checked = true;
+    });
+  }
+  document.querySelectorAll(".checkbox-item input").forEach(function(c, i) {
+    c.addEventListener("change", function() {
+      var all = document.querySelectorAll(".checkbox-item input");
       var arr = Array.from(all).map(function(x) { return x.checked; });
-      localStorage.setItem('eng-day13', JSON.stringify(arr));
+      localStorage.setItem("eng-day13", JSON.stringify(arr));
     });
   });
-})();</script>
+})();
+</script>
 
 <nav>
-  <a href="day-12.html">← Day 12</a>
+  <a href="day-12.html">← day-12.html</a>
   <a href="../index.html">Главная</a>
-  <a href="day-14.html">Day 14 →</a>
+  <a href="day-14.html">day-14.html →</a>
 </nav>
 
 </body>

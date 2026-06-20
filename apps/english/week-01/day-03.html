@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Day 03 — Reporting Issues</title>
+<title>Day 03 — Change Request Due to Regulation</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.7; padding: 20px; max-width: 800px; margin: 0 auto; }
@@ -19,8 +19,9 @@ li { margin: 3px 0; }
 .phrase strong { color: #58a6ff; font-size: 1.02em; }
 .phrase .ru { color: #8b949e; font-size: 0.85em; display: block; margin-top: 3px; }
 .phrase .example { color: #3fb950; font-size: 0.85em; display: block; margin-top: 2px; }
-.dialog { background: #161b22; border-left: 3px solid #f85149; border-radius: 0 8px 8px 0; padding: 12px 14px; margin: 10px 0; }
+.dialog { background: #161b22; border-left: 3px solid #58a6ff; border-radius: 0 8px 8px 0; padding: 12px 14px; margin: 10px 0; }
 .dialog .speaker { color: #f0883e; font-weight: 600; }
+.dialog .vendor { color: #d29922; font-weight: 600; }
 .dialog .you { color: #58a6ff; font-weight: 600; }
 .checkbox-item { display: flex; align-items: flex-start; gap: 10px; margin: 8px 0; }
 .checkbox-item input { margin-top: 4px; accent-color: #3fb950; width: 18px; min-width: 18px; height: 18px; }
@@ -29,123 +30,93 @@ li { margin: 3px 0; }
 .tag { display: inline-block; padding: 0 8px; border-radius: 10px; font-size: 0.7em; font-weight: 600; margin: 0 4px 4px 0; }
 .tag-blue { background: #1f6feb33; color: #58a6ff; }
 .tag-green { background: #23863633; color: #3fb950; }
-.tag-red { background: #da363333; color: #f85149; }
+.tag-orange { background: #d2992233; color: #d29922; }
 nav { margin-top: 30px; padding-top: 16px; border-top: 1px solid #21262d; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 0.85em; }
 nav a { color: #8b949e; text-decoration: none; }
-nav a:hover { color: #58a6ff; }
-</style>
+nav a:hover { color: #58a6ff; }</style>
 </head>
 <body>
 
 <a class="back" href="../index.html">← На главную</a>
-<h1>Day 03 · Reporting Issues</h1>
-<p style="color:#8b949e;font-size:0.9em;">Пн 22 июн 2026 · Week 1 — База встреч · Повтор D2 + Новое</p>
+<h1>Day 03 · Change Request Due to Regulation</h1>
+<p style="color:#8b949e;font-size:0.9em;">Пн 22 июн 2026 · Week 1 — Заказчик → Подрядчик · Новый материал</p>
 
 <div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
-  <strong>🎯 Фокус дня:</strong> Научиться описывать проблемы, инциденты, ошибки — чётко и структурированно.
+  <strong>🎯 Фокус дня:</strong> Сообщать подрядчику об изменениях госорганов и инициировать Change Request
 </div>
 
-<h2>🔁 Повторение — Day 02 (30 мин)</h2>
-<ul>
-  <li>Прочитай вслух фразы D02 (5 шт, без подсказок)</li>
-  <li>Перескажи диалог D02 от лица Manager</li>
-  <li><strong>AI Voice:</strong> <em>"I am a developer with three tasks. Ask me for status on each one and push for details."</em></li>
-</ul>
+<h2>🔁 Повторение</h2>
+<p style="color:#8b949e;font-size:0.9em;">Повторение D02: Скажи вслух: 'We have a new requirement...' — объясни требование и запроси оценку.</p>
 
-<h2>📘 Новые фразы — Reporting Issues</h2>
+<h2>📘 Новые фразы — Change Request Due to Regulation</h2>
 
-<div class="phrase"><strong>We're seeing an issue with [system/process].</strong><span class="ru">У нас проблема с [системой/процессом].</span><span class="example">"We're seeing an issue with the batch job that transfers production orders."</span></div>
-<div class="phrase"><strong>The error message says: [error].</strong><span class="ru">Сообщение об ошибке: [ошибка].</span><span class="example">"The error message says: 'partner profile not found'."</span></div>
-<div class="phrase"><strong>This started at approximately [time] and is affecting [impact].</strong><span class="ru">Это началось примерно в [время] и влияет на [что].</span></div>
-<div class="phrase"><strong>We need to escalate this to [team/vendor].</strong><span class="ru">Нужно эскалировать это в [команду/вендору].</span></div>
-<div class="phrase"><strong>Can we put a workaround in place while we investigate?</strong><span class="ru">Можем сделать временное решение, пока расследуем?</span></div>
+<div class="phrase"><strong>The regulator updated the requirements. We need to change the scope.</strong><span class="ru">Регулятор обновил требования. Нужно изменить scope.</span></div>
+<div class="phrase"><strong>This is a new government requirement. We must implement by [date].</strong><span class="ru">Новое требование государства. Внедрить к [дате].</span></div>
+<div class="phrase"><strong>How will this affect the timeline and budget?</strong><span class="ru">Как это повлияет на сроки и бюджет?</span></div>
+<div class="phrase"><strong>Please provide a revised proposal with the new scope.</strong><span class="ru">Дайте пересмотренное предложение.</span></div>
+<div class="phrase"><strong>We need a formal Change Request to update the contract.</strong><span class="ru">Нужен формальный Change Request.</span></div>
+<div class="phrase"><strong>Is this within the current budget or need additional approval?</strong><span class="ru">Это в бюджете или нужно согласование?</span></div>
+<div class="phrase"><strong>The regulatory deadline is firm. No extension possible.</strong><span class="ru">Дедлайн жёсткий. Продление невозможно.</span></div>
+<div class="phrase"><strong>We need a workaround while the permanent fix is developed.</strong><span class="ru">Нужно временное решение.</span></div>
+<div class="phrase"><strong>Can we phase this — MVP by deadline, full solution later?</strong><span class="ru">Можно поэтапно: MVP к сроку, потом полное решение?</span></div>
+<div class="phrase"><strong>This change is critical for compliance.</strong><span class="ru">Это критично для соблюдения требований.</span></div>
 
-<div class="phrase"><strong>Just to clarify, what exactly is blocking this?</strong><span class="ru">Просто уточнить: что именно блокирует это?</span></div>
-<div class="phrase"><strong>Let me check the logs and get back to you.</strong><span class="ru">Давайте я проверю логи и вернусь к вам.</span></div>
-<div class="phrase"><strong>How long has this been happening?</strong><span class="ru">Как долго это происходит?</span></div>
-<div class="phrase"><strong>Is this a recurring issue or a one-time occurrence?</strong><span class="ru">Это повторяющаяся проблема или разовый случай?</span></div>
-<div class="phrase"><strong>I'll open a ticket and assign it to the integration team.</strong><span class="ru">Я открою тикет и назначу на команду интеграции.</span></div>
-<div class="phrase"><strong>Let's schedule a separate call to troubleshoot this.</strong><span class="ru">Давайте назначим отдельный звонок для диагностики.</span></div>
-<div class="phrase"><strong>Please document the steps to reproduce the issue.</strong><span class="ru">Пожалуйста, задокументируйте шаги для воспроизведения проблемы.</span></div>
 
 <h2>🎭 AI-практика</h2>
-
-<h3>Scenario 1 — Critical MES issue</h3>
-<div class="prompt-box">You are a shop floor operator calling me (the manager) about a critical MES problem. The production line is stopped because MES won't print Data Matrix codes. Describe the issue urgently. I will ask clarifying questions and document the incident. Start the call.</div>
-
-<h3>Scenario 2 — Escalation needed</h3>
-<div class="prompt-box">You are a developer. An SAP batch job failed overnight and IDocs are stuck. Tell me about the issue, the error code (IDoc status 51), and what you've tried so far. I will decide on the next steps. Start by reporting the issue.</div>
+<p style="font-size:0.88em;color:#8b949e;">Запусти ChatGPT Voice Mode и вставь этот промпт (см. <a href="../common/ai-scenarios.html" style="color:#58a6ff;">AI-сценарии</a>):</p>
+<div class="prompt-box">You are a SAP consultant / vendor representative. I am a customer (process automation manager) with intermediate English. Speak clearly. Topic: Change Request Due to Regulation. Context: Сообщать подрядчику об изменениях госорганов и инициировать Change Request. Follow my lead in the conversation.</div>
 
 <h2>🗣️ Диалог для отработки</h2>
-
-<div class="dialog">
-<span class="speaker">Operator:</span> Hello, we have an urgent problem on Packaging line 2. MES won't print the Data Matrix codes. The operator gets a red pop-up "Emission error".<br><br>
-
-<span class="you">Manager (You):</span> I understand. Let me check the MES log. What time did this start?<br><br>
-
-<span class="speaker">Operator:</span> About 20 minutes ago, at 9:40 AM.<br><br>
-
-<span class="you">Manager:</span> Is the line completely stopped?<br><br>
-
-<span class="speaker">Operator:</span> Yes. We can't pack anything without the codes.<br><br>
-
-<span class="you">Manager:</span> Understood. Let me check the log. The error reads: "CRPT service returned: code pool exhausted". When did you last order codes?<br><br>
-
-<span class="speaker">Operator:</span> We ordered 10,000 codes on Monday. But we packed more than that this week.<br><br>
-
-<span class="you">Manager:</span> That explains it. We need to place a new emission order. Do you have access to the CRPT web portal?<br><br>
-
-<span class="speaker">Operator:</span> Yes, I can log in.<br><br>
-
-<span class="you">Manager:</span> Open the portal, go to "Emission" – "Order codes". Select the GTIN 04640000001234, enter 20,000, and confirm. I'll monitor the delivery. In the meantime, let's set up a proactive alert for when the pool falls below 10%. I'll create a ticket for that.<br><br>
-
-<span class="speaker">Operator:</span> Done. The status is "In progress". How long will it take?<br><br>
-
-<span class="you">Manager:</span> Usually 15 minutes. I'll call you back once the codes arrive so we can test one print.
-</div>
+<p style="font-size:0.88em;color:#8b949e;">Прочитай вслух по ролям (ты — Customer). Потом перескажи от своего лица.</p>
+<div class="dialog"><span class="you">You (Customer):</span> John, the CRPT changed the marking rules for dairy. Every item must now be marked, not just outer packaging. This changes the scope significantly.<br><br><span class="vendor">John:</span> That is substantial. It will affect timeline and budget. We need a formal Change Request.<br><br><span class="you">Customer:</span> I understand. Please prepare a revised proposal. Deadline is still December 1st. Can we do MVP by then and full rollout later?</div>
 
 <h2>📝 Самодиктант</h2>
+<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски. Потом проверь себя.</p>
 <ol>
-  <li>У нас проблема с пакетным заданием.</li>
-  <li>Сообщение об ошибке: пул кодов исчерпан.</li>
-  <li>Это началось примерно в 9:40 утра.</li>
-  <li>Нужно эскалировать это в ЦРПТ.</li>
-  <li>Я открою тикет и вернусь к вам.</li>
+<li>Регулятор обновил требования. Нужно изменить scope.</li>
+<li>Как это повлияет на сроки и бюджет?</li>
+<li>Дайте пересмотренное предложение.</li>
+<li>Нужно временное решение до постоянного.</li>
+<li>Дедлайн жёсткий. Нельзя пропустить.</li>
 </ol>
 
-<h2>Reading: Incident Response in IT</h2>
+<h2>Reading: Government Regulations and SAP</h2>
 <div style="background:#161b22; border:1px solid #21262d; border-radius:8px; padding:12px 14px; margin:10px 0;">
-  <p style="color:#c9d1d9;">In manufacturing IT, incidents are inevitable: a batch job fails, an IDoc is stuck, or a label printer stops responding. A structured incident response saves hours. First, confirm the impact: who is affected and how urgent is it? Second, gather data: error messages, timestamps, logs. Third, communicate: inform stakeholders, assign ownership, set a timeline. Fourth, escalate if needed. Finally, after resolution, document the root cause to prevent recurrence.</p>
+  <p style="color:#c9d1d9;">Government regulations change frequently, and SAP systems must adapt. In Russia, the main systems are Chestny Znak (DataMatrix tracking) and Mercury (veterinary certificates). Both regularly update formats. As a customer, monitor changes and inform your vendor fast. When a regulation changes: read the document, identify impact, estimate effort, inform the vendor. Keep a regulatory compliance calendar.</p>
   <hr style="border: none; border-top: 1px solid #21262d; margin: 8px 0;">
-  <p style="color:#8b949e; font-size:0.9em;">В производственном IT инциденты неизбежны: пакетное задание упало, IDoc завис или принтер этикеток перестал отвечать. Структурированная реакция на инцидент экономит часы. Сначала подтвердите влияние, затем соберите данные, потом коммуницируйте, при необходимости эскалируйте. После устранения задокументируйте корневую причину.</p>
+  <p style="color:#8b949e; font-size:0.9em;">Регуляции меняются часто. Как заказчик, отслеживайте изменения и информируйте подрядчика.</p>
 </div>
-
 <p><a href="read-03.html" style="color:#58a6ff;">📖 Полная страница для чтения →</a></p>
 
 <h2>✅ Self-check</h2>
-<div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу описать проблему структурированно</label></div>
-<div class="checkbox-item"><input type="checkbox" id="sc2"><label for="sc2">Я умею задавать уточняющие вопросы по инциденту</label></div>
-<div class="checkbox-item"><input type="checkbox" id="sc3"><label for="sc3">Я помню фразы с D01 и D02 без подсказок</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу инициировать Change Request при изменении регулятора</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc2"><label for="sc2">Я могу предложить поэтапное внедрение (MVP + later)</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc3"><label for="sc3">Я могу чётко сказать о жёстком дедлайне</label></div>
+
 
 <script>
 (function() {
-  var saved = localStorage.getItem('eng-day03');
-  if (saved) { var arr = JSON.parse(saved);
-    document.querySelectorAll('.checkbox-item input').forEach(function(c, i) { if (arr[i]) c.checked = true; }); }
-  document.querySelectorAll('.checkbox-item input').forEach(function(c, i) {
-    c.addEventListener('change', function() {
-      var all = document.querySelectorAll('.checkbox-item input');
+  var saved = localStorage.getItem("eng-day03");
+  if (saved) {
+    var arr = JSON.parse(saved);
+    document.querySelectorAll(".checkbox-item input").forEach(function(c, i) {
+      if (arr[i]) c.checked = true;
+    });
+  }
+  document.querySelectorAll(".checkbox-item input").forEach(function(c, i) {
+    c.addEventListener("change", function() {
+      var all = document.querySelectorAll(".checkbox-item input");
       var arr = Array.from(all).map(function(x) { return x.checked; });
-      localStorage.setItem('eng-day03', JSON.stringify(arr));
+      localStorage.setItem("eng-day03", JSON.stringify(arr));
     });
   });
 })();
 </script>
 
 <nav>
-  <a href="day-02.html">← Day 02</a>
+  <a href="day-02.html">← day-02.html</a>
   <a href="../index.html">Главная</a>
-  <a href="day-04.html">Day 04 →</a>
+  <a href="day-04.html">day-04.html →</a>
 </nav>
 
 </body>

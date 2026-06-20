@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Day 11 — Full Meeting: SAP Status</title>
+<title>Day 11 — Full Meeting: New SAP Requirement</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.7; padding: 20px; max-width: 800px; margin: 0 auto; }
@@ -15,8 +15,13 @@ ul, ol { padding-left: 20px; margin: 6px 0; }
 li { margin: 3px 0; }
 .back { color: #8b949e; text-decoration: none; font-size: 0.85em; display: inline-block; margin-bottom: 12px; }
 .back:hover { color: #58a6ff; }
+.phrase { background: #161b22; border: 1px solid #21262d; border-radius: 8px; padding: 10px 14px; margin: 8px 0; }
+.phrase strong { color: #58a6ff; font-size: 1.02em; }
+.phrase .ru { color: #8b949e; font-size: 0.85em; display: block; margin-top: 3px; }
+.phrase .example { color: #3fb950; font-size: 0.85em; display: block; margin-top: 2px; }
 .dialog { background: #161b22; border-left: 3px solid #58a6ff; border-radius: 0 8px 8px 0; padding: 12px 14px; margin: 10px 0; }
 .dialog .speaker { color: #f0883e; font-weight: 600; }
+.dialog .vendor { color: #d29922; font-weight: 600; }
 .dialog .you { color: #58a6ff; font-weight: 600; }
 .checkbox-item { display: flex; align-items: flex-start; gap: 10px; margin: 8px 0; }
 .checkbox-item input { margin-top: 4px; accent-color: #3fb950; width: 18px; min-width: 18px; height: 18px; }
@@ -28,79 +33,90 @@ li { margin: 3px 0; }
 .tag-orange { background: #d2992233; color: #d29922; }
 nav { margin-top: 30px; padding-top: 16px; border-top: 1px solid #21262d; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 0.85em; }
 nav a { color: #8b949e; text-decoration: none; }
-nav a:hover { color: #58a6ff; }
-</style>
+nav a:hover { color: #58a6ff; }</style>
 </head>
 <body>
 
 <a class="back" href="../index.html">← На главную</a>
-<h1>Day 11 · Full Meeting: SAP-MES Integration Status</h1>
-<p style="color:#8b949e;font-size:0.9em;">Чт 2 июл 2026 · Week 3 — Сквозная практика · Повтор D10 + Полная встреча</p>
+<h1>Day 11 · Full Meeting: New SAP Requirement</h1>
+<p style="color:#8b949e;font-size:0.9em;">Чт 2 июл 2026 · Week 3 — Заказчик → Подрядчик · Новый материал</p>
 
 <div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
-  <strong>🎯 Фокус дня:</strong> Провести полную встречу от открытия до закрытия с 2 участниками AI. Минимум подсказок — максимум самостоятельности.
+  <strong>🎯 Фокус дня:</strong> Полная встреча: открытие → постановка задачи → обсуждение → резюме → задачи
 </div>
 
-<h2>🔁 Повторение — Day 10 (30 мин)</h2>
-<ul>
-  <li>Повтори ключевые фразы Weeks 1–2 (10 шт на выбор)</li>
-  <li><strong>AI Voice:</strong> <em>"I am a developer with overdue action items. Call me for a follow-up and push me on the incomplete tasks."</em></li>
-</ul>
+<h2>🔁 Повторение</h2>
+<p style="color:#8b949e;font-size:0.9em;">Повторение D10: Открой follow-up: спроси статус 2 задач.</p>
 
-<h2>📘 Освежение — Meeting Flow Checklist</h2>
-<p style="color:#8b949e;font-size:0.9em;">Держи в голове последовательность встречи:</p>
+<h2>📘 Новые фразы — Full Meeting: New SAP Requirement</h2>
+
+<div class="phrase"><strong>Good morning everyone. Thanks for joining today's call.</strong><span class="ru">Доброе утро всем. Спасибо, что присоединились.</span></div>
+<div class="phrase"><strong>We have a new requirement for the Mercury VSD integration.</strong><span class="ru">У нас новое требование по интеграции с Меркурием.</span></div>
+<div class="phrase"><strong>The regulator now requires VSD numbers in the XML format before shipment.</strong><span class="ru">Регулятор теперь требует номера VSD в XML до отгрузки.</span></div>
+<div class="phrase"><strong>What is the impact on our current process?</strong><span class="ru">Какое влияние на нынешний процесс?</span></div>
+<div class="phrase"><strong>Which systems need changes — ECC, PI, or both?</strong><span class="ru">Какие системы нужно менять — ECC, PI или обе?</span></div>
+<div class="phrase"><strong>Please provide a proposal with timeline and cost.</strong><span class="ru">Пожалуйста, дайте предложение с сроками и стоимостью.</span></div>
+<div class="phrase"><strong>The deadline is September 1st. Is that feasible?</strong><span class="ru">Дедлайн — 1 сентября. Это выполнимо?</span></div>
+<div class="phrase"><strong>Let me summarize: the key action items are impact assessment and proposal.</strong><span class="ru">Подведём итог: ключевые задачи — оценка и предложение.</span></div>
+<div class="phrase"><strong>John, you own the assessment. Maria, you handle the proposal.</strong><span class="ru">Джон, вы отвечаете за оценку. Мария, вы за предложение.</span></div>
+<div class="phrase"><strong>Let's schedule a follow-up for next Thursday.</strong><span class="ru">Давайте назначим follow-up на следующий четверг.</span></div>
+
+
+<h2>🎭 AI-практика</h2>
+<p style="font-size:0.88em;color:#8b949e;">Запусти ChatGPT Voice Mode и вставь этот промпт (см. <a href="../common/ai-scenarios.html" style="color:#58a6ff;">AI-сценарии</a>):</p>
+<div class="prompt-box">You are a SAP consultant / vendor representative. I am a customer (process automation manager) with intermediate English. Speak clearly. Topic: Full Meeting: New SAP Requirement. Context: Полная встреча: открытие → постановка задачи → обсуждение → резюме → задачи. Follow my lead in the conversation.</div>
+
+<h2>🗣️ Диалог для отработки</h2>
+<p style="font-size:0.88em;color:#8b949e;">Прочитай вслух по ролям (ты — Customer). Потом перескажи от своего лица.</p>
+<div class="dialog"><span class="you">You (Customer):</span> Good morning everyone. Thanks for joining. We have a new requirement for Mercury VSD. The regulator now requires VSD numbers in the XML file before shipment. This changes our current process. John, what is the impact on ECC and PI?<br><br><span class="vendor">Vendor:</span> Both systems need changes. ECC needs a new BADI for VSD generation. PI needs a new mapping.<br><br><span class="you">Customer:</span> I see. Please provide a proposal with timeline and cost. The deadline is September 1st. Is that feasible?<br><br><span class="vendor">Vendor:</span> We'll assess and get back to you by next Tuesday.<br><br><span class="you">Customer:</span> Let me summarize: key action items are 1) impact assessment, 2) proposal with timeline and cost. John owns assessment, Maria owns proposal. Let's schedule a follow-up for next Thursday at 10 AM.</div>
+
+<h2>📝 Самодиктант</h2>
+<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски. Потом проверь себя.</p>
 <ol>
-  <li><strong>Open:</strong> Greet → Agenda → Set expectations</li>
-  <li><strong>Status:</strong> Ask for updates → Dig into blockers → Check timelines</li>
-  <li><strong>Issues:</strong> Clarify → Document → Decide on next steps</li>
-  <li><strong>Close:</strong> Summarize → Assign actions → Confirm deadlines → Next meeting → Thanks</li>
+<li>У нас новое требование по интеграции с Меркурием.</li>
+<li>Какие системы нужно менять — ECC, PI или обе?</li>
+<li>Пожалуйста, дайте предложение с сроками и стоимостью.</li>
+<li>Дедлайн — 1 сентября. Это выполнимо?</li>
+<li>Джон, вы отвечаете за оценку.</li>
 </ol>
 
-<h2>🎭 AI-практика — Full Meeting (30–40 мин)</h2>
-<h3>Single long scenario</h3>
-<div class="prompt-box">You play two roles: Developer (Nikolay) and Business User (Maria). I am the manager running a weekly status meeting. Agenda: 1) SAP-MES IDoc sync — Nikolay reports 3 IDocs failed last night, 2) batch job monitoring — Maria says one job is running slow, 3) new functional requests — Maria needs a new report. I will open, ask for updates, handle issues, assign actions, and close. Both of you speak when I call on you. If I handle each point well, move forward. If I'm unclear, ask questions. Start with me opening the meeting.</div>
-
-<p style="color:#8b949e;font-size:0.85em;margin-top:8px;">💡 <strong>Подсказка:</strong> Не читай сценарий — действуй по ситуации. Если AI говорит что-то неожиданное — используй фразы из cheat-sheet.</p>
-
-<h2>📝 После встречи — Self-review</h2>
-<p style="font-size:0.88em;color:#8b949e;">Запиши (или запиши на диктофон) ответы на 3 вопроса:</p>
-<ol>
-  <li>Что получилось лучше всего в этой встрече?</li>
-  <li>Где я запнулся / забыл фразу?</li>
-  <li>Что сделаю иначе в следующий раз?</li>
-</ol>
-
-<h2>Reading: SAP-MES Integration</h2>
+<h2>Reading: Running a Full Requirement Meeting with a Vendor</h2>
 <div style="background:#161b22; border:1px solid #21262d; border-radius:8px; padding:12px 14px; margin:10px 0;">
-  <p style="color:#c9d1d9;">SAP and MES integration is the backbone of modern manufacturing. SAP ERP handles planning and orders, while MES manages real-time production on the shop floor. The two systems communicate through IDocs. When an IDoc fails, orders can be delayed or duplicated. A status meeting for this integration should cover: IDoc error rates, batch job health, and any pending change requests.</p>
+  <p style="color:#c9d1d9;">A full requirement meeting follows five stages. First, opening: greet everyone and state the agenda. Second, requirement: explain the new need clearly, referencing the regulatory document. Third, discussion: ask the vendor about impact, affected systems, and feasibility. Listen to their concerns and clarify ambiguities. Fourth, summary: recap the key decisions and action items. Fifth, assignments: name owners for each task with deadlines, and schedule the next follow-up. This structure works for any new requirement and ensures nothing is missed. Practicing this flow makes you a confident meeting leader.</p>
   <hr style="border: none; border-top: 1px solid #21262d; margin: 8px 0;">
-  <p style="color:#8b949e; font-size:0.9em;">Интеграция SAP и MES — это основа современного производства. SAP ERP отвечает за планирование и заказы, а MES управляет производством в реальном времени. Две системы обмениваются через IDoc.</p>
+  <p style="color:#8b949e; font-size:0.9em;">Полная встреча из 5 этапов: открытие, задача, обсуждение, резюме, задачи. Этот формат подходит для любого нового требования.</p>
 </div>
-
 <p><a href="read-11.html" style="color:#58a6ff;">📖 Полная страница для чтения →</a></p>
 
 <h2>✅ Self-check</h2>
-<div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я провёл полную встречу с открытием, статусом и закрытием</label></div>
-<div class="checkbox-item"><input type="checkbox" id="sc2"><label for="sc2">Я справился с неожиданными ответами AI</label></div>
-<div class="checkbox-item"><input type="checkbox" id="sc3"><label for="sc3">Я зафиксировал 1-2 слабых места для улучшения</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу провести полную встречу: открытие → задача → обсуждение → резюме → задачи</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc2"><label for="sc2">Я могу объяснить новое регуляторное требование и его влияние</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc3"><label for="sc3">Я могу назначить ответственных и дедлайны</label></div>
 
-<script>(function() {
-  var saved = localStorage.getItem('eng-day11');
-  if (saved) { var arr = JSON.parse(saved);
-    document.querySelectorAll('.checkbox-item input').forEach(function(c, i) { if (arr[i]) c.checked = true; }); }
-  document.querySelectorAll('.checkbox-item input').forEach(function(c, i) {
-    c.addEventListener('change', function() {
-      var all = document.querySelectorAll('.checkbox-item input');
+
+<script>
+(function() {
+  var saved = localStorage.getItem("eng-day11");
+  if (saved) {
+    var arr = JSON.parse(saved);
+    document.querySelectorAll(".checkbox-item input").forEach(function(c, i) {
+      if (arr[i]) c.checked = true;
+    });
+  }
+  document.querySelectorAll(".checkbox-item input").forEach(function(c, i) {
+    c.addEventListener("change", function() {
+      var all = document.querySelectorAll(".checkbox-item input");
       var arr = Array.from(all).map(function(x) { return x.checked; });
-      localStorage.setItem('eng-day11', JSON.stringify(arr));
+      localStorage.setItem("eng-day11", JSON.stringify(arr));
     });
   });
-})();</script>
+})();
+</script>
 
 <nav>
-  <a href="../week-02/day-10.html">← Day 10</a>
+  <a href="day-10.html">← day-10.html</a>
   <a href="../index.html">Главная</a>
-  <a href="day-12.html">Day 12 →</a>
+  <a href="day-12.html">day-12.html →</a>
 </nav>
 
 </body>

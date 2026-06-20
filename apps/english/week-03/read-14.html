@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reading Day 14 — Cross-Functional Reviews</title>
+<title>Reading Day 14 — SAP Security and Access Governance</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.7; padding: 20px; max-width: 800px; margin: 0 auto; }
@@ -34,53 +34,50 @@ nav a:hover { color: #58a6ff; }
 <body>
 
 <a class="back" href="../index.html">← На главную</a>
-<h1>Reading Day 14 · Cross-Functional Reviews</h1>
+<h1>Reading Day 14 · SAP Security and Access Governance</h1>
 <p class="note">Week 3 · Чтение и понимание текста</p>
 
 <div class="card">
-  <p>Cross-functional review meetings bring together production, budget, and IT teams. Each function speaks a different language: production talks throughput and downtime, budget talks costs and ROI, IT talks systems and tickets. Your job is to translate between them. Let each function present briefly, then facilitate discussion on trade-offs. End with a clear decision: approve, defer, or reject each request. The hardest part of cross-functional meetings is managing different priorities. Production wants maximum uptime. IT wants clean implementations. Budget wants minimum cost. None of these are wrong. Your role is to find the intersection where all three can accept the solution, even if it is not ideal for any single function. Use data to drive decisions when possible. If production requests a system change, ask IT for the implementation cost and timeline, ask budget for the financial impact, and ask production for the expected benefit. Present all three together and let the group decide. This makes the decision objective, not political.</p>
+  <p>When an SAP vendor works on your system, they need access. But giving full access to an external vendor is a security risk. You must manage vendor access carefully. Create dedicated vendor user accounts with the minimum permissions needed. Never share your corporate login credentials. Define clearly what the vendor can and cannot access in SAP. For regulatory systems handling Chestny Znak and Mercury data, access control is especially important because these systems contain sensitive business and government-related information. Set up a process to disable vendor access when the project ends or when a team member leaves. Review access logs monthly to check for unusual activity. Ask your vendor about their own security practices — do they have ISO 27001 certification? Discuss security in the kickoff meeting, not after a breach. A good vendor will appreciate your focus on security and cooperate fully.</p>
 </div>
 
 <h2>Перевод</h2>
 <div class="card ru">
-  <p>Кросс-функциональные обзорные встречи объединяют производство, бюджетные и IT-команды. У каждого свой язык: производство говорит о пропускной способности и простоях, бюджет — о затратах и ROI, IT — о системах и тикетах. Ваша задача как ведущего — переводить между ними. Дайте каждой функции кратко выступить, затем модерируйте обсуждение компромиссов. Самая сложная часть — управление разными приоритетами. Используйте данные для принятия решений. Это делает решение объективным, а не политическим.</p>
+  <p>Когда SAP-подрядчик работает в вашей системе, им нужен доступ. Но предоставление полного доступа внешнему подрядчику — это риск безопасности. Вы должны управлять доступом подрядчика тщательно. Создайте выделенные учётные записи для подрядчика с минимально необходимыми правами. Никогда не передавайте свои корпоративные логины и пароли. Чётко определите, к чему подрядчик может и не может иметь доступ в SAP. Для регуляторных систем, работающих с данными Честного Знака и Меркурия, контроль доступа особенно важен, поскольку эти системы содержат чувствительную бизнес-информацию и информацию, связанную с госорганами. Настройте процесс отключения доступа подрядчика после завершения проекта или ухода сотрудника. Проверяйте журналы доступа ежемесячно на предмет подозрительной активности. Спросите подрядчика об их собственных практиках безопасности — есть ли у них сертификация ISO 27001? Обсуждайте безопасность на кик-офф встрече, а не после утечки. Хороший подрядчик оценит ваше внимание к безопасности и будет полностью сотрудничать.</p>
 </div>
 
 <h2>Словарь</h2>
 <table>
   <tr><th style="color:#f0883e;">English</th><th style="color:#f0883e;">Русский</th></tr>
-<tr><td style='color:#58a6ff;'>system</td><td style='color:#8b949e;'>...</td></tr>
-<tr><td style='color:#58a6ff;'>reject</td><td style='color:#8b949e;'>...</td></tr>
-<tr><td style='color:#58a6ff;'>translate</td><td style='color:#8b949e;'>...</td></tr>
-<tr><td style='color:#58a6ff;'>production</td><td style='color:#8b949e;'>...</td></tr>
-<tr><td style='color:#58a6ff;'>tickets</td><td style='color:#8b949e;'>...</td></tr>
-<tr><td style='color:#58a6ff;'>speaks</td><td style='color:#8b949e;'>...</td></tr>
-<tr><td style='color:#58a6ff;'>tradeoffs</td><td style='color:#8b949e;'>...</td></tr>
-<tr><td style='color:#58a6ff;'>solution</td><td style='color:#8b949e;'>...</td></tr>
-<tr><td style='color:#58a6ff;'>hardest</td><td style='color:#8b949e;'>...</td></tr>
-<tr><td style='color:#58a6ff;'>systems</td><td style='color:#8b949e;'>...</td></tr>
-<tr><td style='color:#58a6ff;'>crossfunctional</td><td style='color:#8b949e;'>...</td></tr>
-<tr><td style='color:#58a6ff;'>implementations</td><td style='color:#8b949e;'>...</td></tr>
-
+<tr><td style='color:#58a6ff;'>access</td><td style='color:#8b949e;'>доступ</td></tr>
+<tr><td style='color:#58a6ff;'>security risk</td><td style='color:#8b949e;'>риск безопасности</td></tr>
+<tr><td style='color:#58a6ff;'>permissions</td><td style='color:#8b949e;'>разрешения, права</td></tr>
+<tr><td style='color:#58a6ff;'>credentials</td><td style='color:#8b949e;'>учётные данные</td></tr>
+<tr><td style='color:#58a6ff;'>access logs</td><td style='color:#8b949e;'>журналы доступа</td></tr>
+<tr><td style='color:#58a6ff;'>disable</td><td style='color:#8b949e;'>отключать</td></tr>
+<tr><td style='color:#58a6ff;'>ISO 27001</td><td style='color:#8b949e;'>ISO 27001</td></tr>
+<tr><td style='color:#58a6ff;'>breach</td><td style='color:#8b949e;'>утечка</td></tr>
+<tr><td style='color:#58a6ff;'>sensitive</td><td style='color:#8b949e;'>чувствительный, конфиденциальный</td></tr>
+<tr><td style='color:#58a6ff;'>certification</td><td style='color:#8b949e;'>сертификация</td></tr>
 </table>
 
 <h2>Вопросы на понимание</h2>
 <ol>
-  <li>What is the main idea of this text?</li>
-  <li>Why is this topic important for a manager?</li>
-  <li>What practical advice does the text give?</li>
-  <li>How would you apply this in your work?</li>
-  <li>What phrase from this text will you use today?</li>
+  <li>Why is giving full SAP access to a vendor a security risk?</li>
+  <li>What type of accounts should you create for vendor access?</li>
+  <li>Why is access control especially important for CZ and Mercury systems?</li>
+  <li>How often should you review access logs?</li>
+  <li>When should you discuss security with the vendor — at kickoff or after a breach?</li>
 </ol>
 
 <h2>Перевод упражнение</h2>
 <p class="note">Переведи на английский:</p>
 <ol>
-  <li>Это важный навык для менеджера.</li>
-  <li>Мы должны практиковаться каждый день.</li>
-  <li>Мне нужно улучшить свои коммуникативные навыки.</li>
-  <li>Это поможет команде работать эффективнее.</li>
-  <li>Я буду использовать эту фразу на следующей встрече.</li>
+  <li>Пожалуйста, создайте учётную запись с минимальными правами для подрядчика.</li>
+  <li>Никогда не передавайте свои корпоративные пароли.</li>
+  <li>Мы проверяем журналы доступа каждый месяц.</li>
+  <li>У вашей компании есть сертификация ISO 27001?</li>
+  <li>Давайте обсудим безопасность на кик-офф встрече.</li>
 </ol>
 
 <h2>Ответы</h2>
@@ -88,23 +85,21 @@ nav a:hover { color: #58a6ff; }
   <summary>Показать ответы</summary>
   <div style="margin-top:8px;">
     <p><strong>Вопросы на понимание (примерные ответы):</strong></p>
-    <div class="answer">1. The text explains Cross-Functional Reviews and its role in meetings.</div>
-    <div class="answer">2. It helps a manager communicate more effectively.</div>
-    <div class="answer">3. The text advises to practice key phrases and listen actively.</div>
-    <div class="answer">4. I will apply this in my weekly status meetings.</div>
-    <div class="answer">5. "..." — the specific phrase from this reading.</div>
+    <div class="answer">1. Because the vendor is external and may have different security standards.</div>
+    <div class="answer">2. Dedicated vendor user accounts with minimum permissions.</div>
+    <div class="answer">3. Because these systems contain sensitive business and government-related information.</div>
+    <div class="answer">4. Monthly.</div>
+    <div class="answer">5. At the kickoff meeting.</div>
     <p style="margin-top:8px;"><strong>Перевод:</strong></p>
-    <div class="answer">1. This is an important skill for a manager.</div>
-    <div class="answer">2. We should practice every day.</div>
-    <div class="answer">3. I need to improve my communication skills.</div>
-    <div class="answer">4. This will help the team work more efficiently.</div>
-    <div class="answer">5. I will use this phrase at the next meeting.</div>
+    <div class="answer">1. Please create an account with minimum permissions for the vendor.</div>
+    <div class="answer">2. Never share your corporate passwords.</div>
+    <div class="answer">3. We review access logs every month.</div>
+    <div class="answer">4. Does your company have ISO 27001 certification?</div>
+    <div class="answer">5. Let us discuss security at the kickoff meeting.</div>
   </div>
 </details>
 
 <nav>
-  <a href='day-13.html'>← day-13.html</a>
-
   <a href="../index.html">Главная</a>
   <a href="day-14.html">→ day-14.html</a>
 </nav>

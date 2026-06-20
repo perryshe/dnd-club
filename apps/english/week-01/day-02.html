@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Day 02 — Asking for Updates</title>
+<title>Day 02 — Assigning Tasks to Vendor</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.7; padding: 20px; max-width: 800px; margin: 0 auto; }
@@ -19,8 +19,9 @@ li { margin: 3px 0; }
 .phrase strong { color: #58a6ff; font-size: 1.02em; }
 .phrase .ru { color: #8b949e; font-size: 0.85em; display: block; margin-top: 3px; }
 .phrase .example { color: #3fb950; font-size: 0.85em; display: block; margin-top: 2px; }
-.dialog { background: #161b22; border-left: 3px solid #3fb950; border-radius: 0 8px 8px 0; padding: 12px 14px; margin: 10px 0; }
+.dialog { background: #161b22; border-left: 3px solid #58a6ff; border-radius: 0 8px 8px 0; padding: 12px 14px; margin: 10px 0; }
 .dialog .speaker { color: #f0883e; font-weight: 600; }
+.dialog .vendor { color: #d29922; font-weight: 600; }
 .dialog .you { color: #58a6ff; font-weight: 600; }
 .checkbox-item { display: flex; align-items: flex-start; gap: 10px; margin: 8px 0; }
 .checkbox-item input { margin-top: 4px; accent-color: #3fb950; width: 18px; min-width: 18px; height: 18px; }
@@ -29,119 +30,93 @@ li { margin: 3px 0; }
 .tag { display: inline-block; padding: 0 8px; border-radius: 10px; font-size: 0.7em; font-weight: 600; margin: 0 4px 4px 0; }
 .tag-blue { background: #1f6feb33; color: #58a6ff; }
 .tag-green { background: #23863633; color: #3fb950; }
+.tag-orange { background: #d2992233; color: #d29922; }
 nav { margin-top: 30px; padding-top: 16px; border-top: 1px solid #21262d; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 0.85em; }
 nav a { color: #8b949e; text-decoration: none; }
-nav a:hover { color: #58a6ff; }
-</style>
+nav a:hover { color: #58a6ff; }</style>
 </head>
 <body>
 
 <a class="back" href="../index.html">← На главную</a>
-<h1>Day 02 · Asking for Updates</h1>
-<p style="color:#8b949e;font-size:0.9em;">Пт 19 июн 2026 · Week 1 — База встреч · Повтор D1 + Новое</p>
+<h1>Day 02 · Assigning Tasks to Vendor</h1>
+<p style="color:#8b949e;font-size:0.9em;">Пт 19 июн 2026 · Week 1 — Заказчик → Подрядчик · Новый материал</p>
 
 <div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
-  <strong>🎯 Фокус дня:</strong> Научиться запрашивать статус, выяснять блокеры, уточнять сроки.
+  <strong>🎯 Фокус дня:</strong> Ставить задачи SAP-подрядчику: требования, оценка, сроки
 </div>
 
-<h2>🔁 Повторение — Day 01 (30 мин)</h2>
-<ul>
-  <li>Прочитай вслух фразы из Day 01 (5 шт, без подсказок)</li>
-  <li>Перескажи диалог Day 01 от лица Manager (30 сек)</li>
-  <li><strong>AI Voice:</strong> <em>"I am a late participant joining your meeting. Welcome me and bring me up to speed."</em></li>
-</ul>
+<h2>🔁 Повторение</h2>
+<p style="color:#8b949e;font-size:0.9em;">Повторение D01: Открой встречу с подрядчиком вслух: приветствие, 2 темы в agenda.</p>
 
-<h2>📘 Новые фразы — Asking for Updates</h2>
+<h2>📘 Новые фразы — Assigning Tasks to Vendor</h2>
 
-<div class="phrase"><strong>Could you give us a quick update on this?</strong><span class="ru">Можете дать краткий статус по этому?</span><span class="example">"Could you give us a quick update on the SAP-MES interface fix?"</span></div>
-<div class="phrase"><strong>Could you give us a quick update on [topic]?</strong><span class="ru">Можете дать краткий статус по [теме]?</span></div>
-<div class="phrase"><strong>Just to clarify, what exactly is blocking this?</strong><span class="ru">Просто уточнить: что именно блокирует это?</span></div>
-<div class="phrase"><strong>Are there any blockers or dependencies we need to address?</strong><span class="ru">Есть блокеры или зависимости, которые нужно решить?</span></div>
-<div class="phrase"><strong>What's the timeline / ETA for this?</strong><span class="ru">Какие сроки / примерное время?</span><span class="example">"What's the ETA for the Mercury VSD fix?"</span></div>
-<div class="phrase"><strong>Is this on track, or are there any risks?</strong><span class="ru">Всё по графику или есть риски?</span></div>
+<div class="phrase"><strong>We have a new business requirement from the regulator.</strong><span class="ru">У нас новое требование от регулятора.</span></div>
+<div class="phrase"><strong>Could you assess the impact and give us an estimate?</strong><span class="ru">Оцените влияние и дайте оценку?</span></div>
+<div class="phrase"><strong>We need a solution for Chestny Znak. Please prepare a proposal.</strong><span class="ru">Нужно решение для Честного Знака. Подготовьте предложение.</span></div>
+<div class="phrase"><strong>What is the timeline for the regulatory deadline?</strong><span class="ru">Какие сроки для дедлайна регулятора?</span></div>
+<div class="phrase"><strong>Please provide a cost estimate for this change.</strong><span class="ru">Дайте оценку стоимости изменения.</span></div>
+<div class="phrase"><strong>Which SAP modules will be affected?</strong><span class="ru">Какие модули SAP затронуты?</span></div>
+<div class="phrase"><strong>Do you need more info from our side to proceed?</strong><span class="ru">Нужна доп. информация с нашей стороны?</span></div>
+<div class="phrase"><strong>We need a proposal in two parts: technical + project plan.</strong><span class="ru">Нужно предложение из 2 частей: техника + план.</span></div>
+<div class="phrase"><strong>Is this in scope or a change request?</strong><span class="ru">Это в scope или change request?</span></div>
+<div class="phrase"><strong>Please confirm receipt and deadline for proposal.</strong><span class="ru">Подтвердите получение и срок предложения.</span></div>
 
-<div class="phrase"><strong>What progress has been made since our last meeting?</strong><span class="ru">Какой прогресс был с нашей последней встречи?</span></div>
-<div class="phrase"><strong>Could you walk me through the steps you've taken so far?</strong><span class="ru">Можете провести меня по шагам, которые вы уже сделали?</span></div>
-<div class="phrase"><strong>Has the issue been resolved, or is it still ongoing?</strong><span class="ru">Проблема решена или ещё продолжается?</span></div>
-<div class="phrase"><strong>Do you need any input or support from my side?</strong><span class="ru">Вам нужна помощь или информация с моей стороны?</span></div>
-<div class="phrase"><strong>Let's set a checkpoint for next week to review progress.</strong><span class="ru">Давайте назначим контрольную точку на следующую неделю.</span></div>
 
 <h2>🎭 AI-практика</h2>
-
-<h3>Scenario 1 — Push for clarity</h3>
-<div class="prompt-box">You are a support specialist. I am a manager asking for an update on a Mercury integration issue. Give me a vague answer like "it's being looked at" and see if I ask you for specifics — timelines, blockers, next steps. If I do, give me real details. Start.</div>
-
-<h3>Scenario 2 — Track multiple items</h3>
-<div class="prompt-box">You are a developer managing three tasks: SAP IDoc fix (almost done), MES batch job (blocked), and Честный ЗНАК emission (waiting for CRPT). I am a manager. Ask me for status on each. I will give you short answers — push me for more details. Start the meeting.</div>
+<p style="font-size:0.88em;color:#8b949e;">Запусти ChatGPT Voice Mode и вставь этот промпт (см. <a href="../common/ai-scenarios.html" style="color:#58a6ff;">AI-сценарии</a>):</p>
+<div class="prompt-box">You are a SAP consultant / vendor representative. I am a customer (process automation manager) with intermediate English. Speak clearly. Topic: Assigning Tasks to Vendor. Context: Ставить задачи SAP-подрядчику: требования, оценка, сроки. Follow my lead in the conversation.</div>
 
 <h2>🗣️ Диалог для отработки</h2>
-
-<div class="dialog">
-<span class="you">Manager (You):</span> Let's move to the status updates. Nikolay, could you give us a quick update on the SAP IDoc fix we discussed yesterday?<br><br>
-
-<span class="speaker">Developer:</span> I've identified the root cause — the partner profile was missing after the transport. I've replicated it to the test system and it's working. I'll move it to production today.<br><br>
-
-<span class="you">Manager:</span> And what's the timeline for production?<br><br>
-
-<span class="speaker">Developer:</span> I can have it done by 3 PM, including testing.<br><br>
-
-<span class="you">Manager:</span> Thanks. And the MES batch job — Maria, could you give us a quick update?<br><br>
-
-<span class="speaker">Support:</span> The job is still blocked because the RFC connection keeps timing out. I've opened a ticket with the basis team.<br><br>
-
-<span class="you">Manager:</span> Just to clarify, what exactly is blocking this? Are they working on it?<br><br>
-
-<span class="speaker">Support:</span> No response yet. I'll follow up after this call.<br><br>
-
-<span class="you">Manager:</span> Please escalate if you don't hear back within 2 hours. Let me know if you need me to reach out to their manager. And the Честный ЗНАК emission — could you give us a quick update?<br><br>
-
-<span class="speaker">Developer:</span> We're waiting for the new code order from CRPT. The status is "in progress". Should be delivered within 24 hours.<br><br>
-
-<span class="you">Manager:</span> Okay. Let's set a checkpoint for Friday on all three items. I'll send a calendar invite.
-</div>
+<p style="font-size:0.88em;color:#8b949e;">Прочитай вслух по ролям (ты — Customer). Потом перескажи от своего лица.</p>
+<div class="dialog"><span class="you">You (Customer):</span> John, we have a new requirement from the CRPT. The DataMatrix format for dairy changed. We need your team to assess the impact.<br><br><span class="vendor">John:</span> Understood. Could you share the official document?<br><br><span class="you">Customer:</span> Yes. Please provide: impact assessment, timeline, cost estimate. We need to go live by October 1st.</div>
 
 <h2>📝 Самодиктант</h2>
+<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски. Потом проверь себя.</p>
 <ol>
-  <li>Можете дать краткий статус по IDoc?</li>
-  <li>Есть блокеры, которые мешают?</li>
-  <li>Какие сроки по этому заданию?</li>
-  <li>Проблема решена или ещё продолжается?</li>
-  <li>Вам нужна помощь с моей стороны?</li>
+<li>У нас новое требование от регулятора. Нужно ваше предложение.</li>
+<li>Оцените влияние на систему и сроки.</li>
+<li>Какой модуль SAP затронут?</li>
+<li>Подготовьте предложение из 2 частей.</li>
+<li>Подтвердите получение и срок.</li>
 </ol>
 
-<h2>Reading: The Weekly Sync</h2>
+<h2>Reading: Writing Clear Requirements</h2>
 <div style="background:#161b22; border:1px solid #21262d; border-radius:8px; padding:12px 14px; margin:10px 0;">
-  <p style="color:#c9d1d9;">The weekly status sync is the heartbeat of any project. Its goal is not to micromanage but to surface blockers early. Each team member reports briefly on: what they completed, what they are working on next, and any obstacles. A good status update is specific and concise. Instead of "working on SAP," say "completed IDoc mapping validation, moving to error handling logic." This keeps the team aligned and the manager informed without wasting time.</p>
+  <p style="color:#c9d1d9;">Writing a clear business requirement is the most important skill with an SAP vendor. A vague requirement leads to wrong solutions, delays, and budget overruns. Use SMART: Specific, Measurable, Achievable, Relevant, Time-bound. Instead of 'we need Chestny Znak,' write 'we need to print DataMatrix codes on dairy labels by December 1st.' Include regulatory document references. State affected systems. Specify constraints.</p>
   <hr style="border: none; border-top: 1px solid #21262d; margin: 8px 0;">
-  <p style="color:#8b949e; font-size:0.9em;">Еженедельный статус-митинг — это сердце любого проекта. Его цель не микроменеджмент, а раннее выявление блокеров. Каждый участник кратко сообщает: что сделано, что в работе и какие есть препятствия. Хороший статус-апдейт конкретен и краток.</p>
+  <p style="color:#8b949e; font-size:0.9em;">Чёткое требование — главный навык в работе с SAP-подрядчиком.</p>
 </div>
-
 <p><a href="read-02.html" style="color:#58a6ff;">📖 Полная страница для чтения →</a></p>
 
 <h2>✅ Self-check</h2>
-<div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я умею запрашивать статус у нескольких человек</label></div>
-<div class="checkbox-item"><input type="checkbox" id="sc2"><label for="sc2">Я могу спросить про блокеры и сроки</label></div>
-<div class="checkbox-item"><input type="checkbox" id="sc3"><label for="sc3">Я помню и могу повторить фразы с Day 01</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу сформулировать требование и запросить предложение</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc2"><label for="sc2">Я могу обсудить сроки и выполнимость</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc3"><label for="sc3">Я помню фразы D01 без подсказки</label></div>
+
 
 <script>
 (function() {
-  var saved = localStorage.getItem('eng-day02');
-  if (saved) { var arr = JSON.parse(saved);
-    document.querySelectorAll('.checkbox-item input').forEach(function(c, i) { if (arr[i]) c.checked = true; }); }
-  document.querySelectorAll('.checkbox-item input').forEach(function(c, i) {
-    c.addEventListener('change', function() {
-      var all = document.querySelectorAll('.checkbox-item input');
+  var saved = localStorage.getItem("eng-day02");
+  if (saved) {
+    var arr = JSON.parse(saved);
+    document.querySelectorAll(".checkbox-item input").forEach(function(c, i) {
+      if (arr[i]) c.checked = true;
+    });
+  }
+  document.querySelectorAll(".checkbox-item input").forEach(function(c, i) {
+    c.addEventListener("change", function() {
+      var all = document.querySelectorAll(".checkbox-item input");
       var arr = Array.from(all).map(function(x) { return x.checked; });
-      localStorage.setItem('eng-day02', JSON.stringify(arr));
+      localStorage.setItem("eng-day02", JSON.stringify(arr));
     });
   });
 })();
 </script>
 
 <nav>
-  <a href="day-01.html">← Day 01</a>
+  <a href="day-01.html">← day-01.html</a>
   <a href="../index.html">Главная</a>
-  <a href="day-03.html">Day 03 →</a>
+  <a href="day-03.html">day-03.html →</a>
 </nav>
 
 </body>

@@ -70,14 +70,7 @@ def generate_audio(data, is_digest=False):
         print("  Warning: Zira voice not found, using default")
 
     # Настройка вывода в WAV
-    from win32com.client import Dispatch
-    import pythoncom
-    wav_stream = Dispatch("SAPI.SpFileStream")
-    # PCM format GUID
-    pcm_guid = pythoncom.MakeIID("{00000001-0000-0010-8000-00AA00389B71}")
-    fmt = Dispatch("SAPI.SpAudioFormat")
-    fmt.Type = pcm_guid
-    wav_stream.Format = fmt
+    wav_stream = win32com.client.Dispatch("SAPI.SpFileStream")
     wav_stream.Open(wav_path, 3, False)  # 3 = SSFMCreateForWrite
     speaker.AudioOutputStream = wav_stream
 

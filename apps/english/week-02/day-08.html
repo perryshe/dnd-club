@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Day 08 — Conflict & Difficult Situations</title>
+<title>Day 08 — Scope Disputes with Vendor</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.7; padding: 20px; max-width: 800px; margin: 0 auto; }
@@ -19,8 +19,9 @@ li { margin: 3px 0; }
 .phrase strong { color: #58a6ff; font-size: 1.02em; }
 .phrase .ru { color: #8b949e; font-size: 0.85em; display: block; margin-top: 3px; }
 .phrase .example { color: #3fb950; font-size: 0.85em; display: block; margin-top: 2px; }
-.dialog { background: #161b22; border-left: 3px solid #f0883e; border-radius: 0 8px 8px 0; padding: 12px 14px; margin: 10px 0; }
+.dialog { background: #161b22; border-left: 3px solid #58a6ff; border-radius: 0 8px 8px 0; padding: 12px 14px; margin: 10px 0; }
 .dialog .speaker { color: #f0883e; font-weight: 600; }
+.dialog .vendor { color: #d29922; font-weight: 600; }
 .dialog .you { color: #58a6ff; font-weight: 600; }
 .checkbox-item { display: flex; align-items: flex-start; gap: 10px; margin: 8px 0; }
 .checkbox-item input { margin-top: 4px; accent-color: #3fb950; width: 18px; min-width: 18px; height: 18px; }
@@ -29,116 +30,93 @@ li { margin: 3px 0; }
 .tag { display: inline-block; padding: 0 8px; border-radius: 10px; font-size: 0.7em; font-weight: 600; margin: 0 4px 4px 0; }
 .tag-blue { background: #1f6feb33; color: #58a6ff; }
 .tag-green { background: #23863633; color: #3fb950; }
-.tag-red { background: #da363333; color: #f85149; }
+.tag-orange { background: #d2992233; color: #d29922; }
 nav { margin-top: 30px; padding-top: 16px; border-top: 1px solid #21262d; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 0.85em; }
 nav a { color: #8b949e; text-decoration: none; }
-nav a:hover { color: #58a6ff; }
-</style>
+nav a:hover { color: #58a6ff; }</style>
 </head>
 <body>
 
 <a class="back" href="../index.html">← На главную</a>
-<h1>Day 08 · Conflict &amp; Difficult Situations</h1>
-<p style="color:#8b949e;font-size:0.9em;">Пн 29 июн 2026 · Week 2 — Soft skills · Повтор D7 + Новое</p>
+<h1>Day 08 · Scope Disputes with Vendor</h1>
+<p style="color:#8b949e;font-size:0.9em;">Пн 29 июн 2026 · Week 2 — Заказчик → Подрядчик · Новый материал</p>
 
 <div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
-  <strong>🎯 Фокус дня:</strong> Научиться управлять конфликтом на встрече: медиация, перенаправление, снятие напряжения.
+  <strong>🎯 Фокус дня:</strong> Обсуждать спорные вопросы: scope, change order, компромиссы
 </div>
 
-<h2>🔁 Повторение — Day 07 (30 мин)</h2>
-<ul>
-  <li>Повтори фразы D07 (жалобы) — 5 шт без подсказок</li>
-  <li><strong>AI Voice:</strong> <em>"You are an angry user whose system has been down for 2 hours. I am the manager handling your complaint."</em></li>
-</ul>
+<h2>🔁 Повторение</h2>
+<p style="color:#8b949e;font-size:0.9em;">Повторение D07: Скажи: 'I need to raise a concern about the timeline...' — объясни проблему.</p>
 
-<h2>📘 Новые фразы — Conflict & Difficult Situations</h2>
+<h2>📘 Новые фразы — Scope Disputes with Vendor</h2>
 
-<div class="phrase"><strong>I see your point, but let me offer a different perspective.</strong><span class="ru">Я понимаю вашу точку зрения, но позвольте предложить другой взгляд.</span></div>
-<div class="phrase"><strong>Let's not get stuck on this. We can take it offline.</strong><span class="ru">Давайте не застревать на этом. Обсудим отдельно.</span></div>
-<div class="phrase"><strong>I hear you. Let's focus on finding a solution rather than the cause right now.</strong><span class="ru">Я вас услышал. Давайте сфокусируемся на решении, а не на причине сейчас.</span></div>
-<div class="phrase"><strong>Let's agree to disagree on this point and move forward.</strong><span class="ru">Давайте останемся каждый при своём мнении и двинемся дальше.</span></div>
-<div class="phrase"><strong>I appreciate both perspectives. Let's find a middle ground.</strong><span class="ru">Я ценю обе точки зрения. Давайте найдём компромисс.</span></div>
+<div class="phrase"><strong>We believe this is within the current project scope.</strong><span class="ru">Мы считаем, что это в рамках текущего объёма работ.</span></div>
+<div class="phrase"><strong>I disagree. This was not part of the original agreement.</strong><span class="ru">Я не согласен. Это не было частью изначального договора.</span></div>
+<div class="phrase"><strong>We need to raise a Change Request for this new requirement.</strong><span class="ru">Нужно оформить Change Request на новое требование.</span></div>
+<div class="phrase"><strong>Can we find a compromise? Perhaps share the cost 50/50?</strong><span class="ru">Можем найти компромисс? Например, разделить стоимость 50/50?</span></div>
+<div class="phrase"><strong>Let's look at the contract. Section 3.2 covers regulatory changes.</strong><span class="ru">Давайте посмотрим контракт. Раздел 3.2 описывает регуляторные изменения.</span></div>
+<div class="phrase"><strong>This change is mandated by law. It's not optional.</strong><span class="ru">Это изменение обязательно по закону.</span></div>
+<div class="phrase"><strong>I propose we split the work: MVP in current scope, enhancements as CR.</strong><span class="ru">Предлагаю разделить: MVP в текущем объёме, улучшения как CR.</span></div>
+<div class="phrase"><strong>Let's involve the legal team to review the contract.</strong><span class="ru">Давайте привлечём юристов для анализа контракта.</span></div>
+<div class="phrase"><strong>I understand your position, but we have a different interpretation.</strong><span class="ru">Я понимаю вашу позицию, но у нас другая трактовка.</span></div>
+<div class="phrase"><strong>Let's document our disagreement and escalate if needed.</strong><span class="ru">Давайте зафиксируем разногласия и эскалируем при необходимости.</span></div>
 
-<div class="phrase"><strong>Can we pause the discussion on this and come back to it later?</strong><span class="ru">Можем приостановить обсуждение этого и вернуться позже?</span></div>
-<div class="phrase"><strong>I suggest we put this to a vote / ask for a decision from higher management.</strong><span class="ru">Предлагаю вынести это на голосование / спросить решение руководства.</span></div>
-<div class="phrase"><strong>Let me reframe the question: what is the most important outcome for both sides?</strong><span class="ru">Позвольте переформулировать: какой результат самый важный для обеих сторон?</span></div>
-<div class="phrase"><strong>I think we're all aiming for the same goal — let's focus on that.</strong><span class="ru">Я думаю, мы все стремимся к одной цели — давайте сфокусируемся на этом.</span></div>
-<div class="phrase"><strong>We don't have to solve everything today. Let's prioritize the critical items.</strong><span class="ru">Нам не обязательно решать всё сегодня. Давайте приоритизируем критичное.</span></div>
-
-<div class="phrase"><strong>I'd like to hear what [other person] thinks about this.</strong><span class="ru">Я хотел бы услышать, что [другой человек] думает об этом.</span></div>
 
 <h2>🎭 AI-практика</h2>
-
-<h3>Scenario 1 — Two colleagues arguing</h3>
-<div class="prompt-box">You play two roles: a developer and a business user. The developer wants to delay a feature for technical reasons; the business user insists it's needed now. I am the manager mediating the call. Start the argument and let me mediate. I will step in. Begin.</div>
-
-<h3>Scenario 2 — Pushback on a decision</h3>
-<div class="prompt-box">You are a team lead who disagrees with my decision to change access roles. You think it's too soon and risky. Push back respectfully. I need to handle your concerns and find a compromise. Start with your objection.</div>
+<p style="font-size:0.88em;color:#8b949e;">Запусти ChatGPT Voice Mode и вставь этот промпт (см. <a href="../common/ai-scenarios.html" style="color:#58a6ff;">AI-сценарии</a>):</p>
+<div class="prompt-box">You are a SAP consultant / vendor representative. I am a customer (process automation manager) with intermediate English. Speak clearly. Topic: Scope Disputes with Vendor. Context: Обсуждать спорные вопросы: scope, change order, компромиссы. Follow my lead in the conversation.</div>
 
 <h2>🗣️ Диалог для отработки</h2>
-
-<div class="dialog">
-<span class="speaker">Developer:</span> I'm telling you, we can't push this feature now. The MES interface isn't stable enough. If we add more load, it will break.<br><br>
-
-<span class="speaker">Business User:</span> We can't wait. The regulation deadline is next month. If we don't have the feature, we'll get fined.<br><br>
-
-<span class="you">Manager (You):</span> I appreciate both perspectives. Let's pause and focus on the main goal here — we all want to meet the deadline without breaking the system. Let me reframe the question. Nikolay, what's the minimum we need to stabilize the interface?<br><br>
-
-<span class="speaker">Developer:</span> At least two weeks of testing and a load balancing fix.<br><br>
-
-<span class="you">Manager:</span> And Maria, what's the minimum feature set we need to avoid the fine?<br><br>
-
-<span class="speaker">Business User:</span> Just the basic reporting. The advanced features can wait.<br><br>
-
-<span class="you">Manager:</span> Good. So here's a proposal: we implement the reporting only by the deadline, and push the advanced features to the next release. Nikolay gets time to stabilize the interface, Maria gets the compliance feature. Does that work for both?<br><br>
-
-<span class="speaker">Developer:</span> I can work with that.<br><br>
-
-<span class="speaker">Business User:</span> Agreed.<br><br>
-
-<span class="you">Manager:</span> Great. Action items: Nikolay, document the stabilization plan by Wednesday. Maria, confirm the reporting requirements by tomorrow. Let's reconvene Thursday for a quick check-in.
-</div>
+<p style="font-size:0.88em;color:#8b949e;">Прочитай вслух по ролям (ты — Customer). Потом перескажи от своего лица.</p>
+<div class="dialog"><span class="you">You (Customer):</span> John, my compliance team reviewed the new CRPT requirement. We believe this DataMatrix change is within the current project scope. The contract says SAP interface changes for regulatory updates are included.<br><br><span class="vendor">Vendor:</span> I disagree. This requires a new API endpoint that was not in the original specification. It should be a Change Request.<br><br><span class="you">Customer:</span> Let's look at Section 3.2 of the contract together. It clearly states regulatory format changes are in scope. However, I understand your position. Can we find a compromise? Perhaps we cover the PI layer, you cover the backend changes?</div>
 
 <h2>📝 Самодиктант</h2>
+<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски. Потом проверь себя.</p>
 <ol>
-  <li>Я понимаю вашу точку зрения, но позвольте предложить другой взгляд.</li>
-  <li>Давайте не застревать на этом — обсудим отдельно.</li>
-  <li>Давайте найдём компромисс.</li>
-  <li>Мы все стремимся к одной цели — давайте сфокусируемся на этом.</li>
-  <li>Нам не обязательно решать всё сегодня.</li>
+<li>Мы считаем, что это в рамках текущего объёма работ.</li>
+<li>Нужно оформить Change Request на новое требование.</li>
+<li>Можем найти компромисс?</li>
+<li>Давайте посмотрим контракт. Раздел 3.2.</li>
+<li>Я понимаю вашу позицию, но у нас другая трактовка.</li>
 </ol>
 
-<h2>Reading: Constructive Conflict</h2>
+<h2>Reading: Managing Scope Disputes with Your Vendor</h2>
 <div style="background:#161b22; border:1px solid #21262d; border-radius:8px; padding:12px 14px; margin:10px 0;">
-  <p style="color:#c9d1d9;">Conflict in meetings is natural when smart people disagree. The manager's job is not to eliminate it but to channel it constructively. First, acknowledge both sides. Second, reframe the goal: "We all want the best outcome for production." Third, separate people from the problem. Ask "What data do we have?" not "Who is right?" If needed, park the issue. A skilled facilitator turns conflict into better decisions.</p>
+  <p style="color:#c9d1d9;">Scope disputes are common in SAP projects. The key is to always refer to the contract. Before the meeting, read the relevant sections. During the dispute, state your interpretation clearly: 'We believe this is within the current project scope.' Listen to the vendor's position. If disagreement persists, propose a compromise: split cost, phase the work, or trade scope items. Document everything. If no agreement is reached, escalate formally. Never accept scope changes verbally without a written Change Request. This protects both sides and maintains a professional relationship.</p>
   <hr style="border: none; border-top: 1px solid #21262d; margin: 8px 0;">
-  <p style="color:#8b949e; font-size:0.9em;">Конфликт на встречах естественен, когда умные люди расходятся во мнениях. Задача менеджера — не устранить его, а направить в конструктивное русло. Сначала признайте обе стороны. Затем переформулируйте цель. Отделяйте людей от проблемы.</p>
+  <p style="color:#8b949e; font-size:0.9em;">Споры по объёму работ часты. Всегда ссылайтесь на контракт, предлагайте компромиссы и документируйте всё.</p>
 </div>
-
 <p><a href="read-08.html" style="color:#58a6ff;">📖 Полная страница для чтения →</a></p>
 
 <h2>✅ Self-check</h2>
-<div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу медиировать спор между двумя сторонами</label></div>
-<div class="checkbox-item"><input type="checkbox" id="sc2"><label for="sc2">Я умею перенаправлять конфликт в конструктивное русло</label></div>
-<div class="checkbox-item"><input type="checkbox" id="sc3"><label for="sc3">Я могу предложить компромисс, который устроит обе стороны</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу обосновать свою позицию по scope со ссылкой на контракт</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc2"><label for="sc2">Я могу предложить компромисс при разногласии</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc3"><label for="sc3">Я могу документировать разногласия и эскалировать</label></div>
 
-<script>(function() {
-  var saved = localStorage.getItem('eng-day08');
-  if (saved) { var arr = JSON.parse(saved);
-    document.querySelectorAll('.checkbox-item input').forEach(function(c, i) { if (arr[i]) c.checked = true; }); }
-  document.querySelectorAll('.checkbox-item input').forEach(function(c, i) {
-    c.addEventListener('change', function() {
-      var all = document.querySelectorAll('.checkbox-item input');
+
+<script>
+(function() {
+  var saved = localStorage.getItem("eng-day08");
+  if (saved) {
+    var arr = JSON.parse(saved);
+    document.querySelectorAll(".checkbox-item input").forEach(function(c, i) {
+      if (arr[i]) c.checked = true;
+    });
+  }
+  document.querySelectorAll(".checkbox-item input").forEach(function(c, i) {
+    c.addEventListener("change", function() {
+      var all = document.querySelectorAll(".checkbox-item input");
       var arr = Array.from(all).map(function(x) { return x.checked; });
-      localStorage.setItem('eng-day08', JSON.stringify(arr));
+      localStorage.setItem("eng-day08", JSON.stringify(arr));
     });
   });
-})();</script>
+})();
+</script>
 
 <nav>
-  <a href="day-07.html">← Day 07</a>
+  <a href="day-07.html">← day-07.html</a>
   <a href="../index.html">Главная</a>
-  <a href="day-09.html">Day 09 →</a>
+  <a href="day-09.html">day-09.html →</a>
 </nav>
 
 </body>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Day 14 — Full Meeting: Admin & Access Review</title>
+<title>Day 14 — Full Meeting: SAP Access & Security</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.7; padding: 20px; max-width: 800px; margin: 0 auto; }
@@ -18,6 +18,11 @@ li { margin: 3px 0; }
 .phrase { background: #161b22; border: 1px solid #21262d; border-radius: 8px; padding: 10px 14px; margin: 8px 0; }
 .phrase strong { color: #58a6ff; font-size: 1.02em; }
 .phrase .ru { color: #8b949e; font-size: 0.85em; display: block; margin-top: 3px; }
+.phrase .example { color: #3fb950; font-size: 0.85em; display: block; margin-top: 2px; }
+.dialog { background: #161b22; border-left: 3px solid #58a6ff; border-radius: 0 8px 8px 0; padding: 12px 14px; margin: 10px 0; }
+.dialog .speaker { color: #f0883e; font-weight: 600; }
+.dialog .vendor { color: #d29922; font-weight: 600; }
+.dialog .you { color: #58a6ff; font-weight: 600; }
 .checkbox-item { display: flex; align-items: flex-start; gap: 10px; margin: 8px 0; }
 .checkbox-item input { margin-top: 4px; accent-color: #3fb950; width: 18px; min-width: 18px; height: 18px; }
 .checkbox-item label { font-size: 0.92em; color: #c9d1d9; }
@@ -28,66 +33,90 @@ li { margin: 3px 0; }
 .tag-orange { background: #d2992233; color: #d29922; }
 nav { margin-top: 30px; padding-top: 16px; border-top: 1px solid #21262d; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 0.85em; }
 nav a { color: #8b949e; text-decoration: none; }
-nav a:hover { color: #58a6ff; }
-</style>
+nav a:hover { color: #58a6ff; }</style>
 </head>
 <body>
 
 <a class="back" href="../index.html">← На главную</a>
-<h1>Day 14 · Full Meeting: Admin &amp; Access Review</h1>
-<p style="color:#8b949e;font-size:0.9em;">Вт 7 июл 2026 · Week 3 — Сквозная практика · Повтор D13 + Полная встреча</p>
+<h1>Day 14 · Full Meeting: SAP Access & Security</h1>
+<p style="color:#8b949e;font-size:0.9em;">Вт 7 июл 2026 · Week 3 — Заказчик → Подрядчик · Новый материал</p>
 
 <div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
-  <strong>🎯 Фокус дня:</strong> Провести встречу по обзору прав доступа и политик. Аудитор жёсткий, тимлид хочет быстро — твоя задача найти баланс.
+  <strong>🎯 Фокус дня:</strong> Встреча по SAP-безопасности: права доступа, аудит, роли
 </div>
 
-<h2>🔁 Повторение — Day 13 (30 мин)</h2>
-<ul>
-  <li>Фразы transitions между темами</li>
-  <li><strong>AI Voice:</strong> <em>"I am a business user with a Mercury problem. After I finish, a logistics person calls with a ЧЗ issue. Transition between us."</em></li>
-</ul>
+<h2>🔁 Повторение</h2>
+<p style="color:#8b949e;font-size:0.9em;">Повторение D13: Открой встречу по 2 темам.</p>
 
-<h2>📘 Освежение — Admin-related vocabulary</h2>
-<div class="phrase"><strong>We need to review user access rights for the shop floor.</strong><span class="ru">Нужно пересмотреть права доступа для цеха.</span></div>
-<div class="phrase"><strong>Who has the authority to approve this change?</strong><span class="ru">У кого есть полномочия утвердить это изменение?</span></div>
-<div class="phrase"><strong>Let's run an audit on the current roles and permissions.</strong><span class="ru">Давайте проведём аудит текущих ролей и прав.</span></div>
-<div class="phrase"><strong>We need to revoke access for inactive users.</strong><span class="ru">Нужно отозвать доступ для неактивных пользователей.</span></div>
-<div class="phrase"><strong>Please implement the change and document it in the ticket.</strong><span class="ru">Пожалуйста, внедрите изменение и задокументируйте в тикете.</span></div>
+<h2>📘 Новые фразы — Full Meeting: SAP Access & Security</h2>
 
-<h2>🎭 AI-практика — Full Admin Meeting</h2>
-<div class="prompt-box">You play two roles: Auditor (strict, policy-focused) and Team Lead (pragmatic, wants quick fixes). I am the manager running an access rights review meeting. Topics: 1) users with excessive permissions, 2) new role request for operators, 3) monthly access review process. The auditor wants strict compliance; the team lead wants speed. I need to balance both and document decisions. Challenge me if I'm too soft or too rigid. Start with me opening the meeting.</div>
+<div class="phrase"><strong>Our audit found users with excessive permissions in SAP.</strong><span class="ru">Наш аудит нашёл пользователей с избыточными правами в SAP.</span></div>
+<div class="phrase"><strong>Several ex-employees still have active accounts.</strong><span class="ru">Несколько уволенных сотрудников всё ещё имеют активные учётки.</span></div>
+<div class="phrase"><strong>We need to review and clean up user roles and authorizations.</strong><span class="ru">Нужно пересмотреть и очистить роли и права пользователей.</span></div>
+<div class="phrase"><strong>Can you run a report of all users with SAP_ALL access?</strong><span class="ru">Можете запустить отчёт по всем пользователям с SAP_ALL?</span></div>
+<div class="phrase"><strong>Who has access to critical transactions like FI postings?</strong><span class="ru">У кого доступ к критичным транзакциям, например проводкам в FI?</span></div>
+<div class="phrase"><strong>We need a segregation of duties conflict analysis.</strong><span class="ru">Нужен анализ конфликтов разделения обязанностей.</span></div>
+<div class="phrase"><strong>Please implement a quarterly access review process.</strong><span class="ru">Пожалуйста, внедрите ежеквартальный обзор доступа.</span></div>
+<div class="phrase"><strong>How long will the cleanup take?</strong><span class="ru">Сколько времени займёт очистка?</span></div>
+<div class="phrase"><strong>Let's prioritize: first ex-employees, then SOD conflicts.</strong><span class="ru">Давайте приоритизируем: сначала уволенные, потом SOD-конфликты.</span></div>
+<div class="phrase"><strong>I want a security audit report by August 1st.</strong><span class="ru">Я хочу отчёт по аудиту безопасности к 1 августа.</span></div>
 
-<h2>Reading: Cross-Functional Reviews</h2>
+
+<h2>🎭 AI-практика</h2>
+<p style="font-size:0.88em;color:#8b949e;">Запусти ChatGPT Voice Mode и вставь этот промпт (см. <a href="../common/ai-scenarios.html" style="color:#58a6ff;">AI-сценарии</a>):</p>
+<div class="prompt-box">You are a SAP consultant / vendor representative. I am a customer (process automation manager) with intermediate English. Speak clearly. Topic: Full Meeting: SAP Access & Security. Context: Встреча по SAP-безопасности: права доступа, аудит, роли. Follow my lead in the conversation.</div>
+
+<h2>🗣️ Диалог для отработки</h2>
+<p style="font-size:0.88em;color:#8b949e;">Прочитай вслух по ролям (ты — Customer). Потом перескажи от своего лица.</p>
+<div class="dialog"><span class="you">You (Customer):</span> John, our audit found users with excessive permissions in SAP. Several ex-employees still have active accounts. We need to review and clean up user roles and authorizations urgently.<br><br><span class="vendor">Vendor:</span> That's a serious finding. We can run a full user access report and identify anomalies.<br><br><span class="you">Customer:</span> Please run a report of all users with SAP_ALL access first. Then do a segregation of duties conflict analysis. Let's prioritize: first ex-employees, then SOD conflicts. I want a security audit report by August 1st. Can you implement a quarterly access review process?</div>
+
+<h2>📝 Самодиктант</h2>
+<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски. Потом проверь себя.</p>
+<ol>
+<li>Наш аудит нашёл пользователей с избыточными правами в SAP.</li>
+<li>Несколько уволенных сотрудников всё ещё имеют активные учётки.</li>
+<li>Нужно пересмотреть и очистить роли и права пользователей.</li>
+<li>Можете запустить отчёт по всем пользователям с SAP_ALL?</li>
+<li>Я хочу отчёт по аудиту безопасности к 1 августа.</li>
+</ol>
+
+<h2>Reading: SAP Access and Security Reviews with Vendors</h2>
 <div style="background:#161b22; border:1px solid #21262d; border-radius:8px; padding:12px 14px; margin:10px 0;">
-  <p style="color:#c9d1d9;">Cross-functional review meetings bring together production, budget, and IT teams. Each has a different language: production talks throughput and downtime, budget talks costs and ROI, IT talks systems and tickets. Your job is to translate between them. Let each function present briefly, then facilitate discussion on trade-offs. End with a clear decision: approve, defer, or reject each request.</p>
+  <p style="color:#c9d1d9;">SAP security is a critical compliance area. As a customer, you must regularly audit user access with your vendor. Common findings: ex-employees with active accounts, users with SAP_ALL access, segregation of duties conflicts. When discussing with the vendor, start with the audit finding, then request specific reports: user access list, SAP_ALL users, SOD conflict matrix. Prioritize remediation: first remove ex-employees and inactive users, then address SOD conflicts. Implement a quarterly access review process. Ask the vendor to automate user deactivation upon termination.</p>
   <hr style="border: none; border-top: 1px solid #21262d; margin: 8px 0;">
-  <p style="color:#8b949e; font-size:0.9em;">Кросс-функциональные обзорные встречи объединяют производство, бюджетные и IT-команды. У каждого свой язык. Ваша задача как ведущего — переводить между ними. Завершите чётким решением.</p>
+  <p style="color:#8b949e; font-size:0.9em;">SAP-безопасность — критическая область комплаенса. Регулярно аудируйте доступ, удаляйте уволенных и внедряйте квартальные обзоры.</p>
 </div>
-
 <p><a href="read-14.html" style="color:#58a6ff;">📖 Полная страница для чтения →</a></p>
 
 <h2>✅ Self-check</h2>
-<div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я сохранил баланс между compliance и speed</label></div>
-<div class="checkbox-item"><input type="checkbox" id="sc2"><label for="sc2">Я использовал admin-лексику (roles, permissions, audit)</label></div>
-<div class="checkbox-item"><input type="checkbox" id="sc3"><label for="sc3">Я зафиксировал решения и назначил ответственных</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу обсудить вопросы SAP-безопасности с подрядчиком</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc2"><label for="sc2">Я могу запросить анализ прав доступа и SOD-конфликтов</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc3"><label for="sc3">Я могу предложить процесс регулярного обзора доступа</label></div>
 
-<script>(function() {
-  var saved = localStorage.getItem('eng-day14');
-  if (saved) { var arr = JSON.parse(saved);
-    document.querySelectorAll('.checkbox-item input').forEach(function(c, i) { if (arr[i]) c.checked = true; }); }
-  document.querySelectorAll('.checkbox-item input').forEach(function(c, i) {
-    c.addEventListener('change', function() {
-      var all = document.querySelectorAll('.checkbox-item input');
+
+<script>
+(function() {
+  var saved = localStorage.getItem("eng-day14");
+  if (saved) {
+    var arr = JSON.parse(saved);
+    document.querySelectorAll(".checkbox-item input").forEach(function(c, i) {
+      if (arr[i]) c.checked = true;
+    });
+  }
+  document.querySelectorAll(".checkbox-item input").forEach(function(c, i) {
+    c.addEventListener("change", function() {
+      var all = document.querySelectorAll(".checkbox-item input");
       var arr = Array.from(all).map(function(x) { return x.checked; });
-      localStorage.setItem('eng-day14', JSON.stringify(arr));
+      localStorage.setItem("eng-day14", JSON.stringify(arr));
     });
   });
-})();</script>
+})();
+</script>
 
 <nav>
-  <a href="day-13.html">← Day 13</a>
+  <a href="day-13.html">← day-13.html</a>
   <a href="../index.html">Главная</a>
-  <a href="day-15.html">Day 15 →</a>
+  <a href="day-15.html">day-15.html →</a>
 </nav>
 
 </body>
