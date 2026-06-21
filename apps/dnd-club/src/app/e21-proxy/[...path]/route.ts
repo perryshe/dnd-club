@@ -51,11 +51,11 @@ export async function GET(req: NextRequest, { params }: { params: { path: string
   const qs = req.nextUrl.search
   const url = new URL(`http://localhost:3005/${path}${qs}`)
   const headers = new Headers()
-  for (const [k, v] of req.headers.entries()) {
+  req.headers.forEach((v, k) => {
     if (!["host", "connection", "content-length"].includes(k.toLowerCase())) {
       headers.set(k, v)
     }
-  }
+  })
 
   const resp = await fetch(url, { headers })
   const body = resp.body ? new Uint8Array(await resp.arrayBuffer()) : null
