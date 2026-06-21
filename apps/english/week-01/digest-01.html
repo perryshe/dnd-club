@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekend Digest — Week 1</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.7; padding: 20px; max-width: 800px; margin: 0 auto; }
+h1 { font-size: 1.5em; color: #58a6ff; }
+h2 { font-size: 1.15em; color: #f0883e; margin: 24px 0 10px; border-bottom: 1px solid #21262d; padding-bottom: 6px; }
+p, li { color: #c9d1d9; font-size: 0.95em; }
+.back { color: #8b949e; text-decoration: none; font-size: 0.85em; display: inline-block; margin-bottom: 12px; }
+.back:hover { color: #58a6ff; }
+.phrase { background: #161b22; border: 1px solid #21262d; border-radius: 8px; padding: 10px 14px; margin: 8px 0; }
+.phrase strong { color: #58a6ff; font-size: 1.02em; }
+.audio-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 999; justify-content: center; align-items: center; }
+.audio-overlay.open { display: flex; }
+.audio-overlay-content { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 24px; max-width: 92%; width: 400px; position: relative; }
+.audio-overlay-content audio { width: 100%; display: block; }
+.audio-close { position: absolute; top: 8px; right: 12px; background: none; border: none; color: #8b949e; font-size: 1.3em; cursor: pointer; line-height: 1; }
+.audio-close:hover { color: #f85149; }
+.audio-btn { display: inline-flex; align-items: center; gap: 6px; background: #1f6feb; color: #fff; border: none; border-radius: 20px; padding: 6px 14px; font-size: 0.85em; cursor: pointer; margin-top: 8px; }
+.audio-btn:hover { background: #388bfd; }
+nav { margin-top: 30px; padding-top: 16px; border-top: 1px solid #21262d; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 0.85em; }
+nav a { color: #8b949e; text-decoration: none; }
+nav a:hover { color: #58a6ff; }
+@media (max-width: 600px) { body { padding: 12px; } h1 { font-size: 1.25em; } nav { flex-direction: column; align-items: center; } }
+</style>
+</head>
+<body>
+
+<a class="back" href="../index.html">← На главную</a>
+<h1>⛅ Weekend Digest — Week 1</h1>
+<p style="color:#8b949e;font-size:0.9em;">Week 1 · Базовые встречи с подрядчиком · Повторение</p>
+
+<div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
+  <strong>🎯 Фокус:</strong> Повтори ключевые фразы первой недели: открытие встречи, постановка задач, change request, уточнение, закрытие встречи.<br><button class="audio-btn" onclick="openAudio()">🎵 Аудио дайджеста</button>
+</div>
+
+<h2>📘 Ключевые фразы недели</h2>
+<div class="phrase"><strong>Good morning, thank you for taking this call.</strong><span class="ru" style="color:#8b949e;font-size:0.85em;display:block;margin-top:3px;">Доброе утро, спасибо, что приняли этот звонок.</span></div>
+<div class="phrase"><strong>I need you to configure the SAP interface for DataMatrix codes.</strong><span class="ru" style="color:#8b949e;font-size:0.85em;display:block;margin-top:3px;">Мне нужно настроить SAP-интерфейс для кодов DataMatrix.</span></div>
+<div class="phrase"><strong>The government updated the Chestny Znak requirements yesterday.</strong><span class="ru" style="color:#8b949e;font-size:0.85em;display:block;margin-top:3px;">Правительство вчера обновило требования Честного Знака.</span></div>
+<div class="phrase"><strong>Sorry, could you explain that again in simpler terms?</strong><span class="ru" style="color:#8b949e;font-size:0.85em;display:block;margin-top:3px;">Извините, не могли бы вы объяснить это ещё раз проще?</span></div>
+<div class="phrase"><strong>Action items. You will deliver the API specification by Wednesday.</strong><span class="ru" style="color:#8b949e;font-size:0.85em;display:block;margin-top:3px;">Пункты действий. Вы предоставите спецификацию API к среде.</span></div>
+<div class="phrase"><strong>Please provide a timeline in man-hours by tomorrow.</strong><span class="ru" style="color:#8b949e;font-size:0.85em;display:block;margin-top:3px;">Пожалуйста, предоставьте сроки в человеко-часах к завтрашнему дню.</span></div>
+<div class="phrase"><strong>Let me make sure I understand. You are saying the certificate expired.</strong><span class="ru" style="color:#8b949e;font-size:0.85em;display:block;margin-top:3px;">Позвольте убедиться, что я понял. Вы говорите, сертификат истёк.</span></div>
+<div class="phrase"><strong>Can you commit to the deadline we discussed?</strong><span class="ru" style="color:#8b949e;font-size:0.85em;display:block;margin-top:3px;">Вы можете подтвердить дедлайн, который мы обсудили?</span></div>
+<div class="phrase"><strong>Let me quickly summarise what we agreed today.</strong><span class="ru" style="color:#8b949e;font-size:0.85em;display:block;margin-top:3px;">Позвольте кратко подвести итог тому, о чём мы сегодня договорились.</span></div>
+<div class="phrase"><strong>If there are no further questions, thank you for your time.</strong><span class="ru" style="color:#8b949e;font-size:0.85em;display:block;margin-top:3px;">Если вопросов больше нет, спасибо за ваше время.</span></div>
+
+<div class="audio-overlay" id="audioOverlay" onclick="closeAudio()">
+  <div class="audio-overlay-content" onclick="event.stopPropagation()">
+    <button class="audio-close" onclick="closeAudio()">✕</button>
+    <audio controls>
+      <source src="../audio/weekend-digest-01.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+</div>
+
+<script>
+function openAudio() {
+  document.getElementById("audioOverlay").classList.add("open");
+}
+function closeAudio() {
+  document.getElementById("audioOverlay").classList.remove("open");
+  var a = document.querySelector("#audioOverlay audio");
+  if (a) a.pause();
+}
+</script>
+
+<nav>
+  <a href="../index.html">Главная</a>
+</nav>
+
+</body>
+</html>

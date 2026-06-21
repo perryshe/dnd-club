@@ -90,7 +90,7 @@ input[type="checkbox"] { accent-color: #3fb950; width: 18px; height: 18px; curso
   <a href="tor.html">📄 TOR</a>
 </div>
 
-<h2>Week 1 — База встреч</h2>
+<h2>Week 1 — База встреч <a href="week-01/digest-01.html" class="tag tag-orange" style="font-size:0.7em;text-decoration:none;vertical-align:middle;margin-left:8px;">⛅ Дайджест</a></h2>
 <div class="week-grid">
   <div class="day-row" id="day-01">
     <input type="checkbox" class="day-check" data-day="1">
@@ -134,7 +134,7 @@ input[type="checkbox"] { accent-color: #3fb950; width: 18px; height: 18px; curso
   </div>
 </div>
 
-<h2>Week 2 — Soft Skills</h2>
+<h2>Week 2 — Soft Skills <a href="week-02/digest-02.html" class="tag tag-orange" style="font-size:0.7em;text-decoration:none;vertical-align:middle;margin-left:8px;">⛅ Дайджест</a></h2>
 <div class="week-grid">
   <div class="day-row" id="day-06">
     <input type="checkbox" class="day-check" data-day="6">
@@ -178,7 +178,7 @@ input[type="checkbox"] { accent-color: #3fb950; width: 18px; height: 18px; curso
   </div>
 </div>
 
-<h2>Week 3 — Сквозная практика</h2>
+<h2>Week 3 — Сквозная практика <a href="week-03/digest-03.html" class="tag tag-orange" style="font-size:0.7em;text-decoration:none;vertical-align:middle;margin-left:8px;">⛅ Дайджест</a></h2>
 <div class="week-grid">
   <div class="day-row" id="day-11">
     <input type="checkbox" class="day-check" data-day="11">
@@ -231,6 +231,20 @@ input[type="checkbox"] { accent-color: #3fb950; width: 18px; height: 18px; curso
   var checks = document.querySelectorAll('.day-check');
   var fill = document.getElementById('progress-fill');
   var text = document.getElementById('progress-text');
+  function syncFromDayPages() {
+    for (var i = 0; i < checks.length; i++) {
+      var day = checks[i].getAttribute('data-day');
+      var key = 'eng-day' + (day < 10 ? '0' : '') + day;
+      var saved = localStorage.getItem(key);
+      if (saved) {
+        try {
+          var arr = JSON.parse(saved);
+          // day is complete only if all 3 self-check boxes are checked
+          checks[i].checked = arr.length === 3 && arr[0] && arr[1] && arr[2];
+        } catch(e) {}
+      }
+    }
+  }
   function update() {
     var done = 0;
     for (var i = 0; i < checks.length; i++) {
@@ -249,14 +263,7 @@ input[type="checkbox"] { accent-color: #3fb950; width: 18px; height: 18px; curso
       Array.from(checks).map(function(c) { return c.checked; })
     ));
   }
-  // restore
-  var saved = localStorage.getItem('eng-progress');
-  if (saved) {
-    var arr = JSON.parse(saved);
-    for (var i = 0; i < checks.length && i < arr.length; i++) {
-      checks[i].checked = arr[i];
-    }
-  }
+  syncFromDayPages();
   update();
   for (var i = 0; i < checks.length; i++) {
     checks[i].addEventListener('change', update);

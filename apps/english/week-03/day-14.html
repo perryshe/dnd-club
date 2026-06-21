@@ -41,7 +41,8 @@ li { margin: 3px 0; }
 .audio-close:hover { color: #f85149; }
 nav { margin-top: 30px; padding-top: 16px; border-top: 1px solid #21262d; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 0.85em; }
 nav a { color: #8b949e; text-decoration: none; }
-nav a:hover { color: #58a6ff; }</style>
+nav a:hover { color: #58a6ff; }
+@media (max-width: 600px) { body { padding: 12px; } h1 { font-size: 1.25em; } h2 { font-size: 1em; } .audio-overlay-content { padding: 16px; } nav { flex-direction: column; align-items: center; } }</style>
 </head>
 <body>
 
@@ -105,7 +106,7 @@ nav a:hover { color: #58a6ff; }</style>
 <div class="audio-overlay" id="audioOverlay" onclick="closeAudio()">
   <div class="audio-overlay-content" onclick="event.stopPropagation()">
     <button class="audio-close" onclick="closeAudio()">✕</button>
-    <audio controls autoplay>
+    <audio controls>
       <source src="../audio/day-14.mp3" type="audio/mpeg">
     </audio>
   </div>
@@ -113,11 +114,13 @@ nav a:hover { color: #58a6ff; }</style>
 
 <script>
 function openAudio() {
-  document.getElementById(&quot;audioOverlay&quot;).classList.add(&quot;open&quot;);
+  document.getElementById("audioOverlay").classList.add("open");
+  var a = document.querySelector("#audioOverlay audio");
+  if (a) a.play();
 }
 function closeAudio() {
-  document.getElementById(&quot;audioOverlay&quot;).classList.remove(&quot;open&quot;);
-  var a = document.querySelector(&quot;#audioOverlay audio&quot;);
+  document.getElementById("audioOverlay").classList.remove("open");
+  var a = document.querySelector("#audioOverlay audio");
   if (a) a.pause();
 }
 (function() {

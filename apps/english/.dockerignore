@@ -1,0 +1,7 @@
+audio/_temp/
+_test.mp3
+__pycache__/
+*.pyc
+.git
+.DS_Store
+Thumbs.db

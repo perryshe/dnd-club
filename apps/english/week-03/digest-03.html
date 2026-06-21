@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekend Digest — Week 3</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.7; padding: 20px; max-width: 800px; margin: 0 auto; }
+h1 { font-size: 1.5em; color: #58a6ff; }
+h2 { font-size: 1.15em; color: #f0883e; margin: 24px 0 10px; border-bottom: 1px solid #21262d; padding-bottom: 6px; }
+p, li { color: #c9d1d9; font-size: 0.95em; }
+.back { color: #8b949e; text-decoration: none; font-size: 0.85em; display: inline-block; margin-bottom: 12px; }
+.back:hover { color: #58a6ff; }
+.phrase { background: #161b22; border: 1px solid #21262d; border-radius: 8px; padding: 10px 14px; margin: 8px 0; }
+.phrase strong { color: #58a6ff; font-size: 1.02em; }
+.audio-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 999; justify-content: center; align-items: center; }
+.audio-overlay.open { display: flex; }
+.audio-overlay-content { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 24px; max-width: 92%; width: 400px; position: relative; }
+.audio-overlay-content audio { width: 100%; display: block; }
+.audio-close { position: absolute; top: 8px; right: 12px; background: none; border: none; color: #8b949e; font-size: 1.3em; cursor: pointer; line-height: 1; }
+.audio-close:hover { color: #f85149; }
+.audio-btn { display: inline-flex; align-items: center; gap: 6px; background: #1f6feb; color: #fff; border: none; border-radius: 20px; padding: 6px 14px; font-size: 0.85em; cursor: pointer; margin-top: 8px; }
+.audio-btn:hover { background: #388bfd; }
+nav { margin-top: 30px; padding-top: 16px; border-top: 1px solid #21262d; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 0.85em; }
+nav a { color: #8b949e; text-decoration: none; }
+nav a:hover { color: #58a6ff; }
+@media (max-width: 600px) { body { padding: 12px; } h1 { font-size: 1.25em; } nav { flex-direction: column; align-items: center; } }
+</style>
+</head>
+<body>
+
+<a class="back" href="../index.html">← На главную</a>
+<h1>⛅ Weekend Digest — Week 3</h1>
+<p style="color:#8b949e;font-size:0.9em;">Week 3 · Сквозная практика · Повторение</p>
+
+<div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
+  <strong>🎯 Фокус:</strong> Повтори ключевые фразы третьей недели: новое требование, критический инцидент, несколько изменений, безопасность, финальная встреча.<br><button class="audio-btn" onclick="openAudio()">🎵 Аудио дайджеста</button>
+</div>
+
+<h2>📘 Ключевые фразы недели</h2>
+<div class="phrase"><strong>Let us start. We have a new requirement from the Russian regulator.</strong><span class="ru" style="color:#8b949e;font-size:0.85em;display:block;margin-top:3px;">Давайте начнём. У нас новое требование от российского регулятора.</span></div>
+<div class="phrase"><strong>We have a critical incident. The DataMatrix printing has stopped completely.</strong><span class="ru" style="color:#8b949e;font-size:0.85em;display:block;margin-top:3px;">У нас критический инцидент. Печать DataMatrix полностью остановлена.</span></div>
+<div class="phrase"><strong>Two important topics today. First, Chestny Znak. Second, Mercury VSD.</strong><span class="ru" style="color:#8b949e;font-size:0.85em;display:block;margin-top:3px;">Две важные темы сегодня. Первая — Честный Знак. Вторая — Меркурий ВСД.</span></div>
+<div class="phrase"><strong>Let us review the SAP access rights for the Chestny Znak module.</strong><span class="ru" style="color:#8b949e;font-size:0.85em;display:block;margin-top:3px;">Давайте проверим права доступа SAP для модуля Честного Знака.</span></div>
+<div class="phrase"><strong>Thank you for joining on short notice.</strong><span class="ru" style="color:#8b949e;font-size:0.85em;display:block;margin-top:3px;">Спасибо, что присоединились по короткому уведомлению.</span></div>
+<div class="phrase"><strong>This is a priority one escalation.</strong><span class="ru" style="color:#8b949e;font-size:0.85em;display:block;margin-top:3px;">Это эскалация приоритета один.</span></div>
+<div class="phrase"><strong>Both changes have overlapping compliance deadlines.</strong><span class="ru" style="color:#8b949e;font-size:0.85em;display:block;margin-top:3px;">У обоих изменений пересекающиеся сроки комплаенса.</span></div>
+<div class="phrase"><strong>Please create a new role for operators that only allows code printing.</strong><span class="ru" style="color:#8b949e;font-size:0.85em;display:block;margin-top:3px;">Пожалуйста, создайте новую роль для операторов, которая разрешает только печать кодов.</span></div>
+<div class="phrase"><strong>I am not confident we will meet the deadline at this pace.</strong><span class="ru" style="color:#8b949e;font-size:0.85em;display:block;margin-top:3px;">Я не уверен, что мы успеем к дедлайну в таком темпе.</span></div>
+<div class="phrase"><strong>Let us schedule a daily stand-up until the go-live.</strong><span class="ru" style="color:#8b949e;font-size:0.85em;display:block;margin-top:3px;">Давайте назначим ежедневный стендап до запуска.</span></div>
+
+<div class="audio-overlay" id="audioOverlay" onclick="closeAudio()">
+  <div class="audio-overlay-content" onclick="event.stopPropagation()">
+    <button class="audio-close" onclick="closeAudio()">✕</button>
+    <audio controls>
+      <source src="../audio/weekend-digest-03.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+</div>
+
+<script>
+function openAudio() {
+  document.getElementById("audioOverlay").classList.add("open");
+}
+function closeAudio() {
+  document.getElementById("audioOverlay").classList.remove("open");
+  var a = document.querySelector("#audioOverlay audio");
+  if (a) a.pause();
+}
+</script>
+
+<nav>
+  <a href="../index.html">Главная</a>
+</nav>
+
+</body>
+</html>
