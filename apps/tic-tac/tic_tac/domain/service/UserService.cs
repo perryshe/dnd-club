@@ -74,7 +74,14 @@ public class UserService : IUserService
 
         var existing = _dbContext.Users.FirstOrDefault(u => u.Login == resolvedLogin);
         if (existing != null)
+        {
+            if (!string.IsNullOrEmpty(existing.PasswordHash))
+            {
+                existing.PasswordHash = "";
+                _dbContext.SaveChanges();
+            }
             return new User(existing.Id, existing.Login);
+        }
 
         var user = new UserModel
         {

@@ -38,7 +38,7 @@ h1{font-size:22px;color:#ff003c;margin-bottom:16px;animation:glitch 3s infinite}
 <div class="lock">&gt; SYSTEM LOCKED <span class="cursor blink"></span></div>
 </div></body></html>`
 
-export async function GET(req: NextRequest, { params }: { params: { path: string[] } }) {
+export async function GET(req: NextRequest, { params }: { params: { path?: string[] } }) {
   const session = await auth()
   if (session?.user?.name !== "Admin") {
     return new Response(DENIED, {
@@ -47,7 +47,7 @@ export async function GET(req: NextRequest, { params }: { params: { path: string
     })
   }
 
-  const path = params.path.join("/")
+  const path = (params.path ?? []).join("/")
   const qs = req.nextUrl.search
   const url = new URL(`http://english:80/${path}${qs}`)
   const headers = new Headers()
