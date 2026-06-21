@@ -49,7 +49,7 @@ export async function GET(req: NextRequest, { params }: { params: { path: string
 
   const path = params.path.join("/")
   const qs = req.nextUrl.search
-  const url = new URL(`http://localhost:3005/${path}${qs}`)
+  const url = new URL(`http://english:80/${path}${qs}`)
   const headers = new Headers()
   req.headers.forEach((v, k) => {
     if (!["host", "connection", "content-length"].includes(k.toLowerCase())) {
