@@ -31,6 +31,14 @@ li { margin: 3px 0; }
 .tag-blue { background: #1f6feb33; color: #58a6ff; }
 .tag-green { background: #23863633; color: #3fb950; }
 .tag-orange { background: #d2992233; color: #d29922; }
+.audio-btn { display: inline-flex; align-items: center; gap: 6px; background: #1f6feb; color: #fff; border: none; border-radius: 20px; padding: 6px 14px; font-size: 0.85em; cursor: pointer; margin-top: 8px; }
+.audio-btn:hover { background: #388bfd; }
+.audio-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 999; justify-content: center; align-items: center; }
+.audio-overlay.open { display: flex; }
+.audio-overlay-content { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 24px; max-width: 92%; width: 400px; position: relative; }
+.audio-overlay-content audio { width: 100%; display: block; }
+.audio-close { position: absolute; top: 8px; right: 12px; background: none; border: none; color: #8b949e; font-size: 1.3em; cursor: pointer; line-height: 1; }
+.audio-close:hover { color: #f85149; }
 nav { margin-top: 30px; padding-top: 16px; border-top: 1px solid #21262d; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 0.85em; }
 nav a { color: #8b949e; text-decoration: none; }
 nav a:hover { color: #58a6ff; }</style>
@@ -42,7 +50,7 @@ nav a:hover { color: #58a6ff; }</style>
 <p style="color:#8b949e;font-size:0.9em;">Ср 8 июл 2026 · Week 3 — Заказчик → Подрядчик · Новый материал</p>
 
 <div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
-  <strong>🎯 Фокус дня:</strong> Неподготовленная встреча с подрядчиком на любую тему
+  <strong>🎯 Фокус дня:</strong> Неподготовленная встреча с подрядчиком на любую тему<br><button class="audio-btn" onclick="openAudio()">🎵 Аудио дня</button>
 </div>
 
 <h2>🔁 Повторение</h2>
@@ -94,7 +102,24 @@ nav a:hover { color: #58a6ff; }</style>
 <div class="checkbox-item"><input type="checkbox" id="sc3"><label for="sc3">Я могу собрать ключевые моменты и отправить follow-up</label></div>
 
 
+<div class="audio-overlay" id="audioOverlay" onclick="closeAudio()">
+  <div class="audio-overlay-content" onclick="event.stopPropagation()">
+    <button class="audio-close" onclick="closeAudio()">✕</button>
+    <audio controls autoplay>
+      <source src="../audio/day-15.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+</div>
+
 <script>
+function openAudio() {
+  document.getElementById(&quot;audioOverlay&quot;).classList.add(&quot;open&quot;);
+}
+function closeAudio() {
+  document.getElementById(&quot;audioOverlay&quot;).classList.remove(&quot;open&quot;);
+  var a = document.querySelector(&quot;#audioOverlay audio&quot;);
+  if (a) a.pause();
+}
 (function() {
   var saved = localStorage.getItem("eng-day15");
   if (saved) {

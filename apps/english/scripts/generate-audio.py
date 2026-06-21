@@ -100,9 +100,9 @@ def generate_audio(data, is_digest=False):
     # --- Phrases ---
     for p in phrases:
         speak_wait(speaker, p)
-        write_silence(wav_stream, 5)
+        write_silence(wav_stream, 7.5)
         speak_wait(speaker, p)
-        write_silence(wav_stream, 5)
+        write_silence(wav_stream, 7.5)
 
     # --- Dialog ---
     if dialog and not is_digest:
@@ -143,9 +143,9 @@ def generate_audio(data, is_digest=False):
 
         for d in dictation:
             speak_wait(speaker, d)
-            write_silence(wav_stream, 5)
+            write_silence(wav_stream, 7.5)
             speak_wait(speaker, d)
-            write_silence(wav_stream, 5)
+            write_silence(wav_stream, 7.5)
 
     # --- Outro ---
     speak_wait(speaker, f"End of {title}. Well done. Keep practicing.")
