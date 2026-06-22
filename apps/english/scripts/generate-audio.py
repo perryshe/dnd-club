@@ -1,6 +1,6 @@
 """
-generate-audio.py — Генерация mp3 для English for Manager
-Использует Windows SAPI (встроенный, без интернета) + ffmpeg
+generate-audio.py — Generate mp3 for English for Manager
+Uses Windows SAPI (built-in, no internet) + ffmpeg
 """
 
 import json
@@ -13,7 +13,7 @@ from pathlib import Path
 try:
     import win32com.client
 except ImportError:
-    print("pywin32 не найден. Установи: pip install pywin32")
+    print("pywin32 not found. Install: pip install pywin32")
     sys.exit(1)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +26,6 @@ FFMPEG = r"C:\Users\perryshe\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg
 AUDIO_DIR.mkdir(exist_ok=True)
 TEMP_DIR.mkdir(exist_ok=True)
 
-# SAPI default format: 16kHz, 16-bit, mono → 2 bytes/sample, 32000 bytes/sec
 BYTES_PER_SEC_SILENCE = 32000
 
 
@@ -38,19 +37,39 @@ def speak_wait(speaker, text):
 
 
 def write_silence(stream, seconds):
-    """Write N seconds of silence (zero PCM samples) to the stream."""
     if seconds <= 0:
         return
     stream.Write(b"\x00" * int(BYTES_PER_SEC_SILENCE * seconds))
 
 
 def set_voice(speaker, name_fragment, voices):
-    """Set voice by name fragment. Returns True if found."""
     for v in voices:
         if name_fragment in v.GetDescription():
             speaker.Voice = v
             return True
     return False
+
+
+def has_cyrillic(text):
+    return any('\u0400' <= c <= '\u04FF' for c in text)
+
+
+def wav_to_mp3(wav_path, mp3_path, label):
+    if not os.path.exists(wav_path):
+        print(f"  Error: WAV not created at {wav_path}")
+        return
+    size_mb = os.path.getsize(wav_path) / (1024 * 1024)
+    print(f"  WAV size: {size_mb:.1f} MB, converting to MP3...")
+    result = subprocess.run(
+        [FFMPEG, "-y", "-i", wav_path, "-codec:a", "libmp3lame", "-b:a", "48k", mp3_path],
+        capture_output=True, text=True
+    )
+    if result.returncode == 0:
+        mp3_size = os.path.getsize(mp3_path) / (1024 * 1024)
+        print(f"  -> MP3: {mp3_path} ({mp3_size:.1f} MB)")
+        os.remove(wav_path)
+    else:
+        print(f"  FFmpeg error: {result.stderr[:200]}")
 
 
 def generate_audio(data, is_digest=False):
@@ -97,7 +116,7 @@ def generate_audio(data, is_digest=False):
         speak_wait(speaker, "Part one. New vocabulary and phrases. Listen and repeat each phrase after me.")
     write_silence(wav_stream, 1)
 
-    # --- Phrases ---
+    # --- Phrases (always English) ---
     for p in phrases:
         speak_wait(speaker, p)
         write_silence(wav_stream, 7.5)
@@ -105,6 +124,8 @@ def generate_audio(data, is_digest=False):
         write_silence(wav_stream, 7.5)
 
     # --- Dialog ---
+    # Both Customer and Vendor use English voice (Zira).
+    # The dialog text is always in English.
     if dialog and not is_digest:
         write_silence(wav_stream, 0.5)
         speak_wait(speaker, "Part two. Meeting dialog.")
@@ -119,13 +140,9 @@ def generate_audio(data, is_digest=False):
                 role, text = line.split(":", 1)
                 role = role.strip()
                 text = text.strip()
-                # Customer uses English voice, vendor uses Russian voice
-                if role == "Customer":
-                    if en_voice:
-                        speaker.Voice = en_voice
-                else:
-                    if ru_voice:
-                        speaker.Voice = ru_voice
+                # Both Customer and Vendor use English voice
+                if en_voice:
+                    speaker.Voice = en_voice
                 speak_wait(speaker, text)
                 write_silence(wav_stream, 0.5)
             else:
@@ -136,39 +153,83 @@ def generate_audio(data, is_digest=False):
             speaker.Voice = en_voice
 
     # --- Dictation ---
+    # Dictation text is in Russian — use Russian voice (Irina)
     if dictation and not is_digest:
         write_silence(wav_stream, 0.5)
         speak_wait(speaker, "Part three. Dictation. Listen to the Russian phrase, translate it to English, and say it out loud.")
         write_silence(wav_stream, 1)
 
-        for d in dictation:
-            speak_wait(speaker, d)
+        for d_text in dictation:
+            if has_cyrillic(d_text) and ru_voice:
+                speaker.Voice = ru_voice
+            elif en_voice:
+                speaker.Voice = en_voice
+            speak_wait(speaker, d_text)
             write_silence(wav_stream, 7.5)
-            speak_wait(speaker, d)
+            speak_wait(speaker, d_text)
             write_silence(wav_stream, 7.5)
 
     # --- Outro ---
+    if en_voice:
+        speaker.Voice = en_voice
     speak_wait(speaker, f"End of {title}. Well done. Keep practicing.")
     write_silence(wav_stream, 1)
 
     wav_stream.Close()
     del speaker
 
-    if os.path.exists(wav_path):
-        size_mb = os.path.getsize(wav_path) / (1024 * 1024)
-        print(f"  WAV size: {size_mb:.1f} MB, converting to MP3...")
-        result = subprocess.run(
-            [FFMPEG, "-y", "-i", wav_path, "-codec:a", "libmp3lame", "-b:a", "48k", mp3_path],
-            capture_output=True, text=True
-        )
-        if result.returncode == 0:
-            mp3_size = os.path.getsize(mp3_path) / (1024 * 1024)
-            print(f"  -> MP3: {mp3_path} ({mp3_size:.1f} MB)")
-            os.remove(wav_path)
-        else:
-            print(f"  FFmpeg error: {result.stderr[:200]}")
+    wav_to_mp3(wav_path, mp3_path, day_id)
+
+
+def generate_reading_audio(data):
+    day_id = data["id"]  # e.g. "day-01"
+    read_id = day_id.replace("day-", "read-")
+    text = data.get("reading", {}).get("text", "")
+    title = data.get("title", "")
+
+    if not text:
+        print(f"  [{read_id}] No reading text, skipping")
+        return
+
+    print(f"[{read_id}] Generating reading audio...")
+
+    wav_path = str(TEMP_DIR / f"{read_id}.wav")
+    mp3_path = str(AUDIO_DIR / f"{read_id}.mp3")
+
+    speaker = win32com.client.Dispatch("SAPI.SpVoice")
+    voices = speaker.GetVoices()
+    en_voice = None
+    for v in voices:
+        if "Zira" in v.GetDescription():
+            en_voice = v
+
+    if en_voice:
+        speaker.Voice = en_voice
     else:
-        print(f"  Error: WAV not created at {wav_path}")
+        print("  Warning: Zira voice not found, using default")
+
+    wav_stream = win32com.client.Dispatch("SAPI.SpFileStream")
+    wav_stream.Open(wav_path, 3, False)
+    speaker.AudioOutputStream = wav_stream
+    speaker.Rate = 0
+    speaker.Volume = 100
+
+    # Reading topic name from title, strip "Day XX - " prefix
+    reading_topic = title.split(" - ", 1)[-1] if " - " in title else title
+    speak_wait(speaker, f"Reading. {reading_topic}.")
+    write_silence(wav_stream, 1)
+
+    # Read the full English text
+    speak_wait(speaker, text)
+    write_silence(wav_stream, 0.5)
+
+    speak_wait(speaker, f"End of reading. Well done.")
+    write_silence(wav_stream, 1)
+
+    wav_stream.Close()
+    del speaker
+
+    wav_to_mp3(wav_path, mp3_path, read_id)
 
 
 def main():
@@ -187,6 +248,7 @@ def main():
         if arg == "--all":
             for d in days:
                 generate_audio(d)
+                generate_reading_audio(d)
             for d in digests:
                 generate_audio(d, is_digest=True)
         elif arg == "--week" and len(sys.argv) > 2:
@@ -194,13 +256,27 @@ def main():
             start = (week - 1) * 5
             for d in days[start:start + 5]:
                 generate_audio(d)
-        elif arg.startswith("day-") or arg.startswith("weekend-digest"):
+                generate_reading_audio(d)
+        elif arg == "--reading":
+            for d in days:
+                generate_reading_audio(d)
+        elif arg.startswith("day-") or arg.startswith("read-"):
             found = False
+            # Try day match
             for d in days:
                 if d["id"] == arg:
                     generate_audio(d)
                     found = True
                     break
+            # Try reading match
+            if not found and arg.startswith("read-"):
+                day_id = arg.replace("read-", "day-")
+                for d in days:
+                    if d["id"] == day_id:
+                        generate_reading_audio(d)
+                        found = True
+                        break
+            # Try digest match
             if not found:
                 for d in digests:
                     if d["id"] == arg:
@@ -208,12 +284,13 @@ def main():
                         found = True
                         break
             if not found:
-                print(f"Day '{arg}' not found")
+                print(f"ID '{arg}' not found")
         else:
             print(f"Unknown argument: {arg}")
-            print("Usage: python generate-audio.py [day-id|--week N|--all]")
+            print("Usage: python generate-audio.py [day-id|read-id|--week N|--reading|--all]")
     else:
         generate_audio(days[0])
+        generate_reading_audio(days[0])
 
     print("\nDone!")
 

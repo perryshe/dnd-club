@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reading Day 05 — Effective Meeting Closing</title>
+<title>Reading Day 05 — Closing with Impact</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.7; padding: 20px; max-width: 800px; margin: 0 auto; }
@@ -29,55 +29,67 @@ details .answer { color: #3fb950; padding: 4px 0; }
 nav { margin-top: 30px; padding-top: 16px; border-top: 1px solid #21262d; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 0.85em; }
 nav a { color: #8b949e; text-decoration: none; }
 nav a:hover { color: #58a6ff; }
-@media (max-width: 600px) { body { padding: 12px; } h1 { font-size: 1.25em; } h2 { font-size: 1em; } table { font-size: 0.8em; } td, th { padding: 4px 6px; } nav { flex-direction: column; align-items: center; } }</style>
+.audio-btn { display: inline-flex; align-items: center; gap: 6px; background: #1f6feb; color: #fff; border: none; border-radius: 20px; padding: 6px 14px; font-size: 0.85em; cursor: pointer; margin-top: 8px; }
+.audio-btn:hover { background: #388bfd; }
+.audio-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 999; justify-content: center; align-items: center; }
+.audio-overlay.open { display: flex; }
+.audio-overlay-content { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 24px; max-width: 92%; width: 400px; position: relative; }
+.audio-overlay-content audio { width: 100%; display: block; }
+.audio-close { position: absolute; top: 8px; right: 12px; background: none; border: none; color: #8b949e; font-size: 1.3em; cursor: pointer; line-height: 1; }
+.audio-close:hover { color: #f85149; }
+</style>
 </head>
 <body>
 
 <a class="back" href="../index.html">← На главную</a>
-<h1>Reading Day 05 · Effective Meeting Closing</h1>
+<h1>Reading Day 05 · Closing with Impact</h1>
 <p class="note">Week 1 · Чтение и понимание текста</p>
+<button class="audio-btn" onclick="openAudio()">🎧 Аудио</button>
 
 <div class="card">
-  <p>Closing a meeting with an SAP vendor is just as important as starting one. In the last five minutes, summarize the decisions made and the action items agreed upon. Use clear language: "So we agreed that the vendor will deliver the Mercury integration specification by Friday, and I will provide the product category list by Wednesday." Assign owners and deadlines for each action item. Ask the vendor: "Is there anything we missed?" This gives them a chance to raise concerns. Confirm the next meeting date and time before everyone disconnects. Send a follow-up email within two hours summarizing everything. For regulatory projects, include a reminder of the next CRPT or Rosselkhoznadzor deadline. A strong closing ensures that both sides leave with the same understanding. It also shows the vendor that you are organized, which builds respect and improves collaboration.</p>
+  <p>A strong closing ensures the meeting was worthwhile. Summarize key decisions and action items with owners and deadlines. Ask 'Does anyone have anything else before we wrap up?' to catch late thoughts. Restate next steps clearly. Thank everyone for their time. A good wrap-up gives clarity and accountability, so no one leaves wondering what happens next. The closing should take no more than five minutes. Structure it as: decisions made, action items (who does what by when), and next meeting date if applicable. Send a follow-up email within two hours with the same structure. This creates a written record people can refer back to. As a manager, the closing is also your chance to reinforce team culture. Thank specific people for their contributions. Recognize good work publicly. This takes 30 seconds but builds motivation for weeks. End with a positive note — even if the meeting was difficult — to keep morale high.</p>
 </div>
 
 <h2>Перевод</h2>
 <div class="card ru">
-  <p>Завершение встречи с SAP-подрядчиком так же важно, как и её начало. В последние пять минут подведите итоги принятых решений и согласованных задач. Используйте чёткие формулировки: «Итак, мы договорились, что подрядчик предоставит спецификацию интеграции с Меркурием к пятнице, а я предоставлю список категорий продуктов к среде». Назначьте ответственных и сроки для каждой задачи. Спросите подрядчика: «Мы что-то упустили?» Это даёт им возможность высказать опасения. Подтвердите дату и время следующей встречи, прежде чем все отключатся. Отправьте письмо с итогами в течение двух часов. Для регуляторных проектов включите напоминание о следующем дедлайне ЦРПТ или Россельхознадзора. Хорошее завершение гарантирует, что обе стороны уйдут с одинаковым пониманием. Это также показывает подрядчику, что вы организованы, что укрепляет уважение и улучшает сотрудничество.</p>
+  <p>Сильное завершение гарантирует, что встреча прошла не зря. Подытожьте ключевые решения и поручения с исполнителями и сроками. Спросите «Есть ли что-то ещё перед завершением?» Повторите следующие шаги. Поблагодарите всех за время. Закрытие должно занимать не более пяти минут. Структура: принятые решения, поручения (кто, что, когда), дата следующей встречи. Отправьте follow-up письмо в течение двух часов. В роли менеджера закрытие — это также ваш шанс укрепить командную культуру. Поблагодарите конкретных людей за вклад. Завершите на позитивной ноте.</p>
 </div>
 
 <h2>Словарь</h2>
 <table>
   <tr><th style="color:#f0883e;">English</th><th style="color:#f0883e;">Русский</th></tr>
-<tr><td style='color:#58a6ff;'>summarize</td><td style='color:#8b949e;'>подводить итог</td></tr>
-<tr><td style='color:#58a6ff;'>action item</td><td style='color:#8b949e;'>задача, пункт действий</td></tr>
-<tr><td style='color:#58a6ff;'>owner</td><td style='color:#8b949e;'>ответственный</td></tr>
-<tr><td style='color:#58a6ff;'>deadline</td><td style='color:#8b949e;'>крайний срок</td></tr>
-<tr><td style='color:#58a6ff;'>concern</td><td style='color:#8b949e;'>опасение</td></tr>
-<tr><td style='color:#58a6ff;'>follow-up email</td><td style='color:#8b949e;'>письмо с итогами</td></tr>
-<tr><td style='color:#58a6ff;'>reminder</td><td style='color:#8b949e;'>напоминание</td></tr>
-<tr><td style='color:#58a6ff;'>specification</td><td style='color:#8b949e;'>спецификация</td></tr>
-<tr><td style='color:#58a6ff;'>collaboration</td><td style='color:#8b949e;'>сотрудничество</td></tr>
-<tr><td style='color:#58a6ff;'>missed</td><td style='color:#8b949e;'>пропущенный, упущенный</td></tr>
+<tr><td style='color:#58a6ff;'>builds</td><td style='color:#8b949e;'>строит, развивает</td></tr>
+<tr><td style='color:#58a6ff;'>morale</td><td style='color:#8b949e;'>моральный дух</td></tr>
+<tr><td style='color:#58a6ff;'>structure</td><td style='color:#8b949e;'>структура</td></tr>
+<tr><td style='color:#58a6ff;'>worthwhile</td><td style='color:#8b949e;'>стоящий</td></tr>
+<tr><td style='color:#58a6ff;'>reinforce</td><td style='color:#8b949e;'>укреплять</td></tr>
+<tr><td style='color:#58a6ff;'>everyone</td><td style='color:#8b949e;'>все</td></tr>
+<tr><td style='color:#58a6ff;'>written</td><td style='color:#8b949e;'>письменный</td></tr>
+<tr><td style='color:#58a6ff;'>should</td><td style='color:#8b949e;'>следует</td></tr>
+<tr><td style='color:#58a6ff;'>summarize</td><td style='color:#8b949e;'>резюмировать</td></tr>
+<tr><td style='color:#58a6ff;'>applicable</td><td style='color:#8b949e;'>применимый</td></tr>
+<tr><td style='color:#58a6ff;'>ensures</td><td style='color:#8b949e;'>обеспечивает</td></tr>
+<tr><td style='color:#58a6ff;'>difficult</td><td style='color:#8b949e;'>сложный</td></tr>
+
 </table>
 
 <h2>Вопросы на понимание</h2>
 <ol>
-  <li>What should you do in the last five minutes of a meeting with a vendor?</li>
-  <li>Why is it important to ask "Is there anything we missed?"</li>
-  <li>How soon after the meeting should you send a follow-up email?</li>
-  <li>What should the follow-up email include for regulatory projects?</li>
-  <li>How does a strong closing affect the vendor's perception of you?</li>
+  <li>What is the main idea of this text?</li>
+  <li>Why is this topic important for a manager?</li>
+  <li>What practical advice does the text give?</li>
+  <li>How would you apply this in your work?</li>
+  <li>What phrase from this text will you use today?</li>
 </ol>
 
 <h2>Перевод упражнение</h2>
 <p class="note">Переведи на английский:</p>
 <ol>
-  <li>Давайте подведём итоги встречи и назначим ответственных.</li>
-  <li>Кто отвечает за спецификацию интеграции?</li>
-  <li>Я отправлю письмо с итогами в течение двух часов.</li>
-  <li>Не забудьте напомнить подрядчику о дедлайне ЦРПТ.</li>
-  <li>Мы что-то упустили? Пожалуйста, дайте знать.</li>
+  <li>Это важный навык для менеджера.</li>
+  <li>Мы должны практиковаться каждый день.</li>
+  <li>Мне нужно улучшить свои коммуникативные навыки.</li>
+  <li>Это поможет команде работать эффективнее.</li>
+  <li>Я буду использовать эту фразу на следующей встрече.</li>
 </ol>
 
 <h2>Ответы</h2>
@@ -85,25 +97,46 @@ nav a:hover { color: #58a6ff; }
   <summary>Показать ответы</summary>
   <div style="margin-top:8px;">
     <p><strong>Вопросы на понимание (примерные ответы):</strong></p>
-    <div class="answer">1. Summarize decisions, assign action items with owners and deadlines, and ask if anything was missed.</div>
-    <div class="answer">2. To give the vendor a chance to raise any concerns or forgotten topics.</div>
-    <div class="answer">3. Within two hours.</div>
-    <div class="answer">4. A reminder of the next CRPT or Rosselkhoznadzor deadline.</div>
-    <div class="answer">5. It shows you are organized, which builds respect and improves collaboration.</div>
+    <div class="answer">1. The text explains Closing with Impact and its role in meetings.</div>
+    <div class="answer">2. It helps a manager communicate more effectively.</div>
+    <div class="answer">3. The text advises to practice key phrases and listen actively.</div>
+    <div class="answer">4. I will apply this in my weekly status meetings.</div>
+    <div class="answer">5. "..." — the specific phrase from this reading.</div>
     <p style="margin-top:8px;"><strong>Перевод:</strong></p>
-    <div class="answer">1. Let us summarize the meeting and assign owners.</div>
-    <div class="answer">2. Who is responsible for the integration specification?</div>
-    <div class="answer">3. I will send the follow-up email within two hours.</div>
-    <div class="answer">4. Do not forget to remind the vendor about the CRPT deadline.</div>
-    <div class="answer">5. Did we miss anything? Please let us know.</div>
+    <div class="answer">1. This is an important skill for a manager.</div>
+    <div class="answer">2. We should practice every day.</div>
+    <div class="answer">3. I need to improve my communication skills.</div>
+    <div class="answer">4. This will help the team work more efficiently.</div>
+    <div class="answer">5. I will use this phrase at the next meeting.</div>
   </div>
 </details>
 
 <nav>
-  <a href="read-04.html">← read-04.html</a>
+  <a href='day-04.html'>← day-04.html</a>
+
   <a href="../index.html">Главная</a>
-  <a href="../week-02/read-06.html">read-06.html →</a>
+  <a href="day-05.html">→ day-05.html</a>
 </nav>
+
+<div class="audio-overlay" id="audioOverlay" onclick="closeAudio()">
+  <div class="audio-overlay-content" onclick="event.stopPropagation()">
+    <button class="audio-close" onclick="closeAudio()">×</button>
+    <audio id="readAudio" controls>
+      <source src="../audio/read-05.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+</div>
+
+<script>
+function openAudio() {
+  document.getElementById('audioOverlay').classList.add('open');
+  document.getElementById('readAudio').play();
+}
+function closeAudio() {
+  document.getElementById('audioOverlay').classList.remove('open');
+  document.getElementById('readAudio').pause();
+}
+</script>
 
 </body>
 </html>

@@ -44,7 +44,7 @@ li { margin: 3px 0; }
 nav { margin-top: 30px; padding-top: 16px; border-top: 1px solid #21262d; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 0.85em; }
 nav a { color: #8b949e; text-decoration: none; }
 nav a:hover { color: #58a6ff; }
-@media (max-width: 600px) { body { padding: 12px; } h1 { font-size: 1.25em; } h2 { font-size: 1em; } .audio-overlay-content { padding: 16px; } nav { flex-direction: column; align-items: center; } }"""
+@media (max-width: 600px) { body { padding: 12px; } h1 { font-size: 1.25em; } h2 { font-size: 1em; } nav { flex-direction: column; align-items: center; } }"""
 
 def gen_day(day, title, focus, date, week_label, review, phrases, dialog, dictation, checks, reading_title, reading_text, reading_ru):
     n = f"{day:02d}"

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reading Day 02 — Writing Clear Requirements</title>
+<title>Reading Day 02 — The Weekly Sync</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.7; padding: 20px; max-width: 800px; margin: 0 auto; }
@@ -29,55 +29,67 @@ details .answer { color: #3fb950; padding: 4px 0; }
 nav { margin-top: 30px; padding-top: 16px; border-top: 1px solid #21262d; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 0.85em; }
 nav a { color: #8b949e; text-decoration: none; }
 nav a:hover { color: #58a6ff; }
-@media (max-width: 600px) { body { padding: 12px; } h1 { font-size: 1.25em; } h2 { font-size: 1em; } table { font-size: 0.8em; } td, th { padding: 4px 6px; } nav { flex-direction: column; align-items: center; } }</style>
+.audio-btn { display: inline-flex; align-items: center; gap: 6px; background: #1f6feb; color: #fff; border: none; border-radius: 20px; padding: 6px 14px; font-size: 0.85em; cursor: pointer; margin-top: 8px; }
+.audio-btn:hover { background: #388bfd; }
+.audio-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 999; justify-content: center; align-items: center; }
+.audio-overlay.open { display: flex; }
+.audio-overlay-content { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 24px; max-width: 92%; width: 400px; position: relative; }
+.audio-overlay-content audio { width: 100%; display: block; }
+.audio-close { position: absolute; top: 8px; right: 12px; background: none; border: none; color: #8b949e; font-size: 1.3em; cursor: pointer; line-height: 1; }
+.audio-close:hover { color: #f85149; }
+</style>
 </head>
 <body>
 
 <a class="back" href="../index.html">← На главную</a>
-<h1>Reading Day 02 · Writing Clear Requirements</h1>
+<h1>Reading Day 02 · The Weekly Sync</h1>
 <p class="note">Week 1 · Чтение и понимание текста</p>
+<button class="audio-btn" onclick="openAudio()">🎧 Аудио</button>
 
 <div class="card">
-  <p>When you work with an SAP vendor on regulatory changes, writing clear requirements is essential. Use the SMART framework: Specific, Measurable, Achievable, Relevant, Time-bound. For example, a vague requirement is "Implement Chestny Znak." A SMART version is "Configure SAP to generate DataMatrix codes for all dairy products by March 1st." Your requirement must include the regulation name, the SAP module, the data format, and the exact deadline. Avoid jargon — use terms the vendor can understand even if they are not experts in Russian law. For Mercury changes, specify which product categories need VSD certificates and how the integration should handle errors. Review your requirements with a colleague before sending them to the vendor. Clear requirements save time, reduce change requests, and help the vendor give you an accurate quote.</p>
+  <p>The weekly status sync is the heartbeat of any project. Its goal is not to micromanage but to surface blockers early. Each team member reports briefly on what they completed, what they are working on next, and any obstacles. A good status update is specific and concise. Instead of saying 'working on SAP,' say 'completed IDoc mapping validation, moving to error handling logic.' This keeps the team aligned and the manager informed without wasting time. As a manager, your role is to listen actively, ask clarifying questions, and note dependencies between tasks. If someone reports a blocker, ask: 'What do you need to unblock this?' and 'By when?' Always end the status round with a summary of key points. This confirms everyone heard the same information and prevents misunderstandings later. A well-run weekly sync should take no more than 30 minutes for a team of 8 people.</p>
 </div>
 
 <h2>Перевод</h2>
 <div class="card ru">
-  <p>Когда вы работаете с SAP-подрядчиком над регуляторными изменениями, написание чётких требований необходимо. Используйте принцип SMART: Конкретные, Измеримые, Достижимые, Релевантные, Ограниченные по времени. Например, расплывчатое требование — «Внедрить Честный Знак». SMART-версия: «Настроить SAP для генерации DataMatrix-кодов для всех молочных продуктов до 1 марта». Ваше требование должно включать название регламента, модуль SAP, формат данных и точный срок. Избегайте жаргона — используйте термины, которые подрядчик поймёт, даже если он не эксперт в российском законодательстве. Для изменений в Меркурии укажите, какие категории продуктов нуждаются в ВСД и как интеграция должна обрабатывать ошибки. Проверяйте требования с коллегой перед отправкой подрядчику. Чёткие требования экономят время, уменьшают количество запросов на изменения и помогают подрядчику дать точную смету.</p>
+  <p>Еженедельный статус-митинг — это сердце любого проекта. Его цель не микроменеджмент, а раннее выявление блокеров. Каждый участник кратко сообщает: что сделано, что в работе и какие есть препятствия. Хороший статус-апдейт конкретен и краток. Вместо «работаю над SAP» скажите «завершил валидацию маппинга IDoc, перехожу к логике обработки ошибок». Это держит команду синхронизированной. Как менеджер, ваша роль — активно слушать, задавать уточняющие вопросы и отмечать зависимости между задачами. Всегда завершайте раунд статусов резюме ключевых моментов. Хорошо проведённый еженедельный митинг не должен занимать более 30 минут для команды из 8 человек.</p>
 </div>
 
 <h2>Словарь</h2>
 <table>
   <tr><th style="color:#f0883e;">English</th><th style="color:#f0883e;">Русский</th></tr>
-<tr><td style='color:#58a6ff;'>requirement</td><td style='color:#8b949e;'>требование</td></tr>
-<tr><td style='color:#58a6ff;'>SMART</td><td style='color:#8b949e;'>SMART (метод постановки целей)</td></tr>
-<tr><td style='color:#58a6ff;'>vague</td><td style='color:#8b949e;'>расплывчатый</td></tr>
-<tr><td style='color:#58a6ff;'>configure</td><td style='color:#8b949e;'>настроить</td></tr>
-<tr><td style='color:#58a6ff;'>regulation</td><td style='color:#8b949e;'>нормативный акт, регламент</td></tr>
-<tr><td style='color:#58a6ff;'>module</td><td style='color:#8b949e;'>модуль</td></tr>
-<tr><td style='color:#58a6ff;'>data format</td><td style='color:#8b949e;'>формат данных</td></tr>
-<tr><td style='color:#58a6ff;'>integration</td><td style='color:#8b949e;'>интеграция</td></tr>
-<tr><td style='color:#58a6ff;'>change request</td><td style='color:#8b949e;'>запрос на изменение</td></tr>
-<tr><td style='color:#58a6ff;'>accurate quote</td><td style='color:#8b949e;'>точная смета</td></tr>
+<tr><td style='color:#58a6ff;'>misunderstandings</td><td style='color:#8b949e;'>недопонимание</td></tr>
+<tr><td style='color:#58a6ff;'>everyone</td><td style='color:#8b949e;'>все</td></tr>
+<tr><td style='color:#58a6ff;'>should</td><td style='color:#8b949e;'>следует</td></tr>
+<tr><td style='color:#58a6ff;'>obstacles</td><td style='color:#8b949e;'>препятствия</td></tr>
+<tr><td style='color:#58a6ff;'>update</td><td style='color:#8b949e;'>обновление</td></tr>
+<tr><td style='color:#58a6ff;'>saying</td><td style='color:#8b949e;'>говорение, высказывание</td></tr>
+<tr><td style='color:#58a6ff;'>questions</td><td style='color:#8b949e;'>вопросы</td></tr>
+<tr><td style='color:#58a6ff;'>minutes</td><td style='color:#8b949e;'>протокол встречи</td></tr>
+<tr><td style='color:#58a6ff;'>someone</td><td style='color:#8b949e;'>кто-то</td></tr>
+<tr><td style='color:#58a6ff;'>dependencies</td><td style='color:#8b949e;'>зависимости</td></tr>
+<tr><td style='color:#58a6ff;'>actively</td><td style='color:#8b949e;'>активно</td></tr>
+<tr><td style='color:#58a6ff;'>points</td><td style='color:#8b949e;'>пункты, моменты</td></tr>
+
 </table>
 
 <h2>Вопросы на понимание</h2>
 <ol>
   <li>What is the main idea of this text?</li>
-  <li>What does SMART stand for in requirements writing?</li>
-  <li>Why should you avoid jargon in requirements for an SAP vendor?</li>
-  <li>Give an example of a vague requirement vs. a SMART requirement from the text.</li>
-  <li>Why is it useful to review requirements with a colleague before sending them?</li>
+  <li>Why is this topic important for a manager?</li>
+  <li>What practical advice does the text give?</li>
+  <li>How would you apply this in your work?</li>
+  <li>What phrase from this text will you use today?</li>
 </ol>
 
 <h2>Перевод упражнение</h2>
 <p class="note">Переведи на английский:</p>
 <ol>
-  <li>Требование должно быть конкретным и измеримым.</li>
-  <li>Напишите SMART-требование для интеграции с Меркурием.</li>
-  <li>Дедлайн по настройке SAP — 15 января.</li>
-  <li>Пожалуйста, уточните формат данных для DataMatrix-кодов.</li>
-  <li>Мы получили запрос на изменение от подрядчика.</li>
+  <li>Это важный навык для менеджера.</li>
+  <li>Мы должны практиковаться каждый день.</li>
+  <li>Мне нужно улучшить свои коммуникативные навыки.</li>
+  <li>Это поможет команде работать эффективнее.</li>
+  <li>Я буду использовать эту фразу на следующей встрече.</li>
 </ol>
 
 <h2>Ответы</h2>
@@ -85,25 +97,46 @@ nav a:hover { color: #58a6ff; }
   <summary>Показать ответы</summary>
   <div style="margin-top:8px;">
     <p><strong>Вопросы на понимание (примерные ответы):</strong></p>
-    <div class="answer">1. Writing clear, SMART requirements is essential when working with SAP vendors on regulatory changes.</div>
-    <div class="answer">2. Specific, Measurable, Achievable, Relevant, Time-bound.</div>
-    <div class="answer">3. Because the vendor may not be an expert in Russian law, so clear terms prevent misunderstandings.</div>
-    <div class="answer">4. Vague: "Implement Chestny Znak." SMART: "Configure SAP to generate DataMatrix codes for all dairy products by March 1st."</div>
-    <div class="answer">5. A colleague can spot gaps or unclear points before the vendor sees them.</div>
+    <div class="answer">1. The text explains The Weekly Sync and its role in meetings.</div>
+    <div class="answer">2. It helps a manager communicate more effectively.</div>
+    <div class="answer">3. The text advises to practice key phrases and listen actively.</div>
+    <div class="answer">4. I will apply this in my weekly status meetings.</div>
+    <div class="answer">5. "..." — the specific phrase from this reading.</div>
     <p style="margin-top:8px;"><strong>Перевод:</strong></p>
-    <div class="answer">1. The requirement must be specific and measurable.</div>
-    <div class="answer">2. Write a SMART requirement for the Mercury integration.</div>
-    <div class="answer">3. The deadline for SAP configuration is January 15th.</div>
-    <div class="answer">4. Please clarify the data format for DataMatrix codes.</div>
-    <div class="answer">5. We received a change request from the vendor.</div>
+    <div class="answer">1. This is an important skill for a manager.</div>
+    <div class="answer">2. We should practice every day.</div>
+    <div class="answer">3. I need to improve my communication skills.</div>
+    <div class="answer">4. This will help the team work more efficiently.</div>
+    <div class="answer">5. I will use this phrase at the next meeting.</div>
   </div>
 </details>
 
 <nav>
-  <a href="read-01.html">← read-01.html</a>
+  <a href='day-01.html'>← day-01.html</a>
+
   <a href="../index.html">Главная</a>
-  <a href="read-03.html">read-03.html →</a>
+  <a href="day-02.html">→ day-02.html</a>
 </nav>
+
+<div class="audio-overlay" id="audioOverlay" onclick="closeAudio()">
+  <div class="audio-overlay-content" onclick="event.stopPropagation()">
+    <button class="audio-close" onclick="closeAudio()">×</button>
+    <audio id="readAudio" controls>
+      <source src="../audio/read-02.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+</div>
+
+<script>
+function openAudio() {
+  document.getElementById('audioOverlay').classList.add('open');
+  document.getElementById('readAudio').play();
+}
+function closeAudio() {
+  document.getElementById('audioOverlay').classList.remove('open');
+  document.getElementById('readAudio').pause();
+}
+</script>
 
 </body>
 </html>

@@ -1,4 +1,4 @@
-function Write-ReadingPage {
+﻿function Write-ReadingPage {
     param($Day, $Theme, $EnglishText, $RussianText)
 
     $n = $Day.ToString("00")
@@ -54,6 +54,14 @@ details .answer { color: #3fb950; padding: 4px 0; }
 nav { margin-top: 30px; padding-top: 16px; border-top: 1px solid #21262d; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 0.85em; }
 nav a { color: #8b949e; text-decoration: none; }
 nav a:hover { color: #58a6ff; }
+.audio-btn { display: inline-flex; align-items: center; gap: 6px; background: #1f6feb; color: #fff; border: none; border-radius: 20px; padding: 6px 14px; font-size: 0.85em; cursor: pointer; margin-top: 8px; }
+.audio-btn:hover { background: #388bfd; }
+.audio-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 999; justify-content: center; align-items: center; }
+.audio-overlay.open { display: flex; }
+.audio-overlay-content { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 24px; max-width: 92%; width: 400px; position: relative; }
+.audio-overlay-content audio { width: 100%; display: block; }
+.audio-close { position: absolute; top: 8px; right: 12px; background: none; border: none; color: #8b949e; font-size: 1.3em; cursor: pointer; line-height: 1; }
+.audio-close:hover { color: #f85149; }
 </style>
 </head>
 <body>
@@ -61,6 +69,7 @@ nav a:hover { color: #58a6ff; }
 <a class="back" href="../index.html">← На главную</a>
 <h1>Reading Day $n · $Theme</h1>
 <p class="note">Week $(if ($Day -le 5){1}elseif($Day -le 10){2}else{3}) · Чтение и понимание текста</p>
+<button class="audio-btn" onclick="openAudio()">🎧 Аудио</button>
 
 <div class="card">
   <p>$EnglishText</p>
@@ -120,6 +129,26 @@ $(if ($Day -gt 1) {"  <a href='$prevDay'>← $prevDay</a>`n"})
   <a href="../index.html">Главная</a>
   <a href="$dayFile">→ $dayFile</a>
 </nav>
+
+<div class="audio-overlay" id="audioOverlay" onclick="closeAudio()">
+  <div class="audio-overlay-content" onclick="event.stopPropagation()">
+    <button class="audio-close" onclick="closeAudio()">×</button>
+    <audio id="readAudio" controls>
+      <source src="../audio/read-$n.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+</div>
+
+<script>
+function openAudio() {
+  document.getElementById('audioOverlay').classList.add('open');
+  document.getElementById('readAudio').play();
+}
+function closeAudio() {
+  document.getElementById('audioOverlay').classList.remove('open');
+  document.getElementById('readAudio').pause();
+}
+</script>
 
 </body>
 </html>

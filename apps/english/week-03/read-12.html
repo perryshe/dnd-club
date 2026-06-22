@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reading Day 12 — Critical Incident Management</title>
+<title>Reading Day 12 — MES Incidents</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.7; padding: 20px; max-width: 800px; margin: 0 auto; }
@@ -29,55 +29,67 @@ details .answer { color: #3fb950; padding: 4px 0; }
 nav { margin-top: 30px; padding-top: 16px; border-top: 1px solid #21262d; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 0.85em; }
 nav a { color: #8b949e; text-decoration: none; }
 nav a:hover { color: #58a6ff; }
-@media (max-width: 600px) { body { padding: 12px; } h1 { font-size: 1.25em; } h2 { font-size: 1em; } table { font-size: 0.8em; } td, th { padding: 4px 6px; } nav { flex-direction: column; align-items: center; } }</style>
+.audio-btn { display: inline-flex; align-items: center; gap: 6px; background: #1f6feb; color: #fff; border: none; border-radius: 20px; padding: 6px 14px; font-size: 0.85em; cursor: pointer; margin-top: 8px; }
+.audio-btn:hover { background: #388bfd; }
+.audio-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 999; justify-content: center; align-items: center; }
+.audio-overlay.open { display: flex; }
+.audio-overlay-content { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 24px; max-width: 92%; width: 400px; position: relative; }
+.audio-overlay-content audio { width: 100%; display: block; }
+.audio-close { position: absolute; top: 8px; right: 12px; background: none; border: none; color: #8b949e; font-size: 1.3em; cursor: pointer; line-height: 1; }
+.audio-close:hover { color: #f85149; }
+</style>
 </head>
 <body>
 
 <a class="back" href="../index.html">← На главную</a>
-<h1>Reading Day 12 · Critical Incident Management</h1>
+<h1>Reading Day 12 · MES Incidents</h1>
 <p class="note">Week 3 · Чтение и понимание текста</p>
+<button class="audio-btn" onclick="openAudio()">🎧 Аудио</button>
 
 <div class="card">
-  <p>Sometimes a critical incident happens — the SAP system stops sending DataMatrix codes to CRPT, or Mercury VSD certificates are not being accepted by Rosselkhoznadzor. In these situations, you need to act fast and communicate clearly with your vendor. Start your email or call with "URGENT" in the subject line. Describe the problem: what is happening, when it started, which systems are affected, and what the business impact is. For example: "Since 10:00 AM, our SAP system has not been generating DataMatrix codes for dairy products. Shipments are stopped. This is a critical compliance issue." Ask the vendor to assign their top technical resources. Set up a daily emergency call until the issue is resolved. Document every step of the incident response. After resolution, hold a post-mortem meeting to discuss root cause and prevention. A good vendor will have a defined incident management process.</p>
+  <p>MES incidents disrupt production and require swift action. Common issues include printer failures on the line, label template errors, batch job timeouts, and data sync delays. Your role as a manager is to triage: Is this a production stop? Can we work around it? Who has the expertise to fix it? After resolution, a root cause analysis should be written to prevent recurrence. When an MES incident occurs, the first question is business impact. How many lines are affected? Is any regulatory reporting at risk? Then determine whether a workaround exists. For example, if the label printer is down, can the operator print from a backup station? If MES is completely down, can production continue with manual data entry until recovery? As a manager, you need to escalate appropriately. Not every incident needs to go to senior management, but any incident that stops production for more than 30 minutes should be communicated upward. Always include the estimated fix time and the workaround status in your escalation.</p>
 </div>
 
 <h2>Перевод</h2>
 <div class="card ru">
-  <p>Иногда происходит критический инцидент — SAP-система перестаёт отправлять DataMatrix-коды в ЦРПТ, или ВСД Меркурия не принимаются Россельхознадзором. В таких ситуациях нужно действовать быстро и чётко общаться с подрядчиком. Начните письмо или звонок с пометки «СРОЧНО» в теме письма. Опишите проблему: что происходит, когда началось, какие системы затронуты и каково влияние на бизнес. Например: «С 10:00 наша SAP-система не генерирует DataMatrix-коды для молочной продукции. Отгрузки остановлены. Это критическая проблема соответствия требованиям». Попросите подрядчика назначить лучших технических специалистов. Назначьте ежедневный экстренный звонок до решения проблемы. Документируйте каждый шаг реагирования на инцидент. После решения проведите встречу для анализа первопричины и предотвращения в будущем. Хороший подрядчик имеет определённый процесс управления инцидентами.</p>
+  <p>Инциденты MES нарушают производство и требуют быстрых действий. Частые проблемы включают отказ принтера на линии, ошибки шаблонов этикеток, таймауты пакетных заданий и задержки синхронизации данных. Ваша роль как менеджера — провести триаж: Это остановка производства? Можем ли мы обойти это? У кого есть экспертиза для исправления? После устранения напишите анализ корневых причин. Когда происходит инцидент MES, первый вопрос — влияние на бизнес. Как менеджер, вы должны правильно эскалировать.</p>
 </div>
 
 <h2>Словарь</h2>
 <table>
   <tr><th style="color:#f0883e;">English</th><th style="color:#f0883e;">Русский</th></tr>
-<tr><td style='color:#58a6ff;'>critical incident</td><td style='color:#8b949e;'>критический инцидент</td></tr>
-<tr><td style='color:#58a6ff;'>urgent</td><td style='color:#8b949e;'>срочный</td></tr>
-<tr><td style='color:#58a6ff;'>emergency</td><td style='color:#8b949e;'>экстренная ситуация</td></tr>
-<tr><td style='color:#58a6ff;'>impact</td><td style='color:#8b949e;'>влияние</td></tr>
-<tr><td style='color:#58a6ff;'>technical resources</td><td style='color:#8b949e;'>технические ресурсы</td></tr>
-<tr><td style='color:#58a6ff;'>post-mortem</td><td style='color:#8b949e;'>разбор инцидента</td></tr>
-<tr><td style='color:#58a6ff;'>root cause</td><td style='color:#8b949e;'>первопричина</td></tr>
-<tr><td style='color:#58a6ff;'>prevention</td><td style='color:#8b949e;'>предотвращение</td></tr>
-<tr><td style='color:#58a6ff;'>incident management</td><td style='color:#8b949e;'>управление инцидентами</td></tr>
-<tr><td style='color:#58a6ff;'>resolution</td><td style='color:#8b949e;'>решение, устранение</td></tr>
+<tr><td style='color:#58a6ff;'>backup</td><td style='color:#8b949e;'>резервный</td></tr>
+<tr><td style='color:#58a6ff;'>station</td><td style='color:#8b949e;'>станция</td></tr>
+<tr><td style='color:#58a6ff;'>production</td><td style='color:#8b949e;'>производство</td></tr>
+<tr><td style='color:#58a6ff;'>occurs</td><td style='color:#8b949e;'>происходит</td></tr>
+<tr><td style='color:#58a6ff;'>include</td><td style='color:#8b949e;'>включать</td></tr>
+<tr><td style='color:#58a6ff;'>written</td><td style='color:#8b949e;'>письменный</td></tr>
+<tr><td style='color:#58a6ff;'>should</td><td style='color:#8b949e;'>следует</td></tr>
+<tr><td style='color:#58a6ff;'>regulatory</td><td style='color:#8b949e;'>регуляторный</td></tr>
+<tr><td style='color:#58a6ff;'>determine</td><td style='color:#8b949e;'>определять</td></tr>
+<tr><td style='color:#58a6ff;'>management</td><td style='color:#8b949e;'>менеджмент, руководство</td></tr>
+<tr><td style='color:#58a6ff;'>business</td><td style='color:#8b949e;'>бизнес</td></tr>
+<tr><td style='color:#58a6ff;'>example</td><td style='color:#8b949e;'>пример</td></tr>
+
 </table>
 
 <h2>Вопросы на понимание</h2>
 <ol>
-  <li>What should you put in the subject line of a critical incident communication?</li>
-  <li>What information should you include when describing a critical incident?</li>
-  <li>What should you ask the vendor to do in a critical situation?</li>
-  <li>How often should emergency calls happen until resolution?</li>
-  <li>What is a post-mortem meeting and why is it important?</li>
+  <li>What is the main idea of this text?</li>
+  <li>Why is this topic important for a manager?</li>
+  <li>What practical advice does the text give?</li>
+  <li>How would you apply this in your work?</li>
+  <li>What phrase from this text will you use today?</li>
 </ol>
 
 <h2>Перевод упражнение</h2>
 <p class="note">Переведи на английский:</p>
 <ol>
-  <li>Срочно! SAP не отправляет DataMatrix-коды в ЦРПТ.</li>
-  <li>Проблема началась в 10 утра. Отгрузки остановлены.</li>
-  <li>Пожалуйста, назначьте ваших лучших специалистов на этот инцидент.</li>
-  <li>Давайте проводить ежедневные экстренные звонки до решения проблемы.</li>
-  <li>После решения инцидента мы должны провести разбор первопричины.</li>
+  <li>Это важный навык для менеджера.</li>
+  <li>Мы должны практиковаться каждый день.</li>
+  <li>Мне нужно улучшить свои коммуникативные навыки.</li>
+  <li>Это поможет команде работать эффективнее.</li>
+  <li>Я буду использовать эту фразу на следующей встрече.</li>
 </ol>
 
 <h2>Ответы</h2>
@@ -85,25 +97,46 @@ nav a:hover { color: #58a6ff; }
   <summary>Показать ответы</summary>
   <div style="margin-top:8px;">
     <p><strong>Вопросы на понимание (примерные ответы):</strong></p>
-    <div class="answer">1. "URGENT".</div>
-    <div class="answer">2. What is happening, when it started, which systems are affected, and the business impact.</div>
-    <div class="answer">3. Assign their top technical resources.</div>
-    <div class="answer">4. Daily.</div>
-    <div class="answer">5. A meeting to discuss root cause and prevention after an incident is resolved.</div>
+    <div class="answer">1. The text explains MES Incidents and its role in meetings.</div>
+    <div class="answer">2. It helps a manager communicate more effectively.</div>
+    <div class="answer">3. The text advises to practice key phrases and listen actively.</div>
+    <div class="answer">4. I will apply this in my weekly status meetings.</div>
+    <div class="answer">5. "..." — the specific phrase from this reading.</div>
     <p style="margin-top:8px;"><strong>Перевод:</strong></p>
-    <div class="answer">1. URGENT! SAP is not sending DataMatrix codes to CRPT.</div>
-    <div class="answer">2. The issue started at 10 AM. Shipments are stopped.</div>
-    <div class="answer">3. Please assign your top specialists to this incident.</div>
-    <div class="answer">4. Let us have daily emergency calls until the issue is resolved.</div>
-    <div class="answer">5. After the incident resolution, we must hold a root cause analysis meeting.</div>
+    <div class="answer">1. This is an important skill for a manager.</div>
+    <div class="answer">2. We should practice every day.</div>
+    <div class="answer">3. I need to improve my communication skills.</div>
+    <div class="answer">4. This will help the team work more efficiently.</div>
+    <div class="answer">5. I will use this phrase at the next meeting.</div>
   </div>
 </details>
 
 <nav>
-  <a href="read-11.html">← read-11.html</a>
+  <a href='day-11.html'>← day-11.html</a>
+
   <a href="../index.html">Главная</a>
-  <a href="read-13.html">read-13.html →</a>
+  <a href="day-12.html">→ day-12.html</a>
 </nav>
+
+<div class="audio-overlay" id="audioOverlay" onclick="closeAudio()">
+  <div class="audio-overlay-content" onclick="event.stopPropagation()">
+    <button class="audio-close" onclick="closeAudio()">×</button>
+    <audio id="readAudio" controls>
+      <source src="../audio/read-12.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+</div>
+
+<script>
+function openAudio() {
+  document.getElementById('audioOverlay').classList.add('open');
+  document.getElementById('readAudio').play();
+}
+function closeAudio() {
+  document.getElementById('audioOverlay').classList.remove('open');
+  document.getElementById('readAudio').pause();
+}
+</script>
 
 </body>
 </html>
