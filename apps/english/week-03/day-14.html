@@ -48,7 +48,7 @@ nav a:hover { color: #58a6ff; }
 
 <a class="back" href="../index.html">← На главную</a>
 <h1>Day 14 · Full Meeting: SAP Access & Security</h1>
-<p style="color:#8b949e;font-size:0.9em;">Вт 7 июл 2026 · Week 3 — Заказчик → Подрядчик · Новый материал</p>
+<p style="color:#8b949e;font-size:0.9em;">Чт 9 июл 2026 · Week 3 — Заказчик → Подрядчик · Новый материал</p>
 
 <div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
   <strong>🎯 Фокус дня:</strong> Встреча по SAP-безопасности: права доступа, аудит, роли<br><button class="audio-btn" onclick="openAudio()">🎵 Аудио дня</button>
@@ -75,27 +75,35 @@ nav a:hover { color: #58a6ff; }
 <p style="font-size:0.88em;color:#8b949e;">Запусти ChatGPT Voice Mode и вставь этот промпт (см. <a href="../common/ai-scenarios.html" style="color:#58a6ff;">AI-сценарии</a>):</p>
 <div class="prompt-box">You are a SAP consultant / vendor representative. I am a customer (process automation manager) with intermediate English. Speak clearly. Topic: Full Meeting: SAP Access & Security. Context: Встреча по SAP-безопасности: права доступа, аудит, роли. Follow my lead in the conversation.</div>
 
-<h2>🗣️ Диалог для отработки</h2>
-<p style="font-size:0.88em;color:#8b949e;">Прочитай вслух по ролям (ты — Customer). Потом перескажи от своего лица.</p>
-<div class="dialog"><span class="you">You (Customer):</span> John, our audit found users with excessive permissions in SAP. Several ex-employees still have active accounts. We need to review and clean up user roles and authorizations urgently.<br><br><span class="vendor">Vendor:</span> That's a serious finding. We can run a full user access report and identify anomalies.<br><br><span class="you">Customer:</span> Please run a report of all users with SAP_ALL access first. Then do a segregation of duties conflict analysis. Let's prioritize: first ex-employees, then SOD conflicts. I want a security audit report by August 1st. Can you implement a quarterly access review process?</div>
+<h2>📚 Новые слова — Full Meeting: SAP Access & Security</h2>
+
+<table>
+  <tr><th style="color:#f0883e;">English</th><th style="color:#f0883e;">Русский</th></tr>
+<tr><td style='color:#58a6ff;'>excessive</td><td style='color:#8b949e;'>избыточный</td></tr>
+<tr><td style='color:#58a6ff;'>permissions</td><td style='color:#8b949e;'>права доступа</td></tr>
+<tr><td style='color:#58a6ff;'>segregation</td><td style='color:#8b949e;'>разделение</td></tr>
+<tr><td style='color:#58a6ff;'>quarterly</td><td style='color:#8b949e;'>ежеквартальный</td></tr>
+<tr><td style='color:#58a6ff;'>audit</td><td style='color:#8b949e;'>аудит</td></tr>
+</table>
 
 <h2>📝 Самодиктант</h2>
-<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски. Потом проверь себя.</p>
-<ol>
-<li>Наш аудит нашёл пользователей с избыточными правами в SAP.</li>
-<li>Несколько уволенных сотрудников всё ещё имеют активные учётки.</li>
-<li>Нужно пересмотреть и очистить роли и права пользователей.</li>
-<li>Можете запустить отчёт по всем пользователям с SAP_ALL?</li>
-<li>Я хочу отчёт по аудиту безопасности к 1 августа.</li>
-</ol>
+<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски.</p>
+<ol id="dictList-14"></ol>
+<script>
+(function() {
+  var all = ["Наш аудит нашёл пользователей с избыточными правами в SAP.", "Несколько уволенных сотрудников всё ещё имеют активные учётки.", "Нужно пересмотреть и очистить роли и права пользователей.", "Можете запустить отчёт по всем пользователям с SAP_ALL?", "У кого доступ к критичным транзакциям, например проводкам в FI?", "Нужен анализ конфликтов разделения обязанностей.", "Пожалуйста, внедрите ежеквартальный обзор доступа.", "Сколько времени займёт очистка?", "Давайте приоритизируем: сначала уволенные, потом SOD-конфликты.", "Я хочу отчёт по аудиту безопасности к 1 августа."];
+  var shuffled = all.sort(function(){ return Math.random() - 0.5; }).slice(0, 5);
+  var ol = document.getElementById("dictList-14");
+  shuffled.forEach(function(s) {
+    var li = document.createElement("li");
+    li.textContent = s;
+    ol.appendChild(li);
+  });
+})();
+</script>
 
-<h2>Reading: SAP Access and Security Reviews with Vendors</h2>
-<div style="background:#161b22; border:1px solid #21262d; border-radius:8px; padding:12px 14px; margin:10px 0;">
-  <p style="color:#c9d1d9;">SAP security is a critical compliance area. As a customer, you must regularly audit user access with your vendor. Common findings: ex-employees with active accounts, users with SAP_ALL access, segregation of duties conflicts. When discussing with the vendor, start with the audit finding, then request specific reports: user access list, SAP_ALL users, SOD conflict matrix. Prioritize remediation: first remove ex-employees and inactive users, then address SOD conflicts. Implement a quarterly access review process. Ask the vendor to automate user deactivation upon termination.</p>
-  <hr style="border: none; border-top: 1px solid #21262d; margin: 8px 0;">
-  <p style="color:#8b949e; font-size:0.9em;">SAP-безопасность — критическая область комплаенса. Регулярно аудируйте доступ, удаляйте уволенных и внедряйте квартальные обзоры.</p>
-</div>
-<p><a href="read-14.html" style="color:#58a6ff;">📖 Полная страница для чтения →</a></p>
+<h2>📖 Чтение</h2>
+<p><a href="read-14.html" style="color:#58a6ff;">Полная страница для чтения →</a></p>
 
 <h2>✅ Self-check</h2>
 <div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу обсудить вопросы SAP-безопасности с подрядчиком</label></div>

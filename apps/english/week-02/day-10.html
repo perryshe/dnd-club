@@ -48,7 +48,7 @@ nav a:hover { color: #58a6ff; }
 
 <a class="back" href="../index.html">← На главную</a>
 <h1>Day 10 · Follow-up with Vendor</h1>
-<p style="color:#8b949e;font-size:0.9em;">Ср 1 июл 2026 · Week 2 — Заказчик → Подрядчик · Новый материал</p>
+<p style="color:#8b949e;font-size:0.9em;">Пт 3 июл 2026 · Week 2 — Заказчик → Подрядчик · Новый материал</p>
 
 <div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
   <strong>🎯 Фокус дня:</strong> Проводить follow-up: контроль задач, напоминание, корректировка сроков<br><button class="audio-btn" onclick="openAudio()">🎵 Аудио дня</button>
@@ -75,27 +75,35 @@ nav a:hover { color: #58a6ff; }
 <p style="font-size:0.88em;color:#8b949e;">Запусти ChatGPT Voice Mode и вставь этот промпт (см. <a href="../common/ai-scenarios.html" style="color:#58a6ff;">AI-сценарии</a>):</p>
 <div class="prompt-box">You are a SAP consultant / vendor representative. I am a customer (process automation manager) with intermediate English. Speak clearly. Topic: Follow-up with Vendor. Context: Проводить follow-up: контроль задач, напоминание, корректировка сроков. Follow my lead in the conversation.</div>
 
-<h2>🗣️ Диалог для отработки</h2>
-<p style="font-size:0.88em;color:#8b949e;">Прочитай вслух по ролям (ты — Customer). Потом перескажи от своего лица.</p>
-<div class="dialog"><span class="you">You (Customer):</span> Hi John, let's do a quick follow-up on our action items from last week. First, what's the status of the impact assessment? Is it on track for the July 3rd deadline?<br><br><span class="vendor">Vendor:</span> We're 80% done. Should be ready by Friday as planned.<br><br><span class="you">Customer:</span> Great. Second, I noticed we didn't receive the API documentation. What happened?<br><br><span class="vendor">Vendor:</span> Our technical writer was on sick leave. I can send a draft by Monday.<br><br><span class="you">Customer:</span> Okay, let's set a new deadline: Monday, July 6th. Do you need any support from our side to unblock this?</div>
+<h2>📚 Новые слова — Follow-up with Vendor</h2>
+
+<table>
+  <tr><th style="color:#f0883e;">English</th><th style="color:#f0883e;">Русский</th></tr>
+<tr><td style='color:#58a6ff;'>follow-up</td><td style='color:#8b949e;'>последующая встреча</td></tr>
+<tr><td style='color:#58a6ff;'>status</td><td style='color:#8b949e;'>статус</td></tr>
+<tr><td style='color:#58a6ff;'>adjust</td><td style='color:#8b949e;'>корректировать</td></tr>
+<tr><td style='color:#58a6ff;'>revise</td><td style='color:#8b949e;'>пересматривать</td></tr>
+<tr><td style='color:#58a6ff;'>unblock</td><td style='color:#8b949e;'>разблокировать</td></tr>
+</table>
 
 <h2>📝 Самодиктант</h2>
-<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски. Потом проверь себя.</p>
-<ol>
-<li>Давайте быстро проверим задачи с прошлой недели.</li>
-<li>Какой статус оценки влияния?</li>
-<li>Просто напоминание о предложении к пятнице.</li>
-<li>Нужно скорректировать срок. Предложите новую дату?</li>
-<li>Нужна помощь с нашей стороны?</li>
-</ol>
+<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски.</p>
+<ol id="dictList-10"></ol>
+<script>
+(function() {
+  var all = ["Давайте быстро проверим задачи с прошлой недели.", "Какой статус оценки влияния?", "Всё идёт по плану к дедлайну 3 июля?", "Я заметил, что мы не получили документ. Что случилось?", "Просто напоминание о предложении к пятнице.", "Нужно скорректировать срок. Предложите новую дату?", "На основе вашего обновления нужно пересмотреть план.", "Нужна помощь с нашей стороны для разблокировки?", "Отлично, задача выполнена. Переходим ко второй.", "Давайте поставим новый дедлайн и держать друг друга в курсе."];
+  var shuffled = all.sort(function(){ return Math.random() - 0.5; }).slice(0, 5);
+  var ol = document.getElementById("dictList-10");
+  shuffled.forEach(function(s) {
+    var li = document.createElement("li");
+    li.textContent = s;
+    ol.appendChild(li);
+  });
+})();
+</script>
 
-<h2>Reading: Effective Follow-ups with External Vendors</h2>
-<div style="background:#161b22; border:1px solid #21262d; border-radius:8px; padding:12px 14px; margin:10px 0;">
-  <p style="color:#c9d1d9;">A follow-up meeting checks progress on agreed action items. Structure it simply: list 3-5 tasks from the last meeting, ask for status on each, and update deadlines if needed. Start with 'Let's do a quick follow-up on our action items from last week.' Ask specific questions: 'What's the status of X?' 'Is it on track for the deadline?' If a task is delayed, ask why, offer support, and agree on a new deadline. End by confirming the updated list. Regular follow-ups build accountability and help catch problems early before they become crises.</p>
-  <hr style="border: none; border-top: 1px solid #21262d; margin: 8px 0;">
-  <p style="color:#8b949e; font-size:0.9em;">Регулярные follow-up помогают контролировать задачи и выявлять проблемы на ранней стадии. Спрашивайте статус, корректируйте сроки, предлагайте помощь.</p>
-</div>
-<p><a href="read-10.html" style="color:#58a6ff;">📖 Полная страница для чтения →</a></p>
+<h2>📖 Чтение</h2>
+<p><a href="read-10.html" style="color:#58a6ff;">Полная страница для чтения →</a></p>
 
 <h2>✅ Self-check</h2>
 <div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу провести follow-up: спросить статус, напомнить, скорректировать сроки</label></div>

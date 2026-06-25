@@ -48,7 +48,7 @@ nav a:hover { color: #58a6ff; }
 
 <a class="back" href="../index.html">← На главную</a>
 <h1>Day 02 · Assigning Tasks to Vendor</h1>
-<p style="color:#8b949e;font-size:0.9em;">Пт 19 июн 2026 · Week 1 — Заказчик → Подрядчик · Новый материал</p>
+<p style="color:#8b949e;font-size:0.9em;">Вт 23 июн 2026 · Week 1 — Заказчик → Подрядчик · Новый материал</p>
 
 <div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
   <strong>🎯 Фокус дня:</strong> Ставить задачи SAP-подрядчику: требования, оценка, сроки<br><button class="audio-btn" onclick="openAudio()">🎵 Аудио дня</button>
@@ -75,27 +75,36 @@ nav a:hover { color: #58a6ff; }
 <p style="font-size:0.88em;color:#8b949e;">Запусти ChatGPT Voice Mode и вставь этот промпт (см. <a href="../common/ai-scenarios.html" style="color:#58a6ff;">AI-сценарии</a>):</p>
 <div class="prompt-box">You are a SAP consultant / vendor representative. I am a customer (process automation manager) with intermediate English. Speak clearly. Topic: Assigning Tasks to Vendor. Context: Ставить задачи SAP-подрядчику: требования, оценка, сроки. Follow my lead in the conversation.</div>
 
-<h2>🗣️ Диалог для отработки</h2>
-<p style="font-size:0.88em;color:#8b949e;">Прочитай вслух по ролям (ты — Customer). Потом перескажи от своего лица.</p>
-<div class="dialog"><span class="you">You (Customer):</span> John, we have a new requirement from the CRPT. The DataMatrix format for dairy changed. We need your team to assess the impact.<br><br><span class="vendor">John:</span> Understood. Could you share the official document?<br><br><span class="you">Customer:</span> Yes. Please provide: impact assessment, timeline, cost estimate. We need to go live by October 1st.</div>
+<h2>📚 Новые слова — Assigning Tasks to Vendor</h2>
+
+<table>
+  <tr><th style="color:#f0883e;">English</th><th style="color:#f0883e;">Русский</th></tr>
+<tr><td style='color:#58a6ff;'>assess</td><td style='color:#8b949e;'>оценивать</td></tr>
+<tr><td style='color:#58a6ff;'>impact</td><td style='color:#8b949e;'>влияние</td></tr>
+<tr><td style='color:#58a6ff;'>estimate</td><td style='color:#8b949e;'>оценка</td></tr>
+<tr><td style='color:#58a6ff;'>timeline</td><td style='color:#8b949e;'>сроки, график</td></tr>
+<tr><td style='color:#58a6ff;'>modules</td><td style='color:#8b949e;'>модули</td></tr>
+<tr><td style='color:#58a6ff;'>scope</td><td style='color:#8b949e;'>объём работ</td></tr>
+</table>
 
 <h2>📝 Самодиктант</h2>
-<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски. Потом проверь себя.</p>
-<ol>
-<li>У нас новое требование от регулятора. Нужно ваше предложение.</li>
-<li>Оцените влияние на систему и сроки.</li>
-<li>Какой модуль SAP затронут?</li>
-<li>Подготовьте предложение из 2 частей.</li>
-<li>Подтвердите получение и срок.</li>
-</ol>
+<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски.</p>
+<ol id="dictList-02"></ol>
+<script>
+(function() {
+  var all = ["У нас новое требование от регулятора.", "Оцените влияние и дайте оценку?", "Нужно решение для Честного Знака. Подготовьте предложение.", "Какие сроки для дедлайна регулятора?", "Дайте оценку стоимости изменения.", "Какие модули SAP затронуты?", "Нужна доп. информация с нашей стороны?", "Нужно предложение из 2 частей: техника + план.", "Это в scope или change request?", "Подтвердите получение и срок предложения."];
+  var shuffled = all.sort(function(){ return Math.random() - 0.5; }).slice(0, 5);
+  var ol = document.getElementById("dictList-02");
+  shuffled.forEach(function(s) {
+    var li = document.createElement("li");
+    li.textContent = s;
+    ol.appendChild(li);
+  });
+})();
+</script>
 
-<h2>Reading: Writing Clear Requirements</h2>
-<div style="background:#161b22; border:1px solid #21262d; border-radius:8px; padding:12px 14px; margin:10px 0;">
-  <p style="color:#c9d1d9;">Writing a clear business requirement is the most important skill with an SAP vendor. A vague requirement leads to wrong solutions, delays, and budget overruns. Use SMART: Specific, Measurable, Achievable, Relevant, Time-bound. Instead of 'we need Chestny Znak,' write 'we need to print DataMatrix codes on dairy labels by December 1st.' Include regulatory document references. State affected systems. Specify constraints.</p>
-  <hr style="border: none; border-top: 1px solid #21262d; margin: 8px 0;">
-  <p style="color:#8b949e; font-size:0.9em;">Чёткое требование — главный навык в работе с SAP-подрядчиком.</p>
-</div>
-<p><a href="read-02.html" style="color:#58a6ff;">📖 Полная страница для чтения →</a></p>
+<h2>📖 Чтение</h2>
+<p><a href="read-02.html" style="color:#58a6ff;">Полная страница для чтения →</a></p>
 
 <h2>✅ Self-check</h2>
 <div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу сформулировать требование и запросить предложение</label></div>

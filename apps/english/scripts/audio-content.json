@@ -4,405 +4,480 @@
       "id": "day-01",
       "title": "Day 01 - Opening a Meeting with Vendor",
       "phrases": [
-        "Good morning, thank you for taking this call.",
-        "Let's start. We need to discuss the Chestny Znak integration.",
-        "Can you hear me clearly on your end?",
-        "I'd like to begin with the current status of the DataMatrix setup.",
-        "The main goal today is to finalise the technical requirements.",
-        "Let me share my screen to show you the regulatory timeline.",
-        "I'll keep this meeting to thirty minutes.",
-        "Please stop me if anything is unclear.",
-        "Is there anything you need from us before we start?",
-        "Let me introduce our requirements for this SAP module."
+        "Good morning / afternoon everyone. Thanks for joining the call.",
+        "Thank you for the proposal you sent. We've reviewed it internally.",
+        "Let's start with the agenda. First topic is a new requirement from the regulator.",
+        "We have participants from both our compliance team and your SAP team today.",
+        "Could you briefly introduce your team members?",
+        "The main goal of this meeting is to discuss the new regulatory change.",
+        "I'll keep the meeting to 45 minutes to respect everyone's time.",
+        "Has everyone received the updated requirements document I sent earlier?",
+        "Feel free to stop me if you have questions at any point.",
+        "Let me share my screen to walk through the requirements."
       ],
-      "dialog": "Customer: Good morning, thank you for taking this call. Let's start. We need to discuss the Chestny Znak integration.\nVendor: Good morning. Yes, we've prepared an initial proposal for the DataMatrix printing workflow.\nCustomer: Great. The main goal today is to finalise the technical requirements before the CRPT deadline.\nVendor: Understood. We have the regulatory document ready.\nCustomer: Please stop me if anything is unclear as I go through our production setup.",
+      "dialog": "Customer: Good morning / afternoon everyone. Thanks for joining the call.\nVendor: Thank you. Let me review that and get back to you.\nCustomer: Let's start with the agenda. First topic is a new requirement from the regulator.\nVendor: Understood. We will prepare an assessment.\nCustomer: Could you briefly introduce your team members?",
       "dictation": [
-        "Доброе утро всем, спасибо, что подключились к звонку.",
-        "Давайте начнём с повестки. Первая тема — новое требование регулятора.",
-        "Спасибо за предложение. Мы его рассмотрели.",
-        "Основная цель встречи — обсудить изменение в законодательстве.",
+        "Доброе утро/день всем. Спасибо, что подключились к звонку.",
+        "Спасибо за предложение. Мы его внутренне рассмотрели.",
+        "Давайте начнём с повестки. Первая тема — новое требование от регулятора.",
+        "Сегодня у нас участники от нашего комплаенса и вашей SAP-команды.",
+        "Можете кратко представить участников вашей команды?",
+        "Основная цель встречи — обсудить новое изменение регулятора.",
+        "Я уложу встречу в 45 минут.",
+        "Все получили обновлённый документ с требованиями?",
+        "Не стесняйтесь останавливать меня при вопросах.",
         "Позвольте показать экран и пройтись по требованиям."
       ],
       "reading": {
-        "text": "An effective meeting starts before anyone joins. A clear agenda, sent in advance, sets expectations. The host should arrive early, test the audio and screen share, and greet participants warmly as they enter. A strong opening includes stating the purpose, reviewing the agenda, setting time expectations, and inviting participation. Research shows that meetings with a written agenda finish 25% faster and have higher participant satisfaction. As a manager, your opening sets the tone for the entire meeting. If you sound confident and organized, others will follow. Always prepare three things before every meeting: the agenda, the attendee list, and your opening statement. Practice your opening lines until they feel natural. Remember, the first 30 seconds of a meeting determine how engaged participants will be. Don't waste them on logistics — start with purpose and energy."
+        "text": ""
       }
     },
     {
       "id": "day-02",
       "title": "Day 02 - Assigning Tasks to Vendor",
       "phrases": [
-        "I need you to configure the SAP interface for DataMatrix codes.",
-        "Please set up the HTTP connection to the CRPT API by Friday.",
-        "The first task is to create an RFC for the Mercury VSD exchange.",
-        "Let me send you the technical specification document.",
-        "What level of effort do you estimate for this task?",
-        "Please provide a timeline in man-hours by tomorrow.",
-        "This task is a priority due to the regulatory deadline.",
-        "Can you assign a dedicated developer to this project?",
-        "I expect a status update every Monday and Thursday.",
-        "Let's create a project plan in your ticketing system."
+        "We have a new business requirement from the regulator.",
+        "Could you assess the impact and give us an estimate?",
+        "We need a solution for Chestny Znak. Please prepare a proposal.",
+        "What is the timeline for the regulatory deadline?",
+        "Please provide a cost estimate for this change.",
+        "Which SAP modules will be affected?",
+        "Do you need more info from our side to proceed?",
+        "We need a proposal in two parts: technical + project plan.",
+        "Is this in scope or a change request?",
+        "Please confirm receipt and deadline for proposal."
       ],
-      "dialog": "Customer: I need you to configure the SAP interface for DataMatrix codes. Please set up the HTTP connection to the CRPT API by Friday.\nVendor: Understood. We'll need the API endpoint and authentication details.\nCustomer: I'll send you the technical specification document today. It includes the certificate and token setup.\nVendor: Thank you. What level of effort do you estimate for the entire integration?\nCustomer: That is what I need from you. Please provide a timeline in man-hours by tomorrow.",
+      "dialog": "Customer: We have a new business requirement from the regulator.\nVendor: Thank you. Let me review that and get back to you.\nCustomer: We need a solution for Chestny Znak. Please prepare a proposal.\nVendor: Understood. We will prepare an assessment.\nCustomer: Please provide a cost estimate for this change.",
       "dictation": [
-        "У нас новое требование от регулятора. Нужно ваше предложение.",
-        "Оцените влияние на систему и сроки.",
-        "Какой модуль SAP затронут?",
-        "Подготовьте предложение из 2 частей.",
-        "Подтвердите получение и срок."
+        "У нас новое требование от регулятора.",
+        "Оцените влияние и дайте оценку?",
+        "Нужно решение для Честного Знака. Подготовьте предложение.",
+        "Какие сроки для дедлайна регулятора?",
+        "Дайте оценку стоимости изменения.",
+        "Какие модули SAP затронуты?",
+        "Нужна доп. информация с нашей стороны?",
+        "Нужно предложение из 2 частей: техника + план.",
+        "Это в scope или change request?",
+        "Подтвердите получение и срок предложения."
       ],
       "reading": {
-        "text": "The weekly status sync is the heartbeat of any project. Its goal is not to micromanage but to surface blockers early. Each team member reports briefly on what they completed, what they are working on next, and any obstacles. A good status update is specific and concise. Instead of saying 'working on SAP,' say 'completed IDoc mapping validation, moving to error handling logic.' This keeps the team aligned and the manager informed without wasting time. As a manager, your role is to listen actively, ask clarifying questions, and note dependencies between tasks. If someone reports a blocker, ask: 'What do you need to unblock this?' and 'By when?' Always end the status round with a summary of key points. This confirms everyone heard the same information and prevents misunderstandings later. A well-run weekly sync should take no more than 30 minutes for a team of 8 people."
+        "text": ""
       }
     },
     {
       "id": "day-03",
       "title": "Day 03 - Change Request Due to Regulation",
       "phrases": [
-        "The government updated the Chestny Znak requirements yesterday.",
-        "We now need to include the GTIN field in every DataMatrix request.",
-        "This is a regulatory change, so it cannot wait until the next release.",
-        "Please create a change request to modify the API payload.",
-        "I will send you the link to the new regulation document.",
-        "Can you assess the impact on the current development sprint?",
-        "We need this change implemented before the 15th.",
-        "How many additional hours will this change require?",
-        "Please document all modifications in the change log.",
-        "Let me know if this affects the Mercury module as well."
+        "The regulator updated the requirements. We need to change the scope.",
+        "This is a new government requirement. We must implement by [date].",
+        "How will this affect the timeline and budget?",
+        "Please provide a revised proposal with the new scope.",
+        "We need a formal Change Request to update the contract.",
+        "Is this within the current budget or need additional approval?",
+        "The regulatory deadline is firm. No extension possible.",
+        "We need a workaround while the permanent fix is developed.",
+        "Can we phase this — MVP by deadline, full solution later?",
+        "This change is critical for compliance."
       ],
-      "dialog": "Customer: The government updated the Chestny Znak requirements yesterday. We now need to include the GTIN field in every DataMatrix request.\nVendor: I see. That will require a change to the API payload structure.\nCustomer: This is a regulatory change, so it cannot wait until the next release. Please create a change request.\nVendor: Understood. We'll assess the impact today.\nCustomer: We need this implemented before the 15th. Please let me know how many additional hours this will require.",
+      "dialog": "Customer: The regulator updated the requirements. We need to change the scope.\nVendor: Thank you. Let me review that and get back to you.\nCustomer: How will this affect the timeline and budget?\nVendor: Understood. We will prepare an assessment.\nCustomer: We need a formal Change Request to update the contract.",
       "dictation": [
         "Регулятор обновил требования. Нужно изменить scope.",
+        "Новое требование государства. Внедрить к [дате].",
         "Как это повлияет на сроки и бюджет?",
         "Дайте пересмотренное предложение.",
-        "Нужно временное решение до постоянного.",
-        "Дедлайн жёсткий. Нельзя пропустить."
+        "Нужен формальный Change Request.",
+        "Это в бюджете или нужно согласование?",
+        "Дедлайн жёсткий. Продление невозможно.",
+        "Нужно временное решение.",
+        "Можно поэтапно: MVP к сроку, потом полное решение?",
+        "Это критично для соблюдения требований."
       ],
       "reading": {
-        "text": "In manufacturing IT, incidents are inevitable: a batch job fails, an IDoc is stuck, or a label printer stops responding. A structured incident response saves hours. First, confirm the impact: who is affected and how urgent is it? Second, gather data: error messages, timestamps, logs. Third, communicate: inform stakeholders, assign ownership, set a timeline. Fourth, escalate if needed. Finally, after resolution, document the root cause to prevent recurrence. As a manager, your calmness during incidents sets the team's emotional tone. If you panic, the team panics. If you stay methodical, the team follows. Use phrases like 'Let's step through this one by one' and 'What do we know for sure?' to keep the discussion grounded. After the incident, schedule a post-mortem within 48 hours. Invite all involved and ask: What went well? What went wrong? What will we do differently? This turns every incident into a learning opportunity."
+        "text": ""
       }
     },
     {
       "id": "day-04",
       "title": "Day 04 - Q&A and Clarifying with Vendor",
       "phrases": [
-        "Sorry, could you explain that again in simpler terms?",
-        "Just to clarify, do you mean the CRPT returns a timeout or an error code?",
-        "Could you spell the technical term you just mentioned?",
-        "Let me make sure I understand. You are saying the certificate expired. Correct?",
-        "Could you elaborate on how the VSD signature verification works?",
-        "In other words, we need to update the Mercury plugin first before the SAP side. Is that right?",
-        "Let me rephrase my question to be more precise.",
-        "I did not quite catch the part about the data format.",
-        "Can you show me an example of the XML structure?",
-        "Let me check if I have this correct. The fix requires a transport."
+        "Sorry, could you repeat that more slowly?",
+        "Could you explain that in simpler terms?",
+        "I didn't quite catch that. Could you say it again?",
+        "What does 'API endpoint' mean in this context?",
+        "Could you give me an example?",
+        "Let me check if I understood correctly: you mean...",
+        "Could you send a summary of what you just explained?",
+        "Does this affect the EDI interface or just the API?",
+        "Are you talking about production or test environment?",
+        "Please confirm I understood the tasks correctly in an email."
       ],
-      "dialog": "Customer: Sorry, could you explain that again in simpler terms? I did not quite catch the part about the data format.\nVendor: Of course. The CRPT API expects a JSON payload with three mandatory fields: GTIN, serial, and batch ID.\nCustomer: Let me make sure I understand. You are saying we must send all three fields together. Correct?\nVendor: Exactly. If any field is missing, the API returns a validation error.\nCustomer: Could you show me an example of the JSON structure in the specification?",
+      "dialog": "Customer: Sorry, could you repeat that more slowly?\nVendor: Thank you. Let me review that and get back to you.\nCustomer: I didn't quite catch that. Could you say it again?\nVendor: Understood. We will prepare an assessment.\nCustomer: Could you give me an example?",
       "dictation": [
-        "ÐÐ·Ð²Ð¸Ð½Ð¸ÑÐµ, Ð½Ðµ Ð¼Ð¾Ð³Ð»Ð¸ Ð±Ñ Ð²Ñ Ð¿Ð¾Ð²ÑÐ¾ÑÐ¸ÑÑ Ð¿Ð¾Ð¼ÐµÐ´Ð»ÐµÐ½Ð½ÐµÐµ?",
-        "Ð¯ Ð½Ðµ ÑÐ¾Ð²ÑÐµÐ¼ ÑÐ»Ð¾Ð²Ð¸Ð». ÐÐ¾Ð²ÑÐ¾ÑÐ¸ÑÐµ, Ð¿Ð¾Ð¶Ð°Ð»ÑÐ¹ÑÑÐ°.",
-        "ÐÐµ Ð¼Ð¾Ð³Ð»Ð¸ Ð±Ñ Ð²Ñ Ð¾Ð±ÑÑÑÐ½Ð¸ÑÑ Ð¿ÑÐ¾ÑÐµ?",
-        "ÐÐ°Ð²Ð°Ð¹ÑÐµ Ð¿ÑÐ¾Ð²ÐµÑÑ, Ð¿ÑÐ°Ð²Ð¸Ð»ÑÐ½Ð¾ Ð»Ð¸ Ñ Ð¿Ð¾Ð½ÑÐ».",
-        "ÐÐ¾Ð´ÑÐ²ÐµÑÐ´Ð¸ÑÐµ Ð² Ð¿Ð¸ÑÑÐ¼Ðµ, ÑÑÐ¾ Ñ Ð¿ÑÐ°Ð²Ð¸Ð»ÑÐ½Ð¾ Ð¿Ð¾Ð½ÑÐ» Ð·Ð°Ð´Ð°ÑÐ¸."
+        "Извините, не могли бы вы повторить помедленнее?",
+        "Не могли бы вы объяснить проще?",
+        "Я не совсем уловил. Повторите, пожалуйста.",
+        "Что значит 'API endpoint' в этом контексте?",
+        "Можете привести пример?",
+        "Давайте проверю, правильно ли я понял: вы имеете в виду...",
+        "Можете отправить краткое объяснение?",
+        "Это влияет на EDI или только на API?",
+        "Вы говорите о промышленной или тестовой среде?",
+        "Подтвердите в письме, что я правильно понял задачи."
       ],
       "reading": {
-        "text": "Questions are a manager's most powerful tool. Open-ended questions like 'What do you think?' encourage discussion. Closed questions such as 'Is this ready?' confirm facts. Probing questions dig deeper into issues. Clarifying questions prevent misunderstandings. During Q&A sessions, listen actively, acknowledge each question, and if you don't know the answer, say 'I'll follow up on that after the meeting.' Strong Q&A builds trust between you and your team. It shows you are engaged and value their input. When you ask good questions, you also model curiosity for your team. They learn to think critically and to prepare better for meetings. One technique is the 'five whys' — asking 'why' five times to get to the root cause of any issue. Another is to pause for five seconds after asking a question. This gives people time to think before speaking. Most managers rush the silence; don't. The best answers often come after a pause."
+        "text": ""
       }
     },
     {
       "id": "day-05",
       "title": "Day 05 - Closing Meeting with Vendor",
       "phrases": [
-        "Let me quickly summarise what we agreed today.",
-        "Action items. You will deliver the API specification by Wednesday.",
-        "We will reconvene next Monday at 10 AM to review progress.",
-        "I will send the meeting notes via email within the hour.",
-        "If there are no further questions, thank you for your time.",
-        "Who will be the main contact on your side for this project?",
-        "Can you commit to the deadline we discussed?",
-        "To recap, we agreed on the change request scope and timeline.",
-        "Does everyone agree with the next steps?",
-        "Thank you for your input today. I look forward to the proposal."
+        "Let me summarize what we've agreed on today.",
+        "Our main action item is the impact assessment. John, you own this.",
+        "Please send the minutes to everyone by tomorrow.",
+        "The deadline for the proposal is next Friday, July 3rd.",
+        "Let's schedule a follow-up for next Tuesday to review.",
+        "Does everyone agree on these next steps?",
+        "If there are no questions, we can wrap up here.",
+        "Thank you all for your time today.",
+        "I'll share the meeting notes in an hour.",
+        "Let's confirm the next meeting: Tuesday, July 7th, 10 AM."
       ],
-      "dialog": "Customer: Let me quickly summarise what we agreed today. First, the CRPT API specification by Wednesday. Second, the Mercury impact assessment by Friday.\nVendor: That is correct. We will also provide the effort estimate.\nCustomer: Action items. You will deliver the API specification by Wednesday. We will reconvene next Monday at 10 AM to review progress.\nVendor: Understood. We will have everything ready.\nCustomer: If there are no further questions, thank you for your time.",
+      "dialog": "Customer: Let me summarize what we've agreed on today.\nVendor: Thank you. Let me review that and get back to you.\nCustomer: Please send the minutes to everyone by tomorrow.\nVendor: Understood. We will prepare an assessment.\nCustomer: Let's schedule a follow-up for next Tuesday to review.",
       "dictation": [
-        "ÐÐ°Ð²Ð°Ð¹ÑÐµ Ð¿Ð¾Ð´Ð²ÐµÐ´ÑÐ¼ Ð¸ÑÐ¾Ð³ ÑÐ¾Ð³Ð¾, Ð¾ ÑÑÐ¼ Ð´Ð¾Ð³Ð¾Ð²Ð¾ÑÐ¸Ð»Ð¸ÑÑ.",
-        "ÐÐ°Ñ Ð³Ð»Ð°Ð²Ð½ÑÐ¹ Ð¿ÑÐ½ÐºÑ â Ð¾ÑÐµÐ½ÐºÐ° Ð²Ð»Ð¸ÑÐ½Ð¸Ñ. ÐÐ¶Ð¾Ð½, Ð²Ñ Ð¾ÑÐ²ÐµÑÐ°ÐµÑÐµ.",
-        "ÐÐµÐ´Ð»Ð°Ð¹Ð½ Ð¿ÑÐµÐ´Ð»Ð¾Ð¶ÐµÐ½Ð¸Ñ â ÑÐ»ÐµÐ´ÑÑÑÐ°Ñ Ð¿ÑÑÐ½Ð¸ÑÐ°.",
-        "ÐÐ°Ð²Ð°Ð¹ÑÐµ Ð½Ð°Ð·Ð½Ð°ÑÐ¸Ð¼ follow-up Ð½Ð° ÑÐ»ÐµÐ´ÑÑÑÐ¸Ð¹ Ð²ÑÐ¾ÑÐ½Ð¸Ðº.",
-        "Ð¡Ð¿Ð°ÑÐ¸Ð±Ð¾ Ð²ÑÐµÐ¼ Ð·Ð° Ð²ÑÐµÐ¼Ñ."
+        "Давайте подведём итог того, о чём договорились.",
+        "Наш главный пункт — оценка влияния. Джон, вы отвечаете.",
+        "Пожалуйста, отправьте протокол всем до завтра.",
+        "Дедлайн предложения — следующая пятница, 3 июля.",
+        "Давайте назначим follow-up на следующий вторник.",
+        "Все согласны с этими шагами?",
+        "Если вопросов нет, можем заканчивать.",
+        "Спасибо всем за время.",
+        "Я отправлю заметки через час.",
+        "Подтвердим следующую встречу: вторник, 7 июля, 10 утра."
       ],
       "reading": {
-        "text": "A strong closing ensures the meeting was worthwhile. Summarize key decisions and action items with owners and deadlines. Ask 'Does anyone have anything else before we wrap up?' to catch late thoughts. Restate next steps clearly. Thank everyone for their time. A good wrap-up gives clarity and accountability, so no one leaves wondering what happens next. The closing should take no more than five minutes. Structure it as: decisions made, action items (who does what by when), and next meeting date if applicable. Send a follow-up email within two hours with the same structure. This creates a written record people can refer back to. As a manager, the closing is also your chance to reinforce team culture. Thank specific people for their contributions. Recognize good work publicly. This takes 30 seconds but builds motivation for weeks. End with a positive note — even if the meeting was difficult — to keep morale high."
+        "text": ""
       }
     },
     {
       "id": "day-06",
       "title": "Day 06 - Small Talk with Vendor",
       "phrases": [
-        "How are things going on your end today?",
-        "Did you have a good weekend?",
-        "Thanks for making the time for this call on short notice.",
-        "Good to see you again. How is your team doing?",
-        "Before we start, how is the weather where you are?",
-        "I hope everyone is staying healthy.",
-        "Let us wait another minute for your colleague to join.",
-        "Okay, let us get down to business now.",
-        "It is good to work with you on this project.",
-        "How is your day going so far?"
+        "How was your weekend? Did you do anything nice?",
+        "How was your trip to Moscow last week?",
+        "The weather is really hot today, isn't it?",
+        "Are you busy with other projects these days?",
+        "Okay, let's get down to business.",
+        "I hope you had a good holiday.",
+        "Did you manage to take some time off this summer?",
+        "That's interesting. How long have you been working in SAP consulting?",
+        "By the way, I saw your company won an award. Congratulations!",
+        "Let's start with the agenda. First topic is the Mercury integration."
       ],
-      "dialog": "Customer: Good to see you again. How is your team doing?\nVendor: Everyone is busy, but doing well. And on your side?\nCustomer: Same here. The Chestny Znak project keeps us on our toes.\nVendor: I can imagine. It is a complex regulation.\nCustomer: Yes. Anyway, let us get down to business.",
+      "dialog": "Customer: How was your weekend? Did you do anything nice?\nVendor: Thank you. Let me review that and get back to you.\nCustomer: The weather is really hot today, isn't it?\nVendor: Understood. We will prepare an assessment.\nCustomer: Okay, let's get down to business.",
       "dictation": [
-        "ÐÐ°Ðº Ð¿ÑÐ¾ÑÐ»Ð¸ Ð²ÑÑÐ¾Ð´Ð½ÑÐµ? ÐÐµÐ»Ð°Ð»Ð¸ ÑÑÐ¾-ÑÐ¾ Ð¿ÑÐ¸ÑÑÐ½Ð¾Ðµ?",
-        "ÐÐ¾Ð³Ð¾Ð´Ð° ÑÐµÐ³Ð¾Ð´Ð½Ñ Ð¾ÑÐµÐ½Ñ Ð¶Ð°ÑÐºÐ°Ñ, Ð½Ðµ ÑÐ°Ðº Ð»Ð¸?",
-        "ÐÐ°Ð²Ð°Ð¹ÑÐµ Ð¿ÐµÑÐµÐ¹Ð´ÑÐ¼ Ðº Ð´ÐµÐ»Ñ.",
-        "ÐÑÑÐ°ÑÐ¸, Ð²Ð¸Ð´ÐµÐ», ÑÑÐ¾ Ð²Ð°ÑÐ° ÐºÐ¾Ð¼Ð¿Ð°Ð½Ð¸Ñ Ð¿Ð¾Ð»ÑÑÐ¸Ð»Ð° Ð½Ð°Ð³ÑÐ°Ð´Ñ.",
-        "ÐÐ°Ð²Ð°Ð¹ÑÐµ Ð½Ð°ÑÐ½ÑÐ¼ Ñ Ð¿Ð¾Ð²ÐµÑÑÐºÐ¸."
+        "Как прошли выходные? Делали что-то приятное?",
+        "Как поездка в Москву на прошлой неделе?",
+        "Погода сегодня очень жаркая, не так ли?",
+        "Вы заняты другими проектами сейчас?",
+        "Хорошо, давайте перейдём к делу.",
+        "Надеюсь, у вас был хороший отпуск.",
+        "Удалось отдохнуть этим летом?",
+        "Это интересно. Как давно вы в SAP-консалтинге?",
+        "Кстати, видел, что ваша компания получила награду. Поздравляю!",
+        "Давайте начнём с повестки. Первая тема — интеграция с Меркурием."
       ],
       "reading": {
-        "text": "Small talk is the gateway to stronger workplace relationships. In international teams, it builds trust before diving into business. Safe topics include weather, travel, weekend plans, local food, or sports. Avoid politics, religion, or personal finances. Good openers include 'How was your weekend?', 'Are you traveling anywhere this summer?', or 'Did you try the new cafe near the office?' Small talk shows you see colleagues as people, not just roles. In virtual meetings, small talk is even more important because there is no water cooler to gather around. Start the meeting one minute early and use that time for informal chat. Ask about the person's location, time zone, or how their day is going. This creates a human connection before switching to business mode. For non-native speakers, small talk is excellent practice because the stakes are low and the vocabulary is everyday. Use these moments to build your speaking confidence without the pressure of formal meeting language."
+        "text": ""
       }
     },
     {
       "id": "day-07",
       "title": "Day 07 - Handling Complaints to Vendor",
       "phrases": [
-        "I am not satisfied with the progress on the Mercury integration.",
-        "We agreed on a timeline last week, but nothing has been delivered.",
-        "This delay is affecting our compliance with the regulation.",
-        "I expected a higher level of responsiveness from your team.",
-        "Could you explain why the task was not completed on time?",
-        "I need a concrete plan to get back on schedule.",
+        "I need to raise a concern about the timeline.",
+        "The quality of the latest deliverable is not what we expected.",
+        "We agreed on July 3rd. My team is blocked without this.",
+        "We found several issues in the test results. Let me walk you through them.",
+        "What went wrong, and how will you fix it?",
+        "I expect a revised plan with realistic milestones.",
+        "This is not the first time we have this issue.",
+        "I want to understand the root cause.",
         "Please escalate this to your project manager.",
-        "What steps will you take to prevent this from happening again?",
-        "I expect weekly status reports going forward.",
-        "If the deadline is missed again, we will have to escalate."
+        "Let's schedule a separate call to discuss the issues in detail."
       ],
-      "dialog": "Customer: I am not satisfied with the progress on the Mercury integration. We agreed on a timeline last week, but nothing has been delivered.\nVendor: I understand your concern. We had an unexpected resource issue.\nCustomer: This delay is affecting our compliance with the regulation. I need a concrete plan to get back on schedule.\nVendor: I will escalate this to our project manager and provide a recovery plan by end of day.\nCustomer: Please do. I expect weekly status reports going forward.",
+      "dialog": "Customer: I need to raise a concern about the timeline.\nVendor: Thank you. Let me review that and get back to you.\nCustomer: We agreed on July 3rd. My team is blocked without this.\nVendor: Understood. We will prepare an assessment.\nCustomer: What went wrong, and how will you fix it?",
       "dictation": [
-        "Ð¯ Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð¿Ð¾Ð´Ð½ÑÑÑ Ð²Ð¾Ð¿ÑÐ¾Ñ Ð¾ ÑÑÐ¾ÐºÐ°Ñ.",
-        "ÐÐ°ÑÐµÑÑÐ²Ð¾ Ð¿Ð¾ÑÐ»ÐµÐ´Ð½ÐµÐ³Ð¾ ÑÐµÐ·ÑÐ»ÑÑÐ°ÑÐ° Ð½Ðµ ÑÐ¾Ð¾ÑÐ²ÐµÑÑÑÐ²ÑÐµÑ Ð¾Ð¶Ð¸Ð´Ð°Ð½Ð¸ÑÐ¼.",
-        "Ð§ÑÐ¾ Ð¿Ð¾ÑÐ»Ð¾ Ð½Ðµ ÑÐ°Ðº Ð¸ ÐºÐ°Ðº Ð²Ñ ÑÑÐ¾ Ð¸ÑÐ¿ÑÐ°Ð²Ð¸ÑÐµ?",
-        "Ð¯ ÑÐ¾ÑÑ Ð¿Ð¾Ð½ÑÑÑ Ð¿ÐµÑÐ²Ð¾Ð¿ÑÐ¸ÑÐ¸Ð½Ñ.",
-        "Ð­ÑÐ¾ Ð½Ðµ Ð¿ÐµÑÐ²ÑÐ¹ ÑÐ°Ð·, ÐºÐ¾Ð³Ð´Ð° Ñ Ð½Ð°Ñ ÑÑÐ° Ð¿ÑÐ¾Ð±Ð»ÐµÐ¼Ð°."
+        "Я должен поднять вопрос о сроках.",
+        "Качество последнего результата не соответствует ожиданиям.",
+        "Мы договорились на 3 июля. Моя команда блокирована.",
+        "Мы нашли несколько проблем в результатах тестов.",
+        "Что пошло не так и как вы это исправите?",
+        "Я ожидаю обновлённый план с реалистичными вехами.",
+        "Это не первый раз, когда у нас эта проблема.",
+        "Я хочу понять первопричину.",
+        "Пожалуйста, эскалируйте это своему руководителю.",
+        "Давайте назначим отдельный звонок."
       ],
       "reading": {
-        "text": "A complaint is a gift — it tells you what needs fixing. When someone complains, first listen without interrupting. Acknowledge their feeling: 'I understand why you are frustrated.' Apologize if appropriate. Then focus on solutions. Never get defensive. A well-handled complaint can actually strengthen the relationship more than if the problem never occurred. Follow up after resolving to close the loop. The LAA method helps: Listen, Acknowledge, Act. First, listen fully without planning your response. Second, acknowledge the person's feelings and effort in raising the issue. Third, act by defining a concrete next step. Even if you cannot solve the problem immediately, saying 'I will look into this and get back to you by Friday' shows you take it seriously. Document complaints and track patterns over time. If the same issue appears repeatedly, it is not a one-off — it is a systemic problem that needs management attention. Use complaints as data for process improvement."
+        "text": ""
       }
     },
     {
       "id": "day-08",
       "title": "Day 08 - Scope Disputes with Vendor",
       "phrases": [
-        "I understand your position, but the DataMatrix printing was in the original scope.",
-        "Let me check the contract. We agreed on full CRPT integration including error handling.",
-        "I see your point, but this is not a new feature. It is a required regulatory function.",
-        "We cannot agree to a separate change order for something that was already specified.",
-        "Let us look at the signed statement of work together.",
-        "I suggest we review the original requirements document.",
-        "Can you show me where in the contract this is excluded?",
-        "We are happy to pay for genuine extras, but this is not one.",
-        "Let us take this discussion offline with the commercial team.",
-        "I need you to honour the original agreement on this point."
+        "We believe this is within the current project scope.",
+        "I disagree. This was not part of the original agreement.",
+        "We need to raise a Change Request for this new requirement.",
+        "Can we find a compromise? Perhaps share the cost 50/50?",
+        "Let's look at the contract. Section 3.2 covers regulatory changes.",
+        "This change is mandated by law. It's not optional.",
+        "I propose we split the work: MVP in current scope, enhancements as CR.",
+        "Let's involve the legal team to review the contract.",
+        "I understand your position, but we have a different interpretation.",
+        "Let's document our disagreement and escalate if needed."
       ],
-      "dialog": "Customer: I understand your position, but the DataMatrix printing was in the original scope.\nVendor: We believe the error handling for CRPT failures is a separate add-on.\nCustomer: Let me check the contract. We agreed on full CRPT integration including error handling. It is not a new feature. It is a required regulatory function.\nVendor: We will review the signed statement of work and come back to you.\nCustomer: Please do. We are happy to pay for genuine extras, but this is not one.",
+      "dialog": "Customer: We believe this is within the current project scope.\nVendor: Thank you. Let me review that and get back to you.\nCustomer: We need to raise a Change Request for this new requirement.\nVendor: Understood. We will prepare an assessment.\nCustomer: Let's look at the contract. Section 3.2 covers regulatory changes.",
       "dictation": [
-        "ÐÑ ÑÑÐ¸ÑÐ°ÐµÐ¼, ÑÑÐ¾ ÑÑÐ¾ Ð² ÑÐ°Ð¼ÐºÐ°Ñ ÑÐµÐºÑÑÐµÐ³Ð¾ Ð¾Ð±ÑÑÐ¼Ð° ÑÐ°Ð±Ð¾Ñ.",
-        "ÐÑÐ¶Ð½Ð¾ Ð¾ÑÐ¾ÑÐ¼Ð¸ÑÑ Change Request Ð½Ð° Ð½Ð¾Ð²Ð¾Ðµ ÑÑÐµÐ±Ð¾Ð²Ð°Ð½Ð¸Ðµ.",
-        "ÐÐ¾Ð¶ÐµÐ¼ Ð½Ð°Ð¹ÑÐ¸ ÐºÐ¾Ð¼Ð¿ÑÐ¾Ð¼Ð¸ÑÑ?",
-        "ÐÐ°Ð²Ð°Ð¹ÑÐµ Ð¿Ð¾ÑÐ¼Ð¾ÑÑÐ¸Ð¼ ÐºÐ¾Ð½ÑÑÐ°ÐºÑ. Ð Ð°Ð·Ð´ÐµÐ» 3.2.",
-        "Ð¯ Ð¿Ð¾Ð½Ð¸Ð¼Ð°Ñ Ð²Ð°ÑÑ Ð¿Ð¾Ð·Ð¸ÑÐ¸Ñ, Ð½Ð¾ Ñ Ð½Ð°Ñ Ð´ÑÑÐ³Ð°Ñ ÑÑÐ°ÐºÑÐ¾Ð²ÐºÐ°."
+        "Мы считаем, что это в рамках текущего объёма работ.",
+        "Я не согласен. Это не было частью изначального договора.",
+        "Нужно оформить Change Request на новое требование.",
+        "Можем найти компромисс? Например, разделить стоимость 50/50?",
+        "Давайте посмотрим контракт. Раздел 3.2 описывает регуляторные изменения.",
+        "Это изменение обязательно по закону.",
+        "Предлагаю разделить: MVP в текущем объёме, улучшения как CR.",
+        "Давайте привлечём юристов для анализа контракта.",
+        "Я понимаю вашу позицию, но у нас другая трактовка.",
+        "Давайте зафиксируем разногласия и эскалируем при необходимости."
       ],
       "reading": {
-        "text": "Conflict in meetings is natural when smart people disagree. The manager's job is not to eliminate it but to channel it constructively. First, acknowledge both sides. Second, reframe the goal: 'We all want the best outcome for production.' Third, separate people from the problem. Ask 'What data do we have?' not 'Who is right?' If needed, park the issue for later discussion. A skilled facilitator turns conflict into better decisions. One effective technique is to ask each person to restate the other's position. This forces active listening and often reveals common ground. Another is to frame disagreements as experiments: 'Let's try your approach for two weeks and measure the results.' This removes ego from the equation. As a manager, your neutrality is your greatest asset. Do not take sides unless one option is clearly wrong. When you must decide, explain your reasoning openly so both parties understand why you chose one path over the other. Transparency builds trust even in disagreement."
+        "text": ""
       }
     },
     {
       "id": "day-09",
       "title": "Day 09 - Summarizing Vendor Discussions",
       "phrases": [
-        "Let me quickly summarise what we covered in this meeting.",
-        "To recap the main points. First, the CRPT API. Second, the Mercury VSD. Third, the access setup.",
-        "Let me capture the key decisions we made today.",
-        "To make sure I have not missed anything, any other points from your side?",
-        "So to bring it all together, what we agreed is the following.",
-        "Before we finish, any final comments from your team?",
-        "Please put the technical decisions in writing by end of day.",
-        "I will document the meeting summary and share it with you.",
-        "Thank you for a productive discussion today.",
-        "Let us pick this up again at our next scheduled call."
+        "Let me stop you there. I want to make sure I understand.",
+        "So if I understand correctly, there are three main issues.",
+        "Let's take one topic at a time.",
+        "I want to capture this. Can you repeat the key point?",
+        "Let's structure this. First point: the API change. Second: testing.",
+        "I'm going to pause you here and summarize what I heard.",
+        "Did I miss anything?",
+        "Could you send a bullet-point summary after the call?",
+        "Let me take a step back and look at the big picture.",
+        "Okay, I think I have a clear picture now. Let me confirm."
       ],
-      "dialog": "Customer: To recap the main points. First, the CRPT API specification is due Wednesday. Second, the Mercury VSD impact assessment is due Friday.\nVendor: Correct. We also agreed on the access setup for the test system.\nCustomer: Exactly. Before we finish, any final comments from your team?\nVendor: No, everything is clear from our side.\nCustomer: Good. I will document the meeting summary and share it with you.",
+      "dialog": "Customer: Let me stop you there. I want to make sure I understand.\nVendor: Thank you. Let me review that and get back to you.\nCustomer: Let's take one topic at a time.\nVendor: Understood. We will prepare an assessment.\nCustomer: Let's structure this. First point: the API change. Second: testing.",
       "dictation": [
-        "ÐÐ¾Ð·Ð²Ð¾Ð»ÑÑÐµ Ð¾ÑÑÐ°Ð½Ð¾Ð²Ð¸ÑÑ. Ð¯ ÑÐ¾ÑÑ ÑÐ±ÐµÐ´Ð¸ÑÑÑÑ, ÑÑÐ¾ Ð¿Ð¾Ð½Ð¸Ð¼Ð°Ñ.",
-        "ÐÐ°Ð²Ð°Ð¹ÑÐµ ÑÐ°ÑÑÐ¼Ð°ÑÑÐ¸Ð²Ð°ÑÑ Ð¾Ð´Ð½Ñ ÑÐµÐ¼Ñ Ð·Ð° ÑÐ°Ð·.",
-        "ÐÐ°Ð²Ð°Ð¹ÑÐµ ÑÑÑÑÐºÑÑÑÐ¸ÑÑÐµÐ¼. ÐÐµÑÐ²Ð¾Ðµ: Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ðµ API.",
-        "Ð¯ Ð½Ð¸ÑÐµÐ³Ð¾ Ð½Ðµ ÑÐ¿ÑÑÑÐ¸Ð»?",
-        "ÐÐ¾Ð·Ð²Ð¾Ð»ÑÑÐµ Ð²Ð·Ð³Ð»ÑÐ½ÑÑÑ ÑÐ¸ÑÐµ."
+        "Позвольте остановить. Я хочу убедиться, что понимаю.",
+        "Итак, если я правильно понимаю, есть три основных проблемы.",
+        "Давайте рассматривать одну тему за раз.",
+        "Я хочу записать. Повторите ключевой момент?",
+        "Давайте структурируем. Первое: изменение API. Второе: тестирование.",
+        "Я остановлю вас и резюмирую, что услышал.",
+        "Я ничего не упустил?",
+        "Можете отправить список ключевых пунктов после звонка?",
+        "Позвольте взглянуть шире.",
+        "Хорошо, теперь ясно. Позвольте подтвердить."
       ],
       "reading": {
-        "text": "Summarizing is a superpower in meetings. A good summary confirms alignment, catches details people might have missed, and creates a clear record. Use phrases like 'So what I'm hearing is' or 'Let me make sure I've captured this correctly.' Paraphrasing shows you listened. It gives the speaker a chance to confirm or correct. Summarizing every 10-15 minutes keeps meetings focused and productive. There are three types of summaries in meetings. The mid-point summary: after discussing a topic for a while, pause and recap what was said and decided. The end-of-topic summary: before moving to the next agenda item, state the key decision and action items. The end-of-meeting summary: recap all topics, decisions, and next steps. Each type serves a different purpose but all prevent ambiguity. When you paraphrase, you also buy yourself time to process information. This is especially helpful if English is not your first language. Paraphrasing what someone said gives you a moment to think while showing you are engaged."
+        "text": ""
       }
     },
     {
       "id": "day-10",
       "title": "Day 10 - Follow-up with Vendor",
       "phrases": [
-        "I am following up on the action items from our last meeting.",
-        "What is the status of the CRPT API specification?",
-        "I noticed the Mercury assessment has not been submitted yet. Any blockers?",
-        "Just checking in. Was anything unclear in my requirements document?",
-        "Is there anything I can do on our side to help move this forward?",
-        "I will send an updated status summary after this call.",
-        "Please confirm via email once the specification is delivered.",
-        "Let us close out this overdue item today.",
-        "I will update the project tracker with the latest status.",
-        "Let us keep this on the radar for the regulatory deadline."
+        "Let's do a quick follow-up on our action items from last week.",
+        "What's the status of the impact assessment?",
+        "Is it on track for the July 3rd deadline?",
+        "I noticed we didn't receive the document. What happened?",
+        "Just a friendly reminder about the proposal due Friday.",
+        "We need to adjust the deadline. Can you propose a new date?",
+        "Based on your update, we need to revise the project plan.",
+        "Do you need any support from our side to unblock the task?",
+        "Great, task one is done. Let's move to task two.",
+        "Let's set a new deadline and keep each other updated."
       ],
-      "dialog": "Customer: I am following up on the action items from our last meeting. What is the status of the CRPT API specification?\nVendor: It is almost ready. We are finalising the authentication section.\nCustomer: Good. Also, I noticed the Mercury assessment has not been submitted yet. Any blockers?\nVendor: We are waiting for the Mercury sandbox access from your side.\nCustomer: I will check with our IT team and get back to you today. Please confirm via email once the specification is delivered.",
+      "dialog": "Customer: Let's do a quick follow-up on our action items from last week.\nVendor: Thank you. Let me review that and get back to you.\nCustomer: Is it on track for the July 3rd deadline?\nVendor: Understood. We will prepare an assessment.\nCustomer: Just a friendly reminder about the proposal due Friday.",
       "dictation": [
-        "ÐÐ°Ð²Ð°Ð¹ÑÐµ Ð±ÑÑÑÑÐ¾ Ð¿ÑÐ¾Ð²ÐµÑÐ¸Ð¼ Ð·Ð°Ð´Ð°ÑÐ¸ Ñ Ð¿ÑÐ¾ÑÐ»Ð¾Ð¹ Ð½ÐµÐ´ÐµÐ»Ð¸.",
-        "ÐÐ°ÐºÐ¾Ð¹ ÑÑÐ°ÑÑÑ Ð¾ÑÐµÐ½ÐºÐ¸ Ð²Ð»Ð¸ÑÐ½Ð¸Ñ?",
-        "ÐÑÐ¾ÑÑÐ¾ Ð½Ð°Ð¿Ð¾Ð¼Ð¸Ð½Ð°Ð½Ð¸Ðµ Ð¾ Ð¿ÑÐµÐ´Ð»Ð¾Ð¶ÐµÐ½Ð¸Ð¸ Ðº Ð¿ÑÑÐ½Ð¸ÑÐµ.",
-        "ÐÑÐ¶Ð½Ð¾ ÑÐºÐ¾ÑÑÐµÐºÑÐ¸ÑÐ¾Ð²Ð°ÑÑ ÑÑÐ¾Ðº. ÐÑÐµÐ´Ð»Ð¾Ð¶Ð¸ÑÐµ Ð½Ð¾Ð²ÑÑ Ð´Ð°ÑÑ?",
-        "ÐÑÐ¶Ð½Ð° Ð¿Ð¾Ð¼Ð¾ÑÑ Ñ Ð½Ð°ÑÐµÐ¹ ÑÑÐ¾ÑÐ¾Ð½Ñ?"
+        "Давайте быстро проверим задачи с прошлой недели.",
+        "Какой статус оценки влияния?",
+        "Всё идёт по плану к дедлайну 3 июля?",
+        "Я заметил, что мы не получили документ. Что случилось?",
+        "Просто напоминание о предложении к пятнице.",
+        "Нужно скорректировать срок. Предложите новую дату?",
+        "На основе вашего обновления нужно пересмотреть план.",
+        "Нужна помощь с нашей стороны для разблокировки?",
+        "Отлично, задача выполнена. Переходим ко второй.",
+        "Давайте поставим новый дедлайн и держать друг друга в курсе."
       ],
       "reading": {
-        "text": "The meeting is over, but the work is just beginning. A timely follow-up email with meeting minutes, decisions, and action items prevents confusion. Send it within two hours. Structure it with a subject line containing date and topic, key decisions, action items with owners and deadlines, and the next meeting date. Use bullet points for readability. A good follow-up email is a reference document people will return to throughout the week. The subject line should include the project name and date, such as 'Meeting Notes: SAP-MES Status — 18 Jun 2026.' This makes it easy to find later in the inbox. In the body, start with a one-line summary of the meeting purpose. Then list decisions as bullet points. Then action items as a table: Action, Owner, Deadline. End with the next meeting date or a note that no meeting is scheduled. Keep the tone neutral and factual. Avoid emotional language. Copy only those who attended plus one additional stakeholder if needed."
+        "text": ""
       }
     },
     {
       "id": "day-11",
       "title": "Day 11 - Full Meeting: New SAP Requirement",
       "phrases": [
-        "Let us start. We have a new requirement from the Russian regulator.",
-        "The CRPT is introducing a new digital marking format for dairy products.",
-        "We need to update our SAP system to support the new DataMatrix standard.",
-        "Please assess the impact on the existing printing workflow.",
-        "I will share the preliminary CRPT documentation with you.",
-        "This requirement has a compliance deadline of Q1 next year.",
-        "Can you provide a high-level estimate by end of this week?",
-        "We will need a full project plan with milestones and deliverables.",
-        "Let me introduce the technical changes required on your side.",
-        "I suggest we schedule a workshop to go through the details together."
+        "Good morning everyone. Thanks for joining today's call.",
+        "We have a new requirement for the Mercury VSD integration.",
+        "The regulator now requires VSD numbers in the XML format before shipment.",
+        "What is the impact on our current process?",
+        "Which systems need changes — ECC, PI, or both?",
+        "Please provide a proposal with timeline and cost.",
+        "The deadline is September 1st. Is that feasible?",
+        "Let me summarize: the key action items are impact assessment and proposal.",
+        "John, you own the assessment. Maria, you handle the proposal.",
+        "Let's schedule a follow-up for next Thursday."
       ],
-      "dialog": "Customer: Let us start. We have a new requirement from the Russian regulator. The CRPT is introducing a new digital marking format for dairy products.\nVendor: We heard about this. Do you have the official documentation?\nCustomer: Yes, I will share it after this call. We need to update our SAP system to support the new DataMatrix standard.\nVendor: Understood. We will assess the impact on the existing printing workflow.\nCustomer: Please provide a high-level estimate by end of this week. We will then schedule a workshop to go through the details together.",
+      "dialog": "Customer: Good morning everyone. Thanks for joining today's call.\nVendor: Thank you. Let me review that and get back to you.\nCustomer: The regulator now requires VSD numbers in the XML format before shipment.\nVendor: Understood. We will prepare an assessment.\nCustomer: Which systems need changes — ECC, PI, or both?",
       "dictation": [
-        "Ð£ Ð½Ð°Ñ Ð½Ð¾Ð²Ð¾Ðµ ÑÑÐµÐ±Ð¾Ð²Ð°Ð½Ð¸Ðµ Ð¿Ð¾ Ð¸Ð½ÑÐµÐ³ÑÐ°ÑÐ¸Ð¸ Ñ ÐÐµÑÐºÑÑÐ¸ÐµÐ¼.",
-        "ÐÐ°ÐºÐ¸Ðµ ÑÐ¸ÑÑÐµÐ¼Ñ Ð½ÑÐ¶Ð½Ð¾ Ð¼ÐµÐ½ÑÑÑ â ECC, PI Ð¸Ð»Ð¸ Ð¾Ð±Ðµ?",
-        "ÐÐ¾Ð¶Ð°Ð»ÑÐ¹ÑÑÐ°, Ð´Ð°Ð¹ÑÐµ Ð¿ÑÐµÐ´Ð»Ð¾Ð¶ÐµÐ½Ð¸Ðµ Ñ ÑÑÐ¾ÐºÐ°Ð¼Ð¸ Ð¸ ÑÑÐ¾Ð¸Ð¼Ð¾ÑÑÑÑ.",
-        "ÐÐµÐ´Ð»Ð°Ð¹Ð½ â 1 ÑÐµÐ½ÑÑÐ±ÑÑ. Ð­ÑÐ¾ Ð²ÑÐ¿Ð¾Ð»Ð½Ð¸Ð¼Ð¾?",
-        "ÐÐ¶Ð¾Ð½, Ð²Ñ Ð¾ÑÐ²ÐµÑÐ°ÐµÑÐµ Ð·Ð° Ð¾ÑÐµÐ½ÐºÑ."
+        "Доброе утро всем. Спасибо, что присоединились.",
+        "У нас новое требование по интеграции с Меркурием.",
+        "Регулятор теперь требует номера VSD в XML до отгрузки.",
+        "Какое влияние на нынешний процесс?",
+        "Какие системы нужно менять — ECC, PI или обе?",
+        "Пожалуйста, дайте предложение с сроками и стоимостью.",
+        "Дедлайн — 1 сентября. Это выполнимо?",
+        "Подведём итог: ключевые задачи — оценка и предложение.",
+        "Джон, вы отвечаете за оценку. Мария, вы за предложение.",
+        "Давайте назначим follow-up на следующий четверг."
       ],
       "reading": {
-        "text": "SAP and MES integration is the backbone of modern manufacturing. SAP ERP handles planning and orders, while MES manages real-time production on the shop floor. The two systems communicate through IDoc messages. When an IDoc fails, orders can be delayed or duplicated. A status meeting for this integration should cover IDoc error rates, batch job health, and pending change requests. The SAP-MES interface is typically bi-directional. SAP sends production orders and master data to MES. MES sends back actual production data, material consumption, and quality results. If the interface goes down, production may continue but reporting becomes manual and error-prone. As a manager leading this meeting, you need to know the key technical terms: IDoc, RFC, BAPI, RFC destination, and middleware. You do not need to be a technical expert, but understanding the high-level data flow helps you ask better questions. Common issues include network interruptions, incorrect mapping, and authorization errors."
+        "text": ""
       }
     },
     {
       "id": "day-12",
       "title": "Day 12 - Full Meeting: Critical SAP Incident",
       "phrases": [
-        "We have a critical incident. The DataMatrix printing has stopped completely.",
-        "Our production line is idle because SAP is not sending codes to the printer.",
-        "This is a priority one escalation. I need your full attention on this.",
-        "What is your estimated time to restore the service?",
-        "Please assemble your best technical resource immediately.",
-        "Send me a status update every thirty minutes until resolved.",
-        "Let me walk you through what we see in the SAP logs.",
-        "The error says CRPT certificate validation failed. What does that mean?",
-        "I will coordinate the communication with our operations team.",
-        "After the fix, we need a root cause analysis document."
+        "We have a critical incident. The SAP interface is down.",
+        "The DataMatrix label generation stopped at 8 AM this morning.",
+        "Our warehouse cannot ship without labels.",
+        "What is the root cause? How long to fix?",
+        "Is there a workaround while you fix the root cause?",
+        "Who is working on this right now?",
+        "Please escalate to your senior engineers immediately.",
+        "I want a status update every hour until resolved.",
+        "Document the incident and steps for a post-mortem.",
+        "Once fixed, we need a root cause analysis report."
       ],
-      "dialog": "Customer: We have a critical incident. The DataMatrix printing has stopped completely. Our production line is idle.\nVendor: I understand the urgency. Let me look at the system.\nCustomer: This is a priority one escalation. The error says CRPT certificate validation failed. What does that mean?\nVendor: The certificate for the CRPT API may have expired. Let me check.\nCustomer: Please send me a status update every thirty minutes until resolved. After the fix, we need a root cause analysis document.",
+      "dialog": "Customer: We have a critical incident. The SAP interface is down.\nVendor: Thank you. Let me review that and get back to you.\nCustomer: Our warehouse cannot ship without labels.\nVendor: Understood. We will prepare an assessment.\nCustomer: Is there a workaround while you fix the root cause?",
       "dictation": [
-        "Ð£ Ð½Ð°Ñ ÐºÑÐ¸ÑÐ¸ÑÐµÑÐºÐ¸Ð¹ Ð¸Ð½ÑÐ¸Ð´ÐµÐ½Ñ. ÐÐ½ÑÐµÑÑÐµÐ¹Ñ SAP Ð½Ðµ ÑÐ°Ð±Ð¾ÑÐ°ÐµÑ.",
-        "ÐÐµÐ½ÐµÑÐ°ÑÐ¸Ñ ÐºÐ¾Ð´Ð¾Ð² DataMatrix Ð¾ÑÑÐ°Ð½Ð¾Ð²Ð¸Ð»Ð°ÑÑ Ð² 8 ÑÑÑÐ°.",
-        "Ð ÑÑÐ¼ Ð¿ÐµÑÐ²Ð¾Ð¿ÑÐ¸ÑÐ¸Ð½Ð°? Ð¡ÐºÐ¾Ð»ÑÐºÐ¾ Ð²ÑÐµÐ¼ÐµÐ½Ð¸ Ð½Ð° Ð¸ÑÐ¿ÑÐ°Ð²Ð»ÐµÐ½Ð¸Ðµ?",
-        "Ð¯ ÑÐ¾ÑÑ Ð¾ÑÑÑÑ ÐºÐ°Ð¶Ð´ÑÐ¹ ÑÐ°Ñ Ð´Ð¾ ÑÑÑÑÐ°Ð½ÐµÐ½Ð¸Ñ.",
-        "ÐÐ¾ÑÐ»Ðµ Ð¸ÑÐ¿ÑÐ°Ð²Ð»ÐµÐ½Ð¸Ñ Ð½ÑÐ¶ÐµÐ½ Ð¾ÑÑÑÑ Ñ Ð°Ð½Ð°Ð»Ð¸Ð·Ð¾Ð¼ Ð¿ÐµÑÐ²Ð¾Ð¿ÑÐ¸ÑÐ¸Ð½."
+        "У нас критический инцидент. Интерфейс SAP не работает.",
+        "Генерация кодов DataMatrix остановилась в 8 утра.",
+        "Наш склад не может отгружать без маркировки.",
+        "В чём первопричина? Сколько времени на исправление?",
+        "Есть временное решение на время починки?",
+        "Кто сейчас этим занимается?",
+        "Немедленно эскалируйте старшим инженерам.",
+        "Я хочу отчёт каждый час до устранения.",
+        "Задокументируйте инцидент для разбора.",
+        "После исправления нужен отчёт с анализом первопричин."
       ],
       "reading": {
-        "text": "MES incidents disrupt production and require swift action. Common issues include printer failures on the line, label template errors, batch job timeouts, and data sync delays. Your role as a manager is to triage: Is this a production stop? Can we work around it? Who has the expertise to fix it? After resolution, a root cause analysis should be written to prevent recurrence. When an MES incident occurs, the first question is business impact. How many lines are affected? Is any regulatory reporting at risk? Then determine whether a workaround exists. For example, if the label printer is down, can the operator print from a backup station? If MES is completely down, can production continue with manual data entry until recovery? As a manager, you need to escalate appropriately. Not every incident needs to go to senior management, but any incident that stops production for more than 30 minutes should be communicated upward. Always include the estimated fix time and the workaround status in your escalation."
+        "text": ""
       }
     },
     {
       "id": "day-13",
       "title": "Day 13 - Full Meeting: Two Regulatory Changes",
       "phrases": [
-        "Two important topics today. First, Chestny Znak. Second, Mercury VSD.",
-        "The CRPT has updated the DataMatrix format for tobacco and dairy.",
-        "At the same time, Mercury changed the VSD signature algorithm.",
-        "Both changes have overlapping compliance deadlines. We need a plan.",
-        "Let us start with Chestny Znak and then move to Mercury.",
-        "How much development effort do you need for each change?",
-        "Can we combine both updates into one SAP transport?",
-        "We have thirty minutes for this meeting. Please keep updates brief.",
-        "I will need separate effort estimates for each regulation.",
-        "Let us set a milestone for final testing on both changes."
+        "Today's agenda has two topics: Chestny Znak and Mercury updates.",
+        "Let's start with Chestny Znak. The CRPT changed the DataMatrix format.",
+        "The new format adds a GS1 application identifier for the batch number.",
+        "When does this change take effect?",
+        "Now the second topic: Mercury VSD format update.",
+        "The Mercury system now requires electronic signatures on VSDs.",
+        "Can we combine both changes into one SAP release?",
+        "Both deadlines are in September. We need a combined plan.",
+        "Let me summarize both changes and next steps.",
+        "We'll have one combined proposal by July 20th."
       ],
-      "dialog": "Customer: Two important topics today. First, Chestny Znak. Second, Mercury VSD. The CRPT has updated the DataMatrix format for tobacco and dairy.\nVendor: We saw the announcement. Our team is analysing the changes.\nCustomer: At the same time, Mercury changed the VSD signature algorithm. Both changes have overlapping compliance deadlines. We need a plan.\nVendor: Can we combine both updates into one SAP transport to save time?\nCustomer: That is a good question. Let us assess if the transport dependencies allow it. Please provide separate effort estimates for each change.",
+      "dialog": "Customer: Today's agenda has two topics: Chestny Znak and Mercury updates.\nVendor: Thank you. Let me review that and get back to you.\nCustomer: The new format adds a GS1 application identifier for the batch number.\nVendor: Understood. We will prepare an assessment.\nCustomer: Now the second topic: Mercury VSD format update.",
       "dictation": [
-        "Ð¡ÐµÐ³Ð¾Ð´Ð½Ñ Ð´Ð²Ðµ ÑÐµÐ¼Ñ: Ð¾Ð±Ð½Ð¾Ð²Ð»ÐµÐ½Ð¸Ñ Ð§Ð Ð¸ ÐÐµÑÐºÑÑÐ¸Ñ.",
-        "ÐÐ°ÑÐ½ÑÐ¼ Ñ Ð§Ð. Ð¦Ð ÐÐ¢ Ð¸Ð·Ð¼ÐµÐ½Ð¸Ð»Ð° ÑÐ¾ÑÐ¼Ð°Ñ DataMatrix.",
-        "ÐÐ¾Ð³Ð´Ð° Ð²ÑÑÑÐ¿Ð°ÐµÑ Ð² ÑÐ¸Ð»Ñ?",
-        "ÐÐ¾Ð¶ÐµÐ¼ Ð¾Ð±ÑÐµÐ´Ð¸Ð½Ð¸ÑÑ Ð¾Ð±Ð° Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ Ð² Ð¾Ð´Ð¸Ð½ ÑÐµÐ»Ð¸Ð·?",
-        "ÐÐ¾Ð´Ð²ÐµÐ´ÑÐ¼ Ð¸ÑÐ¾Ð³ Ð¾Ð±Ð¾Ð¸Ñ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ð¹."
+        "Сегодня две темы: обновления ЧЗ и Меркурия.",
+        "Начнём с ЧЗ. ЦРПТ изменила формат DataMatrix.",
+        "Новый формат добавляет GS1-идентификатор номера партии.",
+        "Когда вступает в силу?",
+        "Теперь вторая тема: обновление формата VSD.",
+        "Система Меркурий теперь требует ЭЦП на VSD.",
+        "Можем объединить оба изменения в один релиз?",
+        "Оба дедлайна в сентябре. Нужен объединённый план.",
+        "Подведём итог обоих изменений.",
+        "У нас будет одно объединённое предложение к 20 июля."
       ],
       "reading": {
-        "text": "Chestny Znak (Honest Sign) and Mercury are Russian government traceability systems. Chestny Znak tracks products using DataMatrix codes, essential for pharmaceuticals, tobacco, and dairy. Mercury tracks animal products. Both systems integrate with your ERP and MES. Cross-functional meetings for these projects involve IT, production, logistics, and compliance teams. Each system has different requirements. Chestny Znak requires marking every single item with a unique DataMatrix code. This changes the production line because you need to apply codes at high speed. Mercury requires electronic veterinary certificates for every shipment. Both systems have strict deadlines and heavy fines for non-compliance. A typical status meeting covers: integration timeline, testing progress, production line readiness, and open issues with the system operators. As a manager, you need to track dependencies between IT deployment and production schedule. If the line needs to stop for hardware installation, that must be planned weeks in advance with the production team."
+        "text": ""
       }
     },
     {
       "id": "day-14",
-      "title": "Day 14 - Full Meeting: SAP Access and Security",
+      "title": "Day 14 - Full Meeting: SAP Access & Security",
       "phrases": [
-        "Let us review the SAP access rights for the Chestny Znak module.",
-        "Currently, five users have administration roles in the CRPT transaction.",
-        "According to our security policy, only two people should have that access.",
-        "We need to implement role-based access control for the DataMatrix functions.",
-        "Please create a new role for operators that only allows code printing.",
-        "I have prepared a list of users and their required access levels.",
-        "Let us schedule a regular quarterly review of SAP security roles.",
-        "Who on your side can approve the role changes in the system?",
-        "Please document all role assignments in the change management ticket.",
-        "I will need a report of current authorisation objects for this module."
+        "Our audit found users with excessive permissions in SAP.",
+        "Several ex-employees still have active accounts.",
+        "We need to review and clean up user roles and authorizations.",
+        "Can you run a report of all users with SAP_ALL access?",
+        "Who has access to critical transactions like FI postings?",
+        "We need a segregation of duties conflict analysis.",
+        "Please implement a quarterly access review process.",
+        "How long will the cleanup take?",
+        "Let's prioritize: first ex-employees, then SOD conflicts.",
+        "I want a security audit report by August 1st."
       ],
-      "dialog": "Customer: Let us review the SAP access rights for the Chestny Znak module. Currently, five users have administration roles in the CRPT transaction.\nVendor: That is a risk. According to your security policy, how many should have it?\nCustomer: Only two. We need to implement role-based access control for the DataMatrix functions.\nVendor: We can create a new role for operators that only allows code printing.\nCustomer: Perfect. Please document all role assignments in the change management ticket. I will need a report of current authorisation objects for this module.",
+      "dialog": "Customer: Our audit found users with excessive permissions in SAP.\nVendor: Thank you. Let me review that and get back to you.\nCustomer: We need to review and clean up user roles and authorizations.\nVendor: Understood. We will prepare an assessment.\nCustomer: Who has access to critical transactions like FI postings?",
       "dictation": [
-        "ÐÐ°Ñ Ð°ÑÐ´Ð¸Ñ Ð½Ð°ÑÑÐ» Ð¿Ð¾Ð»ÑÐ·Ð¾Ð²Ð°ÑÐµÐ»ÐµÐ¹ Ñ Ð¸Ð·Ð±ÑÑÐ¾ÑÐ½ÑÐ¼Ð¸ Ð¿ÑÐ°Ð²Ð°Ð¼Ð¸ Ð² SAP.",
-        "ÐÐµÑÐºÐ¾Ð»ÑÐºÐ¾ ÑÐ²Ð¾Ð»ÐµÐ½Ð½ÑÑ ÑÐ¾ÑÑÑÐ´Ð½Ð¸ÐºÐ¾Ð² Ð²ÑÑ ÐµÑÑ Ð¸Ð¼ÐµÑÑ Ð°ÐºÑÐ¸Ð²Ð½ÑÐµ ÑÑÑÑÐºÐ¸.",
-        "ÐÑÐ¶Ð½Ð¾ Ð¿ÐµÑÐµÑÐ¼Ð¾ÑÑÐµÑÑ Ð¸ Ð¾ÑÐ¸ÑÑÐ¸ÑÑ ÑÐ¾Ð»Ð¸ Ð¸ Ð¿ÑÐ°Ð²Ð° Ð¿Ð¾Ð»ÑÐ·Ð¾Ð²Ð°ÑÐµÐ»ÐµÐ¹.",
-        "ÐÐ¾Ð¶ÐµÑÐµ Ð·Ð°Ð¿ÑÑÑÐ¸ÑÑ Ð¾ÑÑÑÑ Ð¿Ð¾ Ð²ÑÐµÐ¼ Ð¿Ð¾Ð»ÑÐ·Ð¾Ð²Ð°ÑÐµÐ»ÑÐ¼ Ñ SAP_ALL?",
-        "Ð¯ ÑÐ¾ÑÑ Ð¾ÑÑÑÑ Ð¿Ð¾ Ð°ÑÐ´Ð¸ÑÑ Ð±ÐµÐ·Ð¾Ð¿Ð°ÑÐ½Ð¾ÑÑÐ¸ Ðº 1 Ð°Ð²Ð³ÑÑÑÐ°."
+        "Наш аудит нашёл пользователей с избыточными правами в SAP.",
+        "Несколько уволенных сотрудников всё ещё имеют активные учётки.",
+        "Нужно пересмотреть и очистить роли и права пользователей.",
+        "Можете запустить отчёт по всем пользователям с SAP_ALL?",
+        "У кого доступ к критичным транзакциям, например проводкам в FI?",
+        "Нужен анализ конфликтов разделения обязанностей.",
+        "Пожалуйста, внедрите ежеквартальный обзор доступа.",
+        "Сколько времени займёт очистка?",
+        "Давайте приоритизируем: сначала уволенные, потом SOD-конфликты.",
+        "Я хочу отчёт по аудиту безопасности к 1 августа."
       ],
       "reading": {
-        "text": "Cross-functional review meetings bring together production, budget, and IT teams. Each function speaks a different language: production talks throughput and downtime, budget talks costs and ROI, IT talks systems and tickets. Your job is to translate between them. Let each function present briefly, then facilitate discussion on trade-offs. End with a clear decision: approve, defer, or reject each request. The hardest part of cross-functional meetings is managing different priorities. Production wants maximum uptime. IT wants clean implementations. Budget wants minimum cost. None of these are wrong. Your role is to find the intersection where all three can accept the solution, even if it is not ideal for any single function. Use data to drive decisions when possible. If production requests a system change, ask IT for the implementation cost and timeline, ask budget for the financial impact, and ask production for the expected benefit. Present all three together and let the group decide. This makes the decision objective, not political."
+        "text": ""
       }
     },
     {
       "id": "day-15",
-      "title": "Day 15 - FINAL: Unprepared Vendor Meeting",
+      "title": "Day 15 - FINAL — Unprepared Vendor Meeting",
       "phrases": [
-        "Thank you for joining on short notice. Let us get started.",
-        "First item. The Chestny Znak go-live is next month. Are you ready?",
-        "I asked for the test results last week. I have not received anything.",
-        "Let me summarise where we are. The API is ready but not tested.",
-        "Action items. Send me the test report by tomorrow morning.",
-        "I am not confident we will meet the deadline at this pace.",
-        "Let us schedule a daily stand-up until the go-live.",
-        "Please reach out immediately if you see any new blockers.",
-        "I appreciate your effort, but we need to move faster.",
-        "Looking forward to your test results tomorrow."
+        "Thanks for taking this call on short notice.",
+        "I have a topic I need to discuss with you urgently.",
+        "Can you give me a quick update on the current status?",
+        "We received a new clarification from the regulator.",
+        "This changes our approach. Let me explain.",
+        "Let's think together. What options do we have?",
+        "I don't have all the details yet, but here's what I know.",
+        "Can you prepare a quick assessment by end of day?",
+        "Let me note down the key points from this discussion.",
+        "I'll send a follow-up email with the details. Thanks!"
       ],
-      "dialog": "Customer: Thank you for joining on short notice. Let us get started. First item. The Chestny Znak go-live is next month. Are you ready?\nVendor: We are working on it. The API integration is complete.\nCustomer: I asked for the test results last week. I have not received anything. I am not confident we will meet the deadline at this pace.\nVendor: I apologise. We had some internal delays.\nCustomer: Action items. Send me the test report by tomorrow morning. Let us schedule a daily stand-up until the go-live.",
+      "dialog": "Customer: Thanks for taking this call on short notice.\nVendor: Thank you. Let me review that and get back to you.\nCustomer: Can you give me a quick update on the current status?\nVendor: Understood. We will prepare an assessment.\nCustomer: This changes our approach. Let me explain.",
       "dictation": [
-        "Ð¡Ð¿Ð°ÑÐ¸Ð±Ð¾, ÑÑÐ¾ Ð¿ÑÐ¸Ð½ÑÐ»Ð¸ Ð·Ð²Ð¾Ð½Ð¾Ðº Ð±ÐµÐ· Ð¿Ð¾Ð´Ð³Ð¾ÑÐ¾Ð²ÐºÐ¸.",
-        "Ð£ Ð¼ÐµÐ½Ñ ÑÐµÐ¼Ð°, ÐºÐ¾ÑÐ¾ÑÑÑ Ð½ÑÐ¶Ð½Ð¾ ÑÑÐ¾ÑÐ½Ð¾ Ð¾Ð±ÑÑÐ´Ð¸ÑÑ.",
-        "ÐÐ¾Ð¶ÐµÑÐµ Ð´Ð°ÑÑ Ð±ÑÑÑÑÑÐ¹ Ð°Ð¿Ð´ÐµÐ¹Ñ Ð¿Ð¾ ÑÐµÐºÑÑÐµÐ¼Ñ ÑÑÐ°ÑÑÑÑ?",
-        "ÐÐ°Ð²Ð°Ð¹ÑÐµ Ð¿Ð¾Ð´ÑÐ¼Ð°ÐµÐ¼ Ð²Ð¼ÐµÑÑÐµ. ÐÐ°ÐºÐ¸Ðµ Ñ Ð½Ð°Ñ Ð²Ð°ÑÐ¸Ð°Ð½ÑÑ?",
-        "Ð¯ Ð¾ÑÐ¿ÑÐ°Ð²Ð»Ñ follow-up Ð¿Ð¸ÑÑÐ¼Ð¾ Ñ Ð´ÐµÑÐ°Ð»ÑÐ¼Ð¸."
+        "Спасибо, что приняли звонок без подготовки.",
+        "У меня тема, которую нужно срочно обсудить.",
+        "Можете дать быстрый апдейт по текущему статусу?",
+        "Мы получили новое разъяснение от регулятора.",
+        "Это меняет наш подход. Позвольте объяснить.",
+        "Давайте подумаем вместе. Какие у нас варианты?",
+        "У меня ещё не все детали, но вот что я знаю.",
+        "Можете подготовить быструю оценку к концу дня?",
+        "Давай запишу ключевые моменты обсуждения.",
+        "Я отправлю follow-up письмо с деталями. Спасибо!"
       ],
       "reading": {
-        "text": "Over the past 15 days, you have built a complete toolkit for leading meetings in English. From opening and closing to handling conflict and cross-functional reviews. The key is to practice every day. Use the phrases, do the AI voice scenarios, and listen to your audio recordings on the commute. Fluency is a habit, not a destination. Aim for clarity, not perfection. Reflect on your journey. Compare how you spoke on Day 1 versus Day 15. You should notice improvements in confidence, vocabulary recall, and sentence structure. The most important habit to maintain is speaking English out loud every day. Even 10 minutes of speaking practice is more effective than 60 minutes of passive listening or reading. Continue using the emergency card phrases in every meeting you lead. Record yourself weekly and compare. Find a language partner or continue with AI voice mode. The course may be finished, but your learning is not. Set a new goal: lead one meeting entirely in English within the next month."
+        "text": ""
       }
     }
   ],

@@ -48,7 +48,7 @@ nav a:hover { color: #58a6ff; }
 
 <a class="back" href="../index.html">← На главную</a>
 <h1>Day 15 · FINAL — Unprepared Vendor Meeting</h1>
-<p style="color:#8b949e;font-size:0.9em;">Ср 8 июл 2026 · Week 3 — Заказчик → Подрядчик · Новый материал</p>
+<p style="color:#8b949e;font-size:0.9em;">Пт 10 июл 2026 · Week 3 — Заказчик → Подрядчик · Новый материал</p>
 
 <div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
   <strong>🎯 Фокус дня:</strong> Неподготовленная встреча с подрядчиком на любую тему<br><button class="audio-btn" onclick="openAudio()">🎵 Аудио дня</button>
@@ -75,27 +75,35 @@ nav a:hover { color: #58a6ff; }
 <p style="font-size:0.88em;color:#8b949e;">Запусти ChatGPT Voice Mode и вставь этот промпт (см. <a href="../common/ai-scenarios.html" style="color:#58a6ff;">AI-сценарии</a>):</p>
 <div class="prompt-box">You are a SAP consultant / vendor representative. I am a customer (process automation manager) with intermediate English. Speak clearly. Topic: FINAL — Unprepared Vendor Meeting. Context: Неподготовленная встреча с подрядчиком на любую тему. Follow my lead in the conversation.</div>
 
-<h2>🗣️ Диалог для отработки</h2>
-<p style="font-size:0.88em;color:#8b949e;">Прочитай вслух по ролям (ты — Customer). Потом перескажи от своего лица.</p>
-<div class="dialog"><span class="you">You (Customer):</span> Hi John, thanks for taking this call on short notice. I have a topic I need to discuss urgently. We received a new clarification from the regulator about the Mercury integration timeline. The deadline moved from September 1st to August 15th.<br><br><span class="vendor">Vendor:</span> That's a significant change. We'll need to reprioritize resources.<br><br><span class="you">Customer:</span> Let's think together. What options do we have to meet the new deadline? Can we do a phased approach? I don't have all the details yet, but here's what I know. Can you prepare a quick assessment by end of day?<br><br><span class="vendor">Vendor:</span> Yes, I'll review the resource plan and get back to you by 5 PM.<br><br><span class="you">Customer:</span> Thanks, John. Let me note down the key points. I'll send a follow-up email with the details.</div>
+<h2>📚 Новые слова — FINAL — Unprepared Vendor Meeting</h2>
+
+<table>
+  <tr><th style="color:#f0883e;">English</th><th style="color:#f0883e;">Русский</th></tr>
+<tr><td style='color:#58a6ff;'>urgently</td><td style='color:#8b949e;'>срочно</td></tr>
+<tr><td style='color:#58a6ff;'>clarify</td><td style='color:#8b949e;'>уточнять</td></tr>
+<tr><td style='color:#58a6ff;'>approach</td><td style='color:#8b949e;'>подход</td></tr>
+<tr><td style='color:#58a6ff;'>reprioritize</td><td style='color:#8b949e;'>переприоритизировать</td></tr>
+<tr><td style='color:#58a6ff;'>phased</td><td style='color:#8b949e;'>поэтапный</td></tr>
+</table>
 
 <h2>📝 Самодиктант</h2>
-<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски. Потом проверь себя.</p>
-<ol>
-<li>Спасибо, что приняли звонок без подготовки.</li>
-<li>У меня тема, которую нужно срочно обсудить.</li>
-<li>Можете дать быстрый апдейт по текущему статусу?</li>
-<li>Давайте подумаем вместе. Какие у нас варианты?</li>
-<li>Я отправлю follow-up письмо с деталями.</li>
-</ol>
+<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски.</p>
+<ol id="dictList-15"></ol>
+<script>
+(function() {
+  var all = ["Спасибо, что приняли звонок без подготовки.", "У меня тема, которую нужно срочно обсудить.", "Можете дать быстрый апдейт по текущему статусу?", "Мы получили новое разъяснение от регулятора.", "Это меняет наш подход. Позвольте объяснить.", "Давайте подумаем вместе. Какие у нас варианты?", "У меня ещё не все детали, но вот что я знаю.", "Можете подготовить быструю оценку к концу дня?", "Давай запишу ключевые моменты обсуждения.", "Я отправлю follow-up письмо с деталями. Спасибо!"];
+  var shuffled = all.sort(function(){ return Math.random() - 0.5; }).slice(0, 5);
+  var ol = document.getElementById("dictList-15");
+  shuffled.forEach(function(s) {
+    var li = document.createElement("li");
+    li.textContent = s;
+    ol.appendChild(li);
+  });
+})();
+</script>
 
-<h2>Reading: The Final Challenge: Unprepared Vendor Meetings</h2>
-<div style="background:#161b22; border:1px solid #21262d; border-radius:8px; padding:12px 14px; margin:10px 0;">
-  <p style="color:#c9d1d9;">Day 15 is your final challenge. In real life, vendor meetings often happen without preparation — the regulator calls with an urgent change, a critical issue arises, or management asks for a last-minute status. The key is to stay calm and structured. Start with thanking the vendor for the short-notice call. State what you know and what you don't know. Ask the vendor to think together. Take notes during the call. End with a commitment to send a follow-up email. You have practiced all the skills from previous 14 days. Trust yourself. You are ready.</p>
-  <hr style="border: none; border-top: 1px solid #21262d; margin: 8px 0;">
-  <p style="color:#8b949e; font-size:0.9em;">Финальный вызов: встреча без подготовки. Сохраняйте спокойствие, структурируйте обсуждение, записывайте ключевые моменты и отправляйте follow-up. Вы готовы!</p>
-</div>
-<p><a href="read-15.html" style="color:#58a6ff;">📖 Полная страница для чтения →</a></p>
+<h2>📖 Чтение</h2>
+<p><a href="read-15.html" style="color:#58a6ff;">Полная страница для чтения →</a></p>
 
 <h2>✅ Self-check</h2>
 <div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу провести неподготовленную встречу на любую тему</label></div>

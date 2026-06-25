@@ -48,7 +48,7 @@ nav a:hover { color: #58a6ff; }
 
 <a class="back" href="../index.html">← На главную</a>
 <h1>Day 01 · Opening a Meeting with Vendor</h1>
-<p style="color:#8b949e;font-size:0.9em;">Чт 18 июн 2026 · Week 1 — Заказчик → Подрядчик · Новый материал</p>
+<p style="color:#8b949e;font-size:0.9em;">Пн 22 июн 2026 · Week 1 — Заказчик → Подрядчик · Новый материал</p>
 
 <div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
   <strong>🎯 Фокус дня:</strong> Научиться уверенно открывать встречу с SAP-подрядчиком<br><button class="audio-btn" onclick="openAudio()">🎵 Аудио дня</button>
@@ -75,27 +75,36 @@ nav a:hover { color: #58a6ff; }
 <p style="font-size:0.88em;color:#8b949e;">Запусти ChatGPT Voice Mode и вставь этот промпт (см. <a href="../common/ai-scenarios.html" style="color:#58a6ff;">AI-сценарии</a>):</p>
 <div class="prompt-box">You are a SAP consultant / vendor representative. I am a customer (process automation manager) with intermediate English. Speak clearly. Topic: Opening a Meeting with Vendor. Context: Научиться уверенно открывать встречу с SAP-подрядчиком. Follow my lead in the conversation.</div>
 
-<h2>🗣️ Диалог для отработки</h2>
-<p style="font-size:0.88em;color:#8b949e;">Прочитай вслух по ролям (ты — Customer). Потом перескажи от своего лица.</p>
-<div class="dialog"><span class="you">You (Customer):</span> Good morning everyone, thanks for joining. Let's start with the agenda. First topic is the new Chestny Znak requirement. Second, the impact on the SAP interface. John, has your team received the document I sent on Friday?<br><br><span class="vendor">John:</span> Yes, we received it. We have some clarifying questions.<br><br><span class="you">Customer:</span> Good. Let's go through the requirements first. Sarah from our compliance team will explain the regulatory background.</div>
+<h2>📚 Новые слова — Opening a Meeting with Vendor</h2>
+
+<table>
+  <tr><th style="color:#f0883e;">English</th><th style="color:#f0883e;">Русский</th></tr>
+<tr><td style='color:#58a6ff;'>internally</td><td style='color:#8b949e;'>внутренне</td></tr>
+<tr><td style='color:#58a6ff;'>compliance</td><td style='color:#8b949e;'>комплаенс</td></tr>
+<tr><td style='color:#58a6ff;'>regulatory</td><td style='color:#8b949e;'>регуляторный</td></tr>
+<tr><td style='color:#58a6ff;'>agenda</td><td style='color:#8b949e;'>повестка</td></tr>
+<tr><td style='color:#58a6ff;'>briefly</td><td style='color:#8b949e;'>кратко</td></tr>
+<tr><td style='color:#58a6ff;'>regulator</td><td style='color:#8b949e;'>регулятор</td></tr>
+</table>
 
 <h2>📝 Самодиктант</h2>
-<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски. Потом проверь себя.</p>
-<ol>
-<li>Доброе утро всем, спасибо, что подключились к звонку.</li>
-<li>Давайте начнём с повестки. Первая тема — новое требование регулятора.</li>
-<li>Спасибо за предложение. Мы его рассмотрели.</li>
-<li>Основная цель встречи — обсудить изменение в законодательстве.</li>
-<li>Позвольте показать экран и пройтись по требованиям.</li>
-</ol>
+<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски.</p>
+<ol id="dictList-01"></ol>
+<script>
+(function() {
+  var all = ["Доброе утро/день всем. Спасибо, что подключились к звонку.", "Спасибо за предложение. Мы его внутренне рассмотрели.", "Давайте начнём с повестки. Первая тема — новое требование от регулятора.", "Сегодня у нас участники от нашего комплаенса и вашей SAP-команды.", "Можете кратко представить участников вашей команды?", "Основная цель встречи — обсудить новое изменение регулятора.", "Я уложу встречу в 45 минут.", "Все получили обновлённый документ с требованиями?", "Не стесняйтесь останавливать меня при вопросах.", "Позвольте показать экран и пройтись по требованиям."];
+  var shuffled = all.sort(function(){ return Math.random() - 0.5; }).slice(0, 5);
+  var ol = document.getElementById("dictList-01");
+  shuffled.forEach(function(s) {
+    var li = document.createElement("li");
+    li.textContent = s;
+    ol.appendChild(li);
+  });
+})();
+</script>
 
-<h2>Reading: Kickoff Meetings with SAP Vendors</h2>
-<div style="background:#161b22; border:1px solid #21262d; border-radius:8px; padding:12px 14px; margin:10px 0;">
-  <p style="color:#c9d1d9;">A kickoff meeting with a new SAP vendor sets the foundation for the entire project. As a customer, your role is to clearly communicate the business requirements, regulatory deadlines, and expectations. Start by introducing all participants from both sides. State the agenda upfront. Share relevant documents. Give the vendor a chance to ask clarifying questions early. A good kickoff prevents misunderstandings later. The most important rule: do not assume the vendor knows your internal processes. Explain your compliance requirements, decision-making process, and key stakeholders. Agree on communication cadence. End with clear next steps and owners.</p>
-  <hr style="border: none; border-top: 1px solid #21262d; margin: 8px 0;">
-  <p style="color:#8b949e; font-size:0.9em;">Кик-офф с новым SAP-подрядчиком закладывает основу проекта. Ваша роль как заказчика — чётко изложить требования и ожидания.</p>
-</div>
-<p><a href="read-01.html" style="color:#58a6ff;">📖 Полная страница для чтения →</a></p>
+<h2>📖 Чтение</h2>
+<p><a href="read-01.html" style="color:#58a6ff;">Полная страница для чтения →</a></p>
 
 <h2>✅ Self-check</h2>
 <div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу открыть встречу с подрядчиком и объявить повестку</label></div>

@@ -48,7 +48,7 @@ nav a:hover { color: #58a6ff; }
 
 <a class="back" href="../index.html">← На главную</a>
 <h1>Day 11 · Full Meeting: New SAP Requirement</h1>
-<p style="color:#8b949e;font-size:0.9em;">Чт 2 июл 2026 · Week 3 — Заказчик → Подрядчик · Новый материал</p>
+<p style="color:#8b949e;font-size:0.9em;">Пн 6 июл 2026 · Week 3 — Заказчик → Подрядчик · Новый материал</p>
 
 <div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
   <strong>🎯 Фокус дня:</strong> Полная встреча: открытие → постановка задачи → обсуждение → резюме → задачи<br><button class="audio-btn" onclick="openAudio()">🎵 Аудио дня</button>
@@ -75,27 +75,35 @@ nav a:hover { color: #58a6ff; }
 <p style="font-size:0.88em;color:#8b949e;">Запусти ChatGPT Voice Mode и вставь этот промпт (см. <a href="../common/ai-scenarios.html" style="color:#58a6ff;">AI-сценарии</a>):</p>
 <div class="prompt-box">You are a SAP consultant / vendor representative. I am a customer (process automation manager) with intermediate English. Speak clearly. Topic: Full Meeting: New SAP Requirement. Context: Полная встреча: открытие → постановка задачи → обсуждение → резюме → задачи. Follow my lead in the conversation.</div>
 
-<h2>🗣️ Диалог для отработки</h2>
-<p style="font-size:0.88em;color:#8b949e;">Прочитай вслух по ролям (ты — Customer). Потом перескажи от своего лица.</p>
-<div class="dialog"><span class="you">You (Customer):</span> Good morning everyone. Thanks for joining. We have a new requirement for Mercury VSD. The regulator now requires VSD numbers in the XML file before shipment. This changes our current process. John, what is the impact on ECC and PI?<br><br><span class="vendor">Vendor:</span> Both systems need changes. ECC needs a new BADI for VSD generation. PI needs a new mapping.<br><br><span class="you">Customer:</span> I see. Please provide a proposal with timeline and cost. The deadline is September 1st. Is that feasible?<br><br><span class="vendor">Vendor:</span> We'll assess and get back to you by next Tuesday.<br><br><span class="you">Customer:</span> Let me summarize: key action items are 1) impact assessment, 2) proposal with timeline and cost. John owns assessment, Maria owns proposal. Let's schedule a follow-up for next Thursday at 10 AM.</div>
+<h2>📚 Новые слова — Full Meeting: New SAP Requirement</h2>
+
+<table>
+  <tr><th style="color:#f0883e;">English</th><th style="color:#f0883e;">Русский</th></tr>
+<tr><td style='color:#58a6ff;'>requirement</td><td style='color:#8b949e;'>требование</td></tr>
+<tr><td style='color:#58a6ff;'>feasible</td><td style='color:#8b949e;'>выполнимо</td></tr>
+<tr><td style='color:#58a6ff;'>assessment</td><td style='color:#8b949e;'>оценка</td></tr>
+<tr><td style='color:#58a6ff;'>integration</td><td style='color:#8b949e;'>интеграция</td></tr>
+<tr><td style='color:#58a6ff;'>schedule</td><td style='color:#8b949e;'>назначить</td></tr>
+</table>
 
 <h2>📝 Самодиктант</h2>
-<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски. Потом проверь себя.</p>
-<ol>
-<li>У нас новое требование по интеграции с Меркурием.</li>
-<li>Какие системы нужно менять — ECC, PI или обе?</li>
-<li>Пожалуйста, дайте предложение с сроками и стоимостью.</li>
-<li>Дедлайн — 1 сентября. Это выполнимо?</li>
-<li>Джон, вы отвечаете за оценку.</li>
-</ol>
+<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски.</p>
+<ol id="dictList-11"></ol>
+<script>
+(function() {
+  var all = ["Доброе утро всем. Спасибо, что присоединились.", "У нас новое требование по интеграции с Меркурием.", "Регулятор теперь требует номера VSD в XML до отгрузки.", "Какое влияние на нынешний процесс?", "Какие системы нужно менять — ECC, PI или обе?", "Пожалуйста, дайте предложение с сроками и стоимостью.", "Дедлайн — 1 сентября. Это выполнимо?", "Подведём итог: ключевые задачи — оценка и предложение.", "Джон, вы отвечаете за оценку. Мария, вы за предложение.", "Давайте назначим follow-up на следующий четверг."];
+  var shuffled = all.sort(function(){ return Math.random() - 0.5; }).slice(0, 5);
+  var ol = document.getElementById("dictList-11");
+  shuffled.forEach(function(s) {
+    var li = document.createElement("li");
+    li.textContent = s;
+    ol.appendChild(li);
+  });
+})();
+</script>
 
-<h2>Reading: Running a Full Requirement Meeting with a Vendor</h2>
-<div style="background:#161b22; border:1px solid #21262d; border-radius:8px; padding:12px 14px; margin:10px 0;">
-  <p style="color:#c9d1d9;">A full requirement meeting follows five stages. First, opening: greet everyone and state the agenda. Second, requirement: explain the new need clearly, referencing the regulatory document. Third, discussion: ask the vendor about impact, affected systems, and feasibility. Listen to their concerns and clarify ambiguities. Fourth, summary: recap the key decisions and action items. Fifth, assignments: name owners for each task with deadlines, and schedule the next follow-up. This structure works for any new requirement and ensures nothing is missed. Practicing this flow makes you a confident meeting leader.</p>
-  <hr style="border: none; border-top: 1px solid #21262d; margin: 8px 0;">
-  <p style="color:#8b949e; font-size:0.9em;">Полная встреча из 5 этапов: открытие, задача, обсуждение, резюме, задачи. Этот формат подходит для любого нового требования.</p>
-</div>
-<p><a href="read-11.html" style="color:#58a6ff;">📖 Полная страница для чтения →</a></p>
+<h2>📖 Чтение</h2>
+<p><a href="read-11.html" style="color:#58a6ff;">Полная страница для чтения →</a></p>
 
 <h2>✅ Self-check</h2>
 <div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу провести полную встречу: открытие → задача → обсуждение → резюме → задачи</label></div>

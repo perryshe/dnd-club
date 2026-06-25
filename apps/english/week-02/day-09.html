@@ -48,7 +48,7 @@ nav a:hover { color: #58a6ff; }
 
 <a class="back" href="../index.html">← На главную</a>
 <h1>Day 09 · Summarizing Vendor Discussions</h1>
-<p style="color:#8b949e;font-size:0.9em;">Вт 30 июн 2026 · Week 2 — Заказчик → Подрядчик · Новый материал</p>
+<p style="color:#8b949e;font-size:0.9em;">Чт 2 июл 2026 · Week 2 — Заказчик → Подрядчик · Новый материал</p>
 
 <div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
   <strong>🎯 Фокус дня:</strong> Структурировать хаотичное обсуждение с подрядчиком<br><button class="audio-btn" onclick="openAudio()">🎵 Аудио дня</button>
@@ -75,27 +75,35 @@ nav a:hover { color: #58a6ff; }
 <p style="font-size:0.88em;color:#8b949e;">Запусти ChatGPT Voice Mode и вставь этот промпт (см. <a href="../common/ai-scenarios.html" style="color:#58a6ff;">AI-сценарии</a>):</p>
 <div class="prompt-box">You are a SAP consultant / vendor representative. I am a customer (process automation manager) with intermediate English. Speak clearly. Topic: Summarizing Vendor Discussions. Context: Структурировать хаотичное обсуждение с подрядчиком. Follow my lead in the conversation.</div>
 
-<h2>🗣️ Диалог для отработки</h2>
-<p style="font-size:0.88em;color:#8b949e;">Прочитай вслух по ролям (ты — Customer). Потом перескажи от своего лица.</p>
-<div class="dialog"><span class="you">You (Customer):</span> John, let me stop you there. I want to make sure I understand. You mentioned the API change, the testing delay, and the Mercury integration issue. Let's take one topic at a time. First point: the API change. What exactly needs to be done?<br><br><span class="vendor">Vendor:</span> We need to update the OAuth token endpoint and add a retry mechanism.<br><br><span class="you">Customer:</span> Got it. Let me capture this. Second point: testing delay. How many days?<br><br><span class="vendor">Vendor:</span> We are 5 days behind schedule due to environment issues.<br><br><span class="you">Customer:</span> I'm going to pause you here and summarize what I heard. Point one: update OAuth — you'll provide a timeline. Point two: testing — you'll propose a catch-up plan. Did I miss anything?</div>
+<h2>📚 Новые слова — Summarizing Vendor Discussions</h2>
+
+<table>
+  <tr><th style="color:#f0883e;">English</th><th style="color:#f0883e;">Русский</th></tr>
+<tr><td style='color:#58a6ff;'>capture</td><td style='color:#8b949e;'>фиксировать</td></tr>
+<tr><td style='color:#58a6ff;'>structure</td><td style='color:#8b949e;'>структурировать</td></tr>
+<tr><td style='color:#58a6ff;'>overview</td><td style='color:#8b949e;'>обзор</td></tr>
+<tr><td style='color:#58a6ff;'>chaotic</td><td style='color:#8b949e;'>хаотичный</td></tr>
+<tr><td style='color:#58a6ff;'>summarize</td><td style='color:#8b949e;'>резюмировать</td></tr>
+</table>
 
 <h2>📝 Самодиктант</h2>
-<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски. Потом проверь себя.</p>
-<ol>
-<li>Позвольте остановить. Я хочу убедиться, что понимаю.</li>
-<li>Давайте рассматривать одну тему за раз.</li>
-<li>Давайте структурируем. Первое: изменение API.</li>
-<li>Я ничего не упустил?</li>
-<li>Позвольте взглянуть шире.</li>
-</ol>
+<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски.</p>
+<ol id="dictList-09"></ol>
+<script>
+(function() {
+  var all = ["Позвольте остановить. Я хочу убедиться, что понимаю.", "Итак, если я правильно понимаю, есть три основных проблемы.", "Давайте рассматривать одну тему за раз.", "Я хочу записать. Повторите ключевой момент?", "Давайте структурируем. Первое: изменение API. Второе: тестирование.", "Я остановлю вас и резюмирую, что услышал.", "Я ничего не упустил?", "Можете отправить список ключевых пунктов после звонка?", "Позвольте взглянуть шире.", "Хорошо, теперь ясно. Позвольте подтвердить."];
+  var shuffled = all.sort(function(){ return Math.random() - 0.5; }).slice(0, 5);
+  var ol = document.getElementById("dictList-09");
+  shuffled.forEach(function(s) {
+    var li = document.createElement("li");
+    li.textContent = s;
+    ol.appendChild(li);
+  });
+})();
+</script>
 
-<h2>Reading: Taking Control of Chaotic Vendor Discussions</h2>
-<div style="background:#161b22; border:1px solid #21262d; border-radius:8px; padding:12px 14px; margin:10px 0;">
-  <p style="color:#c9d1d9;">SAP vendors sometimes go into long technical explanations that lose the main point. As the customer, you must take control. Use phrases like 'Let me stop you there' or 'Let's take one topic at a time.' Break down the discussion into clear points. Summarize frequently: 'So if I understand correctly, there are three main issues.' Ask for confirmation: 'Did I miss anything?' This keeps the meeting efficient and ensures nothing is forgotten. After the call, always request a bullet-point summary by email. This habit prevents misunderstandings and creates a reliable communication record.</p>
-  <hr style="border: none; border-top: 1px solid #21262d; margin: 8px 0;">
-  <p style="color:#8b949e; font-size:0.9em;">Берите контроль над обсуждением: останавливайте, структурируйте, резюмируйте и запрашивайте письменную сводку.</p>
-</div>
-<p><a href="read-09.html" style="color:#58a6ff;">📖 Полная страница для чтения →</a></p>
+<h2>📖 Чтение</h2>
+<p><a href="read-09.html" style="color:#58a6ff;">Полная страница для чтения →</a></p>
 
 <h2>✅ Self-check</h2>
 <div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу вежливо остановить подрядчика и резюмировать</label></div>

@@ -48,7 +48,7 @@ nav a:hover { color: #58a6ff; }
 
 <a class="back" href="../index.html">← На главную</a>
 <h1>Day 07 · Handling Complaints to Vendor</h1>
-<p style="color:#8b949e;font-size:0.9em;">Пт 26 июн 2026 · Week 2 — Заказчик → Подрядчик · Новый материал</p>
+<p style="color:#8b949e;font-size:0.9em;">Вт 30 июн 2026 · Week 2 — Заказчик → Подрядчик · Новый материал</p>
 
 <div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
   <strong>🎯 Фокус дня:</strong> Выражать недовольство подрядчику конструктивно: срыв сроков, качество<br><button class="audio-btn" onclick="openAudio()">🎵 Аудио дня</button>
@@ -75,27 +75,36 @@ nav a:hover { color: #58a6ff; }
 <p style="font-size:0.88em;color:#8b949e;">Запусти ChatGPT Voice Mode и вставь этот промпт (см. <a href="../common/ai-scenarios.html" style="color:#58a6ff;">AI-сценарии</a>):</p>
 <div class="prompt-box">You are a SAP consultant / vendor representative. I am a customer (process automation manager) with intermediate English. Speak clearly. Topic: Handling Complaints to Vendor. Context: Выражать недовольство подрядчику конструктивно: срыв сроков, качество. Follow my lead in the conversation.</div>
 
-<h2>🗣️ Диалог для отработки</h2>
-<p style="font-size:0.88em;color:#8b949e;">Прочитай вслух по ролям (ты — Customer). Потом перескажи от своего лица.</p>
-<div class="dialog"><span class="you">You (Customer):</span> John, I need to raise a concern about the timeline. You were supposed to deliver the impact assessment by last Friday. My team is blocked without it.<br><br><span class="vendor">Vendor:</span> I apologise. We had some resource issues. I can deliver it by Wednesday.<br><br><span class="you">Customer:</span> This is not the first time we have this issue. I want to understand the root cause. Also, the quality of the last deliverable was not what we expected. We found several issues in the test results. What went wrong, and how will you fix it?</div>
+<h2>📚 Новые слова — Handling Complaints to Vendor</h2>
+
+<table>
+  <tr><th style="color:#f0883e;">English</th><th style="color:#f0883e;">Русский</th></tr>
+<tr><td style='color:#58a6ff;'>concern</td><td style='color:#8b949e;'>обеспокоенность</td></tr>
+<tr><td style='color:#58a6ff;'>deliverable</td><td style='color:#8b949e;'>результат</td></tr>
+<tr><td style='color:#58a6ff;'>quality</td><td style='color:#8b949e;'>качество</td></tr>
+<tr><td style='color:#58a6ff;'>root cause</td><td style='color:#8b949e;'>коренная причина</td></tr>
+<tr><td style='color:#58a6ff;'>escalate</td><td style='color:#8b949e;'>эскалировать</td></tr>
+<tr><td style='color:#58a6ff;'>milestones</td><td style='color:#8b949e;'>вехи</td></tr>
+</table>
 
 <h2>📝 Самодиктант</h2>
-<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски. Потом проверь себя.</p>
-<ol>
-<li>Я должен поднять вопрос о сроках.</li>
-<li>Качество последнего результата не соответствует ожиданиям.</li>
-<li>Что пошло не так и как вы это исправите?</li>
-<li>Я хочу понять первопричину.</li>
-<li>Это не первый раз, когда у нас эта проблема.</li>
-</ol>
+<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски.</p>
+<ol id="dictList-07"></ol>
+<script>
+(function() {
+  var all = ["Я должен поднять вопрос о сроках.", "Качество последнего результата не соответствует ожиданиям.", "Мы договорились на 3 июля. Моя команда блокирована.", "Мы нашли несколько проблем в результатах тестов.", "Что пошло не так и как вы это исправите?", "Я ожидаю обновлённый план с реалистичными вехами.", "Это не первый раз, когда у нас эта проблема.", "Я хочу понять первопричину.", "Пожалуйста, эскалируйте это своему руководителю.", "Давайте назначим отдельный звонок."];
+  var shuffled = all.sort(function(){ return Math.random() - 0.5; }).slice(0, 5);
+  var ol = document.getElementById("dictList-07");
+  shuffled.forEach(function(s) {
+    var li = document.createElement("li");
+    li.textContent = s;
+    ol.appendChild(li);
+  });
+})();
+</script>
 
-<h2>Reading: Constructive Complaints to SAP Vendors</h2>
-<div style="background:#161b22; border:1px solid #21262d; border-radius:8px; padding:12px 14px; margin:10px 0;">
-  <p style="color:#c9d1d9;">Raising a complaint with a vendor is uncomfortable but sometimes necessary. The key is to stay professional and constructive. Start with 'I need to raise a concern about...' State the facts: what was promised, what was delivered, and the impact on your team. Ask for root cause analysis: 'I want to understand what went wrong.' Then request a corrective plan: 'I expect a revised plan with realistic milestones.' Avoid emotional language or personal accusations. Focus on the problem, not the person. If this is a repeated issue, mention it calmly. Offer to escalate if needed.</p>
-  <hr style="border: none; border-top: 1px solid #21262d; margin: 8px 0;">
-  <p style="color:#8b949e; font-size:0.9em;">Выражайте недовольство конструктивно: факты, причины, план исправления. Избегайте эмоций и личных обвинений.</p>
-</div>
-<p><a href="read-07.html" style="color:#58a6ff;">📖 Полная страница для чтения →</a></p>
+<h2>📖 Чтение</h2>
+<p><a href="read-07.html" style="color:#58a6ff;">Полная страница для чтения →</a></p>
 
 <h2>✅ Self-check</h2>
 <div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу вежливо, но твёрдо выразить недовольство</label></div>

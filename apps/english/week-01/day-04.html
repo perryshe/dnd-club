@@ -48,7 +48,7 @@ nav a:hover { color: #58a6ff; }
 
 <a class="back" href="../index.html">← На главную</a>
 <h1>Day 04 · Q&A and Clarifying with Vendor</h1>
-<p style="color:#8b949e;font-size:0.9em;">Вт 23 июн 2026 · Week 1 — Заказчик → Подрядчик · Новый материал</p>
+<p style="color:#8b949e;font-size:0.9em;">Чт 25 июн 2026 · Week 1 — Заказчик → Подрядчик · Новый материал</p>
 
 <div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
   <strong>🎯 Фокус дня:</strong> Переспрашивать, уточнять и просить объяснить проще, когда подрядчик говорит сложно или быстро<br><button class="audio-btn" onclick="openAudio()">🎵 Аудио дня</button>
@@ -75,27 +75,36 @@ nav a:hover { color: #58a6ff; }
 <p style="font-size:0.88em;color:#8b949e;">Запусти ChatGPT Voice Mode и вставь этот промпт (см. <a href="../common/ai-scenarios.html" style="color:#58a6ff;">AI-сценарии</a>):</p>
 <div class="prompt-box">You are a SAP consultant / vendor representative. I am a customer (process automation manager) with intermediate English. Speak clearly. Topic: Q&A and Clarifying with Vendor. Context: Переспрашивать, уточнять и просить объяснить проще, когда подрядчик говорит сложно или быстро. Follow my lead in the conversation.</div>
 
-<h2>🗣️ Диалог для отработки</h2>
-<p style="font-size:0.88em;color:#8b949e;">Прочитай вслух по ролям (ты — Customer). Потом перескажи от своего лица.</p>
-<div class="dialog"><span class="you">You (Customer):</span> Sorry, could you repeat that more slowly? I didn't quite catch the part about the API endpoint.<br><br><span class="vendor">Vendor:</span> Of course. I said the new CRPT API endpoint requires a different authentication method — OAuth 2.0 instead of the simple token we use now.<br><br><span class="you">Customer:</span> Could you explain that in simpler terms? What does OAuth 2.0 mean for us practically?<br><br><span class="vendor">Vendor:</span> It means we need to implement a token refresh mechanism. The current integration will stop working after August 1st.<br><br><span class="you">Customer:</span> Let me check if I understood correctly: you mean we need to update the SAP PI interface to support the new authentication before August?<br><br><span class="vendor">Vendor:</span> Exactly. The change is on the interface layer, not in the ECC backend.</div>
+<h2>📚 Новые слова — Q&A and Clarifying with Vendor</h2>
+
+<table>
+  <tr><th style="color:#f0883e;">English</th><th style="color:#f0883e;">Русский</th></tr>
+<tr><td style='color:#58a6ff;'>repeat</td><td style='color:#8b949e;'>повторять</td></tr>
+<tr><td style='color:#58a6ff;'>simpler</td><td style='color:#8b949e;'>проще</td></tr>
+<tr><td style='color:#58a6ff;'>context</td><td style='color:#8b949e;'>контекст</td></tr>
+<tr><td style='color:#58a6ff;'>environment</td><td style='color:#8b949e;'>среда</td></tr>
+<tr><td style='color:#58a6ff;'>endpoint</td><td style='color:#8b949e;'>конечная точка</td></tr>
+<tr><td style='color:#58a6ff;'>paraphrase</td><td style='color:#8b949e;'>перефразировать</td></tr>
+</table>
 
 <h2>📝 Самодиктант</h2>
-<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски. Потом проверь себя.</p>
-<ol>
-<li>Извините, не могли бы вы повторить помедленнее?</li>
-<li>Я не совсем уловил. Повторите, пожалуйста.</li>
-<li>Не могли бы вы объяснить проще?</li>
-<li>Давайте проверю, правильно ли я понял.</li>
-<li>Подтвердите в письме, что я правильно понял задачи.</li>
-</ol>
+<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски.</p>
+<ol id="dictList-04"></ol>
+<script>
+(function() {
+  var all = ["Извините, не могли бы вы повторить помедленнее?", "Не могли бы вы объяснить проще?", "Я не совсем уловил. Повторите, пожалуйста.", "Что значит 'API endpoint' в этом контексте?", "Можете привести пример?", "Давайте проверю, правильно ли я понял: вы имеете в виду...", "Можете отправить краткое объяснение?", "Это влияет на EDI или только на API?", "Вы говорите о промышленной или тестовой среде?", "Подтвердите в письме, что я правильно понял задачи."];
+  var shuffled = all.sort(function(){ return Math.random() - 0.5; }).slice(0, 5);
+  var ol = document.getElementById("dictList-04");
+  shuffled.forEach(function(s) {
+    var li = document.createElement("li");
+    li.textContent = s;
+    ol.appendChild(li);
+  });
+})();
+</script>
 
-<h2>Reading: Clarifying Questions in Vendor Meetings</h2>
-<div style="background:#161b22; border:1px solid #21262d; border-radius:8px; padding:12px 14px; margin:10px 0;">
-  <p style="color:#c9d1d9;">Asking clarifying questions is a critical skill for non-native speakers in vendor meetings. When the vendor speaks too fast or uses technical jargon, you must stop them politely. Use phrases like 'Sorry, could you repeat that more slowly?' or 'Could you explain that in simpler terms?' Never pretend you understood when you did not. This leads to misunderstandings and incorrect implementations. After clarification, always paraphrase to confirm: 'Let me check if I understood correctly...' This gives the vendor a chance to correct you. Finally, ask for a written summary in an email. This creates a paper trail and helps you review later.</p>
-  <hr style="border: none; border-top: 1px solid #21262d; margin: 8px 0;">
-  <p style="color:#8b949e; font-size:0.9em;">Не стесняйтесь переспрашивать подрядчика. Используйте вежливые фразы, перефразируйте для проверки и просите email-сводку.</p>
-</div>
-<p><a href="read-04.html" style="color:#58a6ff;">📖 Полная страница для чтения →</a></p>
+<h2>📖 Чтение</h2>
+<p><a href="read-04.html" style="color:#58a6ff;">Полная страница для чтения →</a></p>
 
 <h2>✅ Self-check</h2>
 <div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу попросить повторить медленнее и проще</label></div>

@@ -48,7 +48,7 @@ nav a:hover { color: #58a6ff; }
 
 <a class="back" href="../index.html">← На главную</a>
 <h1>Day 13 · Full Meeting: Two Regulatory Changes</h1>
-<p style="color:#8b949e;font-size:0.9em;">Пн 6 июл 2026 · Week 3 — Заказчик → Подрядчик · Новый материал</p>
+<p style="color:#8b949e;font-size:0.9em;">Ср 8 июл 2026 · Week 3 — Заказчик → Подрядчик · Новый материал</p>
 
 <div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
   <strong>🎯 Фокус дня:</strong> Встреча по двум регуляторным изменениям: ЧЗ и Меркурий<br><button class="audio-btn" onclick="openAudio()">🎵 Аудио дня</button>
@@ -75,27 +75,34 @@ nav a:hover { color: #58a6ff; }
 <p style="font-size:0.88em;color:#8b949e;">Запусти ChatGPT Voice Mode и вставь этот промпт (см. <a href="../common/ai-scenarios.html" style="color:#58a6ff;">AI-сценарии</a>):</p>
 <div class="prompt-box">You are a SAP consultant / vendor representative. I am a customer (process automation manager) with intermediate English. Speak clearly. Topic: Full Meeting: Two Regulatory Changes. Context: Встреча по двум регуляторным изменениям: ЧЗ и Меркурий. Follow my lead in the conversation.</div>
 
-<h2>🗣️ Диалог для отработки</h2>
-<p style="font-size:0.88em;color:#8b949e;">Прочитай вслух по ролям (ты — Customer). Потом перескажи от своего лица.</p>
-<div class="dialog"><span class="you">You (Customer):</span> Good morning. Today's agenda has two topics: Chestny Znak and Mercury updates. Let's start with Chestny Znak. The CRPT changed the DataMatrix format — it adds a GS1 identifier for batch number. When does this take effect?<br><br><span class="vendor">Vendor:</span> September 1st for dairy products. We need to update the label layout in ECC and the PI mapping.<br><br><span class="you">Customer:</span> Now the second topic. The Mercury system now requires electronic signatures on VSDs. Can we combine both changes into one SAP release?<br><br><span class="vendor">Vendor:</span> Yes, that makes sense. Both affect the PI layer.<br><br><span class="you">Customer:</span> Let me summarize: both changes, one combined proposal by July 20th. John, you'll coordinate.</div>
+<h2>📚 Новые слова — Full Meeting: Two Regulatory Changes</h2>
+
+<table>
+  <tr><th style="color:#f0883e;">English</th><th style="color:#f0883e;">Русский</th></tr>
+<tr><td style='color:#58a6ff;'>identifier</td><td style='color:#8b949e;'>идентификатор</td></tr>
+<tr><td style='color:#58a6ff;'>electronic</td><td style='color:#8b949e;'>электронный</td></tr>
+<tr><td style='color:#58a6ff;'>combine</td><td style='color:#8b949e;'>объединять</td></tr>
+<tr><td style='color:#58a6ff;'>coordinate</td><td style='color:#8b949e;'>координировать</td></tr>
+</table>
 
 <h2>📝 Самодиктант</h2>
-<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски. Потом проверь себя.</p>
-<ol>
-<li>Сегодня две темы: обновления ЧЗ и Меркурия.</li>
-<li>Начнём с ЧЗ. ЦРПТ изменила формат DataMatrix.</li>
-<li>Когда вступает в силу?</li>
-<li>Можем объединить оба изменения в один релиз?</li>
-<li>Подведём итог обоих изменений.</li>
-</ol>
+<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски.</p>
+<ol id="dictList-13"></ol>
+<script>
+(function() {
+  var all = ["Сегодня две темы: обновления ЧЗ и Меркурия.", "Начнём с ЧЗ. ЦРПТ изменила формат DataMatrix.", "Новый формат добавляет GS1-идентификатор номера партии.", "Когда вступает в силу?", "Теперь вторая тема: обновление формата VSD.", "Система Меркурий теперь требует ЭЦП на VSD.", "Можем объединить оба изменения в один релиз?", "Оба дедлайна в сентябре. Нужен объединённый план.", "Подведём итог обоих изменений.", "У нас будет одно объединённое предложение к 20 июля."];
+  var shuffled = all.sort(function(){ return Math.random() - 0.5; }).slice(0, 5);
+  var ol = document.getElementById("dictList-13");
+  shuffled.forEach(function(s) {
+    var li = document.createElement("li");
+    li.textContent = s;
+    ol.appendChild(li);
+  });
+})();
+</script>
 
-<h2>Reading: Managing Multiple Regulatory Changes with a Vendor</h2>
-<div style="background:#161b22; border:1px solid #21262d; border-radius:8px; padding:12px 14px; margin:10px 0;">
-  <p style="color:#c9d1d9;">When two regulatory changes happen simultaneously, efficiency is critical. Hold one meeting with a clear two-topic agenda. Start with topic one: explain the change, ask for impact, discuss timeline. Then topic two: same structure. Ask if the vendor can combine both into one release to save cost and time. Request a single combined proposal. Summarize both topics together. This approach saves meeting time, reduces administrative overhead, and helps the vendor plan resources more efficiently across both changes.</p>
-  <hr style="border: none; border-top: 1px solid #21262d; margin: 8px 0;">
-  <p style="color:#8b949e; font-size:0.9em;">Когда два регуляторных изменения происходят одновременно, проводите одну встречу. Объедините изменения в один релиз для экономии.</p>
-</div>
-<p><a href="read-13.html" style="color:#58a6ff;">📖 Полная страница для чтения →</a></p>
+<h2>📖 Чтение</h2>
+<p><a href="read-13.html" style="color:#58a6ff;">Полная страница для чтения →</a></p>
 
 <h2>✅ Self-check</h2>
 <div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу вести встречу по двум регуляторным темам одновременно</label></div>

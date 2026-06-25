@@ -48,7 +48,7 @@ nav a:hover { color: #58a6ff; }
 
 <a class="back" href="../index.html">← На главную</a>
 <h1>Day 03 · Change Request Due to Regulation</h1>
-<p style="color:#8b949e;font-size:0.9em;">Пн 22 июн 2026 · Week 1 — Заказчик → Подрядчик · Новый материал</p>
+<p style="color:#8b949e;font-size:0.9em;">Ср 24 июн 2026 · Week 1 — Заказчик → Подрядчик · Новый материал</p>
 
 <div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
   <strong>🎯 Фокус дня:</strong> Сообщать подрядчику об изменениях госорганов и инициировать Change Request<br><button class="audio-btn" onclick="openAudio()">🎵 Аудио дня</button>
@@ -75,27 +75,36 @@ nav a:hover { color: #58a6ff; }
 <p style="font-size:0.88em;color:#8b949e;">Запусти ChatGPT Voice Mode и вставь этот промпт (см. <a href="../common/ai-scenarios.html" style="color:#58a6ff;">AI-сценарии</a>):</p>
 <div class="prompt-box">You are a SAP consultant / vendor representative. I am a customer (process automation manager) with intermediate English. Speak clearly. Topic: Change Request Due to Regulation. Context: Сообщать подрядчику об изменениях госорганов и инициировать Change Request. Follow my lead in the conversation.</div>
 
-<h2>🗣️ Диалог для отработки</h2>
-<p style="font-size:0.88em;color:#8b949e;">Прочитай вслух по ролям (ты — Customer). Потом перескажи от своего лица.</p>
-<div class="dialog"><span class="you">You (Customer):</span> John, the CRPT changed the marking rules for dairy. Every item must now be marked, not just outer packaging. This changes the scope significantly.<br><br><span class="vendor">John:</span> That is substantial. It will affect timeline and budget. We need a formal Change Request.<br><br><span class="you">Customer:</span> I understand. Please prepare a revised proposal. Deadline is still December 1st. Can we do MVP by then and full rollout later?</div>
+<h2>📚 Новые слова — Change Request Due to Regulation</h2>
+
+<table>
+  <tr><th style="color:#f0883e;">English</th><th style="color:#f0883e;">Русский</th></tr>
+<tr><td style='color:#58a6ff;'>revised</td><td style='color:#8b949e;'>пересмотренный</td></tr>
+<tr><td style='color:#58a6ff;'>formal</td><td style='color:#8b949e;'>формальный</td></tr>
+<tr><td style='color:#58a6ff;'>workaround</td><td style='color:#8b949e;'>обходное решение</td></tr>
+<tr><td style='color:#58a6ff;'>compliance</td><td style='color:#8b949e;'>соответствие</td></tr>
+<tr><td style='color:#58a6ff;'>budget</td><td style='color:#8b949e;'>бюджет</td></tr>
+<tr><td style='color:#58a6ff;'>phase</td><td style='color:#8b949e;'>этап</td></tr>
+</table>
 
 <h2>📝 Самодиктант</h2>
-<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски. Потом проверь себя.</p>
-<ol>
-<li>Регулятор обновил требования. Нужно изменить scope.</li>
-<li>Как это повлияет на сроки и бюджет?</li>
-<li>Дайте пересмотренное предложение.</li>
-<li>Нужно временное решение до постоянного.</li>
-<li>Дедлайн жёсткий. Нельзя пропустить.</li>
-</ol>
+<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски.</p>
+<ol id="dictList-03"></ol>
+<script>
+(function() {
+  var all = ["Регулятор обновил требования. Нужно изменить scope.", "Новое требование государства. Внедрить к [дате].", "Как это повлияет на сроки и бюджет?", "Дайте пересмотренное предложение.", "Нужен формальный Change Request.", "Это в бюджете или нужно согласование?", "Дедлайн жёсткий. Продление невозможно.", "Нужно временное решение.", "Можно поэтапно: MVP к сроку, потом полное решение?", "Это критично для соблюдения требований."];
+  var shuffled = all.sort(function(){ return Math.random() - 0.5; }).slice(0, 5);
+  var ol = document.getElementById("dictList-03");
+  shuffled.forEach(function(s) {
+    var li = document.createElement("li");
+    li.textContent = s;
+    ol.appendChild(li);
+  });
+})();
+</script>
 
-<h2>Reading: Government Regulations and SAP</h2>
-<div style="background:#161b22; border:1px solid #21262d; border-radius:8px; padding:12px 14px; margin:10px 0;">
-  <p style="color:#c9d1d9;">Government regulations change frequently, and SAP systems must adapt. In Russia, the main systems are Chestny Znak (DataMatrix tracking) and Mercury (veterinary certificates). Both regularly update formats. As a customer, monitor changes and inform your vendor fast. When a regulation changes: read the document, identify impact, estimate effort, inform the vendor. Keep a regulatory compliance calendar.</p>
-  <hr style="border: none; border-top: 1px solid #21262d; margin: 8px 0;">
-  <p style="color:#8b949e; font-size:0.9em;">Регуляции меняются часто. Как заказчик, отслеживайте изменения и информируйте подрядчика.</p>
-</div>
-<p><a href="read-03.html" style="color:#58a6ff;">📖 Полная страница для чтения →</a></p>
+<h2>📖 Чтение</h2>
+<p><a href="read-03.html" style="color:#58a6ff;">Полная страница для чтения →</a></p>
 
 <h2>✅ Self-check</h2>
 <div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу инициировать Change Request при изменении регулятора</label></div>

@@ -48,7 +48,7 @@ nav a:hover { color: #58a6ff; }
 
 <a class="back" href="../index.html">← На главную</a>
 <h1>Day 08 · Scope Disputes with Vendor</h1>
-<p style="color:#8b949e;font-size:0.9em;">Пн 29 июн 2026 · Week 2 — Заказчик → Подрядчик · Новый материал</p>
+<p style="color:#8b949e;font-size:0.9em;">Ср 1 июл 2026 · Week 2 — Заказчик → Подрядчик · Новый материал</p>
 
 <div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
   <strong>🎯 Фокус дня:</strong> Обсуждать спорные вопросы: scope, change order, компромиссы<br><button class="audio-btn" onclick="openAudio()">🎵 Аудио дня</button>
@@ -75,27 +75,36 @@ nav a:hover { color: #58a6ff; }
 <p style="font-size:0.88em;color:#8b949e;">Запусти ChatGPT Voice Mode и вставь этот промпт (см. <a href="../common/ai-scenarios.html" style="color:#58a6ff;">AI-сценарии</a>):</p>
 <div class="prompt-box">You are a SAP consultant / vendor representative. I am a customer (process automation manager) with intermediate English. Speak clearly. Topic: Scope Disputes with Vendor. Context: Обсуждать спорные вопросы: scope, change order, компромиссы. Follow my lead in the conversation.</div>
 
-<h2>🗣️ Диалог для отработки</h2>
-<p style="font-size:0.88em;color:#8b949e;">Прочитай вслух по ролям (ты — Customer). Потом перескажи от своего лица.</p>
-<div class="dialog"><span class="you">You (Customer):</span> John, my compliance team reviewed the new CRPT requirement. We believe this DataMatrix change is within the current project scope. The contract says SAP interface changes for regulatory updates are included.<br><br><span class="vendor">Vendor:</span> I disagree. This requires a new API endpoint that was not in the original specification. It should be a Change Request.<br><br><span class="you">Customer:</span> Let's look at Section 3.2 of the contract together. It clearly states regulatory format changes are in scope. However, I understand your position. Can we find a compromise? Perhaps we cover the PI layer, you cover the backend changes?</div>
+<h2>📚 Новые слова — Scope Disputes with Vendor</h2>
+
+<table>
+  <tr><th style="color:#f0883e;">English</th><th style="color:#f0883e;">Русский</th></tr>
+<tr><td style='color:#58a6ff;'>dispute</td><td style='color:#8b949e;'>спор</td></tr>
+<tr><td style='color:#58a6ff;'>compromise</td><td style='color:#8b949e;'>компромисс</td></tr>
+<tr><td style='color:#58a6ff;'>mandate</td><td style='color:#8b949e;'>обязывать</td></tr>
+<tr><td style='color:#58a6ff;'>interpretation</td><td style='color:#8b949e;'>трактовка</td></tr>
+<tr><td style='color:#58a6ff;'>legal</td><td style='color:#8b949e;'>юридический</td></tr>
+<tr><td style='color:#58a6ff;'>disagreement</td><td style='color:#8b949e;'>разногласие</td></tr>
+</table>
 
 <h2>📝 Самодиктант</h2>
-<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски. Потом проверь себя.</p>
-<ol>
-<li>Мы считаем, что это в рамках текущего объёма работ.</li>
-<li>Нужно оформить Change Request на новое требование.</li>
-<li>Можем найти компромисс?</li>
-<li>Давайте посмотрим контракт. Раздел 3.2.</li>
-<li>Я понимаю вашу позицию, но у нас другая трактовка.</li>
-</ol>
+<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски.</p>
+<ol id="dictList-08"></ol>
+<script>
+(function() {
+  var all = ["Мы считаем, что это в рамках текущего объёма работ.", "Я не согласен. Это не было частью изначального договора.", "Нужно оформить Change Request на новое требование.", "Можем найти компромисс? Например, разделить стоимость 50/50?", "Давайте посмотрим контракт. Раздел 3.2 описывает регуляторные изменения.", "Это изменение обязательно по закону.", "Предлагаю разделить: MVP в текущем объёме, улучшения как CR.", "Давайте привлечём юристов для анализа контракта.", "Я понимаю вашу позицию, но у нас другая трактовка.", "Давайте зафиксируем разногласия и эскалируем при необходимости."];
+  var shuffled = all.sort(function(){ return Math.random() - 0.5; }).slice(0, 5);
+  var ol = document.getElementById("dictList-08");
+  shuffled.forEach(function(s) {
+    var li = document.createElement("li");
+    li.textContent = s;
+    ol.appendChild(li);
+  });
+})();
+</script>
 
-<h2>Reading: Managing Scope Disputes with Your Vendor</h2>
-<div style="background:#161b22; border:1px solid #21262d; border-radius:8px; padding:12px 14px; margin:10px 0;">
-  <p style="color:#c9d1d9;">Scope disputes are common in SAP projects. The key is to always refer to the contract. Before the meeting, read the relevant sections. During the dispute, state your interpretation clearly: 'We believe this is within the current project scope.' Listen to the vendor's position. If disagreement persists, propose a compromise: split cost, phase the work, or trade scope items. Document everything. If no agreement is reached, escalate formally. Never accept scope changes verbally without a written Change Request. This protects both sides and maintains a professional relationship.</p>
-  <hr style="border: none; border-top: 1px solid #21262d; margin: 8px 0;">
-  <p style="color:#8b949e; font-size:0.9em;">Споры по объёму работ часты. Всегда ссылайтесь на контракт, предлагайте компромиссы и документируйте всё.</p>
-</div>
-<p><a href="read-08.html" style="color:#58a6ff;">📖 Полная страница для чтения →</a></p>
+<h2>📖 Чтение</h2>
+<p><a href="read-08.html" style="color:#58a6ff;">Полная страница для чтения →</a></p>
 
 <h2>✅ Self-check</h2>
 <div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу обосновать свою позицию по scope со ссылкой на контракт</label></div>

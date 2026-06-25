@@ -48,7 +48,7 @@ nav a:hover { color: #58a6ff; }
 
 <a class="back" href="../index.html">← На главную</a>
 <h1>Day 12 · Full Meeting: Critical SAP Incident</h1>
-<p style="color:#8b949e;font-size:0.9em;">Пт 3 июл 2026 · Week 3 — Заказчик → Подрядчик · Новый материал</p>
+<p style="color:#8b949e;font-size:0.9em;">Вт 7 июл 2026 · Week 3 — Заказчик → Подрядчик · Новый материал</p>
 
 <div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
   <strong>🎯 Фокус дня:</strong> Экстренная встреча по критическому инциденту с подрядчиком<br><button class="audio-btn" onclick="openAudio()">🎵 Аудио дня</button>
@@ -75,27 +75,35 @@ nav a:hover { color: #58a6ff; }
 <p style="font-size:0.88em;color:#8b949e;">Запусти ChatGPT Voice Mode и вставь этот промпт (см. <a href="../common/ai-scenarios.html" style="color:#58a6ff;">AI-сценарии</a>):</p>
 <div class="prompt-box">You are a SAP consultant / vendor representative. I am a customer (process automation manager) with intermediate English. Speak clearly. Topic: Full Meeting: Critical SAP Incident. Context: Экстренная встреча по критическому инциденту с подрядчиком. Follow my lead in the conversation.</div>
 
-<h2>🗣️ Диалог для отработки</h2>
-<p style="font-size:0.88em;color:#8b949e;">Прочитай вслух по ролям (ты — Customer). Потом перескажи от своего лица.</p>
-<div class="dialog"><span class="you">You (Customer):</span> John, we have a critical incident. The SAP interface for DataMatrix label generation is down since 8 AM. Our warehouse cannot ship. What is the root cause? How long to fix?<br><br><span class="vendor">Vendor:</span> We identified a database connection issue on the PI server. Our team is working on it. Estimated fix in 4 hours.<br><br><span class="you">Customer:</span> Is there a workaround while you fix it? Please escalate to your senior engineers. I want a status update every hour until resolved. After the fix, I expect a root cause analysis report.</div>
+<h2>📚 Новые слова — Full Meeting: Critical SAP Incident</h2>
+
+<table>
+  <tr><th style="color:#f0883e;">English</th><th style="color:#f0883e;">Русский</th></tr>
+<tr><td style='color:#58a6ff;'>critical</td><td style='color:#8b949e;'>критический</td></tr>
+<tr><td style='color:#58a6ff;'>incident</td><td style='color:#8b949e;'>инцидент</td></tr>
+<tr><td style='color:#58a6ff;'>workaround</td><td style='color:#8b949e;'>обходное решение</td></tr>
+<tr><td style='color:#58a6ff;'>escalate</td><td style='color:#8b949e;'>эскалировать</td></tr>
+<tr><td style='color:#58a6ff;'>resolution</td><td style='color:#8b949e;'>устранение</td></tr>
+</table>
 
 <h2>📝 Самодиктант</h2>
-<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски. Потом проверь себя.</p>
-<ol>
-<li>У нас критический инцидент. Интерфейс SAP не работает.</li>
-<li>Генерация кодов DataMatrix остановилась в 8 утра.</li>
-<li>В чём первопричина? Сколько времени на исправление?</li>
-<li>Я хочу отчёт каждый час до устранения.</li>
-<li>После исправления нужен отчёт с анализом первопричин.</li>
-</ol>
+<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски.</p>
+<ol id="dictList-12"></ol>
+<script>
+(function() {
+  var all = ["У нас критический инцидент. Интерфейс SAP не работает.", "Генерация кодов DataMatrix остановилась в 8 утра.", "Наш склад не может отгружать без маркировки.", "В чём первопричина? Сколько времени на исправление?", "Есть временное решение на время починки?", "Кто сейчас этим занимается?", "Немедленно эскалируйте старшим инженерам.", "Я хочу отчёт каждый час до устранения.", "Задокументируйте инцидент для разбора.", "После исправления нужен отчёт с анализом первопричин."];
+  var shuffled = all.sort(function(){ return Math.random() - 0.5; }).slice(0, 5);
+  var ol = document.getElementById("dictList-12");
+  shuffled.forEach(function(s) {
+    var li = document.createElement("li");
+    li.textContent = s;
+    ol.appendChild(li);
+  });
+})();
+</script>
 
-<h2>Reading: Handling Critical SAP Incidents with Your Vendor</h2>
-<div style="background:#161b22; border:1px solid #21262d; border-radius:8px; padding:12px 14px; margin:10px 0;">
-  <p style="color:#c9d1d9;">Critical incidents happen in SAP projects. The key is response speed. When an incident occurs, call the vendor immediately. Start with: 'We have a critical incident.' Describe the impact on business operations. Ask three questions: root cause, estimated fix time, workaround. Demand hourly updates. Require escalation if needed. After resolution, request a formal root cause analysis report. Keep a calm but firm tone. The vendor should feel the urgency without panic. Document the entire incident timeline for your records and to prevent recurrence.</p>
-  <hr style="border: none; border-top: 1px solid #21262d; margin: 8px 0;">
-  <p style="color:#8b949e; font-size:0.9em;">При критическом инциденте звоните подрядчику немедленно. Спрашивайте причину, срок и обходное решение. Требуйте часовой отчёт и RCA.</p>
-</div>
-<p><a href="read-12.html" style="color:#58a6ff;">📖 Полная страница для чтения →</a></p>
+<h2>📖 Чтение</h2>
+<p><a href="read-12.html" style="color:#58a6ff;">Полная страница для чтения →</a></p>
 
 <h2>✅ Self-check</h2>
 <div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу быстро организовать экстренную встречу по инциденту</label></div>

@@ -86,17 +86,20 @@ def generate_audio(data, is_digest=False):
 
     speaker = win32com.client.Dispatch("SAPI.SpVoice")
     voices = speaker.GetVoices()
-    en_voice = None
+    zira_voice = None
+    david_voice = None
     ru_voice = None
     for v in voices:
         name = v.GetDescription()
         if "Zira" in name:
-            en_voice = v
+            zira_voice = v
+        elif "David" in name:
+            david_voice = v
         elif "Irina" in name:
             ru_voice = v
 
-    if en_voice:
-        speaker.Voice = en_voice
+    if zira_voice:
+        speaker.Voice = zira_voice
     else:
         print("  Warning: Zira voice not found, using default")
 
@@ -124,8 +127,7 @@ def generate_audio(data, is_digest=False):
         write_silence(wav_stream, 7.5)
 
     # --- Dialog ---
-    # Both Customer and Vendor use English voice (Zira).
-    # The dialog text is always in English.
+    # Customer → Zira (female EN), Vendor → David (male EN)
     if dialog and not is_digest:
         write_silence(wav_stream, 0.5)
         speak_wait(speaker, "Part two. Meeting dialog.")
@@ -140,17 +142,20 @@ def generate_audio(data, is_digest=False):
                 role, text = line.split(":", 1)
                 role = role.strip()
                 text = text.strip()
-                # Both Customer and Vendor use English voice
-                if en_voice:
-                    speaker.Voice = en_voice
+                if role == "Vendor":
+                    if david_voice:
+                        speaker.Voice = david_voice
+                else:
+                    if zira_voice:
+                        speaker.Voice = zira_voice
                 speak_wait(speaker, text)
                 write_silence(wav_stream, 0.5)
             else:
                 speak_wait(speaker, line)
                 write_silence(wav_stream, 0.3)
 
-        if en_voice:
-            speaker.Voice = en_voice
+        if zira_voice:
+            speaker.Voice = zira_voice
 
     # --- Dictation ---
     # Dictation text is in Russian — use Russian voice (Irina)
@@ -162,16 +167,16 @@ def generate_audio(data, is_digest=False):
         for d_text in dictation:
             if has_cyrillic(d_text) and ru_voice:
                 speaker.Voice = ru_voice
-            elif en_voice:
-                speaker.Voice = en_voice
+            elif zira_voice:
+                speaker.Voice = zira_voice
             speak_wait(speaker, d_text)
             write_silence(wav_stream, 7.5)
             speak_wait(speaker, d_text)
             write_silence(wav_stream, 7.5)
 
     # --- Outro ---
-    if en_voice:
-        speaker.Voice = en_voice
+    if zira_voice:
+        speaker.Voice = zira_voice
     speak_wait(speaker, f"End of {title}. Well done. Keep practicing.")
     write_silence(wav_stream, 1)
 
@@ -198,13 +203,13 @@ def generate_reading_audio(data):
 
     speaker = win32com.client.Dispatch("SAPI.SpVoice")
     voices = speaker.GetVoices()
-    en_voice = None
+    zira_voice = None
     for v in voices:
         if "Zira" in v.GetDescription():
-            en_voice = v
+            zira_voice = v
 
-    if en_voice:
-        speaker.Voice = en_voice
+    if zira_voice:
+        speaker.Voice = zira_voice
     else:
         print("  Warning: Zira voice not found, using default")
 

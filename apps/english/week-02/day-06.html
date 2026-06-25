@@ -48,7 +48,7 @@ nav a:hover { color: #58a6ff; }
 
 <a class="back" href="../index.html">← На главную</a>
 <h1>Day 06 · Small Talk with Vendor</h1>
-<p style="color:#8b949e;font-size:0.9em;">Чт 25 июн 2026 · Week 2 — Заказчик → Подрядчик · Новый материал</p>
+<p style="color:#8b949e;font-size:0.9em;">Пн 29 июн 2026 · Week 2 — Заказчик → Подрядчик · Новый материал</p>
 
 <div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
   <strong>🎯 Фокус дня:</strong> Делать small talk с SAP-подрядчиком перед деловой частью<br><button class="audio-btn" onclick="openAudio()">🎵 Аудио дня</button>
@@ -75,27 +75,36 @@ nav a:hover { color: #58a6ff; }
 <p style="font-size:0.88em;color:#8b949e;">Запусти ChatGPT Voice Mode и вставь этот промпт (см. <a href="../common/ai-scenarios.html" style="color:#58a6ff;">AI-сценарии</a>):</p>
 <div class="prompt-box">You are a SAP consultant / vendor representative. I am a customer (process automation manager) with intermediate English. Speak clearly. Topic: Small Talk with Vendor. Context: Делать small talk с SAP-подрядчиком перед деловой частью. Follow my lead in the conversation.</div>
 
-<h2>🗣️ Диалог для отработки</h2>
-<p style="font-size:0.88em;color:#8b949e;">Прочитай вслух по ролям (ты — Customer). Потом перескажи от своего лица.</p>
-<div class="dialog"><span class="you">You (Customer):</span> Hi John! Good to see you again. How was your weekend? Did you do anything nice?<br><br><span class="vendor">Vendor:</span> It was good, thanks! I took my kids to the park on Saturday. The weather was great.<br><br><span class="you">Customer:</span> That sounds lovely. The weather has been really nice lately. So, shall we get down to business? Let's start with the agenda. First topic is the Mercury VSD integration update.</div>
+<h2>📚 Новые слова — Small Talk with Vendor</h2>
+
+<table>
+  <tr><th style="color:#f0883e;">English</th><th style="color:#f0883e;">Русский</th></tr>
+<tr><td style='color:#58a6ff;'>weekend</td><td style='color:#8b949e;'>выходные</td></tr>
+<tr><td style='color:#58a6ff;'>holiday</td><td style='color:#8b949e;'>отпуск</td></tr>
+<tr><td style='color:#58a6ff;'>congratulations</td><td style='color:#8b949e;'>поздравления</td></tr>
+<tr><td style='color:#58a6ff;'>rapport</td><td style='color:#8b949e;'>взаимопонимание</td></tr>
+<tr><td style='color:#58a6ff;'>award</td><td style='color:#8b949e;'>награда</td></tr>
+<tr><td style='color:#58a6ff;'>briefly</td><td style='color:#8b949e;'>кратко</td></tr>
+</table>
 
 <h2>📝 Самодиктант</h2>
-<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски. Потом проверь себя.</p>
-<ol>
-<li>Как прошли выходные? Делали что-то приятное?</li>
-<li>Погода сегодня очень жаркая, не так ли?</li>
-<li>Давайте перейдём к делу.</li>
-<li>Кстати, видел, что ваша компания получила награду.</li>
-<li>Давайте начнём с повестки.</li>
-</ol>
+<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски.</p>
+<ol id="dictList-06"></ol>
+<script>
+(function() {
+  var all = ["Как прошли выходные? Делали что-то приятное?", "Как поездка в Москву на прошлой неделе?", "Погода сегодня очень жаркая, не так ли?", "Вы заняты другими проектами сейчас?", "Хорошо, давайте перейдём к делу.", "Надеюсь, у вас был хороший отпуск.", "Удалось отдохнуть этим летом?", "Это интересно. Как давно вы в SAP-консалтинге?", "Кстати, видел, что ваша компания получила награду. Поздравляю!", "Давайте начнём с повестки. Первая тема — интеграция с Меркурием."];
+  var shuffled = all.sort(function(){ return Math.random() - 0.5; }).slice(0, 5);
+  var ol = document.getElementById("dictList-06");
+  shuffled.forEach(function(s) {
+    var li = document.createElement("li");
+    li.textContent = s;
+    ol.appendChild(li);
+  });
+})();
+</script>
 
-<h2>Reading: The Art of Small Talk with Vendors</h2>
-<div style="background:#161b22; border:1px solid #21262d; border-radius:8px; padding:12px 14px; margin:10px 0;">
-  <p style="color:#c9d1d9;">Small talk is an important soft skill when working with external vendors. It builds rapport before diving into business. Keep it light: ask about weekends, holidays, weather, or travel. Listen to their answer and show genuine interest. After 2-3 exchanges, transition smoothly: 'Okay, let's get down to business' or 'Shall we start with the agenda?' Good small talk makes the vendor feel comfortable, which leads to more open and productive discussions. Avoid politics, religion, or personal finance. Stick to safe topics like hobbies, food, or the city they live in.</p>
-  <hr style="border: none; border-top: 1px solid #21262d; margin: 8px 0;">
-  <p style="color:#8b949e; font-size:0.9em;">Small talk помогает установить хорошие отношения с подрядчиком. Спрашивайте о безопасных темах и плавно переходите к делу.</p>
-</div>
-<p><a href="read-06.html" style="color:#58a6ff;">📖 Полная страница для чтения →</a></p>
+<h2>📖 Чтение</h2>
+<p><a href="read-06.html" style="color:#58a6ff;">Полная страница для чтения →</a></p>
 
 <h2>✅ Self-check</h2>
 <div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу начать встречу с небольшого small talk</label></div>
