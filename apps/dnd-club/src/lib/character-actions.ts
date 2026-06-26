@@ -107,7 +107,7 @@ export async function updateCharacter(characterId: string, formData: FormData) {
   })
   if (!character) throw new Error("Персонаж не найден")
 
-  const isAdmin = session.user.role === "admin"
+  const isAdmin = session.user.role === "admin" || session.user.role === "sadmin"
   const isOwner = character.userId === session.user.id
   if (!isAdmin && !isOwner) throw new Error("Нет доступа")
 
@@ -190,7 +190,7 @@ export async function deleteCharacter(characterId: string) {
   })
   if (!character) throw new Error("Персонаж не найден")
 
-  const isAdmin = session.user.role === "admin"
+  const isAdmin = session.user.role === "admin" || session.user.role === "sadmin"
   const isOwner = character.userId === session.user.id
   if (!isAdmin && !isOwner) throw new Error("Нет доступа")
 

@@ -26,7 +26,7 @@ function decodeFilename(name: string): string {
 
 async function requireAdmin() {
   const session = await auth()
-  if (session?.user?.role !== "admin") throw new Error("Только для админа")
+  if (session?.user?.role !== "admin" && session?.user?.role !== "sadmin") throw new Error("Только для админа")
   return session
 }
 

@@ -6,7 +6,8 @@ import Image from "next/image"
 import Link from "next/link"
 import { Cpu } from "lucide-react"
 
-const basePath = "/b22"
+  const basePath = "/b22"
+const faviconHref = `${basePath}/club-logo.svg`
 
 export const metadata: Metadata = {
   title: "b22 Club — Book Club",
@@ -19,17 +20,17 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="ru">
       <body className="antialiased">
-        <link rel="icon" href={`${basePath}/club-logo.svg`} type="image/svg+xml" />
+        <link rel="icon" href={faviconHref} type="image/svg+xml" />
         <SessionProvider session={session}>
           <nav className="bg-black border-b border-slate-800">
             <div className="container mx-auto px-4 h-14 flex items-center justify-between">
               <div className="flex items-center gap-6">
                 <a href={process.env.NEXT_PUBLIC_DND_CLUB_URL} className="flex items-center gap-2 font-bold text-amber-400 hover:text-amber-300 transition">
-                  <Image src={`${basePath}/club-logo.svg`} alt="" width={24} height={24} className="w-6 h-6 rounded" unoptimized />
+                  <Image src="/club-logo.svg" alt="" width={24} height={24} className="w-6 h-6 rounded" unoptimized />
                   d21 Club
                 </a>
                 <Link href="/" className="flex items-center gap-2 font-bold text-cyan-400">
-                  <Image src={`${basePath}/club-logo.svg`} alt="" width={24} height={24} className="w-6 h-6" unoptimized />
+                  <Image src="/club-logo.svg" alt="" width={24} height={24} className="w-6 h-6" unoptimized />
                   b22 Club
                 </Link>
               </div>

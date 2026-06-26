@@ -59,7 +59,7 @@ export default async function CharacterSheet({
   const skillProfs = (sheet?.skills || {}) as Record<string, boolean>
   const attacks = (sheet?.attacks || []) as { name: string; atkBonus: string; damage: string; type: string }[]
   const spells = (sheet?.spells || {}) as Record<string, string[]>
-  const canDelete = session?.user?.role === "admin" || session?.user?.id === character.userId
+  const canDelete = session?.user?.role === "admin" || session?.user?.role === "sadmin" || session?.user?.id === character.userId
   const equipment = character.equipment ? character.equipment.split("\n").filter(Boolean) : []
 
   const sectionCard = `bg-slate-800 rounded-xl p-6 border ${accentBorder}`

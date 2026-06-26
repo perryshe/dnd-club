@@ -6,7 +6,6 @@ import VoteSection from "@/components/VoteSection"
 import BookGrid from "@/components/BookGrid"
 import RatingTable from "@/components/RatingTable"
 import SuggestModal from "@/components/SuggestModal"
-import { auth } from "@/lib/auth"
 
 export const metadata: Metadata = {
   title: "b22 Club — Book Club",

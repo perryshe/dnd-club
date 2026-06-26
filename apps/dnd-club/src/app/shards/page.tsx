@@ -12,7 +12,7 @@ export default async function ShardsPage() {
   const campaign = await prisma.campaign.findUnique({ where: { slug: "shards" } })
   if (!campaign) notFound()
 
-  const isAdmin = session?.user?.role === "admin"
+  const isAdmin = session?.user?.role === "admin" || session?.user?.role === "sadmin"
   const isApproved = !!session?.user && session.user.role !== "pending"
 
   const [characters, maps, statuses, gallery, rules] = await Promise.all([

@@ -20,7 +20,7 @@ export default async function EditCharacterPage({
   if (!character) notFound()
 
   const isOwner = character.userId === session.user.id
-  const isAdmin = session.user.role === "admin"
+  const isAdmin = session.user.role === "admin" || session.user.role === "sadmin"
   if (!isOwner && !isAdmin) redirect(`/${character.campaign.slug}`)
 
   return (

@@ -46,7 +46,7 @@ export default async function RootLayout({
               <div className="flex items-center gap-4 text-sm">
                 {session?.user ? (
                   <>
-                    {session.user.role === "admin" && (
+                    {(session.user.role === "admin" || session.user.role === "sadmin") && (
                       <Link
                         href="/admin"
                         className="text-slate-300 hover:text-white transition"
