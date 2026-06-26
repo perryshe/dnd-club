@@ -180,6 +180,30 @@ export async function updateCharacter(characterId: string, formData: FormData) {
   revalidatePath(`/${character.campaign.slug}`)
 }
 
+export async function transferCharacter(characterId: string, formData: FormData) {
+  const session = await auth()
+  if (!session?.user?.id || session?.user?.role !== "sadmin") throw new Error("Только SAdmin")
+
+  const newUserId = formData.get("userId") as string
+  if (!newUserId) throw new Error("Выберите пользователя")
+
+  const character = await prisma.character.findUnique({
+    where: { id: characterId },
+    include: { campaign: true },
+  })
+  if (!character) throw new Error("Персонаж не найден")
+
+  const newUser = await prisma.user.findUnique({ where: { id: newUserId } })
+  if (!newUser) throw new Error("Пользователь не найден")
+
+  await prisma.character.update({
+    where: { id: characterId },
+    data: { userId: newUserId },
+  })
+
+  revalidatePath(`/${character.campaign.slug}`)
+}
+
 export async function deleteCharacter(characterId: string) {
   const session = await auth()
   if (!session?.user?.id) throw new Error("Не авторизован")
