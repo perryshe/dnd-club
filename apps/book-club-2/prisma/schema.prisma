@@ -1,0 +1,118 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  pending
+  user
+  admin
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  schoolNick String? @map("school_nick")
+  name      String
+  password  String
+  role      Role     @default(pending)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  suggestions Suggestion[]
+  votes       Vote[]
+  reviews     Review[]
+  progress    ReadProgress[]
+
+  @@map("users")
+}
+
+model Book {
+  id            String   @id @default(cuid())
+  title         String
+  author        String
+  description   String?
+  cover         String?
+  badge         String?
+  status        String   @default("nominated")
+  month         String?
+  suggestedById String?
+  createdAt     DateTime @default(now())
+
+  suggestedBy User?         @relation(fields: [suggestedById], references: [id])
+  reviews      Review[]
+  meetings     Meeting[]
+  progress     ReadProgress[]
+
+  @@map("books")
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  userId    String
+  bookId    String
+  rating    Int
+  text      String?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  book Book @relation(fields: [bookId], references: [id])
+
+  @@unique([userId, bookId])
+  @@map("reviews")
+}
+
+model Suggestion {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  author    String
+  reason    String
+  createdAt DateTime @default(now())
+
+  user  User @relation(fields: [userId], references: [id])
+  votes Vote[]
+
+  @@map("suggestions")
+}
+
+model Vote {
+  id           String   @id @default(cuid())
+  suggestionId String
+  userId       String
+  createdAt    DateTime @default(now())
+
+  suggestion Suggestion @relation(fields: [suggestionId], references: [id])
+  user       User       @relation(fields: [userId], references: [id])
+
+  @@unique([suggestionId, userId])
+  @@map("votes")
+}
+
+model Meeting {
+  id     String   @id @default(cuid())
+  bookId String
+  date   DateTime
+  notes  String?
+
+  book Book @relation(fields: [bookId], references: [id])
+
+  @@map("meetings")
+}
+
+model ReadProgress {
+  id        String   @id @default(cuid())
+  userId    String
+  bookId    String
+  completed Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  book Book @relation(fields: [bookId], references: [id])
+
+  @@unique([userId, bookId])
+  @@map("read_progress")
+}

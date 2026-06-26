@@ -34,6 +34,10 @@ export default async function RootLayout({
                   <img src="/book-favicon.svg" alt="" className="w-6 h-6" />
                   b21 Club
                 </a>
+                <a href="/b22/" className="flex items-center gap-2 font-bold text-cyan-400 hover:text-cyan-300 transition">
+                  <img src="/book-favicon.svg" alt="" className="w-6 h-6" />
+                  b22 Club
+                </a>
                 <GameModal url={process.env.NEXT_PUBLIC_T21_GAME_URL ?? ""} />
                 <a href="/e21/" className="flex items-center gap-2 font-bold text-green-400 hover:text-green-300 transition">
                   e21 Club
