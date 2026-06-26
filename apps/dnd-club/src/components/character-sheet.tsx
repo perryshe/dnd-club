@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma"
 import { auth } from "@/lib/auth"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowLeft, Trash2, Pencil, UserSwitch } from "lucide-react"
+import { ArrowLeft, Trash2, Pencil, ArrowRightLeft } from "lucide-react"
 import { deleteCharacter, transferCharacter } from "@/lib/character-actions"
 
 function abilityModifier(score: number): number {
@@ -148,7 +148,7 @@ export default async function CharacterSheet({
               type="submit"
               className="flex items-center gap-2 bg-amber-700 hover:bg-amber-600 px-4 py-2 rounded-lg transition text-sm"
             >
-              <UserSwitch size={16} />
+                <ArrowRightLeft size={16} />
               Передать
             </button>
           </form>
