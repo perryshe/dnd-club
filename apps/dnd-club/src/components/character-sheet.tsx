@@ -99,37 +99,62 @@ export default async function CharacterSheet({
             )}
           </div>
         </div>
-        {isSAdmin && (
-          <div className="mt-4 pt-4 border-t border-amber-600/30">
-            <form
-              action={transferCharacter.bind(null, character.id)}
-              className="flex items-end gap-3 flex-wrap"
+        {(canDelete || character.userId === session?.user?.id) && (
+          <div className="flex items-center gap-3">
+            <Link
+              href={`/${character.campaign.slug}/characters/${character.id}/edit`}
+              className="flex items-center gap-2 bg-slate-600 hover:bg-slate-500 px-4 py-2 rounded-lg transition"
             >
-              <div>
-                <label className="block text-xs text-slate-400 mb-1">Передать персонажа</label>
-                <select
-                  name="userId"
-                  defaultValue={character.userId}
-                  className="bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm text-white min-w-[200px]"
-                >
-                  {users.map((u) => (
-                    <option key={u.id} value={u.id}>
-                      {u.name} ({u.schoolNick || u.email})
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <button
-                type="submit"
-                className="flex items-center gap-2 bg-amber-700 hover:bg-amber-600 px-4 py-2 rounded-lg transition text-sm"
+              <Pencil size={18} />
+              Редактировать
+            </Link>
+            {canDelete && (
+              <form
+                action={async () => {
+                  "use server"
+                  await deleteCharacter(character.id)
+                }}
               >
-                <UserSwitch size={16} />
-                Передать
-              </button>
-            </form>
+                <button className="flex items-center gap-2 bg-red-800 hover:bg-red-700 px-4 py-2 rounded-lg transition">
+                  <Trash2 size={18} />
+                  Удалить
+                </button>
+              </form>
+            )}
           </div>
         )}
-      </header>
+      </div>
+      {isSAdmin && (
+        <div className="pt-4 border-t border-amber-600/30">
+          <form
+            action={transferCharacter.bind(null, character.id)}
+            className="flex items-end gap-3 flex-wrap"
+          >
+            <div>
+              <label className="block text-xs text-slate-400 mb-1">Передать персонажа</label>
+              <select
+                name="userId"
+                defaultValue={character.userId}
+                className="bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm text-white min-w-[200px]"
+              >
+                {users.map((u) => (
+                  <option key={u.id} value={u.id}>
+                    {u.name} ({u.schoolNick || u.email})
+                  </option>
+                ))}
+              </select>
+            </div>
+            <button
+              type="submit"
+              className="flex items-center gap-2 bg-amber-700 hover:bg-amber-600 px-4 py-2 rounded-lg transition text-sm"
+            >
+              <UserSwitch size={16} />
+              Передать
+            </button>
+          </form>
+        </div>
+      )}
+    </header>
 
       <main className="container mx-auto px-4 pb-16 space-y-6">
         <div className="grid lg:grid-cols-5 gap-4">
