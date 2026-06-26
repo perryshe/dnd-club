@@ -91,20 +91,24 @@ export default async function AdminPage() {
                                 Сделать админом
                               </button>
                             </form>
-                            <form action={setUserRole.bind(null, user.id, "sadmin")}>
-                              <button className="text-xs px-2 py-1 bg-purple-700 hover:bg-purple-600 rounded transition">
-                                Сделать SAdmin
-                              </button>
-                            </form>
+                            {session.user.email === process.env.ADMIN_EMAIL && (
+                              <form action={setUserRole.bind(null, user.id, "sadmin")}>
+                                <button className="text-xs px-2 py-1 bg-purple-700 hover:bg-purple-600 rounded transition">
+                                  Сделать SAdmin
+                                </button>
+                              </form>
+                            )}
                           </>
                         )}
                         {user.role === "user" && (
                           <>
-                            <form action={setUserRole.bind(null, user.id, "sadmin")}>
-                              <button className="text-xs px-2 py-1 bg-purple-700 hover:bg-purple-600 rounded transition">
-                                Сделать SAdmin
-                              </button>
-                            </form>
+                            {session.user.email === process.env.ADMIN_EMAIL && (
+                              <form action={setUserRole.bind(null, user.id, "sadmin")}>
+                                <button className="text-xs px-2 py-1 bg-purple-700 hover:bg-purple-600 rounded transition">
+                                  Сделать SAdmin
+                                </button>
+                              </form>
+                            )}
                             <form action={setUserRole.bind(null, user.id, "admin")}>
                               <button className="text-xs px-2 py-1 bg-amber-700 hover:bg-amber-600 rounded transition">
                                 Сделать админом
@@ -125,7 +129,7 @@ export default async function AdminPage() {
                             </form>
                           </>
                         )}
-                        {user.role === "admin" && session.user.id !== user.id && (
+                        {user.role === "admin" && session.user.id !== user.id && session.user.email === process.env.ADMIN_EMAIL && (
                           <form action={setUserRole.bind(null, user.id, "sadmin")}>
                             <button className="text-xs px-2 py-1 bg-purple-700 hover:bg-purple-600 rounded transition">
                               Сделать SAdmin

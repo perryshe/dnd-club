@@ -36,6 +36,9 @@ export async function setUserRole(userId: string, role: "admin" | "user" | "sadm
   if (session.user.id === userId) {
     throw new Error("Нельзя изменить свою роль")
   }
+  if (role === "sadmin" && session.user.email !== process.env.ADMIN_EMAIL) {
+    throw new Error("Только главный администратор может назначить SAdmin")
+  }
 
   await prisma.user.update({
     where: { id: userId },
