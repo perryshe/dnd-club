@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 body {
-  background: #0c0a09;
-  color: #d6d3d1;
+  background: #020617;
+  color: #cbd5e1;
 }
 
 .scanlines::before {
