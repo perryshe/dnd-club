@@ -37,7 +37,7 @@ jobs:
             sleep 2
           done
           docker compose -f docker-compose.prod.yml exec -T dnd-club \
-            npx prisma db push --accept-data-loss
+            npx prisma db push
           docker compose -f docker-compose.prod.yml restart dnd-club
       - name: Update nginx and reload
         run: |
