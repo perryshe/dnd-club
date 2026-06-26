@@ -17,7 +17,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="ru">
       <body className="antialiased">
-        <link rel="icon" href="/club-logo.svg" type="image/svg+xml" />
+        <link rel="icon" href="/b22/club-logo.svg" type="image/svg+xml" />
         <SessionProvider session={session}>
           <nav className="bg-black border-b border-slate-800">
             <div className="container mx-auto px-4 h-14 flex items-center justify-between">
