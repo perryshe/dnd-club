@@ -27,6 +27,7 @@ model User {
   votes       Vote[]
   reviews     Review[]
   progress    ReadProgress[]
+  suggestedBooks Book[] @relation("suggestedBooks")
 
   @@map("users")
 }
@@ -43,7 +44,7 @@ model Book {
   suggestedById String?
   createdAt     DateTime @default(now())
 
-  suggestedBy User?         @relation(fields: [suggestedById], references: [id])
+  suggestedBy User?         @relation("suggestedBooks", fields: [suggestedById], references: [id])
   reviews      Review[]
   meetings     Meeting[]
   progress     ReadProgress[]
