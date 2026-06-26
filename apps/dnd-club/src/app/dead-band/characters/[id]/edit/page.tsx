@@ -20,6 +20,8 @@ export default async function EditCharacterPage({
   })
   if (!character) notFound()
 
+  const safeCharacter = JSON.parse(JSON.stringify(character))
+
   const isOwner = character.userId === session.user.id
   const isAdmin = session.user.role === "admin" || session.user.role === "sadmin"
   if (!isOwner && !isAdmin) redirect(`/${character.campaign.slug}`)
@@ -43,7 +45,7 @@ export default async function EditCharacterPage({
           <ErrorBoundary>
             <CharacterForm
               slug={character.campaign.slug}
-              character={character}
+              character={safeCharacter}
               inputClass="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white focus:border-red-500 outline-none"
               btnClass="bg-red-600"
               btnHoverClass="hover:bg-red-700"
