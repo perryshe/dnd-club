@@ -7,6 +7,8 @@ import BookGrid from "@/components/BookGrid"
 import RatingTable from "@/components/RatingTable"
 import SuggestModal from "@/components/SuggestModal"
 
+export const dynamic = "force-dynamic"
+
 export const metadata: Metadata = {
   title: "b22 Club — Book Club",
   description: "Book club v2",

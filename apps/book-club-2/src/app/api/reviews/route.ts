@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma"
 import { auth } from "@/lib/auth"
 
+export const dynamic = "force-dynamic"
+
 export async function GET() {
   const reviews = await prisma.review.findMany({
     include: {
