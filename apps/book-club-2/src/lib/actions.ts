@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache"
 
 export async function voteForSuggestion(suggestionId: string) {
   const session = await auth()
-  if (!session?.user?.id) return { error: "not authenticated" }
+  if (!session?.user?.id) return
 
   const existing = await prisma.vote.findUnique({
     where: { suggestionId_userId: { suggestionId, userId: session.user.id } },
@@ -23,7 +23,7 @@ export async function voteForSuggestion(suggestionId: string) {
 
 export async function submitSuggestion(formData: FormData) {
   const session = await auth()
-  if (!session?.user?.id) return { error: "not authenticated" }
+  if (!session?.user?.id) return
 
   await prisma.suggestion.create({
     data: {
@@ -38,10 +38,10 @@ export async function submitSuggestion(formData: FormData) {
 
 export async function promoteToBookOfMonth(suggestionId: string) {
   const session = await auth()
-  if (session?.user?.role !== "admin") return { error: "forbidden" }
+  if (session?.user?.role !== "sadmin") return
 
   const suggestion = await prisma.suggestion.findUnique({ where: { id: suggestionId } })
-  if (!suggestion) return { error: "not found" }
+  if (!suggestion) return
 
   const now = new Date()
   const month = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`
@@ -61,7 +61,7 @@ export async function promoteToBookOfMonth(suggestionId: string) {
 
 export async function completeBookOfMonth(bookId: string) {
   const session = await auth()
-  if (session?.user?.role !== "admin") return { error: "forbidden" }
+  if (session?.user?.role !== "sadmin") return
 
   await prisma.book.update({
     where: { id: bookId },
@@ -72,7 +72,7 @@ export async function completeBookOfMonth(bookId: string) {
 
 export async function toggleReadProgress(bookId: string) {
   const session = await auth()
-  if (!session?.user?.id) return { error: "not authenticated" }
+  if (!session?.user?.id) return
 
   const existing = await prisma.readProgress.findUnique({
     where: { userId_bookId: { userId: session.user.id, bookId } },

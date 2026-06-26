@@ -71,7 +71,7 @@ export default async function BookOfMonth() {
               </form>
             )}
 
-            {session?.user?.role === "admin" && (
+            {session?.user?.role === "sadmin" && (
               <form action={completeBookOfMonth.bind(null, book.id)}>
                 <button
                   type="submit"

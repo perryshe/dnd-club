@@ -70,7 +70,7 @@ export default async function VoteSection() {
                     </button>
                   </form>
                 )}
-                {session?.user?.role === "admin" && (
+                {session?.user?.role === "sadmin" && (
                   <form action={promoteToBookOfMonth.bind(null, s.id)}>
                     <button
                       type="submit"
