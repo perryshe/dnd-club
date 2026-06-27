@@ -52,3 +52,6 @@ jobs:
         run: |
           cd /home/club/Club
           sudo ./maintenance.sh off
+      - name: Cleanup Docker
+        if: always()
+        run: docker system prune -af
