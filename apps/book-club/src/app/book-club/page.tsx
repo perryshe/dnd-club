@@ -66,11 +66,11 @@ export default async function BookClubPage() {
 
           <h1 className="text-6xl md:text-8xl font-black mb-6 tracking-tight">
             <span className="bg-gradient-to-r from-cyan-300 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
-              Книжный
+              b21
             </span>
             <br />
             <span className="bg-gradient-to-r from-slate-200 via-slate-300 to-slate-400 bg-clip-text text-transparent">
-              клуб
+              Club
             </span>
           </h1>
 

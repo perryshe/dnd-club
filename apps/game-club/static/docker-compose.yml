@@ -1,0 +1,11 @@
+services:
+  g21-club:
+    image: nginx:alpine
+    container_name: g21-club
+    ports:
+      - "8021:80"
+    volumes:
+      - ./index.html:/usr/share/nginx/html/index.html
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./images:/usr/share/nginx/html/images
+    restart: unless-stopped
