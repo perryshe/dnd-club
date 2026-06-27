@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react"
 
-export type ClubId = "d21" | "b21" | "b22" | "t21" | "e21" | "g21" | "quest"
+export type ClubId = "d21" | "b21" | "t21" | "e21" | "g21" | "quest"
 
 type ClubDef = {
   id: ClubId
@@ -16,7 +16,6 @@ type ClubDef = {
 const clubs: ClubDef[] = [
   { id: "d21", label: "d21 Club", color: "text-amber-400 hover:text-amber-300", icon: "/favicon21.jpg", iconSize: "w-6 h-6", iconClass: "rounded" },
   { id: "b21", label: "b21 Club", color: "text-cyan-400 hover:text-cyan-300", icon: "/book-favicon.svg", iconSize: "w-5 h-5" },
-  { id: "b22", label: "b22 Club", color: "text-cyan-400 hover:text-cyan-300", icon: "/book-favicon.svg", iconSize: "w-5 h-5" },
   { id: "t21", label: "t21 Club", color: "text-indigo-400 hover:text-indigo-300" },
   { id: "e21", label: "e21 Club", color: "text-green-400 hover:text-green-300" },
   { id: "g21", label: "g21 Club", color: "text-cyan-300 hover:text-cyan-200" },
@@ -38,7 +37,6 @@ function hrefFor(id: ClubId, dndClubUrl: string, bookClubUrl?: string): string {
   switch (id) {
     case "d21": return dndClubUrl
     case "b21": return bookClubUrl ?? `${dndClubUrl}/b21`
-    case "b22": return `${dndClubUrl}/b22/`
     case "t21": return `${dndClubUrl}/t21/`
     case "e21": return `${dndClubUrl}/e21/`
     case "g21": return `${dndClubUrl}/g21/`
