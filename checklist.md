@@ -1,19 +1,16 @@
 # Аудит и план работ — d21-club.ru
 
-> Единый чек-лист. Готовность отмечается в колонке.
+> Единый чек-лист. Каждая задача — законченный функционал для деплоя и теста.
 > Ветка: `audit` | Обновлён: 27.06.2026
 
 ---
 
 ## Шаг 1 — 🔴 Безопасность: секреты и entrypoint
 
-| # | Задача | Зачем | Файлы | Готовность |
+| # | Задача | Описание | Файлы | Готовность |
 |---|---|---|---|---|
-| 1 | Вынести `POSTGRES_PASSWORD`, `NEXTAUTH_SECRET`, `ADMIN_PASSWORD` в `.env.prod` | Секреты не должны быть в git | `docker-compose.yml`, `docker-compose.prod.yml`, `.env.prod` | ⬜ |
-| 2 | Сгенерировать новый `NEXTAUTH_SECRET` (openssl rand 64) | Текущий `change-me-to-a-random-secret` — не секрет | `.env.prod` | ⬜ |
-| 3 | Сменить пароль БД и админа | `dndclub_pass` и `admin123` в открытом доступе | `.env.prod`, `docker-compose.prod.yml` | ⬜ |
-| 4 | Убрать `npx tsx prisma/seed.ts` из `book-club/docker-entrypoint.sh` | Seed при каждом старте перезаписывает роли | `apps/book-club/docker-entrypoint.sh` | ⬜ |
-| 5 | Добавить `npx prisma generate` в `book-club-2/docker-entrypoint.sh` | Без generate — stale Prisma Client | `apps/book-club-2/docker-entrypoint.sh` | ⬜ |
+| 1 | **Вынести секреты в `.env`** | `POSTGRES_PASSWORD`, `NEXTAUTH_SECRET`, `ADMIN_PASSWORD` из docker-compose в `.env.prod` + сгенерировать новые значения | `docker-compose.yml`, `docker-compose.prod.yml`, `.env.prod` | ⬜ |
+| 2 | **Исправить entrypoint скрипты** | Убрать seed из book-club (перезаписывает роли при рестарте), добавить `prisma generate` в book-club-2 (stale client) | `apps/book-club/docker-entrypoint.sh`, `apps/book-club-2/docker-entrypoint.sh` | ⬜ |
 
 **Зависимости:** нет
 
@@ -21,13 +18,10 @@
 
 ## Шаг 2 — 🔴 Безопасность: CORS, CSP, headers, uploads
 
-| # | Задача | Зачем | Файлы | Готовность |
+| # | Задача | Описание | Файлы | Готовность |
 |---|---|---|---|---|
-| 6 | CORS tic-tac: `AllowAnyOrigin()` → `WithOrigins("https://d21-club.ru")` | Любой сайт может делать запросы к API | `apps/tic-tac/tic_tac/Program.cs:99-102` | ⬜ |
-| 7 | Security headers в nginx (HSTS, X-Frame-Options, X-Content-Type-Options) | Clickjacking, MIME sniffing | `dnd-club-nginx.conf` | ⬜ |
-| 8 | Уточнить CSP: `https:` → конкретные домены | Безопасность скриптов | `dnd-club-nginx.conf` | ⬜ |
-| 9 | Лимит размера файлов при загрузке | DoS через заполнение диска | `apps/dnd-club/src/lib/admin-actions.ts:35` | ⬜ |
-| 10 | Rate limit: cleanup устаревших записей | Сейчас Map растёт бесконечно (memory leak) | `apps/dnd-club/src/lib/rate-limit.ts` | ⬜ |
+| 3 | **Настроить CORS, CSP и security headers** | CORS tic-tac: `AllowAnyOrigin` → `WithOrigins("https://d21-club.ru")`, CSP `https:` → конкретные домены, добавить HSTS, X-Frame-Options, X-Content-Type-Options | `apps/tic-tac/tic_tac/Program.cs:99-102`, `dnd-club-nginx.conf` | ⬜ |
+| 4 | **Добавить лимиты: upload + rate-limit** | Проверка размера файлов при загрузке, cleanup устаревших записей в rate-limit (memory leak) | `apps/dnd-club/src/lib/admin-actions.ts:35`, `apps/dnd-club/src/lib/rate-limit.ts` | ⬜ |
 
 **Зависимости:** нет
 
@@ -35,59 +29,41 @@
 
 ## Шаг 3 — 📊 Аналитика (Яндекс.Метрика)
 
-| # | Задача | Зачем | Файлы | Готовность |
+| # | Задача | Описание | Файлы | Готовность |
 |---|---|---|---|---|
-| 11 | Создать компонент `<Analytics />` | Единый код счётчика | `apps/dnd-club/src/components/Analytics.tsx` | ⬜ |
-| 12 | Внедрить в `dnd-club/layout.tsx` | Главный сайт | `apps/dnd-club/src/app/layout.tsx` | ⬜ |
-| 13 | Внедрить в `book-club/layout.tsx` | Книжный клуб v1 | `apps/book-club/src/app/layout.tsx` | ⬜ |
-| 14 | Внедрить в `book-club-2/layout.tsx` | Книжный клуб v2 | `apps/book-club-2/src/app/layout.tsx` | ⬜ |
-| 15 | Внедрить в `english/index.html`, `tor.html` | Статические страницы | `apps/english/index.html`, `apps/english/tor.html` | ⬜ |
-| 16 | Внедрить в `quest-app/public/index.html` | Страница квеста | `apps/Quest/quest-app/public/index.html` | ⬜ |
-| 17 | Внедрить в `tic_tac/wwwroot/index.html` | Страница крестиков-ноликов | `apps/tic-tac/tic_tac/wwwroot/index.html` | ⬜ |
-| 18 | Добавить `NEXT_PUBLIC_YM_COUNTER` в docker-compose | ID счётчика через env | `docker-compose.prod.yml` | ⬜ |
-| 19 | Обновить CSP под `mc.yandex.ru`, `yastatic.net` | Чтобы Метрика работала | `dnd-club-nginx.conf` | ⬜ |
+| 5 | **Яндекс.Метрика в Next.js приложения** | Компонент Analytics + layout.tsx для dnd-club, book-club, book-club-2 + env `NEXT_PUBLIC_YM_COUNTER` + CSP под Метрику | `apps/*/src/components/Analytics.tsx`, `apps/*/src/app/layout.tsx`, `docker-compose.prod.yml`, `dnd-club-nginx.conf` | ⬜ |
+| 6 | **Яндекс.Метрика на статических страницах** | Внедрить счётчик в index.html english, tor.html, quest-app, tic-tac | `apps/english/index.html`, `apps/english/tor.html`, `apps/Quest/quest-app/public/index.html`, `apps/tic-tac/tic_tac/wwwroot/index.html` | ⬜ |
 
 **Зависимости:** Шаг 1 (env), Шаг 2 (CSP)
 
 ---
 
-## Шаг 4 — 🗄️ Разделение баз данных + 🔄 Prisma миграции
+## Шаг 4 — 🗄️🔄 Разделение БД + Prisma миграции
 
-| # | Задача | Зачем | Файлы | Готовность |
+| # | Задача | Описание | Файлы | Готовность |
 |---|---|---|---|---|
-| 20 | Создать БД `bookclub_v1`, `bookclub_v2` в init.sql | Каждому сервису свою БД | `postgres/init.sql` | ⬜ |
-| 21 | book-club: `DATABASE_URL` → `bookclub_v1` | Не сломать таблицы dnd-club | `docker-compose.prod.yml:55` | ⬜ |
-| 22 | book-club-2: `DATABASE_URL` → `bookclub_v2` | Аналогично | `docker-compose.prod.yml:106` | ⬜ |
-| 23 | Добавить `sadmin` в enum Role в book-club схеме | Иначе `db push` удалит роль | `apps/book-club/prisma/schema.prisma:10-14` | ⬜ |
-| 24 | Сделать dev → prod консистентными | Dev `bookclub` vs prod `dndclub` | `docker-compose.yml`, `docker-compose.prod.yml` | ⬜ |
-| 25 | `prisma migrate dev` для dnd-club | Замена `db push` | `apps/dnd-club/prisma/` | ⬜ |
-| 26 | `prisma migrate dev` для book-club | Замена `db push` | `apps/book-club/prisma/` | ⬜ |
-| 27 | `prisma migrate dev` для book-club-2 | Замена `db push` | `apps/book-club-2/prisma/` | ⬜ |
-| 28 | CI/CD: `db push` → `migrate deploy` | Безопасное обновление схемы | `.github/workflows/deploy-v2.yml:39-40` | ⬜ |
+| 7 | **Разделить базы данных сервисов** | Создать БД `bookclub_v1`, `bookclub_v2`, перенаправить book-club и book-club-2 на свои БД, добавить `sadmin` в enum book-club, синхронизировать dev/prod | `postgres/init.sql`, `docker-compose.prod.yml`, `docker-compose.yml`, `apps/book-club/prisma/schema.prisma` | ⬜ |
+| 8 | **Перевести на Prisma миграции** | Сгенерировать `prisma migrate dev` для всех 3 Next.js app, CI: `db push` → `migrate deploy` | `apps/*/prisma/`, `.github/workflows/deploy-v2.yml:39-40` | ⬜ |
 
-**Зависимости:** нет, но требует тестирования (затрагивает все сервисы)
+**Зависимости:** нет, но требует тестирования всех сервисов после деплоя
 
 ---
 
 ## Шаг 5 — 🛠 CI/CD
 
-| # | Задача | Зачем | Файлы | Готовность |
+| # | Задача | Описание | Файлы | Готовность |
 |---|---|---|---|---|
-| 29 | Добавить `npm run lint` в CI | Проверка кода перед деплоем | `.github/workflows/deploy-v2.yml` | ⬜ |
-| 30 | Добавить `npm run type-check` | TypeScript errors → fail build | `.github/workflows/deploy-v2.yml` | ⬜ |
-| 31 | Заменить `git fetch --force` на `--ff-only` | Безопасный pull | `.github/workflows/deploy-v2.yml:15` | ⬜ |
-| 32 | Добавить `pg_dump` перед деплоем | Авто-бэкап | `.github/workflows/deploy-v2.yml` | ⬜ |
+| 9 | **Улучшить CI/CD пайплайн** | Добавить lint + type-check в CI, заменить `git fetch --force` на `--ff-only`, добавить `pg_dump` перед деплоем | `.github/workflows/deploy-v2.yml` | ⬜ |
 
-**Зависимости:** Шаг 4 (CI ссылается на `migrate deploy` вместо `db push`)
+**Зависимости:** Шаг 4 (`db push` → `migrate deploy`)
 
 ---
 
 ## Шаг 6 — 🏗 Auth: централизация
 
-| # | Задача | Зачем | Файлы | Готовность |
+| # | Задача | Описание | Файлы | Готовность |
 |---|---|---|---|---|
-| 33 | Выделить общий `auth.ts` в shared-пакет | 3 копии — риск рассинхронизации | `apps/*/src/lib/auth.ts` | ⬜ |
-| 34 | Или единый auth gateway | SSO для всех сервисов | Новый сервис или dnd-club | ⬜ |
+| 10 | **Централизовать аутентификацию** | Выделить общий `auth.ts` в shared-пакет для 3 Next.js app — сейчас 3 копии с риском рассинхронизации | `apps/*/src/lib/auth.ts` | ⬜ |
 
 **Зависимости:** Шаг 4 (чтобы не делать две реорганизации сразу)
 
@@ -95,37 +71,36 @@
 
 ## Шаг 7 — 🏗 Quest: отвязка от общей БД
 
-| # | Задача | Зачем | Файлы | Готовность |
+| # | Задача | Описание | Файлы | Готовность |
 |---|---|---|---|---|
-| 35 | REST API в dnd-club: `GET /api/characters?campaign=dead-band` | Вместо прямых pg-запросов | Новый route в dnd-club | ⬜ |
-| 36 | Quest: `pool.query(...)` → fetch к API | Слабая связность | `apps/Quest/quest-app/server.js:42-84` | ⬜ |
+| 11 | **Отвязать Quest от общей БД** | REST API в dnd-club: `GET /api/characters?campaign=dead-band`, Quest: заменить `pool.query()` на fetch к этому API | Новый route в dnd-club, `apps/Quest/quest-app/server.js:42-84` | ⬜ |
 
-**Зависимости:** Шаг 4 (чтобы Quest получал данные из своего API, а не из чужой БД)
+**Зависимости:** Шаг 4 (чтобы Quest получал данные через API, а не из чужой БД)
 
 ---
 
-## Шаг 8 — 📈 Observability + 🚀 Deployment
+## Шаг 8 — 📈🚀 Observability + Deployment
 
-| # | Задача | Зачем | Файлы | Готовность |
+| # | Задача | Описание | Файлы | Готовность |
 |---|---|---|---|---|
-| 37 | endpoint `/api/health` в каждый сервис | Health checks | Каждый app | ⬜ |
-| 38 | Health checks в docker-compose.prod.yml | Docker перезапустит упавший сервис | `docker-compose.prod.yml` | ⬜ |
-| 39 | Структурированные логи (JSON) | Поиск ошибок | Все сервисы | ⬜ |
-| 40 | Zero-downtime deploy | Убрать maintenance window | `maintenance.sh`, `deploy-v2.yml` | ⬜ |
-| 41 | Staging-окружение | Тестировать перед продом | Новый compose-файл или VPS | ⬜ |
-| 42 | Мониторинг и алерты | Не пропускать инциденты | — | ⬜ |
-| 43 | Uptime-мониторинг (UptimeRobot / Grafana) | Узнавать о падениях | — | ⬜ |
+| 12 | **Health checks и zero-downtime deploy** | endpoint `/api/health` в каждый сервис, health checks в docker-compose, убрать maintenance window | `docker-compose.prod.yml`, `maintenance.sh`, `deploy-v2.yml` | ⬜ |
+| 13 | **Staging, мониторинг и алерты** | Staging-окружение, структурированные логи (JSON), uptime-мониторинг + алерты | — | ⬜ |
 
 **Зависимости:** Шаг 7 (после архитектурной стабилизации)
 
 ---
 
-**Итого:** 43 пункта, 8 шагов.
-- 🔴 Шаг 1-2: безопасность (10 задач)
-- 📊 Шаг 3: аналитика (9 задач)
-- 🗄️🔄 Шаг 4: БД и миграции (9 задач)
-- 🛠 Шаг 5: CI/CD (4 задачи)
-- 🏗 Шаг 6-7: архитектура (4 задачи)
-- 📈🚀 Шаг 8: observability + деплой (7 задач)
+## Итого: 13 задач, 8 шагов
+
+| Шаг | Задачи | Тема |
+|---|---|---|
+| **1** | 2 | 🔴 Секреты + entrypoint |
+| **2** | 2 | 🔴 CORS/CSP/headers + лимиты |
+| **3** | 2 | 📊 Аналитика Next.js + статика |
+| **4** | 2 | 🗄️🔄 Разделение БД + миграции |
+| **5** | 1 | 🛠 CI/CD |
+| **6** | 1 | 🏗 Auth централизация |
+| **7** | 1 | 🏗 Quest отвязка |
+| **8** | 2 | 📈🚀 Health/deploy + staging/monitoring |
 
 **Статус:** ⬜ — не начато | ✅ — готово | 🔄 — в работе
