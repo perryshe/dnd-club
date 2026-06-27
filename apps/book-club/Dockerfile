@@ -10,6 +10,7 @@ RUN npm install --ignore-scripts
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
+COPY packages /packages
 COPY apps/book-club/ .
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npx prisma generate && npm run build
