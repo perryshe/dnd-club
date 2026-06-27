@@ -65,6 +65,7 @@ model Wish {
   id        String   @id @default(cuid())
   userId    String
   gameId    String
+  meetingId String?
   createdAt DateTime @default(now())
 
   game Game @relation(fields: [gameId], references: [id], onDelete: Cascade)

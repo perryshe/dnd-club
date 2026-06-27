@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma"
+import { prismaAuth } from "@/lib/prisma-auth"
 import { Users, ArrowUpDown } from "lucide-react"
 
 export default async function RatingTable({
@@ -8,23 +9,30 @@ export default async function RatingTable({
 }) {
   const sort = searchParams?.sort ?? "rating"
 
-  const users = await prisma.user.findMany({
-    where: {
-      role: { not: "pending" },
-      reviews: { some: {} },
-    },
-    include: {
-      reviews: { select: { rating: true } },
-    },
-  })
+  const [reviews, users] = await Promise.all([
+    prisma.review.findMany({ select: { userId: true, rating: true } }),
+    prismaAuth.user.findMany({
+      where: { role: { not: "pending" } },
+      select: { id: true, name: true },
+    }),
+  ])
 
-  const rows = users.map((u) => ({
-    name: u.name,
-    reviewCount: u.reviews.length,
-    avgRating: u.reviews.length > 0
-      ? u.reviews.reduce((a, r) => a + r.rating, 0) / u.reviews.length
-      : 0,
-  }))
+  const userMap = new Map(users.map((u) => [u.id, u.name]))
+  const reviewMap = new Map<string, { count: number; total: number }>()
+  for (const r of reviews) {
+    const entry = reviewMap.get(r.userId) ?? { count: 0, total: 0 }
+    entry.count++
+    entry.total += r.rating
+    reviewMap.set(r.userId, entry)
+  }
+
+  const rows = Array.from(reviewMap.entries())
+    .filter(([uid]) => userMap.has(uid))
+    .map(([uid, data]) => ({
+      name: userMap.get(uid)!,
+      reviewCount: data.count,
+      avgRating: data.total / data.count,
+    }))
 
   rows.sort((a, b) => {
     if (sort === "name") return a.name.localeCompare(b.name)

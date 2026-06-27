@@ -13,7 +13,9 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY packages /packages
 COPY apps/book-club-2/ .
 ENV NEXT_TELEMETRY_DISABLED=1
-RUN npx prisma generate && npm run build
+RUN npx prisma generate --schema=prisma/auth.prisma && \
+    npx prisma generate --schema=prisma/schema.prisma && \
+    npm run build
 
 FROM base AS runner
 WORKDIR /app

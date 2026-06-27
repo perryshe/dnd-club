@@ -15,7 +15,10 @@ export default function Meetings({
   onCreateMeeting: (date: string, allGames: boolean, gameIds: string[]) => void
 }) {
   const [showForm, setShowForm] = useState(false)
-  const [newDate, setNewDate] = useState(new Date().toISOString().slice(0, 10))
+  const [newDate, setNewDate] = useState(() => {
+    const now = new Date()
+    return new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16)
+  })
   const [allGames, setAllGames] = useState(true)
   const [selectedGames, setSelectedGames] = useState<string[]>([])
 
@@ -47,10 +50,10 @@ export default function Meetings({
       {showForm && isAdmin && (
         <form onSubmit={handleCreate} className="mb-8 p-4 rounded-xl border border-dashed border-cyan-700/30 bg-cyan-950/10">
           <div className="flex gap-3 mb-3 flex-wrap">
-            <input
-              type="date" value={newDate} onChange={e => setNewDate(e.target.value)}
-              className="px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs text-white font-mono outline-none focus:border-cyan-500/50"
-            />
+              <input
+                type="datetime-local" value={newDate} onChange={e => setNewDate(e.target.value)}
+                className="px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs text-white font-mono outline-none focus:border-cyan-500/50 [color-scheme:dark]"
+              />
             <label className="flex items-center gap-2 text-xs text-slate-400 font-mono">
               <input type="checkbox" checked={allGames} onChange={e => setAllGames(e.target.checked)} className="accent-cyan-500" />
               Все игры
@@ -92,6 +95,7 @@ export default function Meetings({
                 <div className="flex items-center justify-between mb-2">
                   <span className={`text-sm font-mono font-semibold ${future ? "text-cyan-400" : "text-slate-400"}`}>
                     {d.toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" })}
+                    <span className="text-slate-500 ml-2">{d.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}</span>
                   </span>
                   <span className={`text-[9px] font-mono uppercase px-2 py-0.5 rounded ${
                     future ? "text-cyan-500/70 border border-cyan-500/20" : "text-slate-600 border border-slate-700/30"

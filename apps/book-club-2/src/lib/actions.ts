@@ -38,7 +38,7 @@ export async function submitSuggestion(formData: FormData) {
 
 export async function promoteToBookOfMonth(suggestionId: string) {
   const session = await auth()
-  if (session?.user?.role !== "sadmin") return
+  if (session?.user?.role !== "admin" && session?.user?.role !== "sadmin") return
 
   const suggestion = await prisma.suggestion.findUnique({ where: { id: suggestionId } })
   if (!suggestion) return
@@ -61,7 +61,7 @@ export async function promoteToBookOfMonth(suggestionId: string) {
 
 export async function completeBookOfMonth(bookId: string) {
   const session = await auth()
-  if (session?.user?.role !== "sadmin") return
+  if (session?.user?.role !== "admin" && session?.user?.role !== "sadmin") return
 
   await prisma.book.update({
     where: { id: bookId },
@@ -89,7 +89,7 @@ export async function toggleReadProgress(bookId: string) {
 
 export async function createBookEvent(formData: FormData) {
   const session = await auth()
-  if (session?.user?.role !== "sadmin") return
+  if (session?.user?.role !== "admin" && session?.user?.role !== "sadmin") return
 
   const title = formData.get("title") as string
   const author = formData.get("author") as string
@@ -111,7 +111,7 @@ export async function createBookEvent(formData: FormData) {
 
 export async function toggleBookEventStatus(bookId: string) {
   const session = await auth()
-  if (session?.user?.role !== "sadmin") return
+  if (session?.user?.role !== "admin" && session?.user?.role !== "sadmin") return
 
   const book = await prisma.book.findUnique({ where: { id: bookId } })
   if (!book) return
@@ -125,7 +125,7 @@ export async function toggleBookEventStatus(bookId: string) {
 
 export async function deleteBookEvent(bookId: string) {
   const session = await auth()
-  if (session?.user?.role !== "sadmin") return
+  if (session?.user?.role !== "admin" && session?.user?.role !== "sadmin") return
 
   await prisma.book.delete({ where: { id: bookId } })
   revalidatePath("/")

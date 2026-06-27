@@ -8,16 +8,19 @@ type VoteCounts = Record<string, { up: number; down: number }>
 type WishEntry = { id: string; gameId: string }
 
 export default function Collection({
-  games, votes, wishes, sessionUserId, isAdmin, onVote, onWish, onSave, onDelete,
+  games, votes, wishes, nextMeeting, sessionUserId, isAdmin, onVote, onWish, onSave, onDelete,
 }: {
-  games: Game[]; votes: VoteCounts; wishes: WishEntry[]; sessionUserId?: string | null; isAdmin: boolean
+  games: Game[]; votes: VoteCounts; wishes: WishEntry[]; nextMeeting?: { id: string; date: string; allGames: boolean; games: { game: Game }[] } | null
+  sessionUserId?: string | null; isAdmin: boolean
   onVote: (gid: string, d: "up" | "down") => void; onWish: (gid: string) => void
   onSave: (d: Partial<Game> & { id?: string }) => void; onDelete: (id: string) => void
 }) {
   const [editGame, setEditGame] = useState<Game | null>(null)
   const [showAdd, setShowAdd] = useState(false)
   const wishIds = new Set(wishes.map(w => w.gameId))
-  const activeMeeting = false // simplified — meetings could be fetched
+  const meetingGameIds = nextMeeting?.allGames
+    ? new Set(games.map(g => g.id))
+    : new Set(nextMeeting?.games.map(g => g.game.id) ?? [])
 
   return (
     <>
@@ -35,12 +38,18 @@ export default function Collection({
         )}
       </div>
 
+      {!nextMeeting && (
+        <div className="text-center py-8 text-slate-600 font-mono text-[10px] tracking-[0.2em] uppercase mb-6">
+          // нет ближайшей встречи — вишлист недоступен
+        </div>
+      )}
+
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
         {games.map(game => {
           const v = votes[game.id] || { up: 0, down: 0 }
           const score = v.up - v.down
-          const myVote = null // would need per-user vote tracking
           const wished = wishIds.has(game.id)
+          const canWish = meetingGameIds.has(game.id)
 
           return (
             <div
@@ -71,15 +80,19 @@ export default function Collection({
                   <button onClick={() => onVote(game.id, "up")} className="text-xs px-2 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:border-amber-500 hover:text-amber-400 transition font-mono">▲</button>
                   <span className={`text-xs font-mono min-w-[20px] text-center ${score > 0 ? "text-amber-400" : "text-slate-600"}`}>{score}</span>
                   <button onClick={() => onVote(game.id, "down")} className="text-xs px-2 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:border-red-500 hover:text-red-400 transition font-mono">▼</button>
-                  <button
-                    onClick={() => onWish(game.id)}
-                    className={`ml-auto text-sm px-2 py-1 rounded border transition font-mono ${
-                      wished ? "bg-pink-950/30 border-pink-500/40 text-pink-400" : "bg-slate-800 border-slate-700 text-slate-500 hover:border-pink-500/40 hover:text-pink-400"
-                    }`}
-                    title={wished ? "в вишлисте" : "+ вишлист"}
-                  >
-                    {wished ? "♥" : "♡"}
-                  </button>
+                  {canWish ? (
+                    <button
+                      onClick={() => onWish(game.id)}
+                      className={`ml-auto text-sm px-2 py-1 rounded border transition font-mono ${
+                        wished ? "bg-pink-950/30 border-pink-500/40 text-pink-400" : "bg-slate-800 border-slate-700 text-slate-500 hover:border-pink-500/40 hover:text-pink-400"
+                      }`}
+                      title={wished ? "в вишлисте" : "+ вишлист"}
+                    >
+                      {wished ? "♥" : "♡"}
+                    </button>
+                  ) : (
+                    <span className="ml-auto text-sm px-2 py-1 rounded border border-slate-800/40 text-slate-700 font-mono">♡</span>
+                  )}
                 </div>
 
                 <div className="flex justify-between items-center mt-2 pt-2 border-t border-slate-800/60">

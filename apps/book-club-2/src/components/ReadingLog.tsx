@@ -24,7 +24,7 @@ function searchQuery(title: string, author: string): string {
 
 export default async function ReadingLog() {
   const session = await auth()
-  const isAdmin = session?.user?.role === "sadmin"
+  const isAdmin = session?.user?.role === "admin" || session?.user?.role === "sadmin"
   const events = await prisma.book.findMany({
     where: { eventDate: { not: null } },
     orderBy: { eventDate: "desc" },

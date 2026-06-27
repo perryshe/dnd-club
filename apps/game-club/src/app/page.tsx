@@ -38,6 +38,7 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true)
 
   const isAdmin = session?.user?.role === "admin" || session?.user?.role === "sadmin"
+  const nextMeeting = meetings.filter(m => new Date(m.date) > new Date()).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())[0]
 
   const fetchAll = useCallback(async () => {
     const [g, v, w, m] = await Promise.all([
@@ -65,10 +66,11 @@ export default function HomePage() {
   }
 
   async function toggleWish(gameId: string) {
+    if (!nextMeeting) return
     await fetch("/g21/api/wishes", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ gameId }),
+      body: JSON.stringify({ gameId, meetingId: nextMeeting.id }),
     })
     fetchAll()
   }
@@ -192,6 +194,7 @@ export default function HomePage() {
                     games={games}
                     votes={votes}
                     wishes={wishes}
+                    nextMeeting={nextMeeting}
                     sessionUserId={session?.user?.id}
                     isAdmin={isAdmin}
                     onVote={toggleVote}

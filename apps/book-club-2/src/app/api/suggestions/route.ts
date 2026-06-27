@@ -6,7 +6,6 @@ export const dynamic = "force-dynamic"
 export async function GET() {
   const suggestions = await prisma.suggestion.findMany({
     include: {
-      user: { select: { name: true } },
       votes: { select: { userId: true } },
     },
     orderBy: { createdAt: "desc" },

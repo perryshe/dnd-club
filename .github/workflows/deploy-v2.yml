@@ -47,6 +47,8 @@ jobs:
           docker compose -f docker-compose.prod.yml restart dnd-club
           docker compose -f docker-compose.prod.yml exec -T game-club \
             npx prisma db push --schema=prisma/schema.prisma
+          docker compose -f docker-compose.prod.yml exec -T book-club-2 \
+            npx prisma db push --schema=prisma/schema.prisma
       - name: Update nginx and reload
         run: |
           sudo cp /home/club/Club/dnd-club-nginx.conf /etc/nginx/sites-enabled/dnd-club
