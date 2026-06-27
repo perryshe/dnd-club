@@ -18,8 +18,8 @@ services:
 
   dnd-club:
     build:
-      context: ./apps/dnd-club
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: apps/dnd-club/Dockerfile
     container_name: dnd-club
     restart: always
     ports:
@@ -43,8 +43,8 @@ services:
 
   book-club:
     build:
-      context: ./apps/book-club
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: apps/book-club/Dockerfile
     container_name: dnd-book-club
     restart: always
     ports:
@@ -94,8 +94,8 @@ services:
 
   book-club-2:
     build:
-      context: ./apps/book-club-2
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: apps/book-club-2/Dockerfile
     container_name: dnd-book-club-2
     restart: always
     ports:
@@ -113,8 +113,8 @@ services:
 
   game-club:
     build:
-      context: ./apps/game-club
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: apps/game-club/Dockerfile
     container_name: g21-club
     restart: always
     ports:
