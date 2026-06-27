@@ -33,16 +33,17 @@ model User {
 }
 
 model Book {
-  id            String   @id @default(cuid())
+  id            String    @id @default(cuid())
   title         String
   author        String
   description   String?
   cover         String?
   badge         String?
-  status        String   @default("nominated")
+  status        String    @default("nominated")
   month         String?
+  eventDate     DateTime?
   suggestedById String?
-  createdAt     DateTime @default(now())
+  createdAt     DateTime  @default(now())
 
   suggestedBy User?         @relation("suggestedBooks", fields: [suggestedById], references: [id])
   reviews      Review[]

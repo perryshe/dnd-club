@@ -6,11 +6,12 @@ import VoteSection from "@/components/VoteSection"
 import BookGrid from "@/components/BookGrid"
 import RatingTable from "@/components/RatingTable"
 import SuggestModal from "@/components/SuggestModal"
+import ReadingLog from "@/components/ReadingLog"
 
 export const dynamic = "force-dynamic"
 
 export const metadata: Metadata = {
-  title: "b22 Club — Book Club",
+  title: "b21 Club — Book Club",
   description: "Book club v2",
 }
 
@@ -57,16 +58,12 @@ export default async function HomePage({ searchParams }: { searchParams?: { sort
         </div>
       </section>
 
+      <ReadingLog />
+
       {/* Content */}
       <section className="relative pb-24">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
-            <div className="flex items-center gap-4 mb-12">
-              <div className="flex-1 h-px bg-gradient-to-r from-transparent via-slate-700/50 to-transparent" />
-              <span className="text-slate-600 font-mono text-[10px] tracking-[0.3em] uppercase">// reading log</span>
-              <div className="flex-1 h-px bg-gradient-to-r from-transparent via-slate-700/50 to-transparent" />
-            </div>
-
             <BookOfMonth />
             <VoteSection />
             <BookGrid />
@@ -81,7 +78,7 @@ export default async function HomePage({ searchParams }: { searchParams?: { sort
           <div className="flex items-center justify-center gap-3 mb-4">
             <div className="w-px h-3 bg-cyan-500/30" />
             <span className="text-slate-600 text-[10px] font-mono tracking-[0.3em] uppercase">
-              d21 // b22 club
+              d21 // b21 club
             </span>
             <div className="w-px h-3 bg-cyan-500/30" />
           </div>
