@@ -23,8 +23,8 @@ jobs:
       - name: Cleanup before build
         run: |
           cd /home/club/Club
-          docker compose -f docker-compose.prod.yml stop dnd-club book-club-2 game-club quest t21-game english || true
-          docker compose -f docker-compose.prod.yml rm -f dnd-club book-club-2 game-club quest t21-game english || true
+          docker stop dnd-book-club dnd-club book-club-2 game-club quest t21-game english 2>/dev/null || true
+          docker rm -f dnd-book-club dnd-club book-club-2 game-club quest t21-game english 2>/dev/null || true
           docker system prune -af
       - name: Build app images
         run: |
