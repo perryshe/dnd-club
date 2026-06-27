@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>// ACCESS DENIED — BLACK ICE DETECTED</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+@keyframes glitch{0%,90%,100%{opacity:1;transform:none}92%{opacity:.8;transform:translate(-3px,1px)}94%{opacity:.6;transform:translate(3px,-2px)}96%{opacity:.9;transform:translate(-1px,2px)}98%{opacity:.7;transform:translate(1px,-1px)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes scan{0%{top:-2px}100%{top:100%}}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+@keyframes flicker{0%,19%,21%,23%,25%,54%,56%,100%{opacity:1}20%,24%,55%{opacity:.3}}
+@keyframes boot{0%{width:0}100%{width:100%}}
+body{background:#0a0b0e;color:#c8d6e0;font-family:'Courier New',monospace;min-height:100vh;overflow:hidden}
+.scanline{position:fixed;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,#ff003c11,transparent);animation:scan 4s linear infinite;pointer-events:none;z-index:1}
+.grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,0,60,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,0,60,.02) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+.terminal{position:relative;z-index:2;max-width:800px;margin:5vh auto;padding:32px 36px;border:1px solid #ff003c22;background:linear-gradient(180deg,#0d0e12 0%,#0a0b0e 100%);box-shadow:0 0 60px #ff003c08,inset 0 0 60px #0000}
+.terminal::before{content:"// NETWATCH v.4.2 — ENCRYPTED LINK //";display:block;font-size:10px;color:#ff003c44;letter-spacing:2px;text-align:center;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid #ff003c15}
+.header{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.symbol{font-size:28px;color:#ff003c;animation:glitch 4s infinite;line-height:1}
+.title{font-size:13px;color:#ff003c;letter-spacing:3px;text-transform:uppercase;animation:flicker 3s infinite}
+.ascii{color:#ff003c0d;font-size:9px;line-height:1.15;margin-bottom:20px;text-align:center;user-select:none}
+.bar-wrap{background:#15171e;border:1px solid #ff003c15;height:16px;margin:16px 0 8px;position:relative;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg,#ff003c,#ff6600);width:0;animation:boot 2.5s ease-out 0s forwards}
+.bar-wrap::after{content:attr(data-label);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:9px;color:#fff;letter-spacing:2px;text-shadow:0 0 8px #ff003c66}
+.line{font-size:12px;line-height:1.8;padding:2px 0}
+.line .ts{color:#666;font-size:10px}
+.line .ok{color:#00cc88}
+.line .fail{color:#ff003c}
+.line .sys{color:#ff6600}
+.line .dim{color:#555}
+.line .warn{color:#ffaa00}
+.indent{padding-left:20px}
+.sep{height:1px;background:linear-gradient(90deg,transparent,#ff003c22,transparent);margin:12px 0}
+.red{color:#ff003c}
+.green{color:#00cc88}
+.amber{color:#ffaa00}
+.cursor{display:inline-block;width:8px;height:14px;background:#ff003c;vertical-align:middle;animation:blink 1s step-end infinite;margin-left:4px}
+.footer{margin-top:20px;padding-top:12px;border-top:1px solid #ff003c15;font-size:10px;color:#555;display:flex;justify-content:space-between;align-items:center}
+.footer .tag{color:#ff003c33;letter-spacing:1px}
+.link{color:#4a6a9e;text-decoration:none;font-size:11px;padding:4px 12px;border:1px solid #4a6a9e33;transition:.2s}
+.link:hover{background:#4a6a9e11;border-color:#4a6a9e66}
+</style>
+</head>
+<body>
+<div class="scanline"></div>
+<div class="grid"></div>
+<div class="terminal" id="term">
+  <div class="header">
+    <span class="symbol">&#9881;</span>
+    <span class="title">// CRITICAL: ACCESS VIOLATION DETECTED //</span>
+  </div>
+
+<pre class="ascii">
+  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+  _____  ______ _____  _____  ______ _   _ ______   ___  ____   ____
+ |  __ \|  ____/ ____|/ ____|  ____| \ | |  ____| / _ \|  _ \ / __ \
+ | |__) | |__ | |    | (___ | |__  |  \| | |__   | | | | |_) | |  | |
+ |  ___/|  __|| |     \___ \|  __| | . ` |  __|  | | | |  _ <| |  | |
+ | |    | |___| |____ ____) | |____| |\  | |____ | |_| | |_) | |__| |
+ |_|    |______\_____|_____/|______|_| \_|______| \___/|____/ \____/
+  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+</pre>
+
+  <div class="line"><span class="ts">[22:47:19]</span> <span class="ok">&#9654;</span> NET ARCH connection initiated — node: <span class="sys">e21.d21-club.ru:443</span></div>
+  <div class="line"><span class="ts">[22:47:19]</span> <span class="ok">&#9654;</span> Handshake: TLS 1.3 — cipher: <span class="sys">CHACHA20-POLY1305</span></div>
+  <div class="line"><span class="ts">[22:47:20]</span> <span class="ok">&#9654;</span> Credential check: <span class="red">FAILED</span> — insufficient clearance</div>
+  <div class="line"><span class="ts">[22:47:20]</span> <span class="warn">&#9888;</span> <span class="red">BLACK ICE DETECTED</span> — deploying countermeasures...</div>
+
+  <div class="bar-wrap" data-label="SCANNING PACKET TRAFFIC">
+    <div class="bar-fill"></div>
+  </div>
+
+  <div class="line"><span class="ts">[22:47:21]</span> <span class="fail">&#10007;</span> <span class="red">ACCESS DENIED</span> — this node is restricted to <span class="amber">NET ARCH ADMIN</span> operatives only.</div>
+  <div class="line"><span class="ts">[22:47:21]</span> <span class="fail">&#10007;</span> Connection intercepted by <span class="sys">ICE-9000 // Sentinel</span></div>
+
+  <div class="sep"></div>
+
+  <div class="line"><span class="dim">  Your IP: ********** — geolocation: blocked by ICE</span></div>
+  <div class="line"><span class="dim">  Session ID: <span id="sid">...</span> — logged to central</span></div>
+  <div class="line"><span class="dim">  Threat level: LOW — access attempt recorded</span></div>
+
+  <div class="sep"></div>
+
+  <div class="line" style="margin-top:8px">
+    <span style="color:#666">//</span> <span style="color:#ff003c66">NETWATCH</span> has logged your access attempt.
+    Unauthorized access to this node is a violation of <span style="color:#ff003c44">NET SECURITY PROTOCOL 4.2</span>.
+  </div>
+  <div class="line" style="margin-top:4px">
+    <span style="color:#666">//</span> Authenticate with <span class="sys">ADMIN</span>-level credentials to proceed.
+  </div>
+
+  <div class="line" style="margin-top:12px">
+    <span style="color:#ff003c">[ACCESS LOCKED]</span><span class="cursor"></span>
+  </div>
+
+  <div class="footer">
+    <span class="tag">NETWATCH v.4.2 // SYSLOG @ e21.d21-club.ru</span>
+    <a class="link" href="/">&larr; RETURN TO GATEWAY</a>
+  </div>
+</div>
+
+<script>
+(function() {
+  var chars = "ABCDEF0123456789";
+  var sid = "";
+  for (var i = 0; i < 16; i++) sid += chars[Math.floor(Math.random() * chars.length)];
+  document.getElementById("sid").textContent = "0x" + sid;
+
+  var lines = document.querySelectorAll(".line");
+  lines.forEach(function(l, i) {
+    l.style.opacity = "0";
+    l.style.transition = "opacity .15s";
+  });
+
+  var idx = 0;
+  function show() {
+    if (idx >= lines.length) return;
+    lines[idx].style.opacity = "1";
+    idx++;
+    var delay = idx === 3 ? 800 : idx === 4 ? 1200 : 250;
+    setTimeout(show, delay);
+  }
+  setTimeout(show, 200);
+})();
+</script>
+</body>
+</html>

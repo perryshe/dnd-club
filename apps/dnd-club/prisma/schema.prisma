@@ -11,6 +11,7 @@ enum Role {
   pending
   user
   admin
+  sadmin
 }
 
 model User {
@@ -28,6 +29,11 @@ model User {
   statuses   Status[]
   rules      Rule[]
   bookEvents BookEvent[]
+  suggestions Suggestion[]
+  votes       Vote[]
+  reviews     Review[]
+  progress    ReadProgress[]
+  suggestedBooks Book[] @relation("suggestedBooks")
 
   @@map("users")
 }
@@ -132,6 +138,8 @@ model Status {
   title      String
   essay      String   @default("")
   result     String   @default("")
+  status     String   @default("done")
+  questUrl   String   @default("") @map("quest_url")
   createdBy  String   @map("created_by")
   createdAt  DateTime @default(now()) @map("created_at")
 
@@ -156,6 +164,93 @@ model BookEvent {
   creator User @relation(fields: [createdBy], references: [id])
 
   @@map("book_events")
+}
+
+model Book {
+  id            String   @id @default(cuid())
+  title         String
+  author        String
+  description   String?
+  cover         String?
+  badge         String?
+  status        String   @default("nominated")
+  month         String?
+  suggestedById String?
+  createdAt     DateTime @default(now())
+
+  suggestedBy User?         @relation("suggestedBooks", fields: [suggestedById], references: [id])
+  reviews      Review[]
+  meetings     Meeting[]
+  progress     ReadProgress[]
+
+  @@map("books")
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  userId    String
+  bookId    String
+  rating    Int
+  text      String?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  book Book @relation(fields: [bookId], references: [id])
+
+  @@unique([userId, bookId])
+  @@map("reviews")
+}
+
+model Suggestion {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  author    String
+  reason    String
+  createdAt DateTime @default(now())
+
+  user  User @relation(fields: [userId], references: [id])
+  votes Vote[]
+
+  @@map("suggestions")
+}
+
+model Vote {
+  id           String   @id @default(cuid())
+  suggestionId String
+  userId       String
+  createdAt    DateTime @default(now())
+
+  suggestion Suggestion @relation(fields: [suggestionId], references: [id])
+  user       User       @relation(fields: [userId], references: [id])
+
+  @@unique([suggestionId, userId])
+  @@map("votes")
+}
+
+model Meeting {
+  id     String   @id @default(cuid())
+  bookId String
+  date   DateTime
+  notes  String?
+
+  book Book @relation(fields: [bookId], references: [id])
+
+  @@map("meetings")
+}
+
+model ReadProgress {
+  id        String   @id @default(cuid())
+  userId    String
+  bookId    String
+  completed Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  book Book @relation(fields: [bookId], references: [id])
+
+  @@unique([userId, bookId])
+  @@map("read_progress")
 }
 
 model StatusImage {

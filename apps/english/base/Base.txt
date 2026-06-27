@@ -1,0 +1,262 @@
+1. Программа обучения (2–3 недели)
+Формат: 5 дней в неделю по 60–90 минут. Каждый день — блок «слова/фразы» + устная тренировка.
+Цель: научиться стартовать, вести, завершать созвоны и писать короткие деловые письма по вашим системам.
+
+Неделя 1: База и SAP ERP / MESДень Лексический блок Фразы и коммуникация Устная отработка
+1 Базовые термины BSA, роли, системы (ERP, MES, middleware) Приветствие, представление, старт встречи Читать вслух диалог «Weekly status meeting» (см. ниже)
+2 SAP ERP: модули (MM, PP, SD, FI/CO), мастер-данные (material, BOM, routing) Описание проблем с SAP, запрос информации Пересказать вчерашний диалог от своего лица
+3 MES: production order, work center, shop floor, batch record Как обсуждать синхронизацию SAP-MES, интерфейсы (IDoc, RFC, API) Тренировка фраз «Reporting an issue»
+4 Интеграция SAP-MES: data mapping, batch job, error queue, reconciliation Как запросить проверку логов, повторить передачу данных Диалог «SAP-MES sync failure»
+5 Повторение недели, мини-диктант из выученных фраз Написать 2 письма (запрос статуса, подтверждение исправления) Звонок с самим собой (запись на диктофон)
+Неделя 2: Честный ЗНАК / ЦРПТ и МеркурийДень Лексический блок Фразы и коммуникация Устная отработка
+1 Честный ЗНАК: serialization, aggregation, Data Matrix code, CRPT, emission, marking code Рассказ о процессе маркировки, ошибки эмиссии Диалог «Marking code not generated»
+2 Меркурий: veterinary certificate, VSD, consignment, subordination, withdrawal Запрос статуса ВСД, проблема с погашением Диалог «Mercury integration issue»
+3 Интеграция Меркурий-ERP, администрирование: user account, role, access rights Обсуждение прав доступа, блокировка пользователя Диалог «User access review»
+4 Общие административные работы: monitoring, alert, incident, restart service, cron job Как читать алерты вслух, докладывать о проблеме Отработка доклада «Система недоступна»
+5 Сводный обзор всех систем, «бойцовский лист» главных фраз Написать e-mail о критическом инциденте по Честному ЗНАКу Спонтанный пересказ рабочего дня
+Неделя 3 (при наличии времени): Интенсификация и оперативная поддержкаКаждый день — ролевая игра по одному из готовых диалогов с усложнением (вставляю неожиданную реплику).
+
+Отработка перехода между темами: «Сначала SAP, потом Меркурий, потом доступ».
+
+Использование голосового ассистента (ChatGPT Voice / аналог) для имитации живого собеседника.
+
+Ведение «шпаргалки на стикере» для реальных созвонов.
+
+2. Словарный минимум (глоссарий)
+Общие BSA/IT-производственные
+Русский English
+совещание / созвон meeting / call
+видео-конференц-связь (ВКС) video conference (VC)
+деловая переписка business correspondence / email exchange
+интеграция integration
+интерфейс interface
+промежуточное ПО middleware
+шина данных data bus / ESB
+обмен данными data exchange
+маппинг данных data mapping
+пакетная обработка / фоновое задание batch job
+мониторинг monitoring
+оповещение / алерт alert
+инцидент incident
+сопровождение maintenance / support
+пользовательская учетная запись user account
+права доступа access rights / permissions
+роль role
+аудит audit
+SAP ERP
+Русский English
+ERP-система ERP system
+модуль module
+материалы materials (MM)
+спецификация BOM (Bill of Materials)
+производственный заказ production order (PP)
+заказ клиента sales order (SD)
+финансовая проводка financial posting (FI)
+основная запись master record
+транзакция transaction (code)
+IDoc, RFC, BAPI IDoc, RFC, BAPI (произносить как аббревиатуры)
+MES
+Русский English
+производственная исполнительная система MES (Manufacturing Execution System)
+цех shop floor
+рабочее место / участок work center
+партия batch / lot
+технологическая карта routing / process sheet
+регистрация выработки production confirmation / booking
+отслеживание продукции product tracking / traceability
+взвешивание weighing
+брак / отходы scrap / waste
+Честный ЗНАК / ЦРПТ
+Русский English
+национальная система маркировки national track & trace system
+оператор ЦРПТ CRPT (Centre for Research in Perspective Technologies)
+сериализация serialization
+агрегация aggregation
+код маркировки marking code / Data Matrix code
+эмиссия (кодов)
+[17.06.2026 17:17] 𝙆𝘼𝙏𝙀 𓃠 Tsyshko: emission (of codes)
+заказ кодов code order
+статус кода code status
+ввод в оборот putting into circulation
+выбытие (через кассу) withdrawal (at POS)
+Меркурий
+Русский English
+ветеринарная информационная система veterinary information system (VetIS "Mercury")
+ветеринарно-сопроводительный документ (ВСД) veterinary accompanying document (VSD)
+хозяйствующий субъект business entity / economic entity
+площадка (предприятие) supervised facility
+поднадзорная продукция regulated product
+партия продукции consignment / product batch
+погашение (ВСД) VSD acknowledgement / cancellation
+возвратный ВСД return VSD
+транзакция «переработка» processing transaction
+3. Шаблоны фраз для созвонов и писем
+Для созвонов (ВКС)
+Открытие встречи
+
+Good morning / afternoon, everyone. Thanks for joining.
+
+Let’s get started. Today’s agenda is: first, MES-SAP integration status; second, Честный ЗНАК marking issues; third, action items.
+
+Can everyone hear me well? Please mute yourselves when not speaking.
+
+Запрос обновлений
+
+Can you give us an update on the SAP-MES interface?
+
+What’s the current status of the code emission for Честный ЗНАК?
+
+Are there any open incidents related to Mercury?
+
+Сообщение о проблеме
+
+We’re seeing an issue with the batch job that transfers production orders. The IDocs are stuck in status 51.
+
+The marking codes are not being generated when the packaging order is created in MES. The error log says “code pool depleted”.
+
+Mercury VSDs are not being acknowledged automatically. The API returns a timeout after 30 seconds.
+
+Предложение решения / запрос действий
+
+Could you please restart the batch job and monitor the queue?
+
+Let’s ask the CRPT support to check the emission account.
+
+We need to check the user roles – maybe the service account lost the necessary permissions.
+
+I’ll open a ticket and assign it to the integration team.
+
+Назначение задач и завершение
+So, action items: Ivan will investigate the IDoc issue by end of day. Maria will contact the Mercury support. Let’s reconvene tomorrow at the same time.
+
+If there are no further questions, thanks everyone. I’ll send the minutes via email shortly.
+
+Bye for now.
+
+Уточнение и переспрос
+
+Sorry, could you repeat that, please? The line broke up a little.
+
+Just to clarify, are we talking about production order confirmation or material consumption?
+
+Could you spell the error code, please?
+
+Для писем
+Тема письма (Subject)
+
+SAP-MES Interface: IDoc error – urgent
+
+Честный ЗНАК: Code emission failure on Packaging line 2
+
+Mercury VSD acknowledgment timeout – incident #4582
+
+Access rights review for shop floor users
+Приветствие и цель
+
+Hi Team / Dear colleagues,
+
+I’m writing to follow up on the integration issue we discussed on today’s call.
+
+This is to confirm the action items from the meeting.
+
+Could you please provide an update on…?
+
+We are facing a critical problem with…
+
+Описание проблемы
+
+The issue started at approximately 10:00 MSK. The affected systems are MES and SAP.
+
+When the packaging order is created, the marking codes are not returned. The error message in the logs: “Emission request failed: insufficient balance”.
+
+The Mercury API connection fails intermittently with HTTP 504 errors.
+
+Запрос или предложение
+
+Please check the service account permissions and confirm if anything changed recently.
+
+I suggest we increase the timeout to 60 seconds and retry the failed messages.
+
+Could you escalate this to the CRPT technical support on our behalf?
+
+Please find the relevant log excerpt attached.
+
+Закрытие
+
+Looking forward to your feedback.
+
+Let me know if you need any further details.
+
+Thanks in advance for your prompt action.
+
+Best regards / Kind regards,
+[Your Name]
+
+4. Отработка диалогов (чтобы не теряться на созвоне)
+Ниже — готовые скрипты. Читайте вслух по ролям, потом пробуйте пересказывать от своего лица. Записывайте себя на диктофон.
+
+Диалог 1. Еженедельный статус по интеграции SAP-MES
+BSA (You): Good morning, let’s start. First topic – SAP-MES production order sync. Nikolay, any issues on your side?
+Developer: Good morning. The interface is stable for process orders, but we noticed
+[17.06.2026 17:17] 𝙆𝘼𝙏𝙀 𓃠 Tsyshko: two failed IDocs for discrete production orders last night.
+BSA: Do we have error codes?
+Dev: Yes, status 56, “partner profile not found”. I suspect the logical system name changed after a transport.
+BSA: Can you check and, if needed, replicate the partner profile from production to the test system?
+Dev: Already on it. I’ll update you in two hours.
+BSA: Okay, action item – fix the IDocs and re-process them. Next: batch job monitoring. Who can confirm the job “Z_MES_PROD_SYNC” ran successfully?
+Support Specialist: It ran with completion code 0. No errors in the spool.
+BSA: Good. One more thing – the shop floor users complain that production confirmations sometimes take 30 seconds to appear in SAP. Can we analyze the RFC performance?
+Dev: I’ll enable a trace today during peak hours.
+BSA: Great. We’ll review the trace tomorrow. Moving on to Честный ЗНАК…
+
+Диалог 2. Честный ЗНАК – коды маркировки не генерируютсяBusiness User (factory): Hello, we have an urgent problem on Packaging line 2. When we create a packaging order in MES, the system doesn’t print the Data Matrix codes. The operator gets a red pop-up “Emission error”.
+BSA (You): Thanks for reporting. Let me share my screen. I’m checking the MES log. The error reads: “CRPT service returned: code pool exhausted”. When did you last order codes?
+User: We ordered 10,000 codes on Monday. But we packed more than that this week.
+BSA: That explains it. The pool is empty. We need to place a new emission order through the CRPT personal account. Do you have access to the CRPT web portal?
+User: Yes, I can log in. But I’m not sure which GTIN to use.
+BSA: Please open the portal, go to “Emission” – “Order codes”. Select the GTIN 04640000001234, enter quantity 20,000, and confirm.
+User: Done. The status is “In progress”. How long will it take?
+BSA: Usually up to 15 minutes. I’ll set up a monitoring query. Once the codes are delivered, I’ll call you back so you can test printing one label.
+User: Okay, thank you. I’ll wait.
+BSA: Meanwhile, let’s set up a proactive alert in MES for when the pool falls below 10%. I’ll create a ticket for that.
+
+Диалог 3. Меркурий – проблема с гашением ВСД
+Logistics specialist: Hello, the warehouse cannot close a delivery. The system tries to acknowledge the VSD (ВСД) in Mercury, but it keeps failing.
+BSA (You): Can you give me the VSD number?
+Logistics: Sure, it’s VSD-20260617-000123.
+BSA: Let me check the integration log. I see the error: “Timeout while connecting to Mercury API. HTTP 504”. This may be on the Mercury side. I’ll try to ping their gateway.
+Logistics: Do you want me to try again manually?
+BSA: Wait a moment. I’ve sent a test request – same error. I’ll report it to the Mercury support hotline. In the meantime, please use the web interface to manually acknowledge the VSD if possible.
+Logistics: I tried, but the web interface is also slow.
+BSA: Understood. I’ll put the shipment on hold and inform the business. I’ll also increase the integration timeout from 30s to 60s and restart the service after the fix. Action item: contact Mercury technical support, incident #4821. I’ll email the status in 30 minutes.
+
+Диалог 4. Администрирование: пересмотр прав доступа
+Auditor / Team lead: Let’s review user access for shop floor terminals. We had an incident where an operator posted a production confirmation with a wrong quantity.
+BSA (You): Yes, the operator “user_shop12” had the role “MES_SUPERVISOR” which allowed editing confirmed quantities. According to the policy, only shift supervisors should have that role.
+Team lead: Can we revoke that role for all regular operators?
+BSA: I checked the list. Five operators currently have “MES_SUPERVISOR”. I’ve prepared a change request: remove the role from those five, add a new restricted role “MES_OPERATOR” that only allows confirmation without editing.
+Team lead: Good. How soon can we implement?
+BSA: The role “MES_OPERATOR” already exists in the test system. I’ll move it to production today and assign it to the operators after removing the old role. I’ll need a formal approval – I’ll send the request right
+[17.06.2026 17:17] 𝙆𝘼𝙏𝙀 𓃠 Tsyshko: after this call.
+Team lead: Approved. Please proceed. And add a monthly access review to our checklist.
+BSA: Noted. I’ll add a recurring task in our monitoring system.
+
+5. Возможность оперативной поддержки
+На этапе первых реальных созвонов можно использовать такие инструменты:
+«Живой» тренажёр с ChatGPT (Voice Mode). Включите голосовое общение и скажите: «You are a developer from the integration team. I am an analyst. We need to discuss a failed IDoc in SAP-MES interface. Start the conversation.» Это даст импровизацию, максимально приближенную к реальности.
+
+Параллельный чат со мной во время подготовки к встрече. Сбросьте мне повестку или несколько фраз, которые планируете сказать, — я переведу/отредактирую и предложу варианты. Это можно делать прямо здесь.
+
+Генерация диалогов «на лету». Я могу по любому вашему сценарию (например: «Звонит разгневанный начальник цеха, не работают терминалы сбора данных в MES») мгновенно написать правдоподобный англоязычный разговор для отработки.
+
+Шпаргалка «на стикере». Распечатайте или держите на втором мониторе фразы:
+
+“Can you share your screen, please?”
+
+“Let me check the logs and get back to you.”
+
+“What is the error message exactly?”
+
+“I’ll raise an incident and keep you posted.”
+
+“Sorry, I didn’t catch that. Could you say it again slowly?”

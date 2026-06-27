@@ -1,7 +1,8 @@
 name: Deploy v2 (microservices)
 on:
+  workflow_dispatch:
   push:
-    branches: [refactor/split-services]
+    branches: [develop]
     paths-ignore: ['*.md']
 
 jobs:
@@ -11,25 +12,39 @@ jobs:
       - name: Pull latest code
         run: |
           cd /home/club/Club
-          git pull origin refactor/split-services
-      - name: Backup database before cleanup
+          git fetch --force origin develop && git reset --hard origin/develop
+      - name: Copy maintenance page
         run: |
-          mkdir -p /home/club/Club/backups
-          docker exec dnd-club-db pg_dump -U dndclub dndclub | gzip > /home/club/Club/backups/dndclub-$(date +%Y%m%d_%H%M%S).sql.gz || echo "WARNING: dndclub backup failed"
-          docker exec dnd-club-db pg_dump -U dndclub tic_tac | gzip > /home/club/Club/backups/tic_tac-$(date +%Y%m%d_%H%M%S).sql.gz || echo "WARNING: tic_tac backup failed"
-          find /home/club/Club/backups -name "*.sql.gz" -mtime +7 -delete
-      - name: Full cleanup
+          sudo cp /home/club/Club/maintenance.html /usr/share/nginx/html/maintenance.html
+      - name: Enable maintenance mode
         run: |
           cd /home/club/Club
-          docker compose -f docker-compose.prod.yml down --remove-orphans 2>/dev/null || true
-          docker network rm club_default 2>/dev/null || true
-          docker system prune -a --volumes -f
-      - name: Build and start
+          sudo ./maintenance.sh on
+      - name: Build app images
         run: |
           cd /home/club/Club
-          docker compose -f docker-compose.prod.yml build
+          docker compose -f docker-compose.prod.yml build dnd-club book-club book-club-2 quest t21-game english
+      - name: Restart app services (db untouched)
+        run: |
+          cd /home/club/Club
           docker compose -f docker-compose.prod.yml up -d
+      - name: Sync Prisma schema
+        run: |
+          cd /home/club/Club
+          for i in $(seq 1 30); do
+            docker compose -f docker-compose.prod.yml exec -T dnd-club-db \
+              sh -c "PGPASSWORD=dndclub_pass pg_isready -U dndclub -d dndclub" && break
+            sleep 2
+          done
+          docker compose -f docker-compose.prod.yml exec -T dnd-club \
+            npx prisma db push
+          docker compose -f docker-compose.prod.yml restart dnd-club
       - name: Update nginx and reload
         run: |
-          cp /home/club/Club/dnd-club-nginx.conf /home/club/dnd-club-nginx.conf
+          sudo cp /home/club/Club/dnd-club-nginx.conf /etc/nginx/sites-enabled/dnd-club
           sudo nginx -t && sudo systemctl reload nginx
+      - name: Disable maintenance mode
+        if: always()
+        run: |
+          cd /home/club/Club
+          sudo ./maintenance.sh off

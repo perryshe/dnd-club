@@ -9,7 +9,7 @@ import { setUserRole } from "./actions"
 
 export default async function AdminPage() {
   const session = await auth()
-  if (!session?.user?.role || session.user.role !== "admin") {
+  if (!session?.user?.role || (session.user.role !== "admin" && session.user.role !== "sadmin")) {
     redirect("/login")
   }
 
@@ -60,18 +60,22 @@ export default async function AdminPage() {
                     <td className="py-3 px-2">
                       <span
                         className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${
-                          user.role === "admin"
-                            ? "bg-amber-900/50 text-amber-300"
-                            : user.role === "user"
-                              ? "bg-green-900/50 text-green-300"
-                              : "bg-yellow-900/50 text-yellow-300"
+                          user.role === "sadmin"
+                            ? "bg-purple-900/50 text-purple-300"
+                            : user.role === "admin"
+                              ? "bg-amber-900/50 text-amber-300"
+                              : user.role === "user"
+                                ? "bg-green-900/50 text-green-300"
+                                : "bg-yellow-900/50 text-yellow-300"
                         }`}
                       >
-                        {user.role === "admin"
-                          ? "Админ"
-                          : user.role === "user"
-                            ? "Подтверждён"
-                            : "Ожидает"}
+                        {user.role === "sadmin"
+                          ? "SAdmin"
+                          : user.role === "admin"
+                            ? "Админ"
+                            : user.role === "user"
+                              ? "Подтверждён"
+                              : "Ожидает"}
                       </span>
                     </td>
                     <td className="py-3 px-2 text-slate-400">
@@ -87,10 +91,24 @@ export default async function AdminPage() {
                                 Сделать админом
                               </button>
                             </form>
+                            {session.user.email === process.env.ADMIN_EMAIL && (
+                              <form action={setUserRole.bind(null, user.id, "sadmin")}>
+                                <button className="text-xs px-2 py-1 bg-purple-700 hover:bg-purple-600 rounded transition">
+                                  Сделать SAdmin
+                                </button>
+                              </form>
+                            )}
                           </>
                         )}
                         {user.role === "user" && (
                           <>
+                            {session.user.email === process.env.ADMIN_EMAIL && (
+                              <form action={setUserRole.bind(null, user.id, "sadmin")}>
+                                <button className="text-xs px-2 py-1 bg-purple-700 hover:bg-purple-600 rounded transition">
+                                  Сделать SAdmin
+                                </button>
+                              </form>
+                            )}
                             <form action={setUserRole.bind(null, user.id, "admin")}>
                               <button className="text-xs px-2 py-1 bg-amber-700 hover:bg-amber-600 rounded transition">
                                 Сделать админом
@@ -111,6 +129,13 @@ export default async function AdminPage() {
                             </form>
                           </>
                         )}
+                        {user.role === "admin" && session.user.id !== user.id && session.user.email === process.env.ADMIN_EMAIL && (
+                          <form action={setUserRole.bind(null, user.id, "sadmin")}>
+                            <button className="text-xs px-2 py-1 bg-purple-700 hover:bg-purple-600 rounded transition">
+                              Сделать SAdmin
+                            </button>
+                          </form>
+                        )}
                         {user.role === "admin" && session.user.id !== user.id && (
                           <form action={setUserRole.bind(null, user.id, "user")}>
                             <button className="text-xs px-2 py-1 bg-red-800 hover:bg-red-700 rounded transition">
@@ -118,7 +143,14 @@ export default async function AdminPage() {
                             </button>
                           </form>
                         )}
-                        {user.role !== "admin" && <DeleteButton userId={user.id} />}
+                        {user.role === "sadmin" && session.user.id !== user.id && (
+                          <form action={setUserRole.bind(null, user.id, "admin")}>
+                            <button className="text-xs px-2 py-1 bg-red-800 hover:bg-red-700 rounded transition">
+                              Понизить до админа
+                            </button>
+                          </form>
+                        )}
+                        {user.role !== "admin" && user.role !== "sadmin" && <DeleteButton userId={user.id} />}
                       </div>
                     </td>
                   </tr>

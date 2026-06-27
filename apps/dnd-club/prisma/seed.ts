@@ -15,12 +15,18 @@ async function main() {
         schoolNick: "admin",
         name: "Admin",
         password: await hash(adminPass, 12),
-        role: "admin",
+        role: "sadmin",
       },
     })
     console.log(`Admin created: ${adminEmail}`)
+  } else if (existing.role !== "sadmin") {
+    await prisma.user.update({
+      where: { email: adminEmail },
+      data: { role: "sadmin" },
+    })
+    console.log(`Admin upgraded to SAdmin: ${adminEmail}`)
   } else {
-    console.log("Admin already exists")
+    console.log("SAdmin already exists")
   }
 
   const campaigns = [

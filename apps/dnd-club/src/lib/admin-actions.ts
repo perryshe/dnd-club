@@ -26,7 +26,7 @@ function decodeFilename(name: string): string {
 
 async function requireAdmin() {
   const session = await auth()
-  if (session?.user?.role !== "admin") throw new Error("Только для админа")
+  if (session?.user?.role !== "admin" && session?.user?.role !== "sadmin") throw new Error("Только для админа")
   return session
 }
 
@@ -50,13 +50,18 @@ export async function createStatus(slug: string, formData: FormData) {
   const campaign = await prisma.campaign.findUnique({ where: { slug } })
   if (!campaign) throw new Error("Кампания не найдена")
 
+  const raw = formData.get("date") as string
+  const date = new Date(raw ? raw + "+03:00" : Date.now())
+
   await prisma.status.create({
     data: {
       campaignId: campaign.id,
-      date: new Date(formData.get("date") as string || Date.now()),
+      date,
       title: (formData.get("title") as string) || "",
       essay: (formData.get("essay") as string) || "",
       result: (formData.get("result") as string) || "",
+      questUrl: (formData.get("questUrl") as string) || "",
+      status: date > new Date() ? "plan" : "done",
       createdBy: session.user.id!,
     },
   })
@@ -71,11 +76,23 @@ export async function updateStatus(statusId: string, formData: FormData) {
   await prisma.status.update({
     where: { id: statusId },
     data: {
-      date: new Date(formData.get("date") as string || Date.now()),
+      date: new Date((formData.get("date") as string) + "+03:00" || Date.now()),
       title: (formData.get("title") as string) || "",
       essay: (formData.get("essay") as string) || "",
       result: (formData.get("result") as string) || "",
+      questUrl: (formData.get("questUrl") as string) || "",
     },
+  })
+  revalidatePath(`/${status.campaign.slug}`)
+}
+
+export async function toggleStatus(statusId: string) {
+  await requireAdmin()
+  const status = await prisma.status.findUnique({ where: { id: statusId }, include: { campaign: true } })
+  if (!status) throw new Error("Статус не найден")
+  await prisma.status.update({
+    where: { id: statusId },
+    data: { status: status.status === "plan" ? "done" : "plan" },
   })
   revalidatePath(`/${status.campaign.slug}`)
 }

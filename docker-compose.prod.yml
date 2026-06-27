@@ -75,10 +75,50 @@ services:
     environment:
       - ConnectionStrings__AdminConnection=Host=dnd-club-db;Port=5432;Database=postgres;Username=dndclub;Password=dndclub_pass
       - ConnectionStrings__DefaultConnection=Host=dnd-club-db;Port=5432;Database=tic_tac;Username=dndclub;Password=dndclub_pass
+      - ConnectionStrings__ClubConnection=Host=dnd-club-db;Port=5432;Database=dndclub;Username=dndclub;Password=dndclub_pass
       - ASPNETCORE_ENVIRONMENT=Production
     depends_on:
       db:
         condition: service_healthy
+
+  quest:
+    build:
+      context: ./apps/Quest/quest-app
+      dockerfile: Dockerfile
+    container_name: quest
+    restart: always
+    ports:
+      - "3004:3004"
+    environment:
+      - DATABASE_URL=postgresql://dndclub:dndclub_pass@dnd-club-db:5432/dndclub
+
+  book-club-2:
+    build:
+      context: ./apps/book-club-2
+      dockerfile: Dockerfile
+    container_name: dnd-book-club-2
+    restart: always
+    ports:
+      - "3006:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+      - DATABASE_URL=postgresql://dndclub:dndclub_pass@dnd-club-db:5432/dndclub
+      - NEXTAUTH_SECRET=change-me-to-a-random-secret
+      - NEXTAUTH_URL=https://d21-club.ru/b22
+      - NEXT_PUBLIC_DND_CLUB_URL=https://d21-club.ru
+    depends_on:
+      db:
+        condition: service_healthy
+
+  english:
+    build:
+      context: ./apps/english
+      dockerfile: Dockerfile
+    container_name: english
+    restart: always
+    ports:
+      - "3005:80"
 
 volumes:
   pgdata:

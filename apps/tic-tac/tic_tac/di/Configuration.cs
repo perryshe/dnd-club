@@ -28,6 +28,7 @@ public static class Configuration
         // Domain layer
         // Service — singleton (сервис stateless)
         services.AddSingleton<IGameService, GameService>();
+        services.AddSingleton<IUserService, UserService>();
 
         // Web layer
         // Web Mapper — transient

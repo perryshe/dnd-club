@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma"
 import { auth } from "@/lib/auth"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowLeft, Sword, Users, Map as MapIcon, Image, Scroll, BookOpen } from "lucide-react"
+import { ArrowLeft, Sword } from "lucide-react"
 import DeleteCharacterButton from "@/components/delete-character-button"
 import { StatusForm, StatusTimeline, MapForm, GalleryForm, RuleForm, PdfRuleList } from "@/components/campaign-admin"
 import GalleryLightbox from "@/components/gallery-lightbox"
@@ -12,7 +12,7 @@ export default async function DeadBandPage() {
   const campaign = await prisma.campaign.findUnique({ where: { slug: "dead-band" } })
   if (!campaign) notFound()
 
-  const isAdmin = session?.user?.role === "admin"
+  const isAdmin = session?.user?.role === "admin" || session?.user?.role === "sadmin"
   const isApproved = !!session?.user && session.user.role !== "pending"
 
   const [characters, maps, statuses, gallery, rules] = await Promise.all([
@@ -45,14 +45,7 @@ export default async function DeadBandPage() {
   return (
     <div className="min-h-screen text-white">
       <div className="relative">
-        <div className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage: "url('/images/Fon_TDB.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900/80 to-slate-950 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 pointer-events-none" />
       <div className="relative z-10">
       <header className="container mx-auto px-4 py-8">
         <Link href="/" className="inline-flex items-center gap-2 text-amber-600/70 hover:text-amber-400 mb-6 transition font-mono text-sm">
@@ -60,7 +53,7 @@ export default async function DeadBandPage() {
           ← На главную
         </Link>
         <div className="flex items-center gap-4 mb-4">
-          <div className="p-3 bg-gradient-to-br from-amber-900/50 to-red-900/50 rounded-xl border border-amber-700/30">
+          <div className="p-3 bg-gradient-to-br from-amber-900 to-red-900 rounded-xl border border-amber-700/30">
             <Sword size={36} className="text-amber-400" />
           </div>
           <div>
@@ -75,21 +68,20 @@ export default async function DeadBandPage() {
         </div>
       </header>
 
-      <nav className="container mx-auto px-4 mb-10">
-        <div className="flex flex-wrap gap-2">
+      <nav className="container mx-auto px-4 mb-10 overflow-x-auto">
+        <div className="flex gap-2 min-w-max">
           {[
-            { id: "characters", label: "Персонажи", icon: Users },
-            { id: "rules", label: "Правила", icon: BookOpen },
-            { id: "maps", label: "Карты", icon: MapIcon },
-            { id: "gallery", label: "Галерея", icon: Image },
-            { id: "statuses", label: "Летопись", icon: Scroll },
+            { id: "characters", label: "Персонажи" },
+            { id: "rules", label: "Правила" },
+            { id: "maps", label: "Карты" },
+            { id: "gallery", label: "Галерея" },
+            { id: "statuses", label: "Летопись" },
           ].map((tab) => (
             <a
               key={tab.id}
               href={`#${tab.id}`}
-              className="flex items-center gap-2 border border-amber-900/30 hover:border-amber-700/50 bg-slate-900/60 hover:bg-slate-800/60 px-3 py-1.5 rounded-lg transition text-sm text-slate-400 hover:text-amber-300"
+              className="flex items-center gap-1 border border-amber-900 hover:border-amber-700 bg-slate-900 hover:bg-slate-800 px-2 py-1 rounded-lg transition text-xs text-slate-400 hover:text-amber-300"
             >
-              <tab.icon size={15} />
               {tab.label}
             </a>
           ))}
@@ -118,7 +110,7 @@ export default async function DeadBandPage() {
               {characters.map((char) => {
                 const s = char.stats as Record<string, number>
                 return (
-                  <div key={char.id} className="bg-slate-800/80 backdrop-blur-sm rounded-xl p-6 border border-amber-900/30 hover:border-amber-700/50 transition-all duration-300 group hover:shadow-xl hover:shadow-amber-900/10 card-glow-medieval relative">
+                  <div key={char.id} className="bg-slate-800 rounded-xl p-6 border border-amber-900/30 hover:border-amber-700/50 transition-all duration-300 group hover:shadow-xl hover:shadow-amber-900/10 card-glow-medieval relative">
                     <Link href={`/dead-band/characters/${char.id}`} className="block">
                       <div className="flex items-center gap-3 mb-2">
                         {char.avatarUrl ? (

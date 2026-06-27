@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 15 — FINAL — Unprepared Vendor Meeting</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.7; padding: 20px; max-width: 800px; margin: 0 auto; }
+h1 { font-size: 1.5em; color: #58a6ff; }
+h2 { font-size: 1.15em; color: #f0883e; margin: 24px 0 10px; border-bottom: 1px solid #21262d; padding-bottom: 6px; }
+h3 { font-size: 1em; color: #e6edf3; margin: 16px 0 6px; }
+p, li { color: #c9d1d9; font-size: 0.95em; }
+ul, ol { padding-left: 20px; margin: 6px 0; }
+li { margin: 3px 0; }
+.back { color: #8b949e; text-decoration: none; font-size: 0.85em; display: inline-block; margin-bottom: 12px; }
+.back:hover { color: #58a6ff; }
+.phrase { background: #161b22; border: 1px solid #21262d; border-radius: 8px; padding: 10px 14px; margin: 8px 0; }
+.phrase strong { color: #58a6ff; font-size: 1.02em; }
+.phrase .ru { color: #8b949e; font-size: 0.85em; display: block; margin-top: 3px; }
+.phrase .example { color: #3fb950; font-size: 0.85em; display: block; margin-top: 2px; }
+.dialog { background: #161b22; border-left: 3px solid #58a6ff; border-radius: 0 8px 8px 0; padding: 12px 14px; margin: 10px 0; }
+.dialog .speaker { color: #f0883e; font-weight: 600; }
+.dialog .vendor { color: #d29922; font-weight: 600; }
+.dialog .you { color: #58a6ff; font-weight: 600; }
+.checkbox-item { display: flex; align-items: flex-start; gap: 10px; margin: 8px 0; }
+.checkbox-item input { margin-top: 4px; accent-color: #3fb950; width: 18px; min-width: 18px; height: 18px; }
+.checkbox-item label { font-size: 0.92em; color: #c9d1d9; }
+.prompt-box { background: #0d1117; border: 1px solid #21262d; border-left: 3px solid #d29922; border-radius: 0 8px 8px 0; padding: 10px 14px; margin: 8px 0; font-size: 0.88em; color: #f0c674; white-space: pre-wrap; }
+.tag { display: inline-block; padding: 0 8px; border-radius: 10px; font-size: 0.7em; font-weight: 600; margin: 0 4px 4px 0; }
+.tag-blue { background: #1f6feb33; color: #58a6ff; }
+.tag-green { background: #23863633; color: #3fb950; }
+.tag-orange { background: #d2992233; color: #d29922; }
+.audio-btn { display: inline-flex; align-items: center; gap: 6px; background: #1f6feb; color: #fff; border: none; border-radius: 20px; padding: 6px 14px; font-size: 0.85em; cursor: pointer; margin-top: 8px; }
+.audio-btn:hover { background: #388bfd; }
+.audio-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 999; justify-content: center; align-items: center; }
+.audio-overlay.open { display: flex; }
+.audio-overlay-content { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 24px; max-width: 92%; width: 400px; position: relative; }
+.audio-overlay-content audio { width: 100%; display: block; }
+.audio-close { position: absolute; top: 8px; right: 12px; background: none; border: none; color: #8b949e; font-size: 1.3em; cursor: pointer; line-height: 1; }
+.audio-close:hover { color: #f85149; }
+nav { margin-top: 30px; padding-top: 16px; border-top: 1px solid #21262d; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 0.85em; }
+nav a { color: #8b949e; text-decoration: none; }
+nav a:hover { color: #58a6ff; }
+@media (max-width: 600px) { body { padding: 12px; } h1 { font-size: 1.25em; } h2 { font-size: 1em; } nav { flex-direction: column; align-items: center; } }</style>
+</head>
+<body>
+
+<a class="back" href="../index.html">← На главную</a>
+<h1>Day 15 · FINAL — Unprepared Vendor Meeting</h1>
+<p style="color:#8b949e;font-size:0.9em;">Пт 10 июл 2026 · Week 3 — Заказчик → Подрядчик · Новый материал</p>
+
+<div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
+  <strong>🎯 Фокус дня:</strong> Неподготовленная встреча с подрядчиком на любую тему<br><button class="audio-btn" onclick="openAudio()">🎵 Аудио дня</button>
+</div>
+
+<h2>🔁 Повторение</h2>
+<p style="color:#8b949e;font-size:0.9em;">Повторение D14: Скажи: 'Our audit found users with excessive permissions...'</p>
+
+<h2>📘 Новые фразы — FINAL — Unprepared Vendor Meeting</h2>
+
+<div class="phrase"><strong>Thanks for taking this call on short notice.</strong><span class="ru">Спасибо, что приняли звонок без подготовки.</span></div>
+<div class="phrase"><strong>I have a topic I need to discuss with you urgently.</strong><span class="ru">У меня тема, которую нужно срочно обсудить.</span></div>
+<div class="phrase"><strong>Can you give me a quick update on the current status?</strong><span class="ru">Можете дать быстрый апдейт по текущему статусу?</span></div>
+<div class="phrase"><strong>We received a new clarification from the regulator.</strong><span class="ru">Мы получили новое разъяснение от регулятора.</span></div>
+<div class="phrase"><strong>This changes our approach. Let me explain.</strong><span class="ru">Это меняет наш подход. Позвольте объяснить.</span></div>
+<div class="phrase"><strong>Let's think together. What options do we have?</strong><span class="ru">Давайте подумаем вместе. Какие у нас варианты?</span></div>
+<div class="phrase"><strong>I don't have all the details yet, but here's what I know.</strong><span class="ru">У меня ещё не все детали, но вот что я знаю.</span></div>
+<div class="phrase"><strong>Can you prepare a quick assessment by end of day?</strong><span class="ru">Можете подготовить быструю оценку к концу дня?</span></div>
+<div class="phrase"><strong>Let me note down the key points from this discussion.</strong><span class="ru">Давай запишу ключевые моменты обсуждения.</span></div>
+<div class="phrase"><strong>I'll send a follow-up email with the details. Thanks!</strong><span class="ru">Я отправлю follow-up письмо с деталями. Спасибо!</span></div>
+
+
+<h2>🎭 AI-практика</h2>
+<p style="font-size:0.88em;color:#8b949e;">Запусти ChatGPT Voice Mode и вставь этот промпт (см. <a href="../common/ai-scenarios.html" style="color:#58a6ff;">AI-сценарии</a>):</p>
+<div class="prompt-box">You are a SAP consultant / vendor representative. I am a customer (process automation manager) with intermediate English. Speak clearly. Topic: FINAL — Unprepared Vendor Meeting. Context: Неподготовленная встреча с подрядчиком на любую тему. Follow my lead in the conversation.</div>
+
+<h2>📚 Новые слова — FINAL — Unprepared Vendor Meeting</h2>
+
+<table>
+  <tr><th style="color:#f0883e;">English</th><th style="color:#f0883e;">Русский</th></tr>
+<tr><td style='color:#58a6ff;'>urgently</td><td style='color:#8b949e;'>срочно</td></tr>
+<tr><td style='color:#58a6ff;'>clarify</td><td style='color:#8b949e;'>уточнять</td></tr>
+<tr><td style='color:#58a6ff;'>approach</td><td style='color:#8b949e;'>подход</td></tr>
+<tr><td style='color:#58a6ff;'>reprioritize</td><td style='color:#8b949e;'>переприоритизировать</td></tr>
+<tr><td style='color:#58a6ff;'>phased</td><td style='color:#8b949e;'>поэтапный</td></tr>
+</table>
+
+<h2>📝 Самодиктант</h2>
+<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски.</p>
+<ol id="dictList-15"></ol>
+<script>
+(function() {
+  var all = ["Спасибо, что приняли звонок без подготовки.", "У меня тема, которую нужно срочно обсудить.", "Можете дать быстрый апдейт по текущему статусу?", "Мы получили новое разъяснение от регулятора.", "Это меняет наш подход. Позвольте объяснить.", "Давайте подумаем вместе. Какие у нас варианты?", "У меня ещё не все детали, но вот что я знаю.", "Можете подготовить быструю оценку к концу дня?", "Давай запишу ключевые моменты обсуждения.", "Я отправлю follow-up письмо с деталями. Спасибо!"];
+  var shuffled = all.sort(function(){ return Math.random() - 0.5; }).slice(0, 5);
+  var ol = document.getElementById("dictList-15");
+  shuffled.forEach(function(s) {
+    var li = document.createElement("li");
+    li.textContent = s;
+    ol.appendChild(li);
+  });
+})();
+</script>
+
+<h2>📖 Чтение</h2>
+<p><a href="read-15.html" style="color:#58a6ff;">Полная страница для чтения →</a></p>
+
+<h2>✅ Self-check</h2>
+<div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу провести неподготовленную встречу на любую тему</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc2"><label for="sc2">Я могу быстро переключиться и обсудить новую проблему</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc3"><label for="sc3">Я могу собрать ключевые моменты и отправить follow-up</label></div>
+
+
+<div class="audio-overlay" id="audioOverlay" onclick="closeAudio()">
+  <div class="audio-overlay-content" onclick="event.stopPropagation()">
+    <button class="audio-close" onclick="closeAudio()">✕</button>
+    <audio controls>
+      <source src="../audio/day-15.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+</div>
+
+<script>
+function openAudio() {
+  document.getElementById("audioOverlay").classList.add("open");
+  var a = document.querySelector("#audioOverlay audio");
+  if (a) a.play();
+}
+function closeAudio() {
+  document.getElementById("audioOverlay").classList.remove("open");
+  var a = document.querySelector("#audioOverlay audio");
+  if (a) a.pause();
+}
+(function() {
+  var saved = localStorage.getItem("eng-day15");
+  if (saved) {
+    var arr = JSON.parse(saved);
+    document.querySelectorAll(".checkbox-item input").forEach(function(c, i) {
+      if (arr[i]) c.checked = true;
+    });
+  }
+  document.querySelectorAll(".checkbox-item input").forEach(function(c, i) {
+    c.addEventListener("change", function() {
+      var all = document.querySelectorAll(".checkbox-item input");
+      var arr = Array.from(all).map(function(x) { return x.checked; });
+      localStorage.setItem("eng-day15", JSON.stringify(arr));
+    });
+  });
+})();
+</script>
+
+<nav>
+  <a href="day-14.html">← day-14.html</a>
+  <a href="../index.html">Главная</a>
+  <span style="color:#484f58;">Day 15 (последний) →</span>
+</nav>
+
+</body>
+</html>

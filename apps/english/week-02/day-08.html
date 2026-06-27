@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 08 — Scope Disputes with Vendor</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.7; padding: 20px; max-width: 800px; margin: 0 auto; }
+h1 { font-size: 1.5em; color: #58a6ff; }
+h2 { font-size: 1.15em; color: #f0883e; margin: 24px 0 10px; border-bottom: 1px solid #21262d; padding-bottom: 6px; }
+h3 { font-size: 1em; color: #e6edf3; margin: 16px 0 6px; }
+p, li { color: #c9d1d9; font-size: 0.95em; }
+ul, ol { padding-left: 20px; margin: 6px 0; }
+li { margin: 3px 0; }
+.back { color: #8b949e; text-decoration: none; font-size: 0.85em; display: inline-block; margin-bottom: 12px; }
+.back:hover { color: #58a6ff; }
+.phrase { background: #161b22; border: 1px solid #21262d; border-radius: 8px; padding: 10px 14px; margin: 8px 0; }
+.phrase strong { color: #58a6ff; font-size: 1.02em; }
+.phrase .ru { color: #8b949e; font-size: 0.85em; display: block; margin-top: 3px; }
+.phrase .example { color: #3fb950; font-size: 0.85em; display: block; margin-top: 2px; }
+.dialog { background: #161b22; border-left: 3px solid #58a6ff; border-radius: 0 8px 8px 0; padding: 12px 14px; margin: 10px 0; }
+.dialog .speaker { color: #f0883e; font-weight: 600; }
+.dialog .vendor { color: #d29922; font-weight: 600; }
+.dialog .you { color: #58a6ff; font-weight: 600; }
+.checkbox-item { display: flex; align-items: flex-start; gap: 10px; margin: 8px 0; }
+.checkbox-item input { margin-top: 4px; accent-color: #3fb950; width: 18px; min-width: 18px; height: 18px; }
+.checkbox-item label { font-size: 0.92em; color: #c9d1d9; }
+.prompt-box { background: #0d1117; border: 1px solid #21262d; border-left: 3px solid #d29922; border-radius: 0 8px 8px 0; padding: 10px 14px; margin: 8px 0; font-size: 0.88em; color: #f0c674; white-space: pre-wrap; }
+.tag { display: inline-block; padding: 0 8px; border-radius: 10px; font-size: 0.7em; font-weight: 600; margin: 0 4px 4px 0; }
+.tag-blue { background: #1f6feb33; color: #58a6ff; }
+.tag-green { background: #23863633; color: #3fb950; }
+.tag-orange { background: #d2992233; color: #d29922; }
+.audio-btn { display: inline-flex; align-items: center; gap: 6px; background: #1f6feb; color: #fff; border: none; border-radius: 20px; padding: 6px 14px; font-size: 0.85em; cursor: pointer; margin-top: 8px; }
+.audio-btn:hover { background: #388bfd; }
+.audio-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 999; justify-content: center; align-items: center; }
+.audio-overlay.open { display: flex; }
+.audio-overlay-content { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 24px; max-width: 92%; width: 400px; position: relative; }
+.audio-overlay-content audio { width: 100%; display: block; }
+.audio-close { position: absolute; top: 8px; right: 12px; background: none; border: none; color: #8b949e; font-size: 1.3em; cursor: pointer; line-height: 1; }
+.audio-close:hover { color: #f85149; }
+nav { margin-top: 30px; padding-top: 16px; border-top: 1px solid #21262d; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 0.85em; }
+nav a { color: #8b949e; text-decoration: none; }
+nav a:hover { color: #58a6ff; }
+@media (max-width: 600px) { body { padding: 12px; } h1 { font-size: 1.25em; } h2 { font-size: 1em; } nav { flex-direction: column; align-items: center; } }</style>
+</head>
+<body>
+
+<a class="back" href="../index.html">← На главную</a>
+<h1>Day 08 · Scope Disputes with Vendor</h1>
+<p style="color:#8b949e;font-size:0.9em;">Ср 1 июл 2026 · Week 2 — Заказчик → Подрядчик · Новый материал</p>
+
+<div style="background:#1c2128;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:0.88em;">
+  <strong>🎯 Фокус дня:</strong> Обсуждать спорные вопросы: scope, change order, компромиссы<br><button class="audio-btn" onclick="openAudio()">🎵 Аудио дня</button>
+</div>
+
+<h2>🔁 Повторение</h2>
+<p style="color:#8b949e;font-size:0.9em;">Повторение D07: Скажи: 'I need to raise a concern about the timeline...' — объясни проблему.</p>
+
+<h2>📘 Новые фразы — Scope Disputes with Vendor</h2>
+
+<div class="phrase"><strong>We believe this is within the current project scope.</strong><span class="ru">Мы считаем, что это в рамках текущего объёма работ.</span></div>
+<div class="phrase"><strong>I disagree. This was not part of the original agreement.</strong><span class="ru">Я не согласен. Это не было частью изначального договора.</span></div>
+<div class="phrase"><strong>We need to raise a Change Request for this new requirement.</strong><span class="ru">Нужно оформить Change Request на новое требование.</span></div>
+<div class="phrase"><strong>Can we find a compromise? Perhaps share the cost 50/50?</strong><span class="ru">Можем найти компромисс? Например, разделить стоимость 50/50?</span></div>
+<div class="phrase"><strong>Let's look at the contract. Section 3.2 covers regulatory changes.</strong><span class="ru">Давайте посмотрим контракт. Раздел 3.2 описывает регуляторные изменения.</span></div>
+<div class="phrase"><strong>This change is mandated by law. It's not optional.</strong><span class="ru">Это изменение обязательно по закону.</span></div>
+<div class="phrase"><strong>I propose we split the work: MVP in current scope, enhancements as CR.</strong><span class="ru">Предлагаю разделить: MVP в текущем объёме, улучшения как CR.</span></div>
+<div class="phrase"><strong>Let's involve the legal team to review the contract.</strong><span class="ru">Давайте привлечём юристов для анализа контракта.</span></div>
+<div class="phrase"><strong>I understand your position, but we have a different interpretation.</strong><span class="ru">Я понимаю вашу позицию, но у нас другая трактовка.</span></div>
+<div class="phrase"><strong>Let's document our disagreement and escalate if needed.</strong><span class="ru">Давайте зафиксируем разногласия и эскалируем при необходимости.</span></div>
+
+
+<h2>🎭 AI-практика</h2>
+<p style="font-size:0.88em;color:#8b949e;">Запусти ChatGPT Voice Mode и вставь этот промпт (см. <a href="../common/ai-scenarios.html" style="color:#58a6ff;">AI-сценарии</a>):</p>
+<div class="prompt-box">You are a SAP consultant / vendor representative. I am a customer (process automation manager) with intermediate English. Speak clearly. Topic: Scope Disputes with Vendor. Context: Обсуждать спорные вопросы: scope, change order, компромиссы. Follow my lead in the conversation.</div>
+
+<h2>📚 Новые слова — Scope Disputes with Vendor</h2>
+
+<table>
+  <tr><th style="color:#f0883e;">English</th><th style="color:#f0883e;">Русский</th></tr>
+<tr><td style='color:#58a6ff;'>dispute</td><td style='color:#8b949e;'>спор</td></tr>
+<tr><td style='color:#58a6ff;'>compromise</td><td style='color:#8b949e;'>компромисс</td></tr>
+<tr><td style='color:#58a6ff;'>mandate</td><td style='color:#8b949e;'>обязывать</td></tr>
+<tr><td style='color:#58a6ff;'>interpretation</td><td style='color:#8b949e;'>трактовка</td></tr>
+<tr><td style='color:#58a6ff;'>legal</td><td style='color:#8b949e;'>юридический</td></tr>
+<tr><td style='color:#58a6ff;'>disagreement</td><td style='color:#8b949e;'>разногласие</td></tr>
+</table>
+
+<h2>📝 Самодиктант</h2>
+<p style="font-size:0.88em;color:#8b949e;">Скажи русскую фразу → пауза → скажи по-английски.</p>
+<ol id="dictList-08"></ol>
+<script>
+(function() {
+  var all = ["Мы считаем, что это в рамках текущего объёма работ.", "Я не согласен. Это не было частью изначального договора.", "Нужно оформить Change Request на новое требование.", "Можем найти компромисс? Например, разделить стоимость 50/50?", "Давайте посмотрим контракт. Раздел 3.2 описывает регуляторные изменения.", "Это изменение обязательно по закону.", "Предлагаю разделить: MVP в текущем объёме, улучшения как CR.", "Давайте привлечём юристов для анализа контракта.", "Я понимаю вашу позицию, но у нас другая трактовка.", "Давайте зафиксируем разногласия и эскалируем при необходимости."];
+  var shuffled = all.sort(function(){ return Math.random() - 0.5; }).slice(0, 5);
+  var ol = document.getElementById("dictList-08");
+  shuffled.forEach(function(s) {
+    var li = document.createElement("li");
+    li.textContent = s;
+    ol.appendChild(li);
+  });
+})();
+</script>
+
+<h2>📖 Чтение</h2>
+<p><a href="read-08.html" style="color:#58a6ff;">Полная страница для чтения →</a></p>
+
+<h2>✅ Self-check</h2>
+<div class="checkbox-item"><input type="checkbox" id="sc1"><label for="sc1">Я могу обосновать свою позицию по scope со ссылкой на контракт</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc2"><label for="sc2">Я могу предложить компромисс при разногласии</label></div>
+<div class="checkbox-item"><input type="checkbox" id="sc3"><label for="sc3">Я могу документировать разногласия и эскалировать</label></div>
+
+
+<div class="audio-overlay" id="audioOverlay" onclick="closeAudio()">
+  <div class="audio-overlay-content" onclick="event.stopPropagation()">
+    <button class="audio-close" onclick="closeAudio()">✕</button>
+    <audio controls>
+      <source src="../audio/day-08.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+</div>
+
+<script>
+function openAudio() {
+  document.getElementById("audioOverlay").classList.add("open");
+  var a = document.querySelector("#audioOverlay audio");
+  if (a) a.play();
+}
+function closeAudio() {
+  document.getElementById("audioOverlay").classList.remove("open");
+  var a = document.querySelector("#audioOverlay audio");
+  if (a) a.pause();
+}
+(function() {
+  var saved = localStorage.getItem("eng-day08");
+  if (saved) {
+    var arr = JSON.parse(saved);
+    document.querySelectorAll(".checkbox-item input").forEach(function(c, i) {
+      if (arr[i]) c.checked = true;
+    });
+  }
+  document.querySelectorAll(".checkbox-item input").forEach(function(c, i) {
+    c.addEventListener("change", function() {
+      var all = document.querySelectorAll(".checkbox-item input");
+      var arr = Array.from(all).map(function(x) { return x.checked; });
+      localStorage.setItem("eng-day08", JSON.stringify(arr));
+    });
+  });
+})();
+</script>
+
+<nav>
+  <a href="day-07.html">← day-07.html</a>
+  <a href="../index.html">Главная</a>
+  <a href="day-09.html">day-09.html →</a>
+</nav>
+
+</body>
+</html>

@@ -12,7 +12,7 @@ export default async function ShardsPage() {
   const campaign = await prisma.campaign.findUnique({ where: { slug: "shards" } })
   if (!campaign) notFound()
 
-  const isAdmin = session?.user?.role === "admin"
+  const isAdmin = session?.user?.role === "admin" || session?.user?.role === "sadmin"
   const isApproved = !!session?.user && session.user.role !== "pending"
 
   const [characters, maps, statuses, gallery, rules] = await Promise.all([
@@ -45,14 +45,7 @@ export default async function ShardsPage() {
   return (
     <div className="min-h-screen text-white">
       <div className="relative">
-        <div className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage: "url('/images/Fon_SoNC.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900/80 to-slate-950 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 pointer-events-none" />
       <div className="relative z-10">
       <header className="container mx-auto px-4 py-8">
         <Link href="/" className="inline-flex items-center gap-2 text-cyan-700/70 hover:text-cyan-400 mb-6 transition font-mono text-sm">

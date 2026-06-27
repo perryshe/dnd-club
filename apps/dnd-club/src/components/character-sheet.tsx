@@ -2,8 +2,8 @@ import { prisma } from "@/lib/prisma"
 import { auth } from "@/lib/auth"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowLeft, Trash2, Pencil } from "lucide-react"
-import { deleteCharacter } from "@/lib/character-actions"
+import { ArrowLeft, Trash2, Pencil, ArrowRightLeft } from "lucide-react"
+import { deleteCharacter, transferCharacter } from "@/lib/character-actions"
 
 function abilityModifier(score: number): number {
   return Math.floor((score - 10) / 2)
@@ -51,6 +51,9 @@ export default async function CharacterSheet({
   })
   if (!character) notFound()
 
+  const isSAdmin = session?.user?.role === "sadmin"
+  const users = isSAdmin ? await prisma.user.findMany({ orderBy: { name: "asc" } }) : []
+
   const stats = character.stats as Record<string, number>
   const sheet = character.sheet as Record<string, any>
   const pb = character.proficiencyBonus
@@ -59,7 +62,7 @@ export default async function CharacterSheet({
   const skillProfs = (sheet?.skills || {}) as Record<string, boolean>
   const attacks = (sheet?.attacks || []) as { name: string; atkBonus: string; damage: string; type: string }[]
   const spells = (sheet?.spells || {}) as Record<string, string[]>
-  const canDelete = session?.user?.role === "admin" || session?.user?.id === character.userId
+  const canDelete = session?.user?.role === "admin" || session?.user?.role === "sadmin" || session?.user?.id === character.userId
   const equipment = character.equipment ? character.equipment.split("\n").filter(Boolean) : []
 
   const sectionCard = `bg-slate-800 rounded-xl p-6 border ${accentBorder}`
@@ -95,33 +98,63 @@ export default async function CharacterSheet({
               <p className="text-sm text-slate-500">Опыт: {character.experiencePoints}</p>
             )}
           </div>
-          </div>
-          {(canDelete || character.userId === session?.user?.id) && (
-            <div className="flex items-center gap-3">
-              <Link
-                href={`/${character.campaign.slug}/characters/${character.id}/edit`}
-                className="flex items-center gap-2 bg-slate-600 hover:bg-slate-500 px-4 py-2 rounded-lg transition"
-              >
-                <Pencil size={18} />
-                Редактировать
-              </Link>
-              {canDelete && (
-                <form
-                  action={async () => {
-                    "use server"
-                    await deleteCharacter(character.id)
-                  }}
-                >
-                  <button className="flex items-center gap-2 bg-red-800 hover:bg-red-700 px-4 py-2 rounded-lg transition">
-                    <Trash2 size={18} />
-                    Удалить
-                  </button>
-                </form>
-              )}
-            </div>
-          )}
         </div>
-      </header>
+        {(canDelete || character.userId === session?.user?.id) && (
+          <div className="flex items-center gap-3">
+            <Link
+              href={`/${character.campaign.slug}/characters/${character.id}/edit`}
+              className="flex items-center gap-2 bg-slate-600 hover:bg-slate-500 px-4 py-2 rounded-lg transition"
+            >
+              <Pencil size={18} />
+              Редактировать
+            </Link>
+            {canDelete && (
+              <form
+                action={async () => {
+                  "use server"
+                  await deleteCharacter(character.id)
+                }}
+              >
+                <button className="flex items-center gap-2 bg-red-800 hover:bg-red-700 px-4 py-2 rounded-lg transition">
+                  <Trash2 size={18} />
+                  Удалить
+                </button>
+              </form>
+            )}
+          </div>
+        )}
+      </div>
+      {isSAdmin && (
+        <div className="pt-4 border-t border-amber-600/30">
+          <form
+            action={transferCharacter.bind(null, character.id)}
+            className="flex items-end gap-3 flex-wrap"
+          >
+            <div>
+              <label className="block text-xs text-slate-400 mb-1">Передать персонажа</label>
+              <select
+                name="userId"
+                defaultValue={character.userId}
+                className="bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm text-white min-w-[200px]"
+              >
+                {users.map((u) => (
+                  <option key={u.id} value={u.id}>
+                    {u.name} ({u.schoolNick || u.email})
+                  </option>
+                ))}
+              </select>
+            </div>
+            <button
+              type="submit"
+              className="flex items-center gap-2 bg-amber-700 hover:bg-amber-600 px-4 py-2 rounded-lg transition text-sm"
+            >
+                <ArrowRightLeft size={16} />
+              Передать
+            </button>
+          </form>
+        </div>
+      )}
+    </header>
 
       <main className="container mx-auto px-4 pb-16 space-y-6">
         <div className="grid lg:grid-cols-5 gap-4">

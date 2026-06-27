@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dead Band: Cage in the Clouds</title>
+<base href="/quest/">
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
+</head>
+<body>
+<div x-data="questApp()" x-init="init()" class="app-container">
+  <!-- Loading -->
+  <div x-show="phase === 'loading'" class="loading-screen">
+    <div class="loading-dice">🎲</div>
+    <p>Загрузка...</p>
+  </div>
+
+  <!-- Intro letter -->
+  <div x-show="phase === 'intro'" class="intro-screen" x-cloak>
+    <div class="intro-letter">
+      <div class="letter-stamp">БЕЗ ПОДПИСИ · БЕЗ ПЕЧАТИ</div>
+      <div class="letter-header">
+        <div class="letter-field"><span class="field-label">Получатель:</span> Серый Капюшон (лично, через слепого гонца)</div>
+        <div class="letter-field"><span class="field-label">Отправитель:</span> Старый Друг</div>
+        <div class="letter-field"><span class="field-label">Дата:</span> Третье зеркальной луны</div>
+      </div>
+      <div class="letter-body">
+        <p>Ты спрашиваешь, почему мы не можем просто убить их. Отвечаю: смерть — это милость. Милость, которой они не заслужили.</p>
+        <p>Да, у них слишком много. Крепость на скале — два года наших рук, наш проект, а они просто пришли и объявили себя хозяевами. Летучий корабль — единственный в своём роде, добытый нами потом и кровью, теперь ходит под их флагом. Трёхмесячный запас редких артефактов, доспехи, свитки — всё это лежит в их сундуках.</p>
+        <p>Они даже не понимают, насколько они богаты. И это оскорбляет нас сильнее, чем прямое воровство.</p>
+        <p>Но есть и другая причина. Ходят слухи — они бессмертны. Не проверял никто. Проверять как-то не хочется.</p>
+        <p>Поэтому: никакого быстрого удара. Никакой честной дуэли. Им нужно исчезнуть. Бесследно. Без скандала. Без мученических венков.</p>
+        <p class="letter-plan">План утверждён:</p>
+        <ul>
+          <li><strong>Таверна «Три пня»</strong> — подсыпать сонную пыль в эль. Сильной. Через моего человека в кухне.</li>
+          <li><strong>Погрузка</strong> — когда уснут, погрузить в телегу под видом пьяных.</li>
+          <li><strong>Продажа эльфам</strong> — я вышел на Лунный Торговый Дом. Они берут «долгоживущих пленников» для своих вечных церемоний. Наши герои подпишут вексель на пять тысяч страниц — и забудут, как их зовут. Затеряются в серебряных чертогах быстрее, чем в тумане.</li>
+          <li><strong>Забыть</strong> — все, кто участвовал, получат плату и отправятся в долгий отпуск. За пределы архипелага. Навсегда.</li>
+        </ul>
+        <p>Оружие, корабль и крепость мы забираем себе. Законно — через подставных лиц. Через месяц никто не вспомнит, что эти герои вообще существовали.</p>
+        <p>И главное: они не умрут. Это важно. Бессмертные — большая ответственность. Пусть теряются в эльфийских играх вечно. А мы будем спать спокойно.</p>
+        <p>Ты спросишь: зачем так сложно?<br>Отвечу: бессмертных не убивают. Бессмертных — теряют. А эльфы в этом лучшие.</p>
+        <p>Приступай через три дня. Сигнал — зелёная ракета над старым маяком.</p>
+        <p class="letter-signature">Без злобы. Без пощады. Без свидетелей.<br>— Старый Друг</p>
+      </div>
+      <div class="letter-footer">
+        <p class="letter-epigraph">Добро пожаловать в начало конца. Или в конец начала.</p>
+        <button class="btn btn-start" @click="startGame()">✎ Взять перо &middot; Выбрать героя</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero selection -->
+  <div x-show="phase === 'select'" class="select-screen" x-cloak>
+    <div class="header-title">
+      <h1>Dead Band</h1>
+      <p class="subtitle">Cage in the Clouds &middot; Part XVI — Пролог: Пробуждение в пустоте</p>
+    </div>
+    <div class="hero-list">
+      <template x-for="h in heroes" :key="h.id">
+        <div class="hero-card" @click="startQuest(h.id)">
+          <div class="hero-card-header">
+            <span class="hero-name" x-text="h.name"></span>
+            <span class="hero-class" x-text="h.class"></span>
+          </div>
+          <div class="hero-race" x-text="h.race"></div>
+          <p class="hero-desc" x-text="h.desc"></p>
+          <div class="hero-stats">
+            <span>HP <b x-text="'0/'+h.baseHp"></b></span>
+          </div>
+          <div class="hero-feature"><strong>Способность:</strong> <span x-text="h.feature"></span></div>
+          <div class="hero-weakness"><strong>Слабость:</strong> <span x-text="h.weakness"></span></div>
+        </div>
+      </template>
+    </div>
+  </div>
+
+  <!-- Game screen -->
+  <div x-show="phase === 'play'" class="game-screen" x-cloak>
+    <!-- Status message -->
+    <div x-show="statusMessage" class="status-message" x-text="statusMessage"></div>
+
+    <!-- Top bar -->
+    <div class="top-bar">
+      <div class="hero-info">
+        <span class="hero-badge" x-text="heroName"></span>
+        <span class="class-badge" x-text="heroClass"></span>
+        <span class="race-badge" x-text="heroRace"></span>
+        <span class="ac-badge">КД <b x-text="ac"></b></span>
+      </div>
+      <div class="hp-bar-container">
+        <div class="hp-bar">
+          <div class="hp-fill" :style="'width:'+(hp/maxHp*100)+'%'"></div>
+          <span class="hp-text" x-text="hp+'/'+maxHp"></span>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button @click="showJournal = !showJournal" class="btn btn-small">📜 Журнал</button>
+        <button @click="showWeakness = !showWeakness" class="btn btn-small">⛓ Статус</button>
+        <a href="https://d21-club.ru/" class="btn btn-small btn-exit">✕ Выход</a>
+      </div>
+    </div>
+
+    <div class="main-area">
+      <!-- Story panel -->
+      <div class="story-panel" x-show="!dialogText">
+        <div x-show="showWeakness" class="weakness-box" x-cloak>
+          <strong>⛓ Слабость:</strong> <span x-text="heroWeakness"></span>
+        </div>
+
+        <div class="area-label" x-text="'📍 '+(node?.area||'')"></div>
+        <div class="story-text" x-text="node?.text"></div>
+
+        <!-- Normal choices -->
+        <div class="choices" x-show="!rollPending && !combatActive && !finished && !defeated">
+          <template x-for="c in node?.choices || []" :key="c.id">
+            <button class="choice-btn" :class="{disabled: c.disabled}" :disabled="c.disabled" @click="c.disabled || makeChoice(c.id)" x-text="c.text"></button>
+          </template>
+        </div>
+
+        <!-- Roll dialog -->
+        <div x-show="rollPending" class="roll-dialog">
+          <div class="roll-prompt">
+            <p>Бросок: <b x-text="statName(rollPending.stat)+' Сл '+rollPending.dc"></b></p>
+            <p class="roll-mod">Модификатор: <b x-text="(rollPending.modifier>=0?'+':'')+rollPending.modifier"></b></p>
+          </div>
+          <div x-show="!rollResult" class="roll-anim">
+            <button class="btn btn-roll" @click="doRoll()">🎲 Кинуть кости!</button>
+          </div>
+          <div x-show="rollResult" class="roll-result-box">
+            <div class="dice-display">
+              <span class="d20-big" x-text="rollResult.d20"></span>
+              <span class="roll-math">
+                <template x-if="rollResult.modifier >= 0">+</template><span x-text="rollResult.modifier"></span>
+                <span class="roll-eq">=</span>
+                <span class="roll-total" :class="rollResult.passed?'success':'fail'" x-text="rollResult.total"></span>
+              </span>
+            </div>
+            <div class="roll-verdict" :class="rollResult.passed?'success':'fail'">
+              <span x-text="rollResult.passed?'✓ Успех!':'✗ Провал!'"></span>
+            </div>
+            <p class="outcome-text" x-text="outcomeText"></p>
+            <button class="btn btn-continue" @click="continueAfterRoll()">Продолжить</button>
+          </div>
+        </div>
+
+        <!-- Combat -->
+        <div x-show="combatActive" class="combat-area" x-cloak>
+          <div x-show="combatStartText" class="combat-intro" x-text="combatStartText"></div>
+          <div class="combat-header">⚔ Бой! Раунд <span x-text="combatRound"></span></div>
+          <div class="enemy-list">
+            <template x-for="(e, ei) in enemiesLeft" :key="ei">
+              <div class="enemy-row">
+                <span class="enemy-name" x-text="e.name + (enemiesLeft.length > 1 ? ' ' + (ei+1) : '')"></span>
+                <div class="enemy-hp-bar">
+                  <div class="enemy-hp-fill" :style="'width:'+(e.hp/e.maxHp*100)+'%'"></div>
+                  <span class="enemy-hp-text" x-text="e.hp+'/'+e.maxHp"></span>
+                </div>
+                <span class="enemy-ac">КД <b x-text="e.ac"></b></span>
+              </div>
+            </template>
+          </div>
+
+          <div x-show="combatLastRound" class="combat-log">
+            <div class="combat-round-report">
+              <p><b>Ваша атака:</b>
+                <template x-if="combatLastRound.hits[0]">
+                  <span>
+                    🎲 <span x-text="combatLastRound.hits[0].roll"></span>
+                    <span x-text="combatLastRound.hits[0].dmg > 0 ? ' — урон '+combatLastRound.hits[0].dmg : ' — промах'"></span>
+                    <span x-show="combatLastRound.crossbowShot" class="ability-mark"> 🠖 Выстрел из арбалета</span>
+                    <span x-show="combatLastRound.shadowStrikeTriggered" class="ability-mark"> 🌑 Атака из тени</span>
+                    <span x-show="combatLastRound.rageTriggered" class="ability-mark"> 💢 Ярость</span>
+                  </span>
+                </template>
+              </p>
+              <p><b>Враг атакует:</b>
+                <template x-if="combatLastRound.enemyHits.length">
+                  <span>
+                    <template x-for="(eh, ei) in combatLastRound.enemyHits" :key="ei">
+                      <div class="enemy-attack-row">
+                        <span x-text="eh.attacker"></span>: 🎲 <span x-text="eh.roll"></span>
+                        <span x-text="eh.dmg > 0 ? ' — урон '+eh.dmg : ' — промах'"></span>
+                      </div>
+                    </template>
+                  </span>
+                </template>
+              </p>
+      </div>
+    </div>
+
+          <div class="combat-actions" x-show="!victory && !defeated">
+            <button class="btn btn-attack" @click="doAttack()" :disabled="attackPending">🗡 Атаковать!</button>
+            <button x-show="heroClass==='Варвар' && !flags.rage_used" class="btn btn-ability" @click="useAbility('rage')">💢 Ярость (1/квест)</button>
+          </div>
+          <div x-show="victory" class="combat-victory">
+            <p class="victory-text" x-text="victoryText"></p>
+            <button class="btn btn-continue" @click="continueAfterCombat()">Продолжить</button>
+          </div>
+        </div>
+
+        <!-- Defeated -->
+        <div x-show="defeated" class="defeat-screen" x-cloak>
+          <div class="defeat-icon">💀</div>
+          <div class="defeat-title">Поражение</div>
+          <p class="defeat-text">Вас избили до полусмерти и отволокли обратно в камеру. В глазах темнеет, но сознание возвращается — вы всё ещё живы.</p>
+          <p class="defeat-text">Придётся начинать заново, на этот раз — осторожнее.</p>
+          <div class="defeat-hint">✏ Вы сохраняете 2 HP как напоминание о том, что вы выжили.</div>
+          <button class="btn btn-restart" @click="restartQuest()">🔄 Попробовать снова</button>
+        </div>
+
+        <!-- Game Over -->
+        <div x-show="gameOver" class="gameover-screen" x-cloak>
+          <div class="gameover-icon">💀</div>
+          <div class="gameover-title">Исход печален</div>
+          <p class="gameover-text" x-text="gameOverText"></p>
+          <div class="gameover-actions">
+            <a href="https://d21-club.ru/" class="btn btn-exit-final">← Назад</a>
+            <button class="btn btn-restart" @click="resetQuest()">Выбрать другого героя</button>
+          </div>
+        </div>
+
+        <!-- Finished -->
+        <div x-show="finished" class="finish-screen" x-cloak>
+          <div class="finish-title">— Конец вступления —</div>
+          <div class="finish-summary">
+            <p>Вы выбираетесь и замечаете, что из других дверей выходят такие же ослабленные ваши товарищи. Теперь вы не один.</p>
+            <p>Впереди — новые этажи, новые опасности, новые ответы.</p>
+          </div>
+          <div class="finish-actions">
+            <a x-show="exitUrl" :href="exitUrl" class="btn btn-exit-final">🚪 Выйти наружу</a>
+            <button class="btn btn-restart" @click="resetQuest()">Выход на выбор героя</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inventory sidebar -->
+      <div class="inventory-panel">
+        <h3>⚔ Снаряжение</h3>
+        <div class="slot-row">
+          <div class="slot" :class="{filled: inv.left_hand, locked: inv.locked?.left_hand}">
+            <span class="slot-label">Левая</span>
+            <span class="slot-item" x-show="!inv.locked?.left_hand" x-text="inv.left_hand?.name || 'пусто'"></span>
+            <span class="slot-item locked-text" x-show="inv.locked?.left_hand" x-text="'занято ('+inv.locked.left_hand.by+')'"></span>
+            <button x-show="inv.left_hand && !inv.locked?.left_hand" class="btn-micro" @click="unequipItem('left_hand')">✕</button>
+          </div>
+          <div class="slot" :class="{filled: inv.right_hand, locked: inv.locked?.right_hand}">
+            <span class="slot-label">Правая</span>
+            <span class="slot-item" x-show="!inv.locked?.right_hand" x-text="inv.right_hand?.name || 'пусто'"></span>
+            <span class="slot-item locked-text" x-show="inv.locked?.right_hand" x-text="'занято ('+inv.locked.right_hand.by+')'"></span>
+            <button x-show="inv.right_hand && !inv.locked?.right_hand" class="btn-micro" @click="unequipItem('right_hand')">✕</button>
+          </div>
+        </div>
+        <div class="slot slot-body" :class="{filled: inv.body}">
+          <span class="slot-label">Тело</span>
+          <span class="slot-item" x-text="inv.body?.name || 'пусто'"></span>
+          <button x-show="inv.body" class="btn-micro" @click="unequipItem('body')">✕</button>
+        </div>
+        <div class="ammo-display" x-show="inv.ammo > 0">
+          <span class="slot-label">🠖 Болты</span>
+          <span class="ammo-count" x-text="inv.ammo + ' шт.'"></span>
+        </div>
+        <h4>🎒 Сумка</h4>
+        <div class="bag-items">
+          <template x-for="(item, i) in inv.bag" :key="i">
+            <div class="bag-item">
+              <span class="bag-item-name" x-text="item.name"></span>
+              <div class="bag-item-actions">
+                <button class="btn-micro btn-micro-drop" @click="dropItem(item.id)">✕</button>
+                <template x-if="item.type === 'consumable'">
+                  <button class="btn-micro" @click="useItem(item.id)">Исп.</button>
+                </template>
+                <template x-if="item.slot === 'both'"><span>
+                  <button class="btn-micro" @click="equipItem(item.id, 'left_hand')">→Л</button>
+                  <button class="btn-micro" @click="equipItem(item.id, 'right_hand')">→П</button>
+                </span></template>
+                <template x-if="item.slot === 'hand'"><span>
+                  <button class="btn-micro" @click="equipItem(item.id, 'left_hand')">→Л</button>
+                  <button class="btn-micro" @click="equipItem(item.id, 'right_hand')">→П</button>
+                </span></template>
+                <template x-if="item.slot === 'body'">
+                  <button class="btn-micro" @click="equipItem(item.id, 'body')">→Тело</button>
+                </template>
+              </div>
+            </div>
+          </template>
+          <div x-show="!inv.bag.length" class="bag-empty">пусто</div>
+        </div>
+        <div class="feature-box">
+          <strong>Способность:</strong>
+          <span x-text="heroFeature"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Journal frame -->
+    <div x-show="journal.length > 0 && !dialogText" class="journal-frame">
+      <template x-for="(e, i) in journal.slice(-5).reverse()" :key="i">
+        <div class="journal-line"
+         :class="{
+                'journal-combat': e.combat,
+                'journal-item': e.text.includes('забираете') || e.text.includes('находите') || e.text.includes('Забрать') || e.text.includes('Взять'),
+                'journal-heal': e.text.includes('прилив сил') || e.text.includes('напиться') || e.text.includes('Передохнуть'),
+                'journal-damage': e.text.includes('урона') && !e.combat,
+                'journal-debug': e.debug
+              }"
+              x-text="e.text"></div>
+      </template>
+    </div>
+
+    <!-- Dialog overlay -->
+    <div x-show="dialogText" class="dialog-overlay" @click.self="continueDialog()">
+      <div class="dialog-box">
+        <div class="dialog-text" x-text="dialogText"></div>
+        <button class="btn btn-continue" @click="continueDialog()">Продолжить</button>
+      </div>
+    </div>
+
+    <!-- Journal modal -->
+    <div x-show="showJournal" class="journal-overlay" @click.self="showJournal=false">
+      <div class="journal-modal">
+        <h3>📜 Журнал</h3>
+        <div class="journal-entries">
+          <template x-for="(e,i) in journal.slice().reverse()" :key="i">
+            <div class="journal-entry"
+                 :class="{
+                    'journal-combat': e.combat,
+                    'journal-item': e.text.includes('забираете') || e.text.includes('находите') || e.text.includes('Забрать') || e.text.includes('Взять'),
+                    'journal-heal': e.text.includes('прилив сил') || e.text.includes('напиться') || e.text.includes('Передохнуть'),
+                    'journal-damage': e.text.includes('урона') && !e.combat,
+                    'journal-debug': e.debug
+                  }">
+              <small class="journal-step">Шаг <span x-text="e.step"></span></small>
+              <p x-text="e.text"></p>
+              <div x-show="e.roll" class="journal-roll">
+                🎲 <span x-text="'d20='+e.roll.d20+(e.roll.modifier>=0?'+':'')+e.roll.modifier+'='+e.roll.total"></span>
+                <span x-text="e.roll.passed?' ✓':' ✗'" :class="e.roll.passed?'success':'fail'"></span>
+              </div>
+            </div>
+          </template>
+        </div>
+        <button class="btn btn-small" @click="showJournal=false">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

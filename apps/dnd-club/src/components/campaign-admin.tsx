@@ -1,14 +1,37 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import {
-  createStatus, deleteStatus, updateStatus,
+  createStatus, deleteStatus, updateStatus, toggleStatus,
   createMaps, deleteMap,
   createGalleryImages, deleteGalleryImage,
   createRules, deleteRule,
   uploadStatusImage, deleteStatusImage,
 } from "@/lib/admin-actions"
+
+function CountdownTimer({ targetDate }: { targetDate: Date }) {
+  const [now, setNow] = useState(new Date())
+
+  useEffect(() => {
+    const t = setInterval(() => setNow(new Date()), 1000)
+    return () => clearInterval(t)
+  }, [])
+
+  const diff = targetDate.getTime() - now.getTime()
+  if (diff <= 0) return <span className="text-xs text-green-400 font-mono">Проведено</span>
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000)
+
+  return (
+    <span className="text-xs text-amber-400 font-mono tabular-nums">
+      {days}д {hours.toString().padStart(2, "0")}:{minutes.toString().padStart(2, "0")}:{seconds.toString().padStart(2, "0")}
+    </span>
+  )
+}
 
 export function StatusTimeline({
   statuses,
@@ -16,7 +39,7 @@ export function StatusTimeline({
   isApproved,
   color = "amber",
 }: {
-  statuses: { id: string; date: Date; title: string; essay: string; result: string; images: { id: string; url: string }[] }[]
+  statuses: { id: string; date: Date; title: string; essay: string; result: string; status: string; questUrl: string; images: { id: string; url: string }[] }[]
   isAdmin: boolean
   isApproved: boolean
   color?: "amber" | "purple"
@@ -26,6 +49,7 @@ export function StatusTimeline({
   const resultLabel = color === "purple" ? "text-purple-400" : "text-amber-400"
   const accent = color === "purple" ? "#a855f7" : "#f59e0b"
   const accentRgb = color === "purple" ? "168,85,247" : "245,158,11"
+  const [selectedImage, setSelectedImage] = useState<string | null>(null)
 
   function scrollTo(id: string) {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" })
@@ -76,16 +100,30 @@ export function StatusTimeline({
                   <div className="min-w-0">
                     <time className="text-xs text-slate-500 flex items-center gap-1">
                       <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                      {new Date(s.date).toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" })}
+                      {new Date(s.date).toLocaleString("ru-RU", { day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit", timeZone: "Europe/Moscow" })} МСК
+                      {s.status === "plan" ? (
+                        <span className="ml-2 px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-900/60 text-amber-300 border border-amber-700/50">ПЛАН</span>
+                      ) : (
+                        <span className="ml-2 px-1.5 py-0.5 rounded text-[10px] font-bold bg-green-900/60 text-green-300 border border-green-700/50">ПРОВЕДЕНО</span>
+                      )}
                     </time>
-                    <h3 className="text-lg font-bold mt-0.5 text-white group-hover:text-current transition-colors"
+                    {s.status === "plan" && <CountdownTimer targetDate={new Date(s.date)} />}
+                    <h3 className="text-lg font-bold mt-0.5 text-white group-hover:text-current transition-colors flex items-center gap-2"
                       style={{ color: color === "purple" ? "#d8b4fe" : "#fbbf24" }}
-                    >{s.title}</h3>
+                    >
+                      {s.title}
+                      {s.questUrl && (
+                        <a href={s.questUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-[10px] tracking-wider font-mono text-rose-400 hover:text-rose-300 border border-rose-700/50 px-1.5 py-0.5 rounded" onClick={(e) => e.stopPropagation()} title="Секретный квест">
+                          &#x1F3AD; Quest
+                        </a>
+                      )}
+                    </h3>
                   </div>
                 </div>
                 {isAdmin && (
                   <div className="flex flex-wrap items-center gap-2 ml-9">
-                    <EditStatusButton statusId={s.id} date={new Date(s.date).toISOString().split("T")[0]} title={s.title} essay={s.essay} result={s.result} />
+                    <EditStatusButton statusId={s.id} date={new Date(s.date).toLocaleString("sv-SE", { timeZone: "Europe/Moscow", hour12: false }).replace(" ", "T").slice(0, 16)} title={s.title} essay={s.essay} result={s.result} questUrl={s.questUrl} />
+                    <ToggleStatusButton statusId={s.id} currentStatus={s.status} />
                     <DeleteStatusButton statusId={s.id} />
                   </div>
                 )}
@@ -98,13 +136,19 @@ export function StatusTimeline({
                 </div>
               )}
               {s.images.length > 0 && (
-                <StatusImages images={s.images} isAdmin={isAdmin} />
+                <StatusImages images={s.images} isAdmin={isAdmin} onImageClick={setSelectedImage} />
               )}
               {isApproved && <div className="mt-3"><StatusImageUpload statusId={s.id} /></div>}
             </div>
           </div>
         ))}
       </div>
+      {selectedImage && (
+        <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center" onClick={() => setSelectedImage(null)}>
+          <button onClick={() => setSelectedImage(null)} className="absolute top-4 right-4 text-white text-2xl">&times;</button>
+          <img src={selectedImage} alt="" className="max-w-[90vw] max-h-[90vh] object-contain" onClick={(e) => e.stopPropagation()} />
+        </div>
+      )}
     </div>
   )
 }
@@ -134,8 +178,8 @@ export function StatusForm({ slug }: { slug: string }) {
       <h3 className="font-bold text-amber-400">Новая запись</h3>
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <label className="text-xs text-slate-400 block mb-1">Дата</label>
-          <input name="date" type="date" required className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm" />
+          <label className="text-xs text-slate-400 block mb-1">Дата и время (МСК)</label>
+          <input name="date" type="datetime-local" required className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm" />
         </div>
         <div>
           <label className="text-xs text-slate-400 block mb-1">Название</label>
@@ -150,6 +194,10 @@ export function StatusForm({ slug }: { slug: string }) {
         <label className="text-xs text-slate-400 block mb-1">Результат</label>
         <textarea name="result" rows={2} className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm resize-none" />
       </div>
+      <div>
+        <label className="text-xs text-slate-400 block mb-1">Ссылка</label>
+        <input name="questUrl" type="url" className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm" />
+      </div>
       <div className="flex gap-3">
         <button type="submit" disabled={loading} className="bg-amber-600 hover:bg-amber-700 disabled:opacity-50 px-4 py-2 rounded-lg text-sm transition">
           {loading ? "Сохранение..." : "Сохранить"}
@@ -158,6 +206,20 @@ export function StatusForm({ slug }: { slug: string }) {
       </div>
     </form>
   )
+}
+
+export function ToggleStatusButton({ statusId, currentStatus }: { statusId: string; currentStatus: string }) {
+  const router = useRouter()
+  async function handleToggle() {
+    try {
+      await toggleStatus(statusId)
+      router.refresh()
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Ошибка")
+    }
+  }
+  const label = currentStatus === "plan" ? "Отметить проведённым" : "Вернуть в план"
+  return <button onClick={handleToggle} className="text-xs text-cyan-400 hover:text-cyan-300">{label}</button>
 }
 
 export function DeleteStatusButton({ statusId }: { statusId: string }) {
@@ -174,8 +236,8 @@ export function DeleteStatusButton({ statusId }: { statusId: string }) {
   return <button onClick={handleDelete} className="text-xs text-red-400 hover:text-red-300">Удалить</button>
 }
 
-export function EditStatusButton({ statusId, date, title, essay, result }: {
-  statusId: string; date: string; title: string; essay: string; result: string
+export function EditStatusButton({ statusId, date, title, essay, result, questUrl }: {
+  statusId: string; date: string; title: string; essay: string; result: string; questUrl: string
 }) {
   const router = useRouter()
   const [open, setOpen] = useState(false)
@@ -201,8 +263,8 @@ export function EditStatusButton({ statusId, date, title, essay, result }: {
       <h3 className="font-bold text-amber-400">Редактирование записи</h3>
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <label className="text-xs text-slate-400 block mb-1">Дата</label>
-          <input name="date" type="date" defaultValue={date} required className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm" />
+          <label className="text-xs text-slate-400 block mb-1">Дата и время (МСК)</label>
+          <input name="date" type="datetime-local" defaultValue={date} required className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm" />
         </div>
         <div>
           <label className="text-xs text-slate-400 block mb-1">Название</label>
@@ -216,6 +278,10 @@ export function EditStatusButton({ statusId, date, title, essay, result }: {
       <div>
         <label className="text-xs text-slate-400 block mb-1">Результат</label>
         <textarea name="result" defaultValue={result} rows={2} className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm resize-none" />
+      </div>
+      <div>
+        <label className="text-xs text-slate-400 block mb-1">Ссылка</label>
+        <input name="questUrl" type="url" defaultValue={questUrl} className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white text-sm" />
       </div>
       <div className="flex gap-3">
         <button type="submit" disabled={loading} className="bg-amber-600 hover:bg-amber-700 disabled:opacity-50 px-4 py-2 rounded-lg text-sm transition">
@@ -298,9 +364,8 @@ export function StatusImageUpload({ statusId }: { statusId: string }) {
   )
 }
 
-export function StatusImages({ images, isAdmin }: { images: { id: string; url: string }[]; isAdmin: boolean }) {
+export function StatusImages({ images, isAdmin, onImageClick }: { images: { id: string; url: string }[]; isAdmin: boolean; onImageClick?: (url: string) => void }) {
   const router = useRouter()
-  const [selected, setSelected] = useState<string | null>(null)
 
   async function handleDelete(id: string) {
     if (!confirm("Удалить фото?")) return
@@ -313,31 +378,23 @@ export function StatusImages({ images, isAdmin }: { images: { id: string; url: s
   }
 
   return (
-    <>
-      <div className="flex flex-wrap gap-2 mt-3">
-        {images.map((img) => (
-          <div key={img.id} className="relative group shrink-0">
-            <button onClick={() => setSelected(img.url)}>
-              <img src={img.url} alt="" className="w-20 h-20 object-cover rounded-lg border border-slate-600 hover:border-amber-400 transition" />
+    <div className="flex flex-wrap gap-2 mt-3">
+      {images.map((img) => (
+        <div key={img.id} className="relative group shrink-0">
+          <button onClick={() => onImageClick?.(img.url)}>
+            <img src={img.url} alt="" className="w-20 h-20 object-cover rounded-lg border border-slate-600 hover:border-amber-400 transition" />
+          </button>
+          {isAdmin && (
+            <button
+              onClick={() => handleDelete(img.id)}
+              className="absolute -top-2 -right-2 bg-red-600 hover:bg-red-700 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition"
+            >
+              &times;
             </button>
-            {isAdmin && (
-              <button
-                onClick={() => handleDelete(img.id)}
-                className="absolute -top-2 -right-2 bg-red-600 hover:bg-red-700 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition"
-              >
-                &times;
-              </button>
-            )}
-          </div>
-        ))}
-      </div>
-      {selected && (
-        <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center" onClick={() => setSelected(null)}>
-          <button onClick={() => setSelected(null)} className="absolute top-4 right-4 text-white text-2xl">&times;</button>
-          <img src={selected} alt="" className="max-w-[90vw] max-h-[90vh] object-contain" onClick={(e) => e.stopPropagation()} />
+          )}
         </div>
-      )}
-    </>
+      ))}
+    </div>
   )
 }
 

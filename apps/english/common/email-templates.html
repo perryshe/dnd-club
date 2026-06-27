@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email Templates — English for Customer (SAP)</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.7; padding: 20px; max-width: 800px; margin: 0 auto; }
+h1 { font-size: 1.5em; color: #58a6ff; }
+h2 { font-size: 1.15em; color: #f0883e; margin: 24px 0 10px; border-bottom: 1px solid #21262d; padding-bottom: 6px; }
+h3 { font-size: 1em; color: #e6edf3; margin: 16px 0 6px; }
+p, li { color: #c9d1d9; font-size: 0.95em; }
+.email { background: #161b22; border: 1px solid #21262d; border-radius: 8px; padding: 12px 14px; margin: 10px 0; }
+.email pre { background: #0d1117; padding: 10px; border-radius: 6px; font-size: 0.85em; margin: 8px 0; color: #e6edf3; white-space: pre-wrap; border-left: 3px solid #21262d; font-family: inherit; line-height: 1.6; }
+.back { color: #8b949e; text-decoration: none; font-size: 0.85em; display: inline-block; margin-bottom: 12px; }
+.back:hover { color: #58a6ff; }
+.tag { display: inline-block; padding: 0 8px; border-radius: 10px; font-size: 0.7em; font-weight: 600; }
+.tag-blue { background: #1f6feb33; color: #58a6ff; }
+.tag-green { background: #23863633; color: #3fb950; }
+</style>
+</head>
+<body>
+
+<a class="back" href="../index.html">← На главную</a>
+<h1>✉️ Шаблоны писем (заказчик → подрядчик)</h1>
+<p style="color:#8b949e;font-size:0.9em;margin-bottom:12px;">Готовые шаблоны для переписки с SAP-вендором. Замени [в скобках] на свои данные.</p>
+
+<div class="email">
+<h3>1. Meeting Minutes — протокол встречи с подрядчиком</h3>
+<p style="font-size:0.8em;color:#8b949e;">Отправить после каждой встречи</p>
+<pre><strong>Subject:</strong> Meeting Minutes — [Project/Topic] — [Date]
+
+Dear [Vendor Team],
+
+Thank you for the productive call today.
+
+<strong>Attendees:</strong> [Names]
+
+<strong>Topics discussed:</strong>
+1. [Topic 1] — [brief summary]
+2. [Topic 2] — [brief summary]
+
+<strong>Key decisions:</strong>
+- [Decision 1]
+- [Decision 2]
+
+<strong>Action items:</strong>
+- [Vendor]: [Task] — due [Date]
+- [Customer]: [Task] — due [Date]
+
+<strong>Next meeting:</strong> [Date/Time]
+
+Please confirm that I have captured everything correctly.
+
+Best regards,
+[Your Name]
+[Your Company]</pre>
+</div>
+
+<div class="email">
+<h3>2. New Requirement — новое требование к подрядчику</h3>
+<p style="font-size:0.8em;color:#8b949e;">Отправить при появлении нового требования регулятора</p>
+<pre><strong>Subject:</strong> New Requirement: [Regulatory change] — impact assessment needed
+
+Dear [Vendor Contact],
+
+We have received a new requirement from [government body / CRPT / Mercury] regarding [description].
+
+<strong>Summary of the requirement:</strong>
+[Brief description of what changed and by when it must be implemented]
+
+<strong>Request:</strong>
+Please assess the impact on our current SAP system and provide:
+1. Implementation options
+2. Estimated timeline
+3. Resource requirements
+4. Cost estimate
+
+<strong>Deadline for proposal:</strong> [Date]
+
+Let me know if you need any additional information from our side.
+
+Best regards,
+[Your Name]
+[Your Company]</pre>
+</div>
+
+<div class="email">
+<h3>3. Change Request — запрос на изменение</h3>
+<p style="font-size:0.8em;color:#8b949e;">Когда меняется объём работ</p>
+<pre><strong>Subject:</strong> Change Request #[Number] — [Description]
+
+Dear [Vendor PM],
+
+We request the following change to the current project scope.
+
+<strong>Change description:</strong>
+[What needs to change and why]
+
+<strong>Reason for change:</strong>
+[Regulatory update / process change / new requirement]
+
+<strong>Affected systems:</strong>
+[System names]
+
+<strong>Requested action:</strong>
+Please provide a revised proposal including:
+- Updated timeline
+- Impact on current budget
+- Any risks or dependencies
+
+We would appreciate your response by [Date].
+
+Best regards,
+[Your Name]
+[Your Company]</pre>
+</div>
+
+<div class="email">
+<h3>4. Escalation — задержка / проблема</h3>
+<p style="font-size:0.8em;color:#8b949e;">Когда подрядчик срывает сроки</p>
+<pre><strong>Subject:</strong> Escalation: [Project] — [Issue] — URGENT
+
+Dear [Vendor Management],
+
+We are escalating the following issue that requires your immediate attention.
+
+<strong>Project:</strong> [Project name]
+<strong>Issue:</strong> [Brief description of the delay/problem]
+<strong>Impact:</strong> [Business impact — production, compliance, etc.]
+
+<strong>What we need:</strong>
+1. Root cause explanation
+2. Recovery plan with updated timeline
+3. Measures to prevent recurrence
+
+<strong>Deadline for response:</strong> [Date/Time]
+
+Please treat this as urgent.
+
+Best regards,
+[Your Name]
+[Your Company]</pre>
+</div>
+
+<div class="email">
+<h3>5. Follow-up — напоминание о задачах</h3>
+<p style="font-size:0.8em;color:#8b949e;">Мягкое напоминание подрядчику</p>
+<pre><strong>Subject:</strong> Follow-up: [Action item] — status update
+
+Dear [Vendor Contact],
+
+I am following up on the action item from our meeting on [Date].
+
+<strong>Action item:</strong>
+[Description of the task]
+
+<strong>Original deadline:</strong>
+[Date]
+
+Could you please provide a status update? Let us know if you need any support from our side to complete this.
+
+Best regards,
+[Your Name]
+[Your Company]</pre>
+</div>
+
+<div class="email">
+<h3>6. Proposal Request — запрос коммерческого предложения</h3>
+<p style="font-size:0.8em;color:#8b949e;">Для нового проекта / этапа</p>
+<pre><strong>Subject:</strong> Request for Proposal: [Project name]
+
+Dear [Vendor Contact],
+
+We would like to request a proposal for the following work.
+
+<strong>Scope:</strong>
+[Description of the required work]
+
+<strong>Background:</strong>
+[Relevant context — regulatory requirement, business need]
+
+<strong>Required deliverables:</strong>
+1. [Deliverable 1]
+2. [Deliverable 2]
+3. [Deliverable 3]
+
+<strong>Preferred timeline:</strong>
+- Proposal due: [Date]
+- Project start: [Date]
+- Go-live deadline: [Date]
+
+Please include timeline, cost breakdown, and resource plan in your proposal.
+
+Best regards,
+[Your Name]
+[Your Company]</pre>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOR — English for Manager</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.7; padding: 20px; }
+h1 { font-size: 1.6em; margin-bottom: 4px; color: #58a6ff; }
+h2 { font-size: 1.2em; margin: 28px 0 10px; color: #f0883e; border-bottom: 1px solid #21262d; padding-bottom: 6px; }
+h3 { font-size: 1em; margin: 18px 0 6px; color: #8b949e; }
+p, li { font-size: 0.95em; color: #c9d1d9; }
+ul, ol { padding-left: 22px; margin: 6px 0; }
+li { margin: 3px 0; }
+code { background: #161b22; padding: 1px 6px; border-radius: 4px; font-size: 0.9em; color: #f0c674; }
+pre { background: #161b22; padding: 12px; border-radius: 8px; overflow-x: auto; font-size: 0.88em; margin: 8px 0; border: 1px solid #21262d; }
+table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 0.9em; }
+th, td { border: 1px solid #21262d; padding: 8px 10px; text-align: left; }
+th { background: #1c2128; color: #8b949e; font-weight: 600; }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.78em; font-weight: 600; margin: 0 4px; }
+.tag-blue { background: #1f6feb22; color: #58a6ff; border: 1px solid #1f6feb44; }
+.tag-green { background: #23863622; color: #3fb950; border: 1px solid #23863644; }
+.tag-orange { background: #d2992222; color: #d29922; border: 1px solid #d2992244; }
+</style>
+</head>
+<body>
+
+<h1>TOR: English for Manager — 3-Week Intensive</h1>
+<p style="color:#8b949e;font-size:0.9em;margin-bottom:18px;">Техническое задание. Версия 1.0 — 18.06.2026</p>
+
+<h2>1. Цель проекта</h2>
+<p>Подготовить русскоязычного менеджера по автоматизированным процессам к ведению рабочих встреч (ВКС) и деловой переписке на английском языке. Фокус — <strong>общее ведение встречи</strong>, а не глубокая техническая лексика.</p>
+
+<h2>2. Целевая аудитория</h2>
+<ul>
+<li>Должность: менеджер по автоматизированным процессам (SAP, MES, Честный ЗНАК, Меркурий, Xtime)</li>
+<li>Текущий уровень: Intermediate (могу читать/писать, но неуверенно говорю на созвонах)</li>
+<li>Доступные инструменты: ChatGPT Voice (или аналог), Python с edge-tts для генерации аудио</li>
+<li>Ограничения: 2–2.5 ч/день + 2 ч в дороге (аудио)</li>
+</ul>
+
+<h2>3. Формат обучения</h2>
+<ul>
+<li><strong>Длительность:</strong> 15 дней, 18 июня – 8 июля 2026 (без выходных, но с аудио-дайджестами на выходные)</li>
+<li><strong>Каждый день:</strong>
+  <ul>
+    <li>🚗 Аудио по пути на работу (60 мин) — повтор вчерашнего + новый материал</li>
+    <li>💻 Вечер: AI Voice Mode (60–90 мин) — 2 раунда активной практики</li>
+    <li>🚗 Аудио по пути с работы (60 мин) — повторное слушание + самодиктант</li>
+    <li>📱 В течение дня: шпаргалка в телефоне (5 мин × 2–3)</li>
+  </ul>
+</li>
+<li><strong>Структура дня:</strong> 30 мин повтор → 90 мин новое → 15 мин закрепление</li>
+<li><strong>Light version:</strong> 30 мин (только фразы + 1 AI-раунд) — для дней с цейтнотом</li>
+</ul>
+
+<h2>4. Структура проекта (файлы и папки)</h2>
+<pre>
+4_english/
+├── index.html                    # Главный навигатор (точка входа)
+├── tor.html                      # Это файл — техзадание
+│
+├── base/
+│   ├── Base.txt                  # Исходная программа обучения (не менять)
+│   └── Manager.txt               # Требования к вакансии (не менять)
+│
+├── schedule/
+│   └── schedule.html             # Расписание на 15 дней с датами
+│
+├── common/
+│   ├── cheat-sheet.html          # Шпаргалка менеджера (20 фраз на стикер)
+│   ├── glossary.html             # Полный глоссарий (расширенный из Base.txt)
+│   ├── meeting-phrases.html      # Фразы по ситуациям (открыть, Q&A, закрыть, эскалация)
+│   ├── ai-scenarios.html         # Все сценарии для AI Voice Mode по дням
+│   └── email-templates.html      # Шаблоны писем (follow-up, minutes, escalation)
+│
+├── week-01/                      # База встреч (Days 1–5)
+│   ├── day-01.html
+│   └── day-02.html … day-05.html
+├── week-02/                      # Soft skills (Days 6–10)
+│   ├── day-06.html … day-10.html
+├── week-03/                      # Сквозная практика (Days 11–15)
+│   ├── day-11.html … day-15.html
+│
+├── audio/                        # Сгенерированные mp3
+│   ├── day-01.mp3 … day-15.mp3
+│   └── weekend-digest-01.mp3 … weekend-digest-03.mp3
+│
+└── scripts/
+    └── generate-audio.py         # Скрипт: HTML-файл дня → mp3
+</pre>
+
+<h2>5. Формат файла дня (day-N.html)</h2>
+<p>Каждый day-N.html — самостоятельная страница, не зависящая от других. Содержит:</p>
+<ol>
+<li><strong>Шапка:</strong> тема дня, дата, Week X, Day N</li>
+<li><strong>Progress bar / checklist</strong> (начало / пройдено?)</li>
+<li><strong>Повторение (Review):</strong> фразы с прошлого дня + краткий диалог + quick AI run</li>
+<li><strong>Новые фразы (Vocabulary):</strong> 10–12 фраз с переводом, примерами, транскрипцией (опционально)</li>
+<li><strong>AI сценарии (Practice):</strong> 2 сценария — готовый промпт для ChatGPT Voice</li>
+<li><strong>Диалог (Dialog):</strong> скрипт meeting с участием 2–3 человек</li>
+<li><strong>Самодиктант (Dictation):</strong> 5 русских фраз → пауза → английский</li>
+<li><strong>Self-check:</strong> 3 вопроса (понимаю? могу повторить? могу применить?)</li>
+<li><strong>Футер:</strong> ссылки на соседние дни, common-файлы, главную</li>
+</ol>
+
+<h2>6. Дизайн-принципы (все .html файлы)</h2>
+<ul>
+<li>Mobile-first (работает на телефоне без горизонтального скролла)</li>
+<li>Тёмная тема (dark background — глаза не устают)</li>
+<li>Шрифт 16px минимум, line-height 1.7</li>
+<li>Никаких внешних зависимостей: нет CDN, нет JS-библиотек, нет шрифтов</li>
+<li>Минимальный CSS (inline в &lt;style&gt;)</li>
+<li>Цветовая схема: фон #0d1117, текст #e6edf3, акценты #58a6ff (синий), #f0883e (оранжевый), #3fb950 (зелёный для done)</li>
+<li>Все файлы в UTF-8 без BOM</li>
+</ul>
+
+<h2>7. Контент-стратегия</h2>
+<table>
+<tr><th>Week</th><th>Тема</th><th>Дни</th><th>Главный фокус</th></tr>
+<tr><td>1</td><td>База встреч</td><td>1–5</td><td>Открытие, статус, проблемы, Q&A, закрытие</td></tr>
+<tr><td>2</td><td>Soft skills</td><td>6–10</td><td>Small talk, жалобы, конфликты, summary, follow-up</td></tr>
+<tr><td>3</td><td>Сквозная практика</td><td>11–15</td><td>Полные встречи от А до Я с AI, минимум подсказок</td></tr>
+</table>
+<p><strong>Привязка к Manager.txt:</strong> обязанности покрываются в порядке приоритета — общая коммуникация → администрирование → обучение пользователей → технические детали.</p>
+
+<h2>8. Принцип повторения</h2>
+<ul>
+<li>День 1: только новый материал</li>
+<li>День 2+: 30 мин повторение дня N-1 → 90 мин новое</li>
+<li>Повторение включает: прогон фраз, пересказ диалога, AI по вчерашней теме</li>
+<li>Выходные: аудио-дайджест прошедшей недели (60 мин, без активной работы)</li>
+<li>К Day 15 фразы из Day 1 повторены 14 раз (каждый день)</li>
+</ul>
+
+<h2>9. Аудио-формат (generate-audio.py)</h2>
+<p>Скрипт на Python, использующий <code>edge-tts</code> (бесплатно, голоса Microsoft, безлимит):</p>
+<ul>
+<li><strong>Вход:</strong> путь к HTML-файлу дня или флаг <code>--week N</code> для batch-генерации</li>
+<li><strong>Выход:</strong> mp3 в <code>audio/</code></li>
+<li><strong>Структура mp3 (60 мин):</strong><br>
+  0:00–15:00 — повтор фраз вчерашнего дня (англ + пауза 5с)<br>
+  15:00–20:00 — диалог вчерашнего дня (озвучка по ролям: David / Jenny)<br>
+  20:00–45:00 — новые фразы сегодняшнего дня (англ → пауза 4с → перевод → пауза 2с → повтор)<br>
+  45:00–55:00 — новый диалог сегодня (озвучка по ролям)<br>
+  55:00–60:00 — диктант (русская фраза → пауза 7с → английский ответ)
+</li>
+<li><strong>Голоса:</strong><br>
+  Английский (основной): <code>en-US-DavidNeural</code> (male)<br>
+  Английский (второй): <code>en-US-JennyNeural</code> (female)<br>
+  Русский (диктант/объяснения): <code>ru-RU-DariyaNeural</code> или не используется (вся озвучка на английском)
+</li>
+<li><strong>Запуск:</strong> <code>pip install edge-tts</code> → <code>python scripts/generate-audio.py day-01</code></li>
+</ul>
+
+<h2>10. Day-by-day content map</h2>
+<h3>Week 1 — База встреч</h3>
+<table>
+<tr><th>Day</th><th>Date</th><th>Theme</th><th>Key phrases (qty)</th><th>AI scenarios</th></tr>
+<tr><td>1</td><td>18.06</td><td>Opening a meeting</td><td>10</td><td>2</td></tr>
+<tr><td>2</td><td>19.06</td><td>Asking for updates</td><td>10</td><td>2</td></tr>
+<tr><td>3</td><td>22.06</td><td>Reporting issues</td><td>12</td><td>2</td></tr>
+<tr><td>4</td><td>23.06</td><td>Q&A, clarifications</td><td>10</td><td>2</td></tr>
+<tr><td>5</td><td>24.06</td><td>Assigning & wrap-up</td><td>10</td><td>2 + self-rec</td></tr>
+</table>
+
+<h3>Week 2 — Soft skills</h3>
+<table>
+<tr><th>Day</th><th>Date</th><th>Theme</th><th>Key phrases (qty)</th><th>AI scenarios</th></tr>
+<tr><td>6</td><td>25.06</td><td>Small talk</td><td>10</td><td>2</td></tr>
+<tr><td>7</td><td>26.06</td><td>Handling complaints</td><td>10</td><td>2</td></tr>
+<tr><td>8</td><td>29.06</td><td>Conflict / difficult situations</td><td>12</td><td>2</td></tr>
+<tr><td>9</td><td>30.06</td><td>Summarizing & closing</td><td>10</td><td>2</td></tr>
+<tr><td>10</td><td>01.07</td><td>Follow-up & action tracking</td><td>10</td><td>2 + self-rec</td></tr>
+</table>
+
+<h3>Week 3 — Full meetings</h3>
+<table>
+<tr><th>Day</th><th>Date</th><th>Theme</th><th>Key phrases (qty)</th><th>AI scenarios</th></tr>
+<tr><td>11</td><td>02.07</td><td>Full status meeting (SAP)</td><td>8 (new) + all prev</td><td>1 long session</td></tr>
+<tr><td>12</td><td>03.07</td><td>Full incident meeting (MES)</td><td>8 (new) + all prev</td><td>1 long session</td></tr>
+<tr><td>13</td><td>06.07</td><td>Full combined (ЧЗ + Mercury)</td><td>8 (new) + all prev</td><td>1 long session</td></tr>
+<tr><td>14</td><td>07.07</td><td>Admin & access review</td><td>8 (new) + all prev</td><td>1 long session</td></tr>
+<tr><td>15</td><td>08.07</td><td>FINAL: unprepared meeting</td><td>—</td><td>AI sets agenda, self-record</td></tr>
+</table>
+
+<h2>11. Emergency Card (отдельно в cheat-sheet)</h2>
+<p>Пять фраз, которые нужно знать наизусть до автоматизма:</p>
+<ol>
+<li>"Let me start by going through the agenda."</li>
+<li>"Could you give us a quick update on this?"</li>
+<li>"Just to clarify, what exactly is the blocker?"</li>
+<li>"Let me summarize what we've agreed."</li>
+<li>"Action items: ... I'll send the minutes in a moment."</li>
+</ol>
+
+<h2>12. Генерация аудио — инструкция</h2>
+<p>При первом запуске:</p>
+<pre>
+pip install edge-tts
+python scripts/generate-audio.py day-01   # один день
+python scripts/generate-audio.py --week 1  # вся неделя
+</pre>
+
+<p>Выход: <code>audio/day-01.mp3</code> etc. — готово для телефона, копировать на устройство через USB или облако.</p>
+
+<h2>13. Критерии качества</h2>
+<ul>
+<li>Все .html открываются на телефоне без горизонтального скролла</li>
+<li>Все внутренние ссылки работают (index → day → common → index)</li>
+<li>Каждый день имеет одинаковую структуру (чтобы не путаться)</li>
+<li>Чекбоксы чек-листа кликабельны</li>
+<li>Скрипт generate-audio.py обрабатывает все дни без ошибок</li>
+<li>Каждый mp3 длится 55–65 минут</li>
+</ul>
+
+<h2>14. План итераций (после 15 дней)</h2>
+<ol>
+<li>Оценка прогресса (Day 15 self-recording → разбор)</li>
+<li>Слабые зоны: усилить повтор конкретных тем</li>
+<li>Новый блок: если нужно — углубление под администрирование (SQL, оборудование)</li>
+<li>Поддержание: 1–2 раза в неделю AI-сессии без подготовки</li>
+</ol>
+
+<h2>15. Changelog</h2>
+<ul>
+<li><strong>v1.0 (18.06.2026):</strong> Первая версия TOR. Старт проекта.</li>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tic-Tac-Toe</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #1a1a2e; color: #eee; }
+.container { background: #16213e; padding: 2rem; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,.4); min-width: 360px; }
+h2 { margin-bottom: 1rem; text-align: center; color: #e94560; }
+input { display: block; width: 100%; padding: .7rem; margin-bottom: .7rem; border: 1px solid #333; border-radius: 8px; background: #1a1a2e; color: #eee; font-size: 1rem; }
+button { display: block; width: 100%; padding: .7rem; margin-bottom: .5rem; border: none; border-radius: 8px; background: #e94560; color: #fff; font-size: 1rem; cursor: pointer; }
+button:hover { opacity: .85; }
+button.secondary { background: #0f3460; }
+.hidden { display: none !important; }
+.error { color: #e94560; font-size: .85rem; margin-bottom: .5rem; text-align: center; }
+.board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; max-width: 300px; margin: 1rem auto; }
+.cell { aspect-ratio: 1; background: #1a1a2e; border: none; border-radius: 8px; font-size: 2.5rem; font-weight: bold; color: #eee; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .15s; }
+.cell:hover { background: #0f3460; }
+.cell.x { color: #e94560; }
+.cell.o { color: #45e9b6; }
+.cell.taken { cursor: default; }
+#game-info { text-align: center; margin-bottom: .5rem; font-size: 1.1rem; min-height: 2rem; }
+#game-id { text-align: center; font-size: .75rem; color: #888; margin-bottom: .5rem; }
+.menu-buttons { display: flex; flex-direction: column; gap: .5rem; margin-bottom: 1rem; }
+.available-title { margin: 1rem 0 .5rem; font-size: .9rem; color: #aaa; }
+.game-item { display: flex; justify-content: space-between; align-items: center; background: #1a1a2e; padding: .5rem 1rem; border-radius: 8px; margin-bottom: .4rem; }
+.game-item button { width: auto; padding: .3rem 1rem; margin: 0; }
+.spinner { border: 3px solid #333; border-top: 3px solid #e94560; border-radius: 50%; width: 24px; height: 24px; animation: spin .8s linear infinite; margin: 1rem auto; }
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="auth-screen">
+    <h2>Tic-Tac-Toe</h2>
+    <input id="login-input" type="text" placeholder="Login" autocomplete="username">
+    <input id="password-input" type="password" placeholder="Password" autocomplete="current-password">
+    <div id="auth-error" class="error"></div>
+    <button id="login-btn">Login</button>
+    <button id="register-btn" class="secondary">Register</button>
+  </div>
+
+  <div id="menu-screen" class="hidden">
+    <h2>Tic-Tac-Toe</h2>
+    <div id="user-info" style="text-align:center;font-size:.8rem;color:#888;margin-bottom:1rem"></div>
+    <div class="menu-buttons">
+      <button id="vs-computer-btn">New Game vs Computer</button>
+      <button id="vs-player-btn" class="secondary">New Game vs Player</button>
+    </div>
+    <div id="available-section" class="hidden">
+      <div class="available-title">Available Games</div>
+      <div id="available-list"></div>
+    </div>
+  </div>
+
+  <div id="game-screen" class="hidden">
+    <h2>Tic-Tac-Toe</h2>
+    <div id="game-id"></div>
+    <div id="game-info"></div>
+    <div class="board" id="board"></div>
+    <button id="back-btn" class="secondary" style="margin-top:.5rem">Back</button>
+  </div>
+</div>
+
+<script>
+const AUTH_KEY = 'tic_tac_auth';
+let currentUserId = null;
+let currentGameId = null;
+let polling = null;
+
+function show(id) {
+  ['auth-screen','menu-screen','game-screen'].forEach(s => {
+    document.getElementById(s).classList.toggle('hidden', s !== id);
+  });
+  if (id === 'menu-screen') loadAvailableGames();
+}
+
+function getAuth() { return localStorage.getItem(AUTH_KEY) || ''; }
+
+async function api(path, options = {}) {
+  const auth = getAuth();
+  const res = await fetch(path, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...(auth ? { 'Authorization': 'Basic ' + auth } : {}),
+      ...(options.headers || {})
+    }
+  });
+  if (res.status === 401) { localStorage.removeItem(AUTH_KEY); show('auth-screen'); return null; }
+  const text = await res.text();
+  try { return { ok: res.ok, data: text ? JSON.parse(text) : null, status: res.status }; }
+  catch { return { ok: res.ok, data: text, status: res.status }; }
+}
+
+async function register() {
+  const login = document.getElementById('login-input').value.trim();
+  const password = document.getElementById('password-input').value.trim();
+  if (!login || !password) { showAuthError('Fill both fields'); return; }
+  const r = await api('/api/auth/register', { method: 'POST', body: JSON.stringify({ login, password }) });
+  if (r && r.ok) showAuthError('Registered! Now login.');
+  else showAuthError('Register failed (user may exist)');
+}
+
+async function login() {
+  const login = document.getElementById('login-input').value.trim();
+  const password = document.getElementById('password-input').value.trim();
+  if (!login || !password) { showAuthError('Fill both fields'); return; }
+  const auth = btoa(login + ':' + password);
+  localStorage.setItem(AUTH_KEY, auth);
+  const r = await api('/api/auth/login', { method: 'POST' });
+  if (r && r.ok && r.data) {
+    currentUserId = r.data;
+    document.getElementById('user-info').textContent = 'Logged in as ' + login + ' (id: ' + currentUserId + ')';
+    show('menu-screen');
+  } else { localStorage.removeItem(AUTH_KEY); showAuthError('Login failed'); }
+}
+
+function showAuthError(msg) {
+  document.getElementById('auth-error').textContent = msg;
+}
+
+async function createGame(gameType) {
+  const r = await api('/api/game', { method: 'POST', body: JSON.stringify({ gameType }) });
+  if (r && r.ok && r.data) {
+    openGame(r.data);
+  }
+}
+
+async function loadAvailableGames() {
+  const r = await api('/api/game/available');
+  const section = document.getElementById('available-section');
+  const list = document.getElementById('available-list');
+  if (!r || !r.ok || !r.data || r.data.length === 0) {
+    section.classList.add('hidden');
+    return;
+  }
+  section.classList.remove('hidden');
+  list.innerHTML = r.data.map(g => `
+    <div class="game-item">
+      <span>Game ${g.id.slice(0,8)}...</span>
+      <button onclick="joinGame('${g.id}')">Join</button>
+    </div>
+  `).join('');
+  // setInterval(() => loadAvailableGames(), 5000);
+}
+
+async function joinGame(id) {
+  const r = await api('/api/game/' + id + '/join', { method: 'POST' });
+  if (r && r.ok && r.data) openGame(r.data);
+}
+
+function openGame(game) {
+  currentGameId = game.id;
+  document.getElementById('game-id').textContent = 'Game: ' + game.id;
+  renderBoard(game);
+  show('game-screen');
+  startPolling(game.id);
+}
+
+function renderBoard(game) {
+  const boardEl = document.getElementById('board');
+  const info = document.getElementById('game-info');
+  boardEl.innerHTML = '';
+  const state = game.state;
+  const isOver = state === 'PlayerXWin' || state === 'PlayerOWin' || state === 'Draw';
+  const gameType = game.gameType;
+  const mySymbol = game.playerXId === currentUserId ? 1 : (game.playerOId === currentUserId ? 2 : -1);
+  const myTurn = (state === 'PlayerXTurn' && mySymbol === 1) || (state === 'PlayerOTurn' && mySymbol === 2);
+
+  if (isOver) {
+    if (state === 'PlayerXWin') info.textContent = gameType === 'VsComputer' ? 'Computer wins!' : 'X wins!';
+    else if (state === 'PlayerOWin') info.textContent = gameType === 'VsComputer' ? 'You win!' : 'O wins!';
+    else info.textContent = 'Draw!';
+  } else if (state === 'WaitingForPlayers') {
+    info.textContent = 'Waiting for opponent...';
+  } else if (myTurn) {
+    info.textContent = 'Your turn (' + (mySymbol === 1 ? 'X' : 'O') + ')';
+  } else {
+    info.textContent = (gameType === 'VsComputer') ? 'Computer is thinking...' : 'Opponent\'s turn...';
+  }
+
+  const board = game.board.board;
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      const cell = document.createElement('button');
+      cell.className = 'cell';
+      const val = board[i][j];
+      cell.textContent = val === 1 ? 'X' : val === 2 ? 'O' : '';
+      if (val === 1) cell.classList.add('x');
+      if (val === 2) cell.classList.add('o');
+      if (val !== 0 || isOver || !myTurn || state === 'WaitingForPlayers') cell.classList.add('taken');
+      else cell.onclick = () => makeMove(game.id, i, j);
+      boardEl.appendChild(cell);
+    }
+  }
+}
+
+async function makeMove(id, row, col) {
+  const r = await api('/api/game/' + id, { method: 'POST', body: JSON.stringify({ row, col }) });
+  if (r && r.ok && r.data) renderBoard(r.data);
+}
+
+function startPolling(id) {
+  if (polling) clearInterval(polling);
+  polling = setInterval(async () => {
+    const r = await api('/api/game/' + id);
+    if (r && r.ok && r.data) {
+      renderBoard(r.data);
+      const state = r.data.state;
+      if (state === 'PlayerXWin' || state === 'PlayerOWin' || state === 'Draw') {
+        clearInterval(polling);
+        polling = null;
+      }
+    }
+  }, 2000);
+}
+
+function backToMenu() {
+  if (polling) { clearInterval(polling); polling = null; }
+  currentGameId = null;
+  show('menu-screen');
+}
+
+document.getElementById('register-btn').onclick = register;
+document.getElementById('login-btn').onclick = login;
+document.getElementById('vs-computer-btn').onclick = () => createGame('VsComputer');
+document.getElementById('vs-player-btn').onclick = () => createGame('VsPlayer');
+document.getElementById('back-btn').onclick = backToMenu;
+
+document.getElementById('login-input').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+document.getElementById('password-input').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+
+// Auto-login check
+if (getAuth()) {
+  (async () => {
+    const r = await api('/api/auth/login', { method: 'POST' });
+    if (r && r.ok && r.data) {
+      currentUserId = r.data;
+      show('menu-screen');
+    } else {
+      localStorage.removeItem(AUTH_KEY);
+      show('auth-screen');
+    }
+  })();
+}
+</script>
+</body>
+</html>

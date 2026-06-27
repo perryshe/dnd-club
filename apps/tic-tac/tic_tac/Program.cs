@@ -41,6 +41,52 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.EnsureCreated();
+    // Создаём новые таблицы если БД уже существовала (EnsureCreated не добавляет их)
+    db.Database.ExecuteSqlRaw("""
+        CREATE TABLE IF NOT EXISTS users (
+            "Id" uuid PRIMARY KEY,
+            "Login" text NOT NULL,
+            "PasswordHash" text NOT NULL,
+            "CreatedAt" timestamptz NOT NULL
+        )
+    """);
+    db.Database.ExecuteSqlRaw("""
+        CREATE TABLE IF NOT EXISTS game_results (
+            "Id" uuid PRIMARY KEY,
+            "UserId" uuid NOT NULL,
+            "Result" integer NOT NULL,
+            "Timestamp" timestamptz NOT NULL
+        )
+    """);
+    try { db.Database.ExecuteSqlRaw("""CREATE UNIQUE INDEX IF NOT EXISTS "IX_users_Login" ON users ("Login")"""); } catch { }
+    // Sync existing users: replace email logins with school nicknames from main DB
+    try
+    {
+        var clubConnStr = app.Configuration.GetConnectionString("ClubConnection");
+        if (!string.IsNullOrEmpty(clubConnStr))
+        {
+            var emailUsers = db.Users.Where(u => u.Login.Contains("@")).ToList();
+            foreach (var user in emailUsers)
+            {
+                using var clubConn = new NpgsqlConnection(clubConnStr);
+                clubConn.Open();
+                using var cmd = clubConn.CreateCommand();
+                cmd.CommandText = "SELECT school_nick FROM users WHERE email = @email";
+                cmd.Parameters.AddWithValue("@email", NpgsqlTypes.NpgsqlDbType.Text, user.Login);
+                var schoolNick = cmd.ExecuteScalar() as string;
+                if (!string.IsNullOrEmpty(schoolNick))
+                {
+                    Console.WriteLine($"Syncing user: {user.Login} -> {schoolNick}");
+                    user.Login = schoolNick;
+                }
+            }
+            db.SaveChanges();
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"User sync error (non-fatal): {ex.Message}");
+    }
 }
 // === MIDDLEWARE (порядок важен!) ===
 
@@ -67,9 +113,13 @@ app.MapControllers();
 // Выводим информацию в консоль
 Console.WriteLine("Tic-Tac-Toe Server running on http://localhost:5000");
 Console.WriteLine("API endpoints:");
-Console.WriteLine("  GET  /api/game       - Create new game");
-Console.WriteLine("  GET  /api/game/{id}  - Get game by ID");
-Console.WriteLine("  POST /api/game/{id}  - Make move");
+Console.WriteLine("  POST /api/auth/register   - Register new user");
+Console.WriteLine("  POST /api/auth/login      - Login (Basic Auth)");
+Console.WriteLine("  GET  /api/game            - Create new game [Auth]");
+Console.WriteLine("  GET  /api/game/{id}       - Get game by ID [Auth]");
+Console.WriteLine("  POST /api/game/{id}       - Make move [Auth]");
+Console.WriteLine("  POST /api/stats/record    - Record game result [Auth]");
+Console.WriteLine("  GET  /api/stats/leaderboard - Leaderboard");
 
 // Запускаем сервер (блокирующий вызов)
 app.Run();

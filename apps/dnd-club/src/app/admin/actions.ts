@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache"
 
 export async function approveUser(userId: string) {
   const session = await auth()
-  if (!session?.user?.role || session.user.role !== "admin") {
+  if (!session?.user?.role || (session.user.role !== "admin" && session.user.role !== "sadmin")) {
     throw new Error("Нет доступа")
   }
 
@@ -20,7 +20,7 @@ export async function approveUser(userId: string) {
 
 export async function deleteUser(userId: string) {
   const session = await auth()
-  if (!session?.user?.role || session.user.role !== "admin") {
+  if (!session?.user?.role || (session.user.role !== "admin" && session.user.role !== "sadmin")) {
     throw new Error("Нет доступа")
   }
 
@@ -28,13 +28,16 @@ export async function deleteUser(userId: string) {
   revalidatePath("/admin")
 }
 
-export async function setUserRole(userId: string, role: "admin" | "user") {
+export async function setUserRole(userId: string, role: "admin" | "user" | "sadmin") {
   const session = await auth()
-  if (!session?.user?.role || session.user.role !== "admin") {
+  if (!session?.user?.role || (session.user.role !== "admin" && session.user.role !== "sadmin")) {
     throw new Error("Нет доступа")
   }
-  if (session.user.id === userId && role !== "admin") {
-    throw new Error("Нельзя понизить себя")
+  if (session.user.id === userId) {
+    throw new Error("Нельзя изменить свою роль")
+  }
+  if (role === "sadmin" && session.user.email !== process.env.ADMIN_EMAIL) {
+    throw new Error("Только главный администратор может назначить SAdmin")
   }
 
   await prisma.user.update({

@@ -4,6 +4,7 @@ import { notFound, redirect } from "next/navigation"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import CharacterForm from "@/components/character-form"
+import { ErrorBoundary } from "@/components/error-boundary"
 
 export default async function EditCharacterPage({
   params,
@@ -19,8 +20,10 @@ export default async function EditCharacterPage({
   })
   if (!character) notFound()
 
+  const safeCharacter = JSON.parse(JSON.stringify(character))
+
   const isOwner = character.userId === session.user.id
-  const isAdmin = session.user.role === "admin"
+  const isAdmin = session.user.role === "admin" || session.user.role === "sadmin"
   if (!isOwner && !isAdmin) redirect(`/${character.campaign.slug}`)
 
   return (
@@ -39,13 +42,15 @@ export default async function EditCharacterPage({
 
       <main className="container mx-auto px-4 pb-16">
         <div className="max-w-4xl">
-          <CharacterForm
-            slug={character.campaign.slug}
-            character={character}
-            inputClass="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white focus:border-red-500 outline-none"
-            btnClass="bg-red-600"
-            btnHoverClass="hover:bg-red-700"
-          />
+          <ErrorBoundary>
+            <CharacterForm
+              slug={character.campaign.slug}
+              character={safeCharacter}
+              inputClass="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white focus:border-red-500 outline-none"
+              btnClass="bg-red-600"
+              btnHoverClass="hover:bg-red-700"
+            />
+          </ErrorBoundary>
         </div>
       </main>
     </div>

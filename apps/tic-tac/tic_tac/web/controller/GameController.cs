@@ -5,6 +5,7 @@ using tic_tac.datasource.mapper;
 using tic_tac.datasource.model;
 using tic_tac.domain.model;
 using tic_tac.domain.service;
+using tic_tac.web.auth;
 using tic_tac.web.mapper;
 using tic_tac.web.model;
 
@@ -16,6 +17,7 @@ namespace tic_tac.web.controller;
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
+[UserAuthenticator]
 public class GameController : ControllerBase
 {
     private readonly IGameService _gameService;

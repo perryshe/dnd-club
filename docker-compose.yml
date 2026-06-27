@@ -75,6 +75,7 @@ services:
     environment:
       - ConnectionStrings__AdminConnection=Host=db;Port=5432;Database=postgres;Username=dndclub;Password=dndclub_pass
       - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=tic_tac;Username=dndclub;Password=dndclub_pass
+      - ConnectionStrings__ClubConnection=Host=db;Port=5432;Database=dndclub;Username=dndclub;Password=dndclub_pass
       - ASPNETCORE_ENVIRONMENT=Production
     depends_on:
       db:
