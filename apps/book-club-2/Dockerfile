@@ -5,7 +5,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY apps/book-club-2/package.json ./
 COPY packages /packages
-RUN npm install --ignore-scripts
+RUN npm install --ignore-scripts && rm -rf node_modules/club-nav && cp -r /packages/club-nav node_modules/club-nav
 
 FROM base AS builder
 WORKDIR /app
