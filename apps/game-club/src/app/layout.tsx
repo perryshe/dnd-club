@@ -3,7 +3,7 @@ import { SessionProvider } from "next-auth/react"
 import { auth } from "@/lib/auth"
 import "./globals.css"
 import SignOutButton from "@/components/signout-button"
-import ClubHeader from "club-nav"
+import ClubNav from "club-nav"
 import { Cpu } from "lucide-react"
 
 export const metadata: Metadata = {
@@ -18,7 +18,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="ru">
       <body className="antialiased min-h-screen flex flex-col">
         <SessionProvider session={session}>
-          <ClubHeader club="g21" session={session} />
+          <ClubNav
+            active="g21"
+            dndClubUrl={process.env.NEXT_PUBLIC_DND_CLUB_URL ?? "/"}
+            bookClubUrl={process.env.NEXT_PUBLIC_BOOK_CLUB_URL}
+            activeHref="/"
+            session={session}
+          />
           <main className="flex-1">{children}</main>
           <footer className="border-t border-slate-800/40 bg-slate-950/50">
             <div className="container mx-auto px-4 h-10 flex items-center justify-between">
