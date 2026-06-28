@@ -1,11 +1,13 @@
 import type { Metadata } from "next"
 import { ClubHeader } from "club-nav"
 import StatsCards from "@/components/StatsCards"
+import NextEvent from "@/components/NextEvent"
+import ReadingLog from "@/components/ReadingLog"
 import VoteSection from "@/components/VoteSection"
 import BookGrid from "@/components/BookGrid"
 import RatingTable from "@/components/RatingTable"
+import FreeLibraries from "@/components/FreeLibraries"
 import SuggestModal from "@/components/SuggestModal"
-import ReadingLog from "@/components/ReadingLog"
 
 export const dynamic = "force-dynamic"
 
@@ -35,6 +37,7 @@ export default async function HomePage({ searchParams }: { searchParams?: { sort
       <section className="relative">
         <div className="container mx-auto px-4 pb-16 text-center">
           <StatsCards />
+          <NextEvent />
         </div>
       </section>
 
@@ -47,6 +50,9 @@ export default async function HomePage({ searchParams }: { searchParams?: { sort
             <VoteSection />
             <BookGrid />
             <RatingTable searchParams={searchParams} />
+            <div className="mt-8">
+              <FreeLibraries />
+            </div>
           </div>
         </div>
       </section>
