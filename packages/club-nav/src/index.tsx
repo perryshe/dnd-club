@@ -75,10 +75,38 @@ const clubHeaderConfig: Record<ClubIdMain, { division: string; links: { label: s
   },
 }
 
-const clubColors: Record<ClubIdMain, string> = {
-  d21: "text-amber-400",
-  b21: "text-cyan-400",
-  g21: "text-cyan-300",
+const clubStyles: Record<ClubIdMain, {
+  title: string
+  badge: string
+  link: string
+  linkSep: string
+  telegram: string
+  telegramDisabled: string
+}> = {
+  d21: {
+    title: "bg-gradient-to-r from-amber-300 via-amber-500 to-orange-600 bg-clip-text text-transparent",
+    badge: "border-amber-500/20 bg-amber-950/30 text-amber-400/80",
+    link: "text-amber-400/80 hover:text-amber-300",
+    linkSep: "text-amber-700",
+    telegram: "bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 shadow-amber-900/30",
+    telegramDisabled: "text-amber-600 border-amber-800",
+  },
+  b21: {
+    title: "text-cyan-400",
+    badge: "border-slate-700/30 bg-slate-900/50 text-slate-500",
+    link: "text-slate-500 hover:text-white",
+    linkSep: "text-slate-700",
+    telegram: "bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-500 hover:to-blue-600 shadow-sky-900/30",
+    telegramDisabled: "text-slate-600 border-slate-800",
+  },
+  g21: {
+    title: "text-cyan-300",
+    badge: "border-slate-700/30 bg-slate-900/50 text-slate-500",
+    link: "text-slate-500 hover:text-white",
+    linkSep: "text-slate-700",
+    telegram: "bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-500 hover:to-blue-600 shadow-sky-900/30",
+    telegramDisabled: "text-slate-600 border-slate-800",
+  },
 }
 
 const telegramUrls: Record<ClubIdMain, string | null> = {
@@ -93,23 +121,24 @@ type ClubHeaderProps = {
 
 export function ClubHeader({ club }: ClubHeaderProps) {
   const config = clubHeaderConfig[club]
+  const style = clubStyles[club]
   const tg = telegramUrls[club]
 
   return (
     <header className="text-center pt-24 pb-16">
-      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-700/30 bg-slate-900/50 text-slate-500 text-[10px] font-mono tracking-[0.25em] uppercase mb-8">
+      <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-[10px] font-mono tracking-[0.25em] uppercase mb-8 ${style.badge}`}>
         Module // {config.division}
       </div>
 
-      <h1 className={`text-5xl md:text-7xl font-black mb-4 tracking-tight ${clubColors[club]}`}>
+      <h1 className={`text-5xl md:text-7xl font-black mb-4 tracking-tight ${style.title}`}>
         {club.toUpperCase()} Club
       </h1>
 
-      <nav className="flex items-center justify-center gap-3 text-xs font-mono tracking-wider uppercase text-slate-500 mb-8">
+      <nav className={`flex items-center justify-center gap-3 text-xs font-mono tracking-wider uppercase mb-8 ${style.link}`}>
         {config.links.map((link, i) => (
           <span key={link.label}>
-            {i > 0 && <span className="text-slate-700 mx-1">·</span>}
-            <a href={link.href} className="hover:text-white transition">{link.label}</a>
+            {i > 0 && <span className={`${style.linkSep} mx-1`}>·</span>}
+            <a href={link.href} className={`${style.link} transition`}>{link.label}</a>
           </span>
         ))}
       </nav>
@@ -118,12 +147,12 @@ export function ClubHeader({ club }: ClubHeaderProps) {
         <a
           href={tg}
           target="_blank"
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-500 hover:to-blue-600 px-6 py-3 rounded-lg transition shadow-lg shadow-sky-900/30 text-sm font-mono tracking-wider uppercase"
+          className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg transition shadow-lg text-sm font-mono tracking-wider uppercase ${style.telegram}`}
         >
           Telegram
         </a>
       ) : (
-        <span className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-mono tracking-wider uppercase text-slate-600 border border-slate-800">
+        <span className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-mono tracking-wider uppercase border ${style.telegramDisabled}`}>
           Telegram
         </span>
       )}

@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
 import { ClubHeader } from "club-nav"
 import StatsCards from "@/components/StatsCards"
-import BookOfMonth from "@/components/BookOfMonth"
 import VoteSection from "@/components/VoteSection"
 import BookGrid from "@/components/BookGrid"
 import RatingTable from "@/components/RatingTable"
@@ -45,7 +44,6 @@ export default async function HomePage({ searchParams }: { searchParams?: { sort
       <section className="relative pb-24">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
-            <BookOfMonth />
             <VoteSection />
             <BookGrid />
             <RatingTable searchParams={searchParams} />
