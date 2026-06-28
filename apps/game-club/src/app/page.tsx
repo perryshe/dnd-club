@@ -31,6 +31,16 @@ type MeetingData = {
 export default function HomePage() {
   const { data: session } = useSession()
   const [tab, setTab] = useState("main")
+
+  useEffect(() => {
+    const onHash = () => {
+      const hash = window.location.hash.replace("#", "")
+      if (["collection", "vote", "wish"].includes(hash)) setTab(hash)
+    }
+    window.addEventListener("hashchange", onHash)
+    onHash()
+    return () => window.removeEventListener("hashchange", onHash)
+  }, [])
   const [games, setGames] = useState<Game[]>([])
   const [votes, setVotes] = useState<VoteCounts>({})
   const [wishes, setWishes] = useState<WishEntry[]>([])

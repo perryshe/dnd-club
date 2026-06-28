@@ -50,25 +50,24 @@ const clubHeaderConfig: Record<ClubIdMain, { division: string; links: { label: s
   d21: {
     division: "rpg division",
     links: [
-      { label: "campaigns", href: "#" },
-      { label: "characters", href: "#" },
-      { label: "wiki", href: "#" },
+      { label: "The dead Band", href: "/dead-band" },
+      { label: "Night city", href: "/shards" },
     ],
   },
   b21: {
     division: "book club division",
     links: [
       { label: "reading log", href: "#reading-log" },
-      { label: "voting", href: "#voting" },
-      { label: "meetings", href: "#meetings" },
+      { label: "vote", href: "#voting" },
+      { label: "books", href: "#books" },
     ],
   },
   g21: {
     division: "board games division",
     links: [
-      { label: "collection", href: "#" },
-      { label: "voting", href: "#" },
-      { label: "meetings", href: "#" },
+      { label: "collection", href: "#collection" },
+      { label: "vote", href: "#vote" },
+      { label: "wishlist", href: "#wish" },
     ],
   },
 }

@@ -34,7 +34,7 @@ export default async function ReadingLog() {
   }
 
   return (
-    <section className="relative pb-24">
+    <section id="reading-log" className="relative pb-24">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
           <div className="flex items-center gap-4 mb-12">

@@ -18,7 +18,7 @@ export default async function BookGrid() {
   if (books.length === 0) return null
 
   return (
-    <section className="mb-12">
+    <section id="books" className="mb-12">
       <div className="flex items-center gap-2 mb-6">
         <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-slate-500">// все книги</span>
       </div>
