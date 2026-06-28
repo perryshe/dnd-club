@@ -1,6 +1,6 @@
 "use client"
 
-import type { ReactNode } from "react"
+import { useState } from "react"
 
 export type ClubId = "d21" | "b21" | "t21" | "e21" | "g21" | "quest"
 
@@ -26,11 +26,9 @@ type Props = {
   active?: ClubId
   dndClubUrl: string
   bookClubUrl?: string
-  /** For the active club, use this as the href (the club's own basePath or "/") */
   activeHref?: string
   session?: { user?: { role?: string } } | null
-  /** Replace the default t21 link (e.g. with GameModal) */
-  t21Element?: ReactNode
+  t21Url?: string
 }
 
 function hrefFor(id: ClubId, dndClubUrl: string, bookClubUrl?: string): string {
@@ -85,8 +83,8 @@ const clubStyles: Record<ClubIdMain, {
 }> = {
   d21: {
     title: "bg-gradient-to-r from-amber-300 via-amber-500 to-orange-600 bg-clip-text text-transparent",
-    badge: "border-amber-500/20 bg-amber-950/30 text-amber-400/80",
-    link: "text-amber-400/80 hover:text-amber-300",
+    badge: "border-amber-500/40 bg-amber-950/70 text-amber-300",
+    link: "text-amber-300 hover:text-amber-200",
     linkSep: "text-amber-700",
     telegram: "bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 shadow-amber-900/30",
     telegramDisabled: "text-amber-600 border-amber-800",
@@ -131,7 +129,7 @@ export function ClubHeader({ club }: ClubHeaderProps) {
       </div>
 
       <h1 className={`text-5xl md:text-7xl font-black mb-4 tracking-tight ${style.title}`}>
-        {club.toUpperCase()} Club
+        {club} Club
       </h1>
 
       <nav className={`flex items-center justify-center gap-3 text-xs font-mono tracking-wider uppercase mb-8 ${style.link}`}>
@@ -162,8 +160,9 @@ export function ClubHeader({ club }: ClubHeaderProps) {
 
 // --- ClubNav (top bar) ---
 
-export default function ClubNav({ active, dndClubUrl, bookClubUrl, activeHref, session, t21Element }: Props) {
+export default function ClubNav({ active, dndClubUrl, bookClubUrl, activeHref, session, t21Url }: Props) {
   const isSadmin = session?.user?.role === "sadmin"
+  const [t21Open, setT21Open] = useState(false)
 
   return (
     <nav className="bg-black border-b border-slate-800">
@@ -192,15 +191,32 @@ export default function ClubNav({ active, dndClubUrl, bookClubUrl, activeHref, s
           )
           return <span key={club.id}>{el}</span>
         })}
-        {t21Element}
-        {!t21Element && (
-          <span key="t21">
-            <a href={hrefFor("t21", dndClubUrl, bookClubUrl)} className="flex items-center gap-2 font-bold text-indigo-400 hover:text-indigo-300 transition whitespace-nowrap">
-              t21 Club
-            </a>
-          </span>
-        )}
+        <span key="t21">
+          <button onClick={() => setT21Open(true)} className="flex items-center gap-2 font-bold text-indigo-400 hover:text-indigo-300 transition whitespace-nowrap bg-transparent border-none cursor-pointer">
+            <span className="w-4 h-4 rounded flex items-center justify-center bg-indigo-600 text-white text-[8px] font-bold shrink-0">#</span>
+            <span className="text-xs">t21 Club</span>
+          </button>
+        </span>
       </div>
+      {t21Open && t21Url && (
+        <div
+          className="fixed inset-0 z-50 flex items-start justify-start bg-black/70"
+          onClick={() => setT21Open(false)}
+        >
+          <div
+            className="relative w-[400px] h-[600px] mt-16 ml-4 bg-[#1a1a2e] overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setT21Open(false)}
+              className="absolute top-2 right-2 z-10 w-5 h-5 flex items-center justify-center bg-red-600 hover:bg-red-700 text-white rounded-full text-xs leading-none"
+            >
+              &times;
+            </button>
+            <iframe src={t21Url} className="w-full h-full border-none" title="t21 Club" />
+          </div>
+        </div>
+      )}
     </nav>
   )
 }
