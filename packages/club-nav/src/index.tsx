@@ -2,87 +2,90 @@
 
 import type { ReactNode } from "react"
 
-export type ClubId = "d21" | "b21" | "t21" | "e21" | "g21" | "quest"
+export type ClubId = "d21" | "b21" | "g21"
 
-type ClubDef = {
-  id: ClubId
+type NavLink = {
   label: string
-  color: string
-  icon?: string
-  iconSize?: string
-  iconClass?: string
+  href: string
 }
 
-const clubs: ClubDef[] = [
-  { id: "d21", label: "d21 Club", color: "text-amber-400 hover:text-amber-300", icon: "/favicon21.jpg", iconSize: "w-6 h-6", iconClass: "rounded" },
-  { id: "b21", label: "b21 Club", color: "text-cyan-400 hover:text-cyan-300", icon: "/book-favicon.svg", iconSize: "w-5 h-5" },
-  { id: "t21", label: "t21 Club", color: "text-indigo-400 hover:text-indigo-300" },
-  { id: "e21", label: "e21 Club", color: "text-green-400 hover:text-green-300" },
-  { id: "g21", label: "g21 Club", color: "text-cyan-300 hover:text-cyan-200" },
-  { id: "quest", label: "quest", color: "text-purple-400 hover:text-purple-300" },
-]
+const clubConfig: Record<ClubId, { division: string; links: NavLink[] }> = {
+  d21: {
+    division: "rpg division",
+    links: [
+      { label: "campaigns", href: "#" },
+      { label: "characters", href: "#" },
+      { label: "wiki", href: "#" },
+    ],
+  },
+  b21: {
+    division: "book club division",
+    links: [
+      { label: "reading log", href: "#reading-log" },
+      { label: "voting", href: "#voting" },
+      { label: "meetings", href: "#meetings" },
+    ],
+  },
+  g21: {
+    division: "board games division",
+    links: [
+      { label: "collection", href: "#" },
+      { label: "voting", href: "#" },
+      { label: "meetings", href: "#" },
+    ],
+  },
+}
+
+const colors: Record<ClubId, string> = {
+  d21: "text-amber-400",
+  b21: "text-cyan-400",
+  g21: "text-cyan-300",
+}
+
+const telegrams: Record<ClubId, string | null> = {
+  d21: "https://t.me/d21_blg",
+  b21: null,
+  g21: null,
+}
 
 type Props = {
-  active?: ClubId
-  dndClubUrl: string
-  bookClubUrl?: string
-  /** For the active club, use this as the href (the club's own basePath or "/") */
-  activeHref?: string
+  club: ClubId
   session?: { user?: { role?: string } } | null
-  /** Replace the default t21 link (e.g. with GameModal) */
-  t21Element?: ReactNode
+  children?: ReactNode
 }
 
-function hrefFor(id: ClubId, dndClubUrl: string, bookClubUrl?: string): string {
-  switch (id) {
-    case "d21": return dndClubUrl
-    case "b21": return bookClubUrl ?? `${dndClubUrl}/b21`
-    case "t21": return `${dndClubUrl}/t21/`
-    case "e21": return `${dndClubUrl}/e21/`
-    case "g21": return `${dndClubUrl}/g21/`
-    case "quest": return `${dndClubUrl}/quest/`
-  }
-}
-
-export default function ClubNav({ active, dndClubUrl, bookClubUrl, activeHref, session, t21Element }: Props) {
-  const isSadmin = session?.user?.role === "sadmin"
+export default function ClubHeader({ club, session, children }: Props) {
+  const config = clubConfig[club]
+  const tg = telegrams[club]
 
   return (
-    <nav className="bg-black border-b border-slate-800">
-      <div className="container mx-auto px-4 h-12 flex items-center gap-6">
-        {clubs.map((club) => {
-          if (club.id === "quest" && !isSadmin) return null
-          if (club.id === "t21") return null
-
-          const isActive = active === club.id
-          const baseClass = "flex items-center gap-2 font-bold transition whitespace-nowrap"
-          const colorClass = isActive ? club.color.replace(" hover:", " ") : club.color
-
-          const inner = (
-            <>
-              {club.icon && (
-                <img src={club.icon} alt="" className={`${club.iconSize ?? "w-5 h-5"} ${club.iconClass ?? ""}`} />
-              )}
-              {club.label}
-            </>
-          )
-
-          const el = isActive && activeHref ? (
-            <a href={activeHref} className={`${baseClass} ${colorClass}`}>{inner}</a>
-          ) : (
-            <a href={hrefFor(club.id, dndClubUrl, bookClubUrl)} className={`${baseClass} ${colorClass}`}>{inner}</a>
-          )
-          return <span key={club.id}>{el}</span>
-        })}
-        {t21Element}
-        {!t21Element && (
-          <span key="t21">
-            <a href={hrefFor("t21", dndClubUrl, bookClubUrl)} className="flex items-center gap-2 font-bold text-indigo-400 hover:text-indigo-300 transition whitespace-nowrap">
-              t21 Club
+    <header className="bg-black border-b border-slate-800">
+      <div className="container mx-auto px-4 py-4">
+        <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-slate-600">
+          Module // {config.division}
+        </div>
+        <div className={`text-2xl font-bold mt-1 ${colors[club]}`}>
+          {club.toUpperCase()} Club
+        </div>
+        <nav className="flex items-center gap-3 mt-2 text-xs font-mono tracking-wider uppercase text-slate-400">
+          {config.links.map((link, i) => (
+            <span key={link.label}>
+              {i > 0 && <span className="text-slate-700 mx-1">·</span>}
+              <a href={link.href} className="hover:text-white transition">{link.label}</a>
+            </span>
+          ))}
+        </nav>
+        <div className="mt-3 pt-3 border-t border-slate-800">
+          {tg ? (
+            <a href={tg} className="text-xs text-slate-500 hover:text-sky-400 transition font-mono" target="_blank" rel="noopener noreferrer">
+              Telegram
             </a>
-          </span>
-        )}
+          ) : (
+            <span className="text-xs text-slate-600 font-mono">Telegram</span>
+          )}
+        </div>
+        {children}
       </div>
-    </nav>
+    </header>
   )
 }
