@@ -18,8 +18,8 @@ services:
 
   dnd-club:
     build:
-      context: ./apps/dnd-club
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: apps/dnd-club/Dockerfile
     container_name: dnd-club
     restart: always
     ports:
@@ -40,29 +40,6 @@ services:
         condition: service_healthy
     volumes:
       - ./uploads:/app/public/uploads
-
-  book-club:
-    build:
-      context: ./apps/book-club
-      dockerfile: Dockerfile
-    container_name: dnd-book-club
-    restart: always
-    ports:
-      - "3002:3000"
-    environment:
-      - NODE_ENV=production
-      - NEXT_TELEMETRY_DISABLED=1
-      - DATABASE_URL=postgresql://dndclub:dndclub_pass@dnd-club-db:5432/dndclub
-      - NEXTAUTH_SECRET=change-me-to-a-random-secret
-      - NEXTAUTH_URL=https://d21-club.ru/b21
-      - NEXT_PUBLIC_DND_CLUB_URL=https://d21-club.ru
-      - NEXT_PUBLIC_BOOK_CLUB_URL=https://d21-club.ru/b21
-      - NEXT_PUBLIC_T21_GAME_URL=https://d21-club.ru/t21
-      - ADMIN_EMAIL=admin@dnd-club.ru
-      - ADMIN_PASSWORD=admin123
-    depends_on:
-      db:
-        condition: service_healthy
 
   t21-game:
     build:
@@ -94,8 +71,8 @@ services:
 
   book-club-2:
     build:
-      context: ./apps/book-club-2
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: apps/book-club-2/Dockerfile
     container_name: dnd-book-club-2
     restart: always
     ports:
@@ -103,10 +80,32 @@ services:
     environment:
       - NODE_ENV=production
       - NEXT_TELEMETRY_DISABLED=1
-      - DATABASE_URL=postgresql://dndclub:dndclub_pass@dnd-club-db:5432/dndclub
+      - AUTH_DATABASE_URL=postgresql://dndclub:dndclub_pass@dnd-club-db:5432/dndclub
+      - DATABASE_URL=postgresql://dndclub:dndclub_pass@dnd-club-db:5432/bookclub2
       - NEXTAUTH_SECRET=change-me-to-a-random-secret
-      - NEXTAUTH_URL=https://d21-club.ru/b22
+      - NEXTAUTH_URL=https://d21-club.ru/b21
       - NEXT_PUBLIC_DND_CLUB_URL=https://d21-club.ru
+    depends_on:
+      db:
+        condition: service_healthy
+
+  game-club:
+    build:
+      context: .
+      dockerfile: apps/game-club/Dockerfile
+    container_name: g21-club
+    restart: always
+    ports:
+      - "3007:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+      - AUTH_DATABASE_URL=postgresql://dndclub:dndclub_pass@dnd-club-db:5432/dndclub
+      - DATABASE_URL=postgresql://dndclub:dndclub_pass@dnd-club-db:5432/gameclub
+      - NEXTAUTH_SECRET=change-me-to-a-random-secret
+      - NEXTAUTH_URL=https://d21-club.ru/g21
+      - NEXT_PUBLIC_DND_CLUB_URL=https://d21-club.ru
+      - NEXT_PUBLIC_BOOK_CLUB_URL=https://d21-club.ru/b21
     depends_on:
       db:
         condition: service_healthy

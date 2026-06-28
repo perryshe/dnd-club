@@ -3,13 +3,15 @@ FROM node:20-alpine3.21 AS base
 FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
-COPY package.json ./
-RUN npm install --ignore-scripts
+COPY apps/book-club/package.json ./
+COPY packages /packages
+RUN npm install --ignore-scripts && rm -rf node_modules/club-nav && cp -r /packages/club-nav node_modules/club-nav
 
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+COPY packages /packages
+COPY apps/book-club/ .
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npx prisma generate && npm run build
 

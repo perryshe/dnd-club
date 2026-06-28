@@ -1,7 +1,7 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { compare } from "bcryptjs"
-import { prisma } from "./prisma"
+import { prismaAuth } from "./prisma-auth"
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   trustHost: true,
@@ -17,8 +17,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       async authorize(credentials) {
         if (!credentials?.schoolNick || !credentials?.password) return null
         const nick = credentials.schoolNick as string
-        let user = await prisma.user.findFirst({ where: { schoolNick: nick } })
-        if (!user) user = await prisma.user.findUnique({ where: { email: nick } })
+        let user = await prismaAuth.user.findFirst({ where: { schoolNick: nick } })
+        if (!user) user = await prismaAuth.user.findUnique({ where: { email: nick } })
         if (!user) return null
         if (user.role === "pending") return null
         const valid = await compare(credentials.password as string, user.password)

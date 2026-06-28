@@ -12,7 +12,7 @@ jobs:
       - name: Pull latest code
         run: |
           cd /home/club/Club
-          git fetch --force origin develop && git reset --hard origin/develop
+          git pull
       - name: Copy maintenance page
         run: |
           sudo cp /home/club/Club/maintenance.html /usr/share/nginx/html/maintenance.html
@@ -20,10 +20,16 @@ jobs:
         run: |
           cd /home/club/Club
           sudo ./maintenance.sh on
+      - name: Cleanup before build
+        run: |
+          cd /home/club/Club
+          docker stop dnd-book-club dnd-club book-club-2 game-club quest t21-game english 2>/dev/null || true
+          docker rm -f dnd-book-club dnd-club book-club-2 game-club quest t21-game english 2>/dev/null || true
+          docker system prune -af
       - name: Build app images
         run: |
           cd /home/club/Club
-          docker compose -f docker-compose.prod.yml build dnd-club book-club book-club-2 quest t21-game english
+          docker compose -f docker-compose.prod.yml build dnd-club book-club-2 quest t21-game english game-club
       - name: Restart app services (db untouched)
         run: |
           cd /home/club/Club
@@ -39,6 +45,10 @@ jobs:
           docker compose -f docker-compose.prod.yml exec -T dnd-club \
             npx prisma db push
           docker compose -f docker-compose.prod.yml restart dnd-club
+          docker compose -f docker-compose.prod.yml exec -T game-club \
+            npx prisma db push --schema=prisma/schema.prisma
+          docker compose -f docker-compose.prod.yml exec -T book-club-2 \
+            npx prisma db push --schema=prisma/schema.prisma
       - name: Update nginx and reload
         run: |
           sudo cp /home/club/Club/dnd-club-nginx.conf /etc/nginx/sites-enabled/dnd-club
@@ -48,3 +58,6 @@ jobs:
         run: |
           cd /home/club/Club
           sudo ./maintenance.sh off
+      - name: Cleanup Docker
+        if: always()
+        run: docker system prune -af

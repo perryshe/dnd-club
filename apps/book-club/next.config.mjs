@@ -2,6 +2,7 @@
 const nextConfig = {
   output: "standalone",
   basePath: "/b21",
+  transpilePackages: ["club-nav"],
   images: {
     dangerouslyAllowSVG: true,
     remotePatterns: [

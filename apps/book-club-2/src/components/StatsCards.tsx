@@ -1,9 +1,10 @@
 import { prisma } from "@/lib/prisma"
+import { prismaAuth } from "@/lib/prisma-auth"
 import { BookOpen, Users, FileText, Calendar } from "lucide-react"
 
 export default async function StatsCards() {
   const [users, books, reviews, meetings] = await Promise.all([
-    prisma.user.count({ where: { role: { not: "pending" } } }),
+    prismaAuth.user.count({ where: { role: { not: "pending" } } }),
     prisma.book.count({ where: { status: "past" } }),
     prisma.review.count(),
     prisma.meeting.count(),

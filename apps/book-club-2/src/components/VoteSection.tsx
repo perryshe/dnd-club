@@ -6,7 +6,6 @@ import { ThumbsUp } from "lucide-react"
 export default async function VoteSection() {
   const suggestions = await prisma.suggestion.findMany({
     include: {
-      user: { select: { name: true } },
       votes: { select: { userId: true } },
     },
     orderBy: { createdAt: "desc" },
@@ -70,7 +69,7 @@ export default async function VoteSection() {
                     </button>
                   </form>
                 )}
-                {session?.user?.role === "sadmin" && (
+                {(session?.user?.role === "admin" || session?.user?.role === "sadmin") && (
                   <form action={promoteToBookOfMonth.bind(null, s.id)}>
                     <button
                       type="submit"

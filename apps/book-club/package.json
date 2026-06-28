@@ -21,7 +21,8 @@
     "lucide-react": "^0.400.0",
     "@prisma/client": "^6.0.0",
     "next-auth": "5.0.0-beta.25",
-    "bcryptjs": "^2.4.3"
+    "bcryptjs": "^2.4.3",
+    "club-nav": "file:../../packages/club-nav"
   },
   "devDependencies": {
     "@types/node": "^20",

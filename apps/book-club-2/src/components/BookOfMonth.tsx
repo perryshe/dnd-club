@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma"
+import { prismaAuth } from "@/lib/prisma-auth"
 import { auth } from "@/lib/auth"
 import { BookOpen } from "lucide-react"
 import { completeBookOfMonth, toggleReadProgress } from "@/lib/actions"
@@ -8,7 +9,7 @@ export default async function BookOfMonth() {
   if (!book) return null
 
   const session = await auth()
-  const totalUsers = await prisma.user.count({ where: { role: { not: "pending" } } })
+  const totalUsers = await prismaAuth.user.count({ where: { role: { not: "pending" } } })
   const completedCount = await prisma.readProgress.count({
     where: { bookId: book.id, completed: true },
   })
@@ -71,7 +72,7 @@ export default async function BookOfMonth() {
               </form>
             )}
 
-            {session?.user?.role === "sadmin" && (
+            {(session?.user?.role === "admin" || session?.user?.role === "sadmin") && (
               <form action={completeBookOfMonth.bind(null, book.id)}>
                 <button
                   type="submit"

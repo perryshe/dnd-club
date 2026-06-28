@@ -6,7 +6,6 @@ export const dynamic = "force-dynamic"
 export async function GET() {
   const reviews = await prisma.review.findMany({
     include: {
-      user: { select: { name: true } },
       book: { select: { title: true, author: true } },
     },
     orderBy: { createdAt: "desc" },
