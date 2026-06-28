@@ -2,7 +2,7 @@
 
 > Перспективный план. Выполняется ПОСЛЕ основного чек-листа (`checklist.md`).
 > Суть: билд в CI (GitHub Actions), образы в ghcr.io, на VPS только pull.
-> Ветка: `audit` | Статус: подготовка
+> Ветка: `audit` | Обновлён: 28.06.2026 (мерж develop) | Статус: подготовка
 
 ---
 
@@ -33,7 +33,7 @@
 
 | # | Задача | Описание | Файлы | Готовность |
 |---|---|---|---|---|
-| 3 | **CI: build + push образов** | В `deploy-v2.yml`: login to ghcr.io через `GHCR_TOKEN`, build всех 6 сервисов, тег `:sha-{GITHUB_SHA}` и `:latest`, `docker push` | `.github/workflows/deploy-v2.yml` | ⬜ |
+| 3 | **CI: build + push образов** | В `deploy-v2.yml`: login to ghcr.io через `GHCR_TOKEN`, build всех 6 сервисов (dnd-club, book-club-2, t21-game, quest, english, game-club), тег `:sha-{GITHUB_SHA}` и `:latest`, `docker push` | `.github/workflows/deploy-v2.yml` | ⬜ |
 | 4 | **Первый push всех образов** | Один раз запустить CI (или вручную) чтобы наполнить registry — все 6 сервисов с тегом `:latest` | Вручную через workflow_dispatch | ⬜ |
 
 **Зависимости:** Шаг 1 (токен)
@@ -67,19 +67,21 @@
 ```
 push develop → GitHub Actions
                    ├── build dnd-club
-                   ├── build book-club
                    ├── build book-club-2
                    ├── build t21-game
                    ├── build quest
-                   └── build english
-                           ↓
-                  docker push → ghcr.io
-                           ↓
-                  VPS: docker compose pull
-                  VPS: docker compose up -d
-                  VPS: npx prisma migrate deploy
-                  VPS: nginx reload
+                   ├── build english
+                   └── build game-club
+                            ↓
+                   docker push → ghcr.io
+                            ↓
+                   VPS: docker compose pull
+                   VPS: docker compose up -d
+                   VPS: npx prisma migrate deploy
+                   VPS: nginx reload
 ```
+
+> **После мержа develop (28.06):** book-club (старый b21) удалён из prod compose, добавлен game-club (g21). Список сервисов: dnd-club, book-club-2, t21-game, quest, english, game-club — всё так же 6 штук.
 
 ---
 

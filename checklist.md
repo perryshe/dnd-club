@@ -1,7 +1,7 @@
 # Аудит и план работ — d21-club.ru
 
 > Единый чек-лист. Каждая задача — законченный функционал для деплоя и теста.
-> Ветка: `audit` | Обновлён: 27.06.2026
+> Ветка: `audit` | Обновлён: 28.06.2026 | Мерж: `develop` догнал до `d33cd24`
 
 ---
 
@@ -9,10 +9,12 @@
 
 | # | Задача | Описание | Файлы | Готовность |
 |---|---|---|---|---|
-| 1 | **Вынести секреты в `.env`** | `POSTGRES_PASSWORD`, `NEXTAUTH_SECRET`, `ADMIN_PASSWORD` из docker-compose в `.env.prod` + сгенерировать новые значения | `docker-compose.yml`, `docker-compose.prod.yml`, `.env.prod` | ⬜ |
-| 2 | **Исправить entrypoint скрипты** | Убрать seed из book-club (перезаписывает роли при рестарте), добавить `prisma generate` в book-club-2 (stale client) | `apps/book-club/docker-entrypoint.sh`, `apps/book-club-2/docker-entrypoint.sh` | ⬜ |
+| 1 | **Вынести секреты в `.env`** | `POSTGRES_PASSWORD`, `NEXTAUTH_SECRET`, `ADMIN_PASSWORD` + **game-club** secrets из docker-compose в `.env.prod`. Сгенерировать новые значения для всех секретов | `docker-compose.yml`, `docker-compose.prod.yml`, `.env.prod` | ⬜ |
+| 2 | **Исправить entrypoint скрипты** | Убрать seed из `apps/book-club/docker-entrypoint.sh` (перезаписывает админа и кампании при каждом рестарте). **book-club-2** и **dnd-club** — уже почищено в develop ✅. **game-club** — чистый, без seed в entrypoint ✅ | `apps/book-club/docker-entrypoint.sh` | ⬜ |
 
 **Зависимости:** нет
+
+> **Заметка:** book-club удалён из `docker-compose.prod.yml`, но остаётся в `docker-compose.yml` (dev). Seed-фикс нужен для локальной разработки.
 
 ---
 
@@ -20,8 +22,8 @@
 
 | # | Задача | Описание | Файлы | Готовность |
 |---|---|---|---|---|
-| 3 | **Настроить CORS, CSP и security headers** | CORS tic-tac: `AllowAnyOrigin` → `WithOrigins("https://d21-club.ru")`, CSP `https:` → конкретные домены, добавить HSTS, X-Frame-Options, X-Content-Type-Options | `apps/tic-tac/tic_tac/Program.cs:99-102`, `dnd-club-nginx.conf` | ⬜ |
-| 4 | **Добавить лимиты: upload + rate-limit** | Проверка размера файлов при загрузке, cleanup устаревших записей в rate-limit (memory leak) | `apps/dnd-club/src/lib/admin-actions.ts:35`, `apps/dnd-club/src/lib/rate-limit.ts` | ⬜ |
+| 3 | **Настроить CORS, CSP и security headers** | CORS tic-tac: `AllowAnyOrigin` → `WithOrigins("https://d21-club.ru")`, CSP `https:` → конкретные домены (добавить `d21-club.ru`, `mc.yandex.ru` для Метрики, убрать `https:`). Добавить HSTS, X-Frame-Options, X-Content-Type-Options. **game-club** (g21) — добавить в CSP | `apps/tic-tac/tic_tac/Program.cs:99-102`, `dnd-club-nginx.conf` | ⬜ |
+| 4 | **Добавить лимиты: upload + rate-limit** | Проверка размера файлов при загрузке, cleanup устаревших записей в rate-limit (memory leak). **game-club** — проверить на те же проблемы | `apps/dnd-club/src/lib/admin-actions.ts:35`, `apps/dnd-club/src/lib/rate-limit.ts`, `apps/game-club/src/lib/*` | ⬜ |
 
 **Зависимости:** нет
 
@@ -31,7 +33,7 @@
 
 | # | Задача | Описание | Файлы | Готовность |
 |---|---|---|---|---|
-| 5 | **Яндекс.Метрика в Next.js приложения** | Компонент Analytics + layout.tsx для dnd-club, book-club, book-club-2 + env `NEXT_PUBLIC_YM_COUNTER` + CSP под Метрику | `apps/*/src/components/Analytics.tsx`, `apps/*/src/app/layout.tsx`, `docker-compose.prod.yml`, `dnd-club-nginx.conf` | ⬜ |
+| 5 | **Яндекс.Метрика в Next.js приложения** | Компонент Analytics + layout.tsx для dnd-club, **book-club-2**, **game-club** + env `NEXT_PUBLIC_YM_COUNTER` + CSP под Метрику. **Примечание:** book-club (старый b21) удалён из prod compose — не добавлять | `apps/*/src/components/Analytics.tsx`, `apps/*/src/app/layout.tsx`, `docker-compose.prod.yml`, `dnd-club-nginx.conf` | ⬜ |
 | 6 | **Яндекс.Метрика на статических страницах** | Внедрить счётчик в index.html english, tor.html, quest-app, tic-tac | `apps/english/index.html`, `apps/english/tor.html`, `apps/Quest/quest-app/public/index.html`, `apps/tic-tac/tic_tac/wwwroot/index.html` | ⬜ |
 
 **Зависимости:** Шаг 1 (env), Шаг 2 (CSP)
@@ -42,10 +44,12 @@
 
 | # | Задача | Описание | Файлы | Готовность |
 |---|---|---|---|---|
-| 7 | **Разделить базы данных сервисов** | Создать БД `bookclub_v1`, `bookclub_v2`, перенаправить book-club и book-club-2 на свои БД, добавить `sadmin` в enum book-club, синхронизировать dev/prod | `postgres/init.sql`, `docker-compose.prod.yml`, `docker-compose.yml`, `apps/book-club/prisma/schema.prisma` | ⬜ |
-| 8 | **Перевести на Prisma миграции** | Сгенерировать `prisma migrate dev` для всех 3 Next.js app, CI: `db push` → `migrate deploy` | `apps/*/prisma/`, `.github/workflows/deploy-v2.yml:39-40` | ⬜ |
+| 7 | **Доделать разделение БД** | book-club-2 → `bookclub2` ✅, game-club → `gameclub` ✅ (уже сделано в develop). Осталось: отвязать Quest от `dndclub` (прямые SQL-запросы), отвязать t21-game от `dndclub` (ClubConnection), перенести auth-таблицы из `dndclub` в отдельную БД `auth` для всех сервисов, добавить `sadmin` в enum | `apps/Quest/quest-app/server.js`, `docker-compose.prod.yml`, `postgres/init.sql` | ⬜ |
+| 8 | **Перевести на Prisma миграции** | Сгенерировать `prisma migrate dev` для **dnd-club**, **book-club-2**, **game-club**. CI: заменить `db push` → `migrate deploy` для всех 3 (`deploy-v2.yml:45-51`) | `apps/*/prisma/`, `.github/workflows/deploy-v2.yml:45-51` | ⬜ |
 
 **Зависимости:** нет, но требует тестирования всех сервисов после деплоя
+
+> **Заметка:** develop уже содержит 3 отдельные БД: `dndclub` (dnd-club + auth всех сервисов), `bookclub2` (book-club-2), `gameclub` (game-club). После разделения auth в отдельную БД останется: `dndclub` → только dnd-club data.
 
 ---
 
@@ -53,7 +57,7 @@
 
 | # | Задача | Описание | Файлы | Готовность |
 |---|---|---|---|---|
-| 9 | **Улучшить CI/CD пайплайн** | Добавить lint + type-check в CI, заменить `git fetch --force` на `--ff-only`, добавить `pg_dump` перед деплоем | `.github/workflows/deploy-v2.yml` | ⬜ |
+| 9 | **Улучшить CI/CD пайплайн** | Добавить lint + type-check в CI, заменить `git pull` на `git pull --ff-only`, добавить `pg_dump` перед деплоем. **Уже в develop:** cleanup перед сборкой ✅, параллельный `db push` для 3 Next.js приложений ✅. **Осталось:** `db push` → `migrate deploy` (в Шаге 8), `git pull` → `--ff-only`, добавить lint/typecheck | `.github/workflows/deploy-v2.yml` | ⬜ |
 
 **Зависимости:** Шаг 4 (`db push` → `migrate deploy`)
 
@@ -63,7 +67,7 @@
 
 | # | Задача | Описание | Файлы | Готовность |
 |---|---|---|---|---|
-| 10 | **Централизовать аутентификацию** | Выделить общий `auth.ts` в shared-пакет для 3 Next.js app — сейчас 3 копии с риском рассинхронизации | `apps/*/src/lib/auth.ts` | ⬜ |
+| 10 | **Централизовать аутентификацию** | Выделить общий `auth.ts` в shared-пакет для 3 Next.js app (dnd-club, book-club-2, game-club) — сейчас 3 независимые копии с риском рассинхронизации. **book-club** (старый) — не трогать, он только в dev | `apps/*/src/lib/auth.ts`, `packages/club-nav/` | ⬜ |
 
 **Зависимости:** Шаг 4 (чтобы не делать две реорганизации сразу)
 
@@ -102,5 +106,7 @@
 | **6** | 1 | 🏗 Auth централизация |
 | **7** | 1 | 🏗 Quest отвязка |
 | **8** | 2 | 📈🚀 Health/deploy + staging/monitoring |
+
+> **После мержа develop (28.06):** book-club (старый) удалён из prod compose | Добавлен **game-club (g21)** — новая Next.js 14 app со своей БД `gameclub` | book-club-2 переехал на `bookclub2` | dnd-club и book-club-2 entrypoint'ы почищены (нет seed) | CI обновлён (cleanup, parallel db push)
 
 **Статус:** ⬜ — не начато | ✅ — готово | 🔄 — в работе
