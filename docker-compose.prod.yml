@@ -119,7 +119,7 @@ services:
     container_name: english
     restart: always
     ports:
-      - "3005:80"
+      - "3005:3000"
 
 volumes:
   pgdata:

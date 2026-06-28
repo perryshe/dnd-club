@@ -25,7 +25,6 @@ jobs:
           cd /home/club/Club
           docker stop dnd-book-club dnd-club book-club-2 game-club quest t21-game english 2>/dev/null || true
           docker rm -f dnd-book-club dnd-club book-club-2 game-club quest t21-game english 2>/dev/null || true
-          docker system prune -af
       - name: Build app images
         run: |
           cd /home/club/Club
