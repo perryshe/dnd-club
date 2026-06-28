@@ -94,6 +94,95 @@
 
 ---
 
+---
+
+## Архитектура после внедрения (checklist.md)
+
+```mermaid
+graph TB
+    subgraph "Users"
+        U[Browser]
+    end
+
+    subgraph "VPS — d21-club.ru"
+        subgraph "nginx — security headers · CSP · HSTS"
+            N[Reverse Proxy<br/>CORS restricted · X-Frame-Options<br/>X-Content-Type-Options]
+        end
+
+        subgraph "Next.js Apps — Yandex.Metrika · health /api/health"
+            DC[dnd-club<br/>upload limits · rate-limit cleanup]
+            BC[book-club-2<br/>Prisma migrate deploy]
+            GC[game-club<br/>Prisma migrate deploy]
+        end
+
+        subgraph "Other Services — Yandex.Metrika · health /api/health"
+            T21[t21-game<br/>ASP.NET Core 10 · CORS fixed]
+            Q[quest<br/>Express.js → REST API client]
+            EN[english<br/>nginx-static]
+        end
+
+        subgraph "Databases — isolated per service"
+            PG1[(dndclub)]
+            PG2[(bookclub2)]
+            PG3[(gameclub)]
+            PG4[(tic_tac)]
+            PG5[(shared-auth)]
+        end
+
+        subgraph "Monitoring & Deploy"
+            YM[Yandex.Metrika<br/>все 6 сервисов]
+            STG[Staging окружение]
+            CI[GitHub Actions<br/>lint · typecheck · migrate deploy<br/>pg_dump backup · --ff-only]
+        end
+    end
+
+    U --> N
+
+    N --> DC
+    N --> BC
+    N --> GC
+    N --> T21
+    N --> Q
+    N --> EN
+
+    DC --> PG1
+    BC --> PG2
+    BC --> PG5
+    GC --> PG3
+    GC --> PG5
+    T21 --> PG4
+
+    Q -.->|REST API| DC
+    Q -.->|removed direct DB| PG1
+
+    DC --> YM
+    BC --> YM
+    GC --> YM
+    T21 --> YM
+    Q --> YM
+    EN --> YM
+
+    DC --> CI
+    BC --> CI
+    GC --> CI
+
+    subgraph "Legend"
+        L1[⚡= changed by this checklist]
+        L2[⬜ = unchanged]
+    end
+```
+
+**Ключевые изменения:**
+- **Quest** — больше не ходит напрямую в БД dndclub, только через REST API dnd-club
+- **auth** — выделен в отдельную БД `shared-auth`, единый пакет для 3 Next.js приложений
+- **Analytics** — Yandex.Metrika на всех 6 сервисах
+- **Security** — CSP без `https:` wildcard, CORS ограничен, HSTS, upload-лимит
+- **CI** — `db push` → `migrate deploy`, добавлены lint + typecheck, `pg_dump` перед деплоем, `--ff-only`
+- **Deploy** — health checks, zero-downtime (без maintenance.html)
+- **Staging** — отдельное окружение для тестирования
+
+---
+
 ## Итого: 13 задач, 8 шагов
 
 | Шаг | Задачи | Тема |

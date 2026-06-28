@@ -62,28 +62,50 @@
 
 ---
 
-## Схема нового CI/CD
+## Архитектура: до и после (checklist-registry.md)
 
-```
-push develop → GitHub Actions
-                   ├── build dnd-club
-                   ├── build book-club-2
-                   ├── build t21-game
-                   ├── build quest
-                   ├── build english
-                   └── build game-club
-                            ↓
-                   docker push → ghcr.io
-                            ↓
-                   VPS: docker compose pull
-                   VPS: docker compose up -d
-                   VPS: npx prisma migrate deploy
-                   VPS: nginx reload
+```mermaid
+graph TB
+    subgraph "СЕЙЧАС — билд на VPS"
+        DEV1[git push develop] --> VPS1[VPS: git pull]
+        VPS1 --> BUILD1[VPS: docker compose build<br/>~5‑8 мин · Node 20 + .NET 10 SDK]
+        BUILD1 --> UP1[VPS: docker compose up -d<br/>простой до 10 мин]
+        UP1 --> NGINX1[nginx reload]
+    end
+
+    subgraph "ПОСЛЕ — билд в CI, образы в ghcr.io"
+        DEV2[git push develop] --> CI2[GitHub Actions]
+        CI2 --> BUILD2[Build 6 образов<br/>теги :latest + :sha-commit]
+        BUILD2 --> REG2[ghcr.io<br/>perryshe/dnd-club]
+        REG2 --> PULL2[VPS: docker compose pull<br/>~30 сек]
+        PULL2 --> UP2[VPS: docker compose up -d<br/>простой — секунды]
+        UP2 --> NGINX2[nginx reload]
+
+        subgraph "Образы"
+            IMG1[dnd-club:latest<br/>book-club-2:latest<br/>t21-game:latest<br/>quest:latest<br/>english:latest<br/>game-club:latest]
+        end
+        REG2 --> IMG1
+
+        subgraph "Роллбэк"
+            RB[rollback.sh sha-abc<br/>→ docker pull :sha-abc<br/>→ docker tag :latest<br/>→ compose up -d]
+        end
+        REG2 --> RB
+        RB --> PULL2
+    end
 ```
 
-> **После мержа develop (28.06):** book-club (старый b21) удалён из prod compose, добавлен game-club (g21). Список сервисов: dnd-club, book-club-2, t21-game, quest, english, game-club — всё так же 6 штук.
+**Ключевые изменения:**
+| Аспект | Сейчас | После |
+|---|---|---|
+| Где билд | VPS (self-hosted runner) | GitHub Actions (тот же runner, но образы пушатся) |
+| Откуда берутся образы | `docker compose build` | `docker compose pull` из ghcr.io |
+| Время деплоя | ~5-10 мин | ~30 сек |
+| Версионирование | нет | `:latest`, `:sha-{commit}`, `:stable` |
+| Роллбэк | пересборка коммита | `docker pull` предыдущего тега |
 
 ---
+
+## Итого: 8 задач, 4 шага
 
 ## Итого: 8 задач, 4 шага
 
