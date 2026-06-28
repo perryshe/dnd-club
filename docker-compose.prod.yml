@@ -109,6 +109,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    volumes:
+      - ./uploads/g21:/app/public/images
 
   english:
     build:
