@@ -1,5 +1,6 @@
 import Link from "next/link"
-import { Sword, MessageCircle, ArrowRight } from "lucide-react"
+import { Sword, ArrowRight } from "lucide-react"
+import { ClubHeader } from "club-nav"
 
 export default function Home() {
   return (
@@ -15,33 +16,7 @@ export default function Home() {
       >
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-900/40 to-slate-950/80 pointer-events-none" />
 
-        <header className="relative container mx-auto px-4 py-24 text-center">
-          {/* Medieval decorative element */}
-          <div className="text-amber-500/30 text-6xl mb-6 select-none">⚜</div>
-
-          <h1 className="text-7xl font-black mb-4 tracking-wide">
-            <span className="bg-gradient-to-r from-amber-300 via-amber-500 to-orange-600 bg-clip-text text-transparent">
-              d21
-            </span>
-            <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent ml-4">
-              Club
-            </span>
-          </h1>
-
-          <p className="text-lg text-slate-400 mb-8 max-w-md mx-auto font-mono tracking-wider uppercase">
-            /* medieval cyberpunk */
-          </p>
-
-          <div className="flex gap-4 justify-center mb-20">
-            <a
-              href="https://t.me/d21_blg"
-              target="_blank"
-              className="flex items-center gap-2 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 px-6 py-3 rounded-lg transition shadow-lg shadow-amber-900/30"
-            >
-              <MessageCircle size={20} />
-              Telegram
-            </a>
-          </div>
+        <ClubHeader club="d21" />
 
           {/* Campaign cards */}
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
@@ -135,7 +110,6 @@ export default function Home() {
               </div>
             </Link>
           </div>
-        </header>
       </div>
 
       {/* Divider */}
