@@ -3,13 +3,16 @@ FROM node:20-alpine AS base
 FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
-COPY site/package.json ./
-RUN npm install
+COPY apps/english/site/package.json ./
+RUN npm install --ignore-scripts
+COPY packages /packages
+RUN rm -rf node_modules/club-nav && cp -r /packages/club-nav node_modules/club-nav
 
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
-COPY site/ .
+COPY packages /packages
+COPY apps/english/site/ .
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 

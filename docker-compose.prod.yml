@@ -114,12 +114,16 @@ services:
 
   english:
     build:
-      context: ./apps/english
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: apps/english/Dockerfile
     container_name: english
     restart: always
     ports:
       - "3005:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+      - NEXT_PUBLIC_DND_CLUB_URL=https://d21-club.ru
 
 volumes:
   pgdata:

@@ -12,7 +12,7 @@ const navItems = [
 
 export function Sidebar() {
   return (
-    <aside className="fixed top-0 left-0 w-64 h-screen bg-[#111827] border-r border-[#1f2937] flex flex-col z-50">
+    <aside className="w-64 shrink-0 bg-[#111827] border-r border-[#1f2937] flex flex-col">
       <div className="p-5 border-b border-[#1f2937]">
         <h1 className="text-lg font-bold text-[#60a5fa] leading-tight">
           English for<br />Manager
@@ -31,7 +31,7 @@ export function Sidebar() {
         ))}
       </nav>
       <div className="p-4 border-t border-[#1f2937] text-xs text-[#6b7280]">
-        v2.0 · next-export
+        v2.0
       </div>
     </aside>
   );
