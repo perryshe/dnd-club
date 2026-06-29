@@ -4,7 +4,7 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY apps/english/site/package.json ./
-RUN npm install --ignore-scripts --legacy-peer-deps
+RUN npm install --ignore-scripts
 COPY packages /packages
 RUN rm -rf node_modules/club-nav && cp -r /packages/club-nav node_modules/club-nav
 
