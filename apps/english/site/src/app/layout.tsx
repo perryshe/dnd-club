@@ -12,6 +12,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "English for Manager — Course",
   description: "15 дней · 22 июн – 10 июл 2026",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
