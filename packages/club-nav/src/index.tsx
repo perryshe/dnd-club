@@ -9,17 +9,17 @@ type ClubDef = {
   label: string
   color: string
   icon?: string
-  iconSize?: string
+  iconSize?: number
   iconClass?: string
 }
 
 const clubs: ClubDef[] = [
-  { id: "d21", label: "d21 Club", color: "text-amber-400 hover:text-amber-300", icon: "/favicon21.jpg", iconSize: "w-6 h-6", iconClass: "rounded" },
-  { id: "b21", label: "b21 Club", color: "text-cyan-400 hover:text-cyan-300", icon: "/book-favicon.svg", iconSize: "w-5 h-5" },
+  { id: "d21", label: "d21 Club", color: "text-amber-400 hover:text-amber-300", icon: "/favicon21.jpg", iconSize: 24, iconClass: "rounded" },
+  { id: "b21", label: "b21 Club", color: "text-cyan-400 hover:text-cyan-300", icon: "/book-favicon.svg", iconSize: 20 },
   { id: "t21", label: "t21 Club", color: "text-indigo-400 hover:text-indigo-300" },
   { id: "g21", label: "g21 Club", color: "text-cyan-300 hover:text-cyan-200" },
   { id: "quest", label: "quest", color: "text-purple-400 hover:text-purple-300" },
-  { id: "e21", label: "e21 Club", color: "text-green-400 hover:text-green-300", icon: "/e21-favicon.svg", iconSize: "w-5 h-5" },
+  { id: "e21", label: "e21 Club", color: "text-green-400 hover:text-green-300", icon: "/e21-favicon.svg", iconSize: 20 },
 ]
 
 type Props = {
@@ -177,7 +177,7 @@ export default function ClubNav({ active, dndClubUrl, bookClubUrl, activeHref, s
           const inner = (
             <>
               {club.icon && (
-                <img src={club.icon} alt="" className={`${club.iconSize ?? "w-5 h-5"} ${club.iconClass ?? ""}`} />
+                <img src={club.icon} alt="" className={club.iconClass ?? ""} style={{ width: club.iconSize ?? 20, height: club.iconSize ?? 20 }} />
               )}
               {club.label}
             </>
