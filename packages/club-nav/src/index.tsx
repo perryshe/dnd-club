@@ -19,7 +19,7 @@ const clubs: ClubDef[] = [
   { id: "t21", label: "t21 Club", color: "text-indigo-400 hover:text-indigo-300" },
   { id: "g21", label: "g21 Club", color: "text-cyan-300 hover:text-cyan-200" },
   { id: "quest", label: "quest", color: "text-purple-400 hover:text-purple-300" },
-  { id: "e21", label: "e21 Club", color: "text-green-400 hover:text-green-300" },
+  { id: "e21", label: "e21 Club", color: "text-green-400 hover:text-green-300", icon: "/e21-favicon.svg", iconSize: "w-5 h-5" },
 ]
 
 type Props = {
