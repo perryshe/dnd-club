@@ -44,7 +44,7 @@ function hrefFor(id: ClubId, dndClubUrl: string, bookClubUrl?: string): string {
 
 // --- ClubHeader (for main pages) ---
 
-export type ClubIdMain = "d21" | "b21" | "g21"
+export type ClubIdMain = "d21" | "b21" | "g21" | "e21"
 
 const clubHeaderConfig: Record<ClubIdMain, { division: string; links: { label: string; href: string }[] }> = {
   d21: {
@@ -68,6 +68,18 @@ const clubHeaderConfig: Record<ClubIdMain, { division: string; links: { label: s
       { label: "collection", href: "#collection" },
       { label: "vote", href: "#vote" },
       { label: "wishlist", href: "#wish" },
+    ],
+  },
+  e21: {
+    division: "english division",
+    links: [
+      { label: "home", href: "/" },
+      { label: "schedule", href: "/schedule" },
+      { label: "audio", href: "/audio" },
+      { label: "cheat sheet", href: "/cheat-sheet" },
+      { label: "glossary", href: "/glossary" },
+      { label: "AI scenarios", href: "/ai-scenarios" },
+      { label: "emails", href: "/email-templates" },
     ],
   },
 }
@@ -104,12 +116,21 @@ const clubStyles: Record<ClubIdMain, {
     telegram: "bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-500 hover:to-blue-600 shadow-sky-900/30",
     telegramDisabled: "text-slate-600 border-slate-800",
   },
+  e21: {
+    title: "text-green-400",
+    badge: "border-green-500/40 bg-green-950/70 text-green-300",
+    link: "text-green-400 hover:text-green-300",
+    linkSep: "text-green-700",
+    telegram: "bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-500 hover:to-emerald-600 shadow-green-900/30",
+    telegramDisabled: "text-green-600 border-green-800",
+  },
 }
 
 const telegramUrls: Record<ClubIdMain, string | null> = {
   d21: "https://t.me/d21_blg",
   b21: null,
   g21: null,
+  e21: null,
 }
 
 type ClubHeaderProps = {
