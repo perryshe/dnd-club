@@ -4,7 +4,8 @@ import { useState } from "react";
 
 export function PhraseList({ phrases }: { phrases: { en: string; ru: string }[] }) {
   const [checked, setChecked] = useState<Set<number>>(new Set());
-  const [reveal, setReveal] = useState(false);
+  const [revealRu, setRevealRu] = useState(false);
+  const [revealEn, setRevealEn] = useState(true);
 
   const toggle = (i: number) => {
     const next = new Set(checked);
@@ -16,12 +17,20 @@ export function PhraseList({ phrases }: { phrases: { en: string; ru: string }[] 
     <div>
       <div className="flex items-center justify-between mb-3">
         <h2 className="text-lg font-semibold text-[#60a5fa]">Phrases</h2>
-        <button
-          onClick={() => setReveal((r) => !r)}
-          className="text-xs px-3 py-1 rounded-full bg-[#1f2937] text-[#9ca3af] hover:text-[#f3f4f6] transition-colors"
-        >
-          {reveal ? "Hide" : "Reveal"} RU
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={() => setRevealEn((r) => !r)}
+            className="text-xs px-3 py-1 rounded-full bg-[#1f2937] text-[#9ca3af] hover:text-[#f3f4f6] transition-colors"
+          >
+            {revealEn ? "Hide" : "Reveal"} En
+          </button>
+          <button
+            onClick={() => setRevealRu((r) => !r)}
+            className="text-xs px-3 py-1 rounded-full bg-[#1f2937] text-[#9ca3af] hover:text-[#f3f4f6] transition-colors"
+          >
+            {revealRu ? "Hide" : "Reveal"} RU
+          </button>
+        </div>
       </div>
       <div className="space-y-2">
         {phrases.map((p, i) => (
@@ -40,15 +49,23 @@ export function PhraseList({ phrases }: { phrases: { en: string; ru: string }[] 
               className="mt-1 accent-emerald-500"
             />
             <div className="flex-1 min-w-0">
-              <div className="text-sm font-medium">{p.en}</div>
+              <div
+                className={`text-sm font-medium transition-all ${
+                  revealEn || checked.has(i)
+                    ? "text-[#f3f4f6] opacity-100"
+                    : "text-transparent select-none"
+                }`}
+              >
+                {revealEn || checked.has(i) ? p.en : "••••••"}
+              </div>
               <div
                 className={`text-sm mt-0.5 transition-all ${
-                  reveal || checked.has(i)
+                  revealRu || checked.has(i)
                     ? "text-[#9ca3af] opacity-100"
                     : "text-transparent select-none"
                 }`}
               >
-                {reveal || checked.has(i) ? p.ru : "••••••"}
+                {revealRu || checked.has(i) ? p.ru : "••••••"}
               </div>
             </div>
           </label>
