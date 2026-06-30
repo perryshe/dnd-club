@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <path d="M16 26S8 24 4 24V8s4-2 12 2v16z" fill="#22d3ee" opacity=".6"/>
-  <path d="M16 26S24 24 28 24V8s-4-2-12 2v16z" fill="#22d3ee" opacity=".4"/>
-  <path d="M16 26S8 24 4 24V8s4-2 12 2" stroke="#22d3ee" stroke-width="1.5" fill="none"/>
-  <path d="M16 26S24 24 28 24V8s-4-2-12 2" stroke="#22d3ee" stroke-width="1.5" fill="none"/>
-  <path d="M16 10v16" stroke="#22d3ee" stroke-width="1" opacity=".5"/>
-</svg>
