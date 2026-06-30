@@ -29,7 +29,7 @@ export default async function VoteSection() {
     : new Set()
 
   return (
-    <section className="mb-12">
+    <section id="voting" className="mb-12">
       <div className="flex items-center gap-2 mb-6">
         <ThumbsUp size={16} className="text-amber-400" />
         <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-amber-500/60">// голосование за следующую книгу</span>

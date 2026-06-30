@@ -4,8 +4,7 @@ import { auth } from "@/lib/auth"
 import "./globals.css"
 import Link from "next/link"
 import SignOutButton from "@/components/signout-button"
-import GameModal from "@/components/GameModal"
-import ClubHeader from "club-nav"
+import ClubNav from "club-nav"
 import { Cpu } from "lucide-react"
 
 export const metadata: Metadata = {
@@ -25,9 +24,14 @@ export default async function RootLayout({
     <html lang="ru">
       <body className="antialiased min-h-screen flex flex-col">
         <SessionProvider session={session}>
-          <ClubHeader club="d21" session={session}>
-            <GameModal url={process.env.NEXT_PUBLIC_T21_GAME_URL ?? ""} />
-          </ClubHeader>
+          <ClubNav
+            active="d21"
+            dndClubUrl={process.env.NEXT_PUBLIC_DND_CLUB_URL ?? "/"}
+            bookClubUrl={process.env.NEXT_PUBLIC_BOOK_CLUB_URL}
+            activeHref="/"
+            session={session}
+            t21Url={process.env.NEXT_PUBLIC_T21_GAME_URL}
+          />
           <main className="flex-1">{children}</main>
           <footer className="border-t border-slate-800/40 bg-slate-950/50">
             <div className="container mx-auto px-4 h-10 flex items-center justify-between">

@@ -2,7 +2,7 @@
 
 import { useSession } from "next-auth/react"
 import { useState, useEffect, useCallback } from "react"
-import { Sparkles, MessageCircle } from "lucide-react"
+import { ClubHeader } from "club-nav"
 import Collection from "@/components/collection"
 import VoteSection from "@/components/vote-section"
 import Wishlist from "@/components/wishlist"
@@ -31,6 +31,16 @@ type MeetingData = {
 export default function HomePage() {
   const { data: session } = useSession()
   const [tab, setTab] = useState("main")
+
+  useEffect(() => {
+    const onHash = () => {
+      const hash = window.location.hash.replace("#", "")
+      if (["collection", "vote", "wish"].includes(hash)) setTab(hash)
+    }
+    window.addEventListener("hashchange", onHash)
+    onHash()
+    return () => window.removeEventListener("hashchange", onHash)
+  }, [])
   const [games, setGames] = useState<Game[]>([])
   const [votes, setVotes] = useState<VoteCounts>({})
   const [wishes, setWishes] = useState<WishEntry[]>([])
@@ -115,37 +125,10 @@ export default function HomePage() {
       <div className="fixed top-0 left-1/3 w-[500px] h-[500px] rounded-full bg-cyan-500/5 blur-3xl pointer-events-none" />
       <div className="fixed bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-purple-500/5 blur-3xl pointer-events-none" />
 
+      <ClubHeader club="g21" />
+
       <section className="relative">
-        <div className="container mx-auto px-4 pt-24 pb-16 text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-cyan-500/20 bg-cyan-950/30 text-cyan-400/80 text-[10px] font-mono tracking-[0.25em] uppercase mb-12">
-            <Sparkles size={12} />
-            Module // board games division
-            <Sparkles size={12} />
-          </div>
-
-          <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight">
-            <span className="bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-500 bg-clip-text text-transparent">
-              g21
-            </span>
-            <br />
-            <span className="bg-gradient-to-r from-slate-200 via-slate-300 to-slate-400 bg-clip-text text-transparent">
-              Club
-            </span>
-          </h1>
-
-          <p className="text-slate-500 text-base max-w-lg mx-auto leading-relaxed font-mono mb-8">
-            <span className="text-cyan-500/60">[</span> collection & voting & meetings <span className="text-cyan-500/60">]</span>
-          </p>
-
-          <a
-            href="https://t.me/tagort"
-            target="_blank"
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-600 to-blue-700 hover:from-cyan-500 hover:to-blue-600 px-6 py-3 rounded-lg transition shadow-lg shadow-cyan-900/30 text-sm font-mono tracking-wider uppercase mb-12"
-          >
-            <MessageCircle size={18} />
-            Telegram
-          </a>
-
+        <div className="container mx-auto px-4 pb-16 text-center">
           {!loading && (
             <div className="flex items-center justify-center gap-1 text-xs font-mono text-slate-600 mb-8">
               <span className="text-cyan-500/60">{games.length}</span> игр
