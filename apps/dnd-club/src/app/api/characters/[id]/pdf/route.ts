@@ -16,7 +16,9 @@ export async function GET(
       return new NextResponse("Character not found", { status: 404 })
     }
 
-    const pdfTemplatePath = path.join(process.cwd(), "public", "5E_CharacterSheet_Fillable.pdf")
+    const publicDir = path.join(process.cwd(), "public")
+    const pdfTemplatePath = path.join(publicDir, "5E_CharacterSheet_Fillable.pdf")
+    const fontPath = path.join(publicDir, "DejaVuSans.ttf")
 
     if (!fs.existsSync(pdfTemplatePath)) {
       return new NextResponse(
@@ -51,6 +53,7 @@ export async function GET(
         sheet: character.sheet as Record<string, any>,
       },
       pdfTemplatePath,
+      fontPath,
     )
 
     return new NextResponse(pdfBytes as any, {

@@ -294,11 +294,15 @@ function buildPdfData(char: CharacterData): Record<string, string | boolean> {
 
 export async function generateCharacterPdf(
   char: CharacterData,
-  pdfTemplatePath: string
+  pdfTemplatePath: string,
+  fontPath: string,
 ): Promise<Uint8Array> {
   const existingPdfBytes = fs.readFileSync(pdfTemplatePath)
   const pdfDoc = await PDFDocument.load(existingPdfBytes)
   const form = pdfDoc.getForm()
+
+  const fontBytes = fs.readFileSync(fontPath)
+  const font = await pdfDoc.embedFont(fontBytes)
 
   const data = buildPdfData(char)
 
@@ -321,6 +325,7 @@ export async function generateCharacterPdf(
 
     if (field.setText) {
       const textValue = String(value)
+      try { field.setFont(font) } catch {}
       let maxLen: number | undefined
       try {
         maxLen = field.getMaxLength()
