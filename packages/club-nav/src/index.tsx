@@ -90,6 +90,7 @@ const clubStyles: Record<ClubIdMain, {
   link: string
   linkSep: string
   telegram: string
+  telegramDisabled: string
 }> = {
   d21: {
     title: "bg-gradient-to-r from-amber-300 via-amber-500 to-orange-600 bg-clip-text text-transparent",
@@ -97,6 +98,7 @@ const clubStyles: Record<ClubIdMain, {
     link: "text-amber-300 hover:text-amber-200",
     linkSep: "text-amber-700",
     telegram: "bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 shadow-amber-900/30",
+    telegramDisabled: "text-amber-600 border-amber-800",
   },
   b21: {
     title: "text-cyan-400",
@@ -104,6 +106,7 @@ const clubStyles: Record<ClubIdMain, {
     link: "text-slate-500 hover:text-white",
     linkSep: "text-slate-700",
     telegram: "bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-500 hover:to-blue-600 shadow-sky-900/30",
+    telegramDisabled: "text-slate-600 border-slate-800",
   },
   g21: {
     title: "text-cyan-300",
@@ -111,6 +114,7 @@ const clubStyles: Record<ClubIdMain, {
     link: "text-slate-500 hover:text-white",
     linkSep: "text-slate-700",
     telegram: "bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-500 hover:to-blue-600 shadow-sky-900/30",
+    telegramDisabled: "text-slate-600 border-slate-800",
   },
   e21: {
     title: "text-green-400",
@@ -118,13 +122,14 @@ const clubStyles: Record<ClubIdMain, {
     link: "text-green-400 hover:text-green-300",
     linkSep: "text-green-700",
     telegram: "bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-500 hover:to-emerald-600 shadow-green-900/30",
+    telegramDisabled: "text-green-600 border-green-800",
   },
 }
 
 const telegramUrls: Record<ClubIdMain, string | null> = {
   d21: "https://t.me/d21_blg",
-  b21: "https://t.me/+P8j9F-vG5b0zNWVi",
-  g21: "https://t.me/+mGU5rw83i380ZGYy",
+  b21: null,
+  g21: null,
   e21: null,
 }
 
@@ -156,7 +161,7 @@ export function ClubHeader({ club }: ClubHeaderProps) {
         ))}
       </nav>
 
-      {tg && (
+      {tg ? (
         <a
           href={tg}
           target="_blank"
@@ -164,6 +169,10 @@ export function ClubHeader({ club }: ClubHeaderProps) {
         >
           Telegram
         </a>
+      ) : (
+        <span className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-mono tracking-wider uppercase border ${style.telegramDisabled}`}>
+          Telegram
+        </span>
       )}
     </header>
   )

@@ -1,0 +1,1 @@
+self.__SSG_MANIFEST=new Set(["\u002Fweek\u002F[w]\u002Fday\u002F[d]","\u002Fweek\u002F[w]\u002Fread\u002F[d]"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()
