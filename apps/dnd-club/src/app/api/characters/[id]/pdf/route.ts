@@ -47,7 +47,7 @@ export async function GET(
     pdfTemplatePath,
   )
 
-  return new NextResponse(pdfBytes, {
+  return new NextResponse(Buffer.from(pdfBytes), {
     headers: {
       "Content-Type": "application/pdf",
       "Content-Disposition": `attachment; filename="${character.name.replace(/[^a-zA-Z0-9а-яА-Я]/g, "_")}.pdf"`,
