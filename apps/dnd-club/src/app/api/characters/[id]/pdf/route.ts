@@ -47,9 +47,9 @@ export async function GET(
     pdfTemplatePath,
   )
 
-  const blob = new Blob([pdfBytes], { type: "application/pdf" })
-  return new NextResponse(blob, {
+  return new NextResponse(pdfBytes, {
     headers: {
+      "Content-Type": "application/pdf",
       "Content-Disposition": `attachment; filename="${character.name.replace(/[^a-zA-Z0-9а-яА-Я]/g, "_")}.pdf"`,
     },
   })

@@ -295,7 +295,7 @@ function buildPdfData(char: CharacterData): Record<string, string | boolean> {
 export async function generateCharacterPdf(
   char: CharacterData,
   pdfTemplatePath: string
-): Promise<Uint8Array> {
+): Promise<Buffer> {
   const existingPdfBytes = fs.readFileSync(pdfTemplatePath)
   const pdfDoc = await PDFDocument.load(existingPdfBytes)
   const form = pdfDoc.getForm()
@@ -315,6 +315,26 @@ export async function generateCharacterPdf(
       } catch {
         continue
       }
+    }
+
+    if (!field) continue
+
+    if (field.setText) {
+      const textValue = String(value)
+      let maxLen: number | undefined
+      try {
+        maxLen = field.getMaxLength()
+      } catch {}
+      field.setText(truncate(textValue, maxLen))
+    } else if (field.check && typeof value === "boolean") {
+      if (value) field.check()
+    }
+  }
+
+  form.flatten()
+  const uint8 = await pdfDoc.save()
+  return Buffer.from(uint8.buffer as ArrayBuffer, uint8.byteOffset, uint8.byteLength)
+}
     }
 
     if (!field) continue
