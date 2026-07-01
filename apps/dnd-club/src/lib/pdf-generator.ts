@@ -1,5 +1,6 @@
 import fs from "fs"
 import { PDFDocument } from "pdf-lib"
+import fontkit from "@pdf-lib/fontkit"
 
 interface CharacterData {
   name: string
@@ -299,6 +300,7 @@ export async function generateCharacterPdf(
 ): Promise<Uint8Array> {
   const existingPdfBytes = fs.readFileSync(pdfTemplatePath)
   const pdfDoc = await PDFDocument.load(existingPdfBytes)
+  pdfDoc.registerFontkit(fontkit)
   const form = pdfDoc.getForm()
 
   const fontBytes = fs.readFileSync(fontPath)
