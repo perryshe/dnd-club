@@ -295,7 +295,7 @@ function buildPdfData(char: CharacterData): Record<string, string | boolean> {
 export async function generateCharacterPdf(
   char: CharacterData,
   pdfTemplatePath: string
-): Promise<Buffer> {
+): Promise<Uint8Array> {
   const existingPdfBytes = fs.readFileSync(pdfTemplatePath)
   const pdfDoc = await PDFDocument.load(existingPdfBytes)
   const form = pdfDoc.getForm()
@@ -332,6 +332,5 @@ export async function generateCharacterPdf(
   }
 
   form.flatten()
-  const uint8 = await pdfDoc.save()
-  return Buffer.from(uint8.buffer as ArrayBuffer, uint8.byteOffset, uint8.byteLength)
+  return await pdfDoc.save()
 }
