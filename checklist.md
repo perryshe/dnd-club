@@ -1,7 +1,7 @@
 # Аудит и план работ — d21-club.ru
 
 > Единый чек-лист. Каждая задача — законченный функционал для деплоя и теста.
-> Ветка: `audit` | Обновлён: 28.06.2026 | Мерж: `develop` догнал до `d33cd24`
+> Ветка: `audit` | Обновлён: 28.06.2026 | Мерж: `develop` догнал до `6fdce5e`
 
 ---
 
@@ -15,6 +15,7 @@
 **Зависимости:** нет
 
 > **Заметка:** book-club удалён из `docker-compose.prod.yml`, но остаётся в `docker-compose.yml` (dev). Seed-фикс нужен для локальной разработки.
+> **english (e21):** не использует БД/auth — у него нет секретов, но `NODE_ENV` и `NEXT_TELEMETRY_DISABLED` должны уйти в `.env` общей структурой.
 
 ---
 
@@ -34,7 +35,7 @@
 | # | Задача | Описание | Файлы | Готовность |
 |---|---|---|---|---|
 | 5 | **Яндекс.Метрика в Next.js приложения** | Компонент Analytics + layout.tsx для dnd-club, **book-club-2**, **game-club** + env `NEXT_PUBLIC_YM_COUNTER` + CSP под Метрику. **Примечание:** book-club (старый b21) удалён из prod compose — не добавлять | `apps/*/src/components/Analytics.tsx`, `apps/*/src/app/layout.tsx`, `docker-compose.prod.yml`, `dnd-club-nginx.conf` | ⬜ |
-| 6 | **Яндекс.Метрика на статических страницах** | Внедрить счётчик в index.html english, tor.html, quest-app, tic-tac | `apps/english/index.html`, `apps/english/tor.html`, `apps/Quest/quest-app/public/index.html`, `apps/tic-tac/tic_tac/wwwroot/index.html` | ⬜ |
+| 6 | **Яндекс.Метрика на статических страницах** | **english** теперь Next.js — счётчик через Analytics в `layout.tsx` (как остальные Next.js app). Статика: `tor.html` (apps/english/site/public), quest-app, tic-tac | `apps/english/site/src/app/layout.tsx`, `apps/english/site/public/tor.html`, `apps/Quest/quest-app/public/index.html`, `apps/tic-tac/tic_tac/wwwroot/index.html` | ⬜ |
 
 **Зависимости:** Шаг 1 (env), Шаг 2 (CSP)
 
@@ -87,7 +88,7 @@
 
 | # | Задача | Описание | Файлы | Готовность |
 |---|---|---|---|---|
-| 12 | **Health checks и zero-downtime deploy** | endpoint `/api/health` в каждый сервис, health checks в docker-compose, убрать maintenance window | `docker-compose.prod.yml`, `maintenance.sh`, `deploy-v2.yml` | ⬜ |
+| 12 | **Health checks и zero-downtime deploy** | endpoint `/api/health` в каждый сервис, health checks в docker-compose, убрать maintenance window. **english (e21):** статический экспорт, `/api/health` не добавить — health check через TCP-порт (3005) | `docker-compose.prod.yml`, `maintenance.sh`, `deploy-v2.yml` | ⬜ |
 | 13 | **Staging, мониторинг и алерты** | Staging-окружение, структурированные логи (JSON), uptime-мониторинг + алерты | — | ⬜ |
 
 **Зависимости:** Шаг 7 (после архитектурной стабилизации)
@@ -113,12 +114,12 @@ graph TB
             DC[dnd-club<br/>upload limits · rate-limit cleanup]
             BC[book-club-2<br/>Prisma migrate deploy]
             GC[game-club<br/>Prisma migrate deploy]
+            EN[english<br/>Next.js static export]
         end
 
         subgraph "Other Services — Yandex.Metrika · health /api/health"
             T21[t21-game<br/>ASP.NET Core 10 · CORS fixed]
             Q[quest<br/>Express.js → REST API client]
-            EN[english<br/>nginx-static]
         end
 
         subgraph "Databases — isolated per service"
@@ -175,6 +176,7 @@ graph TB
 **Ключевые изменения:**
 - **Quest** — больше не ходит напрямую в БД dndclub, только через REST API dnd-club
 - **auth** — выделен в отдельную БД `shared-auth`, единый пакет для 3 Next.js приложений
+- **english** — переехал с nginx-static на Next.js (node:20-alpine, monorepo build)
 - **Analytics** — Yandex.Metrika на всех 6 сервисах
 - **Security** — CSP без `https:` wildcard, CORS ограничен, HSTS, upload-лимит
 - **CI** — `db push` → `migrate deploy`, добавлены lint + typecheck, `pg_dump` перед деплоем, `--ff-only`
@@ -196,6 +198,6 @@ graph TB
 | **7** | 1 | 🏗 Quest отвязка |
 | **8** | 2 | 📈🚀 Health/deploy + staging/monitoring |
 
-> **После мержа develop (28.06):** book-club (старый) удалён из prod compose | Добавлен **game-club (g21)** — новая Next.js 14 app со своей БД `gameclub` | book-club-2 переехал на `bookclub2` | dnd-club и book-club-2 entrypoint'ы почищены (нет seed) | CI обновлён (cleanup, parallel db push)
+> **После мержа develop (28.06):** book-club (старый) удалён из prod compose | Добавлены game-club (g21) + english (e21, теперь Next.js, не nginx-static) | book-club-2 переехал на `bookclub2` | dnd-club и book-club-2 entrypoint'ы почищены | CI обновлён (cleanup, parallel db push)
 
 **Статус:** ⬜ — не начато | ✅ — готово | 🔄 — в работе
