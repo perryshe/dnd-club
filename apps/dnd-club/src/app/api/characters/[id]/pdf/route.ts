@@ -18,8 +18,6 @@ export async function GET(
 
     const publicDir = path.join(process.cwd(), "public")
     const pdfTemplatePath = path.join(publicDir, "5E_CharacterSheet_Fillable.pdf")
-    const fontPath = path.join(publicDir, "DejaVuSans.ttf")
-
     if (!fs.existsSync(pdfTemplatePath)) {
       return new NextResponse(
         `Template not found at: ${pdfTemplatePath}`,
@@ -53,7 +51,6 @@ export async function GET(
         sheet: character.sheet as Record<string, any>,
       },
       pdfTemplatePath,
-      fontPath,
     )
 
     return new NextResponse(pdfBytes as any, {

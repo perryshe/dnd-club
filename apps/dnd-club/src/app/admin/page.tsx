@@ -50,7 +50,7 @@ export default async function AdminPage() {
                 </tr>
               </thead>
               <tbody>
-                {users.map((user) => (
+                {users.map((user: any) => (
                   <tr
                     key={user.id}
                     className="border-b border-slate-700/50 hover:bg-slate-700/30"

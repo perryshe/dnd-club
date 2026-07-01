@@ -1,6 +1,5 @@
 import fs from "fs"
-import { PDFDocument } from "pdf-lib"
-import fontkit from "@pdf-lib/fontkit"
+import { PDFDocument, PDFName } from "pdf-lib"
 
 interface CharacterData {
   name: string
@@ -293,18 +292,29 @@ function buildPdfData(char: CharacterData): Record<string, string | boolean> {
   return d
 }
 
+function setFieldRawValue(field: any, value: string): void {
+  try {
+    field.setText(value)
+  } catch {
+    // setText failed (likely WinAnsi encoding) — set value directly in the PDF dictionary
+    try {
+      const acroField = field.acroField
+      const pdfDoc = field.doc
+      const pdfStr = pdfDoc.context.obj(value)
+      acroField.setValue(pdfStr)
+    } catch {
+      // give up on this field
+    }
+  }
+}
+
 export async function generateCharacterPdf(
   char: CharacterData,
   pdfTemplatePath: string,
-  fontPath: string,
 ): Promise<Uint8Array> {
   const existingPdfBytes = fs.readFileSync(pdfTemplatePath)
   const pdfDoc = await PDFDocument.load(existingPdfBytes)
-  pdfDoc.registerFontkit(fontkit)
   const form = pdfDoc.getForm()
-
-  const fontBytes = fs.readFileSync(fontPath)
-  const font = await pdfDoc.embedFont(fontBytes)
 
   const data = buildPdfData(char)
 
@@ -318,26 +328,20 @@ export async function generateCharacterPdf(
     } catch {
       try {
         field = form.getCheckBox(pdfName)
-      } catch {
-        continue
-      }
+        if (field && field.check && typeof value === "boolean") {
+          if (value) field.check()
+        }
+      } catch {}
+      continue
     }
 
     if (!field) continue
 
-    if (field.setText) {
-      const textValue = String(value)
-      try { field.setFont(font) } catch {}
-      let maxLen: number | undefined
-      try {
-        maxLen = field.getMaxLength()
-      } catch {}
-      field.setText(truncate(textValue, maxLen))
-    } else if (field.check && typeof value === "boolean") {
-      if (value) field.check()
-    }
+    const textValue = String(value)
+    let maxLen: number | undefined
+    try { maxLen = field.getMaxLength() } catch {}
+    setFieldRawValue(field, truncate(textValue, maxLen))
   }
 
-  form.flatten()
   return await pdfDoc.save()
 }

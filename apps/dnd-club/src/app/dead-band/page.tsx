@@ -39,8 +39,8 @@ export default async function DeadBandPage() {
     }),
   ])
 
-  const imageRules = rules.filter((r) => r.type === "image")
-  const pdfRules = rules.filter((r) => r.type === "pdf")
+  const imageRules = rules.filter((r: any) => r.type === "image")
+  const pdfRules = rules.filter((r: any) => r.type === "pdf")
 
   return (
     <div className="min-h-screen text-white">
@@ -107,7 +107,7 @@ export default async function DeadBandPage() {
             <p className="text-slate-500">Пока нет персонажей</p>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {characters.map((char) => {
+              {characters.map((char: any) => {
                 const s = char.stats as Record<string, number>
                 return (
                   <div key={char.id} className="bg-slate-800 rounded-xl p-6 border border-amber-900/30 hover:border-amber-700/50 transition-all duration-300 group hover:shadow-xl hover:shadow-amber-900/10 card-glow-medieval relative">
