@@ -1,13 +1,14 @@
 "use client"
 
 import { useState } from "react"
-import { Star, Pencil } from "lucide-react"
+import { Star, Pencil, ChevronDown, ChevronUp } from "lucide-react"
 
 type Review = {
   id: string
   userId: string
   rating: number
   text: string | null
+  createdAt: Date
 }
 
 type BookCardProps = {
@@ -26,15 +27,24 @@ type BookCardProps = {
   userReview: Review | null
   userId: string | undefined
   isAdmin: boolean
+  userNames: Record<string, string>
 }
 
-export default function BookCard({ book, userReview, userId, isAdmin }: BookCardProps) {
+function truncate(text: string, max = 80): string {
+  if (text.length <= max) return text
+  const cut = text.slice(0, max)
+  const lastSpace = cut.lastIndexOf(" ")
+  return cut.slice(0, lastSpace > 0 ? lastSpace : max) + "…"
+}
+
+export default function BookCard({ book, userReview, userId, isAdmin, userNames }: BookCardProps) {
   const [review, setReview] = useState<Review | null>(userReview)
   const [rating, setRating] = useState(userReview?.rating ?? 0)
   const [text, setText] = useState(userReview?.text ?? "")
   const [editing, setEditing] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [adminEditing, setAdminEditing] = useState(false)
+  const [showReviews, setShowReviews] = useState(false)
   const [adminForm, setAdminForm] = useState({
     title: book.title,
     author: book.author,
@@ -51,6 +61,10 @@ export default function BookCard({ book, userReview, userId, isAdmin }: BookCard
   const completed = book.progress.filter((p) => p.completed).length
 
   const canModify = userId && (isAdmin || review?.userId === userId)
+
+  const sortedReviews = [...book.reviews].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  )
 
   async function submitReview() {
     if (!userId || rating === 0) return
@@ -105,7 +119,6 @@ export default function BookCard({ book, userReview, userId, isAdmin }: BookCard
         ? "border-cyan-500/30 bg-cyan-950/20"
         : "border-slate-700/50 bg-slate-900/30 hover:border-slate-600/50"
     }`}>
-      {/* Admin edit form */}
       {adminEditing ? (
         <div className="space-y-3">
           <input value={adminForm.title} onChange={(e) => setAdminForm({ ...adminForm, title: e.target.value })}
@@ -218,6 +231,45 @@ export default function BookCard({ book, userReview, userId, isAdmin }: BookCard
                 <button onClick={() => setEditing(true)} className="mt-1 text-[9px] font-mono tracking-wider uppercase text-slate-600 hover:text-slate-400 transition">
                   Изменить
                 </button>
+              )}
+            </div>
+          )}
+
+          {sortedReviews.length > 0 && (
+            <div className="mt-3 pt-3 border-t border-slate-800">
+              <button
+                onClick={() => setShowReviews((r) => !r)}
+                className="flex items-center gap-1 text-[10px] font-mono tracking-wider uppercase text-slate-500 hover:text-slate-300 transition"
+              >
+                {showReviews ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
+                Рецензии ({sortedReviews.length})
+              </button>
+              {!showReviews ? (
+                <div className="mt-2 text-[11px] text-slate-500">
+                  <span className="text-slate-400 font-medium">{userNames[sortedReviews[0].userId] ?? "—"}</span>
+                  <span className="mx-1.5 inline-flex items-center gap-0.5 align-middle">
+                    {[1, 2, 3, 4, 5].map((n) => (
+                      <Star key={n} size={8} className={n <= sortedReviews[0].rating ? "text-amber-400 fill-amber-400" : "text-slate-700"} />
+                    ))}
+                  </span>
+                  {sortedReviews[0].text && <span>{truncate(sortedReviews[0].text)}</span>}
+                </div>
+              ) : (
+                <div className="mt-2 space-y-3">
+                  {sortedReviews.map((r) => (
+                    <div key={r.id} className="text-[11px]">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-slate-400 font-medium">{userNames[r.userId] ?? "—"}</span>
+                        <span className="inline-flex items-center gap-0.5">
+                          {[1, 2, 3, 4, 5].map((n) => (
+                            <Star key={n} size={8} className={n <= r.rating ? "text-amber-400 fill-amber-400" : "text-slate-700"} />
+                          ))}
+                        </span>
+                      </div>
+                      {r.text && <p className="text-slate-500 mt-0.5 leading-relaxed">{r.text}</p>}
+                    </div>
+                  ))}
+                </div>
               )}
             </div>
           )}
