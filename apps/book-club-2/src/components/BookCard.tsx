@@ -1,13 +1,14 @@
 "use client"
 
 import { useState } from "react"
-import { Star } from "lucide-react"
+import { Star, Pencil, ChevronDown, ChevronUp } from "lucide-react"
 
 type Review = {
   id: string
   userId: string
   rating: number
   text: string | null
+  createdAt: Date
 }
 
 type BookCardProps = {
@@ -18,20 +19,41 @@ type BookCardProps = {
     badge: string | null
     status: string
     eventDate: Date | null
+    description: string | null
+    month: string | null
     reviews: Review[]
     progress: { completed: boolean }[]
   }
   userReview: Review | null
   userId: string | undefined
   isAdmin: boolean
+  userNames: Record<string, string>
 }
 
-export default function BookCard({ book, userReview, userId, isAdmin }: BookCardProps) {
+function truncate(text: string, max = 80): string {
+  if (text.length <= max) return text
+  const cut = text.slice(0, max)
+  const lastSpace = cut.lastIndexOf(" ")
+  return cut.slice(0, lastSpace > 0 ? lastSpace : max) + "…"
+}
+
+export default function BookCard({ book, userReview, userId, isAdmin, userNames }: BookCardProps) {
   const [review, setReview] = useState<Review | null>(userReview)
   const [rating, setRating] = useState(userReview?.rating ?? 0)
   const [text, setText] = useState(userReview?.text ?? "")
   const [editing, setEditing] = useState(false)
   const [submitting, setSubmitting] = useState(false)
+  const [adminEditing, setAdminEditing] = useState(false)
+  const [showReviews, setShowReviews] = useState(false)
+  const [adminForm, setAdminForm] = useState({
+    title: book.title,
+    author: book.author,
+    status: book.status,
+    eventDate: book.eventDate ? new Date(book.eventDate).toISOString().slice(0, 16) : "",
+    badge: book.badge ?? "",
+    month: book.month ?? "",
+    description: book.description ?? "",
+  })
 
   const avgRating = book.reviews.length > 0
     ? (book.reviews.reduce((a, r) => a + r.rating, 0) / book.reviews.length).toFixed(1)
@@ -39,6 +61,10 @@ export default function BookCard({ book, userReview, userId, isAdmin }: BookCard
   const completed = book.progress.filter((p) => p.completed).length
 
   const canModify = userId && (isAdmin || review?.userId === userId)
+
+  const sortedReviews = [...book.reviews].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  )
 
   async function submitReview() {
     if (!userId || rating === 0) return
@@ -69,6 +95,20 @@ export default function BookCard({ book, userReview, userId, isAdmin }: BookCard
     setSubmitting(false)
   }
 
+  async function saveAdminEdit() {
+    setSubmitting(true)
+    const res = await fetch(`/b21/api/books/${book.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(adminForm),
+    })
+    if (res.ok) {
+      setAdminEditing(false)
+      window.location.reload()
+    }
+    setSubmitting(false)
+  }
+
   const dateStr = book.eventDate
     ? book.eventDate.toLocaleDateString("ru-RU", { day: "numeric", month: "short", year: "numeric" })
     : null
@@ -79,79 +119,161 @@ export default function BookCard({ book, userReview, userId, isAdmin }: BookCard
         ? "border-cyan-500/30 bg-cyan-950/20"
         : "border-slate-700/50 bg-slate-900/30 hover:border-slate-600/50"
     }`}>
-      <div className="flex items-start justify-between gap-2 mb-2">
-        <h3 className="font-semibold text-sm text-slate-200 leading-tight">{book.title}</h3>
-        {book.badge && (
-          <span className="flex-shrink-0 text-[9px] font-mono tracking-wider px-2 py-0.5 rounded-full border border-amber-500/30 bg-amber-950/30 text-amber-400">
-            {book.badge}
-          </span>
-        )}
-      </div>
-      <p className="text-xs text-slate-500 font-mono mb-1">{book.author}</p>
-      {dateStr && <p className="text-[10px] text-slate-600 font-mono mb-3">📅 {dateStr}</p>}
-
-      <div className="flex items-center gap-3 text-xs text-slate-500 font-mono">
-        <span className="flex items-center gap-1">
-          <Star size={12} className="text-amber-400/60" />
-          {avgRating}
-        </span>
-        <span>{book.reviews.length} рец.</span>
-        {completed > 0 && <span>{completed} прочли</span>}
-      </div>
-
-      {userId && !review && !editing && (
-        <button onClick={() => setEditing(true)} className="mt-3 text-[10px] font-mono tracking-wider uppercase text-cyan-500/60 hover:text-cyan-400 transition">
-          + Оценить
-        </button>
-      )}
-
-      {editing && (
-        <div className="mt-3 pt-3 border-t border-slate-800">
-          <div className="flex items-center gap-1 mb-2">
-            {[1, 2, 3, 4, 5].map((n) => (
-              <button key={n} onClick={() => setRating(n)} className="transition hover:scale-110" disabled={submitting}>
-                <Star size={16} className={n <= rating ? "text-amber-400 fill-amber-400" : "text-slate-600"} />
-              </button>
-            ))}
-          </div>
-          <textarea
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="Отзыв (необязательно)"
-            rows={2}
-            className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-300 placeholder-slate-600 resize-none mb-2 focus:outline-none focus:border-cyan-500/40"
-            disabled={submitting}
-          />
+      {adminEditing ? (
+        <div className="space-y-3">
+          <input value={adminForm.title} onChange={(e) => setAdminForm({ ...adminForm, title: e.target.value })}
+            className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs text-white font-mono outline-none focus:border-cyan-500/50" />
+          <input value={adminForm.author} onChange={(e) => setAdminForm({ ...adminForm, author: e.target.value })}
+            className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs text-white font-mono outline-none focus:border-cyan-500/50" />
+          <select value={adminForm.status} onChange={(e) => setAdminForm({ ...adminForm, status: e.target.value })}
+            className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs text-white font-mono outline-none focus:border-cyan-500/50">
+            <option value="nominated">nominated</option>
+            <option value="current">current</option>
+            <option value="past">past</option>
+          </select>
+          <input value={adminForm.eventDate} type="datetime-local" onChange={(e) => setAdminForm({ ...adminForm, eventDate: e.target.value })}
+            className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs text-white font-mono outline-none focus:border-cyan-500/50 [color-scheme:dark]" />
+          <input value={adminForm.badge} onChange={(e) => setAdminForm({ ...adminForm, badge: e.target.value })}
+            placeholder="Badge" className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs text-white font-mono outline-none focus:border-cyan-500/50" />
+          <input value={adminForm.month} onChange={(e) => setAdminForm({ ...adminForm, month: e.target.value })}
+            placeholder="Month (YYYY-MM)" className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs text-white font-mono outline-none focus:border-cyan-500/50" />
+          <input value={adminForm.description} onChange={(e) => setAdminForm({ ...adminForm, description: e.target.value })}
+            placeholder="Description" className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs text-white font-mono outline-none focus:border-cyan-500/50" />
           <div className="flex items-center gap-2">
-            <button onClick={submitReview} disabled={submitting || rating === 0} className="px-3 py-1.5 rounded-lg bg-cyan-600/20 text-cyan-400 text-[10px] font-mono tracking-wider uppercase border border-cyan-500/30 hover:bg-cyan-600/30 transition disabled:opacity-50">
-              {submitting ? "..." : review ? "Сохранить" : "Оценить"}
+            <button onClick={saveAdminEdit} disabled={submitting}
+              className="px-3 py-1.5 rounded-lg bg-cyan-600/20 text-cyan-400 text-[10px] font-mono tracking-wider uppercase border border-cyan-500/30 hover:bg-cyan-600/30 transition disabled:opacity-50">
+              {submitting ? "..." : "Сохранить"}
             </button>
-            {review && canModify && (
-              <button onClick={deleteReview} disabled={submitting} className="px-3 py-1.5 rounded-lg text-red-400/60 text-[10px] font-mono tracking-wider uppercase border border-red-500/20 hover:border-red-500/40 transition disabled:opacity-50">
-                Удалить
-              </button>
-            )}
-            <button onClick={() => { setEditing(false); setRating(review?.rating ?? 0); setText(review?.text ?? "") }} className="text-[10px] text-slate-600 hover:text-slate-400 transition font-mono">
+            <button onClick={() => setAdminEditing(false)}
+              className="text-[10px] text-slate-600 hover:text-slate-400 transition font-mono">
               Отмена
             </button>
           </div>
         </div>
-      )}
-
-      {review && !editing && (
-        <div className="mt-3 pt-3 border-t border-slate-800">
-          <div className="flex items-center gap-1 mb-1">
-            {[1, 2, 3, 4, 5].map((n) => (
-              <Star key={n} size={12} className={n <= review.rating ? "text-amber-400 fill-amber-400" : "text-slate-700"} />
-            ))}
+      ) : (
+        <>
+          <div className="flex items-start justify-between gap-2 mb-2">
+            <h3 className="font-semibold text-sm text-slate-200 leading-tight">{book.title}</h3>
+            <div className="flex items-center gap-1">
+              {book.badge && (
+                <span className="flex-shrink-0 text-[9px] font-mono tracking-wider px-2 py-0.5 rounded-full border border-amber-500/30 bg-amber-950/30 text-amber-400">
+                  {book.badge}
+                </span>
+              )}
+              {isAdmin && (
+                <button onClick={() => setAdminEditing(true)} title="Редактировать"
+                  className="p-1 rounded text-slate-600 hover:text-cyan-400 hover:bg-slate-800/50 transition">
+                  <Pencil size={13} />
+                </button>
+              )}
+            </div>
           </div>
-          {review.text && <p className="text-[11px] text-slate-500 leading-relaxed">{review.text}</p>}
-          {canModify && (
-            <button onClick={() => setEditing(true)} className="mt-1 text-[9px] font-mono tracking-wider uppercase text-slate-600 hover:text-slate-400 transition">
-              Изменить
+          <p className="text-xs text-slate-500 font-mono mb-1">{book.author}</p>
+          {dateStr && <p className="text-[10px] text-slate-600 font-mono mb-3">{dateStr}</p>}
+
+          <div className="flex items-center gap-3 text-xs text-slate-500 font-mono">
+            <span className="flex items-center gap-1">
+              <Star size={12} className="text-amber-400/60" />
+              {avgRating}
+            </span>
+            <span>{book.reviews.length} рец.</span>
+            {completed > 0 && <span>{completed} прочли</span>}
+          </div>
+
+          {userId && !review && !editing && (
+            <button onClick={() => setEditing(true)} className="mt-3 text-[10px] font-mono tracking-wider uppercase text-cyan-500/60 hover:text-cyan-400 transition">
+              + Оценить
             </button>
           )}
-        </div>
+
+          {editing && (
+            <div className="mt-3 pt-3 border-t border-slate-800">
+              <div className="flex items-center gap-1 mb-2">
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <button key={n} onClick={() => setRating(n)} className="transition hover:scale-110" disabled={submitting}>
+                    <Star size={16} className={n <= rating ? "text-amber-400 fill-amber-400" : "text-slate-600"} />
+                  </button>
+                ))}
+              </div>
+              <textarea
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                placeholder="Отзыв (необязательно)"
+                rows={2}
+                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-300 placeholder-slate-600 resize-none mb-2 focus:outline-none focus:border-cyan-500/40"
+                disabled={submitting}
+              />
+              <div className="flex items-center gap-2">
+                <button onClick={submitReview} disabled={submitting || rating === 0} className="px-3 py-1.5 rounded-lg bg-cyan-600/20 text-cyan-400 text-[10px] font-mono tracking-wider uppercase border border-cyan-500/30 hover:bg-cyan-600/30 transition disabled:opacity-50">
+                  {submitting ? "..." : review ? "Сохранить" : "Оценить"}
+                </button>
+                {review && canModify && (
+                  <button onClick={deleteReview} disabled={submitting} className="px-3 py-1.5 rounded-lg text-red-400/60 text-[10px] font-mono tracking-wider uppercase border border-red-500/20 hover:border-red-500/40 transition disabled:opacity-50">
+                    Удалить
+                  </button>
+                )}
+                <button onClick={() => { setEditing(false); setRating(review?.rating ?? 0); setText(review?.text ?? "") }} className="text-[10px] text-slate-600 hover:text-slate-400 transition font-mono">
+                  Отмена
+                </button>
+              </div>
+            </div>
+          )}
+
+          {review && !editing && (
+            <div className="mt-3 pt-3 border-t border-slate-800">
+              <div className="flex items-center gap-1 mb-1">
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <Star key={n} size={12} className={n <= review.rating ? "text-amber-400 fill-amber-400" : "text-slate-700"} />
+                ))}
+              </div>
+              {review.text && <p className="text-[11px] text-slate-500 leading-relaxed">{review.text}</p>}
+              {canModify && (
+                <button onClick={() => setEditing(true)} className="mt-1 text-[9px] font-mono tracking-wider uppercase text-slate-600 hover:text-slate-400 transition">
+                  Изменить
+                </button>
+              )}
+            </div>
+          )}
+
+          {sortedReviews.length > 0 && (
+            <div className="mt-3 pt-3 border-t border-slate-800">
+              <button
+                onClick={() => setShowReviews((r) => !r)}
+                className="flex items-center gap-1 text-[10px] font-mono tracking-wider uppercase text-slate-500 hover:text-slate-300 transition"
+              >
+                {showReviews ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
+                Рецензии ({sortedReviews.length})
+              </button>
+              {!showReviews ? (
+                <div className="mt-2 text-[11px] text-slate-500">
+                  <span className="text-slate-400 font-medium">{userNames[sortedReviews[0].userId] ?? "—"}</span>
+                  <span className="mx-1.5 inline-flex items-center gap-0.5 align-middle">
+                    {[1, 2, 3, 4, 5].map((n) => (
+                      <Star key={n} size={8} className={n <= sortedReviews[0].rating ? "text-amber-400 fill-amber-400" : "text-slate-700"} />
+                    ))}
+                  </span>
+                  {sortedReviews[0].text && <span>{truncate(sortedReviews[0].text)}</span>}
+                </div>
+              ) : (
+                <div className="mt-2 space-y-3">
+                  {sortedReviews.map((r) => (
+                    <div key={r.id} className="text-[11px]">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-slate-400 font-medium">{userNames[r.userId] ?? "—"}</span>
+                        <span className="inline-flex items-center gap-0.5">
+                          {[1, 2, 3, 4, 5].map((n) => (
+                            <Star key={n} size={8} className={n <= r.rating ? "text-amber-400 fill-amber-400" : "text-slate-700"} />
+                          ))}
+                        </span>
+                      </div>
+                      {r.text && <p className="text-slate-500 mt-0.5 leading-relaxed">{r.text}</p>}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </>
       )}
     </div>
   )

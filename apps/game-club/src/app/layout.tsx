@@ -24,6 +24,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             bookClubUrl={process.env.NEXT_PUBLIC_BOOK_CLUB_URL}
             activeHref="/"
             session={session}
+            t21Url={(process.env.NEXT_PUBLIC_DND_CLUB_URL ?? "/") + "t21/"}
           />
           <main className="flex-1">{children}</main>
           <footer className="border-t border-slate-800/40 bg-slate-950/50">

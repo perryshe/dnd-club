@@ -9,7 +9,8 @@
     "lint": "next lint",
     "db:generate": "prisma generate --schema=prisma/auth.prisma && prisma generate --schema=prisma/schema.prisma",
     "db:push": "prisma db push",
-    "db:seed": "tsx prisma/seed.ts"
+    "db:seed": "tsx prisma/seed.ts",
+    "migrate:events": "tsx scripts/migrate-event-dates.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

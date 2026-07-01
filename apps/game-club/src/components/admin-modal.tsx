@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useRef } from "react"
 
 type Game = { id: string; name: string; time: string | null; players: string | null; age: string | null; year: number | null; isExp: boolean; image: string | null }
 
@@ -14,13 +14,29 @@ export default function AdminModal({ game, onSave, onClose }: {
   const [year, setYear] = useState(String(game?.year || ""))
   const [isExp, setIsExp] = useState(game?.isExp || false)
   const [image, setImage] = useState(game?.image || "")
+  const [uploading, setUploading] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploading(true)
+    const fd = new FormData()
+    fd.append("file", file)
+    const res = await fetch("/g21/api/upload", { method: "POST", body: fd })
+    if (res.ok) {
+      const data = await res.json()
+      setImage(data.filename)
+    }
+    setUploading(false)
+  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     onSave({
       id: game?.id, name, time, players, age,
       year: year ? parseInt(year) : undefined,
-      isExp, image,
+      isExp, image: image || null,
     })
   }
 
@@ -56,9 +72,23 @@ export default function AdminModal({ game, onSave, onClose }: {
             <input type="checkbox" id="isExp" checked={isExp} onChange={e => setIsExp(e.target.checked)} className="accent-cyan-500" />
             <label htmlFor="isExp" className="text-[10px] text-slate-500 font-mono">Дополнение</label>
           </div>
+
           <div className="col-span-2">
-            <label className="text-[10px] text-slate-500 font-mono block mb-1">Изображение (имя файла)</label>
-            <input value={image} onChange={e => setImage(e.target.value)} placeholder="pic7416519.jpg" className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs text-white font-mono outline-none focus:border-cyan-500/50" />
+            <label className="text-[10px] text-slate-500 font-mono block mb-1">Изображение</label>
+            <div className="flex items-center gap-3">
+              <button type="button" onClick={() => inputRef.current?.click()} disabled={uploading}
+                className="px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs text-slate-400 font-mono hover:border-cyan-500/50 hover:text-cyan-400 transition disabled:opacity-50">
+                {uploading ? "⏳ Загрузка..." : "📁 Выбрать файл"}
+              </button>
+              <input ref={inputRef} type="file" accept="image/*" onChange={handleFile} className="hidden" />
+              {image && <span className="text-[10px] text-slate-500 font-mono truncate max-w-[180px]">{image}</span>}
+            </div>
+            {image && (
+              <div className="mt-2 w-24 h-24 rounded-lg overflow-hidden bg-slate-800 border border-slate-700">
+                <img src={`/g21/images/${image}`} alt="preview" className="w-full h-full object-cover"
+                  onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none" }} />
+              </div>
+            )}
           </div>
 
           <div className="col-span-2 flex gap-2 mt-2">

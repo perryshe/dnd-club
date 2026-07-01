@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma"
 import { auth } from "@/lib/auth"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowLeft, Trash2, Pencil, ArrowRightLeft } from "lucide-react"
+import { ArrowLeft, Trash2, Pencil, ArrowRightLeft, FileDown } from "lucide-react"
 import { deleteCharacter, transferCharacter } from "@/lib/character-actions"
 
 function abilityModifier(score: number): number {
@@ -101,6 +101,14 @@ export default async function CharacterSheet({
         </div>
         {(canDelete || character.userId === session?.user?.id) && (
           <div className="flex items-center gap-3">
+            <a
+              href={`/api/characters/${character.id}/pdf`}
+              download
+              className="flex items-center gap-2 bg-emerald-700 hover:bg-emerald-600 px-4 py-2 rounded-lg transition"
+            >
+              <FileDown size={18} />
+              PDF
+            </a>
             <Link
               href={`/${character.campaign.slug}/characters/${character.id}/edit`}
               className="flex items-center gap-2 bg-slate-600 hover:bg-slate-500 px-4 py-2 rounded-lg transition"

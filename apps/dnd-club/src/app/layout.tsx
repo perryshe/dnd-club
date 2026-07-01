@@ -4,7 +4,6 @@ import { auth } from "@/lib/auth"
 import "./globals.css"
 import Link from "next/link"
 import SignOutButton from "@/components/signout-button"
-import GameModal from "@/components/GameModal"
 import ClubNav from "club-nav"
 import { Cpu } from "lucide-react"
 
@@ -31,7 +30,7 @@ export default async function RootLayout({
             bookClubUrl={process.env.NEXT_PUBLIC_BOOK_CLUB_URL}
             activeHref="/"
             session={session}
-            t21Element={<GameModal url={process.env.NEXT_PUBLIC_T21_GAME_URL ?? ""} />}
+            t21Url={process.env.NEXT_PUBLIC_T21_GAME_URL}
           />
           <main className="flex-1">{children}</main>
           <footer className="border-t border-slate-800/40 bg-slate-950/50">

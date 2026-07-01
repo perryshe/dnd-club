@@ -1,14 +1,8 @@
-import { Download, ExternalLink, Plus, RotateCcw, Trash2 } from "lucide-react"
+import { Download, Plus, RotateCcw, Trash2 } from "lucide-react"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { createBookEvent, toggleBookEventStatus, deleteBookEvent } from "@/lib/actions"
 import Countdown from "./Countdown"
-
-const libraries = [
-  { name: "lib.ru", url: "https://lib.ru" },
-  { name: "flibusta", url: "https://flibusta.is" },
-  { name: "traumlibrary", url: "https://traumlibrary.net" },
-]
 
 const months = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"]
 
@@ -40,7 +34,7 @@ export default async function ReadingLog() {
   }
 
   return (
-    <section className="relative pb-24">
+    <section id="reading-log" className="relative pb-24">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
           <div className="flex items-center gap-4 mb-12">
@@ -190,25 +184,6 @@ export default async function ReadingLog() {
             })}
           </div>
 
-          {/* Libraries reference */}
-          <div className="mt-8 p-4 rounded-xl border border-slate-800/50 bg-slate-900/20">
-            <div className="flex items-center gap-2 mb-3">
-              <ExternalLink size={12} className="text-slate-600" />
-              <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-slate-600">Бесплатные библиотеки</span>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {libraries.map((lib) => (
-                <a
-                  key={lib.name}
-                  href={lib.url}
-                  target="_blank"
-                  className="text-[10px] font-mono tracking-wider text-slate-500 hover:text-cyan-400 transition px-2 py-1 rounded border border-slate-700/30 hover:border-cyan-700/30"
-                >
-                  {lib.name}
-                </a>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
     </section>
