@@ -335,22 +335,3 @@ export async function generateCharacterPdf(
   const uint8 = await pdfDoc.save()
   return Buffer.from(uint8.buffer as ArrayBuffer, uint8.byteOffset, uint8.byteLength)
 }
-    }
-
-    if (!field) continue
-
-    if (field.setText) {
-      const textValue = String(value)
-      let maxLen: number | undefined
-      try {
-        maxLen = field.getMaxLength()
-      } catch {}
-      field.setText(truncate(textValue, maxLen))
-    } else if (field.check && typeof value === "boolean") {
-      if (value) field.check()
-    }
-  }
-
-  form.flatten()
-  return await pdfDoc.save()
-}
