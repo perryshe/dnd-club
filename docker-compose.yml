@@ -18,8 +18,8 @@ services:
 
   dnd-club:
     build:
-      context: ./apps/dnd-club
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: apps/dnd-club/Dockerfile
     container_name: dnd-club
     restart: always
     ports:
@@ -43,8 +43,8 @@ services:
 
   book-club:
     build:
-      context: ./apps/book-club
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: apps/book-club/Dockerfile
     container_name: dnd-book-club
     restart: always
     ports:
