@@ -1,5 +1,6 @@
 import fs from "fs"
 import { PDFDocument, PDFHexString } from "pdf-lib"
+import fontkit from "@pdf-lib/fontkit"
 
 interface CharacterData {
   name: string
@@ -63,6 +64,7 @@ function computeSkillTotal(
 
 const PDF_INPUT_NAMES: Record<string, string> = {
   classLevel: "ClassLevel",
+  race: "Race ",
   background: "Background",
   playerName: "PlayerName",
   characterName: "CharacterName",
@@ -72,7 +74,7 @@ const PDF_INPUT_NAMES: Record<string, string> = {
   profBonus: "ProfBonus",
 
   str: "STR", dex: "DEX", con: "CON", int: "INT", wis: "WIS", cha: "CHA",
-  strMod: "STRmod", dexMod: "DEXmod", conMod: "CONmod",
+  strMod: "STRmod", dexMod: "DEXmod ", conMod: "CONmod",
   intMod: "INTmod", wisMod: "WISmod", chaMod: "CHamod",
 
   ac: "AC", initiative: "Initiative", speed: "Speed",
@@ -115,11 +117,12 @@ const PDF_INPUT_NAMES: Record<string, string> = {
 
   wpnName1: "Wpn Name", wpnAtkBonus1: "Wpn1 AtkBonus",
   wpnDamage1: "Wpn1 Damage",
-  wpnName2: "Wpn Name 2", wpnAtkBonus2: "Wpn2 AtkBonus",
-  wpnDamage2: "Wpn2 Damage",
-  wpnName3: "Wpn Name 3", wpnAtkBonus3: "Wpn3 AtkBonus",
-  wpnDamage3: "Wpn3 Damage",
+  wpnName2: "Wpn Name 2", wpnAtkBonus2: "Wpn2 AtkBonus ",
+  wpnDamage2: "Wpn2 Damage ",
+  wpnName3: "Wpn Name 3", wpnAtkBonus3: "Wpn3 AtkBonus  ",
+  wpnDamage3: "Wpn3 Damage ",
 
+  personalityTraits: "PersonalityTraits ",
   ideals: "Ideals", bonds: "Bonds", flaws: "Flaws",
 
   cp: "CP", sp: "SP", ep: "EP", gp: "GP", pp: "PP",
@@ -198,6 +201,7 @@ function buildPdfData(char: CharacterData): Record<string, string | boolean> {
   const d: Record<string, string | boolean> = {}
 
   d.classLevel = `${char.class} ${char.level}`
+  d.race = char.race || ""
   d.background = char.background || ""
   d.playerName = ""
   d.characterName = char.name
@@ -250,6 +254,7 @@ function buildPdfData(char: CharacterData): Record<string, string | boolean> {
     d[`wpnDamage${i + 1}`] = atk?.damage || ""
   }
 
+  d.personalityTraits = sheet.personalityTraits || ""
   d.ideals = sheet.ideals || ""
   d.bonds = sheet.bonds || ""
   d.flaws = sheet.flaws || ""
@@ -258,12 +263,15 @@ function buildPdfData(char: CharacterData): Record<string, string | boolean> {
   d.equipment = char.equipment || ""
   d.featuresTraits = sheet.featuresAndTraits || ""
 
-  const personalityParts: string[] = []
-  if (sheet.personalityTraits) personalityParts.push(`Personality Traits: ${sheet.personalityTraits}`)
-  if (sheet.ideals) personalityParts.push(`Ideals: ${sheet.ideals}`)
-  if (sheet.bonds) personalityParts.push(`Bonds: ${sheet.bonds}`)
-  if (sheet.flaws) personalityParts.push(`Flaws: ${sheet.flaws}`)
-  d.attacksSpellcasting = personalityParts.join("\n")
+  const attackParts: string[] = []
+  for (const atk of attacks) {
+    if (atk.name) attackParts.push(`${atk.name} ${atk.atkBonus || ""} ${atk.damage || ""} ${atk.type || ""}`.trim())
+  }
+  const spellNames: string[] = []
+  for (const [, list] of Object.entries(spells)) {
+    for (const s of list) spellNames.push(s)
+  }
+  d.attacksSpellcasting = [...attackParts, ...spellNames].join("\n")
 
   d.characterName2 = char.name
   d.backstory = char.backstory || ""
@@ -292,21 +300,25 @@ function buildPdfData(char: CharacterData): Record<string, string | boolean> {
   return d
 }
 
-function setFieldRawValue(field: any, value: string): void {
-  try {
-    const acroField = field.acroField
-    acroField.setValue(PDFHexString.fromText(value))
-  } catch {
-    // give up on this field
-  }
-}
-
 export async function generateCharacterPdf(
   char: CharacterData,
   pdfTemplatePath: string,
+  fontPath?: string,
 ): Promise<Uint8Array> {
   const existingPdfBytes = fs.readFileSync(pdfTemplatePath)
   const pdfDoc = await PDFDocument.load(existingPdfBytes)
+
+  let embeddedFont: any = null
+  if (fontPath) {
+    try {
+      pdfDoc.registerFontkit(fontkit)
+      const fontBytes = fs.readFileSync(fontPath)
+      embeddedFont = await pdfDoc.embedFont(fontBytes)
+    } catch (e) {
+      console.warn("Font embedding failed, continuing without custom font:", e)
+    }
+  }
+
   const form = pdfDoc.getForm()
 
   const data = buildPdfData(char)
@@ -333,8 +345,20 @@ export async function generateCharacterPdf(
     const textValue = String(value)
     let maxLen: number | undefined
     try { maxLen = field.getMaxLength() } catch {}
-    setFieldRawValue(field, truncate(textValue, maxLen))
+
+    // Set value directly via acroField to bypass WinAnsi encoding
+    try {
+      const acroField = field.acroField
+      acroField.setValue(PDFHexString.fromText(truncate(textValue, maxLen)))
+    } catch {}
+
+    // Mark dirty so updateFieldAppearances regenerates this field's appearance
+    try { field.markAsDirty() } catch {}
   }
 
-  return await pdfDoc.save()
+  if (embeddedFont) {
+    form.updateFieldAppearances(embeddedFont)
+  }
+
+  return await pdfDoc.save({ updateFieldAppearances: false })
 }
