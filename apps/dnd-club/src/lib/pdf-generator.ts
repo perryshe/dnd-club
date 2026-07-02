@@ -1,5 +1,5 @@
 import fs from "fs"
-import { PDFDocument } from "pdf-lib"
+import { PDFDocument, PDFHexString } from "pdf-lib"
 
 interface CharacterData {
   name: string
@@ -203,7 +203,7 @@ function buildPdfData(char: CharacterData): Record<string, string | boolean> {
   d.characterName = char.name
   d.alignment = char.alignment || ""
   d.xp = String(char.experiencePoints || 0)
-  d.inspiration = char.inspiration ? "✓" : ""
+  d.inspiration = char.inspiration ? "Yes" : ""
   d.profBonus = formatMod(pb)
 
   for (const key of ["str", "dex", "con", "int", "wis", "cha"] as const) {
@@ -295,8 +295,7 @@ function buildPdfData(char: CharacterData): Record<string, string | boolean> {
 function setFieldRawValue(field: any, value: string): void {
   try {
     const acroField = field.acroField
-    const pdfStr = acroField.dict.context.obj(value)
-    acroField.setValue(pdfStr)
+    acroField.setValue(PDFHexString.fromText(value))
   } catch {
     // give up on this field
   }
