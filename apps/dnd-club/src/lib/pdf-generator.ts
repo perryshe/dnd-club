@@ -1,5 +1,5 @@
 import fs from "fs"
-import { PDFDocument, PDFName } from "pdf-lib"
+import { PDFDocument } from "pdf-lib"
 
 interface CharacterData {
   name: string
@@ -294,17 +294,11 @@ function buildPdfData(char: CharacterData): Record<string, string | boolean> {
 
 function setFieldRawValue(field: any, value: string): void {
   try {
-    field.setText(value)
+    const acroField = field.acroField
+    const pdfStr = acroField.dict.context.obj(value)
+    acroField.setValue(pdfStr)
   } catch {
-    // setText failed (likely WinAnsi encoding) — set value directly in the PDF dictionary
-    try {
-      const acroField = field.acroField
-      const pdfDoc = field.doc
-      const pdfStr = pdfDoc.context.obj(value)
-      acroField.setValue(pdfStr)
-    } catch {
-      // give up on this field
-    }
+    // give up on this field
   }
 }
 
