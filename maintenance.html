@@ -256,7 +256,7 @@ body::before {
           <div class="progress-fill" id="progressFill"></div>
         </div>
         <div class="progress-label">
-          <span>⌛ REMAINING</span>
+          <span id="progressLabel">⌛ REMAINING</span>
           <span id="progressPct">0%</span>
         </div>
       </div>
@@ -278,19 +278,26 @@ body::before {
   var display = document.getElementById('countdown');
   var fill = document.getElementById('progressFill');
   var pct = document.getElementById('progressPct');
+  var label = document.getElementById('progressLabel');
 
   function tick() {
     var now = Math.floor(Date.now() / 1000);
     var elapsed = now - buildStart;
     var remaining = Math.max(0, TOTAL - elapsed);
+    var done = remaining <= 0;
+
+    if (done) {
+      display.classList.add('expired');
+      display.textContent = '✓ ВЫПОЛНЕНО';
+      label.textContent = '✅ DONE';
+      fill.style.width = '100%';
+      pct.textContent = '100%';
+      return;
+    }
+
     var mins = Math.floor(remaining / 60);
     var secs = remaining % 60;
     display.textContent = String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
-
-    if (remaining <= 0) {
-      display.classList.add('expired');
-      display.textContent = '00:00';
-    }
 
     var progress = Math.min(100, (elapsed / TOTAL) * 100);
     fill.style.width = progress + '%';
