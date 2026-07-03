@@ -175,40 +175,85 @@ export default function ClubNav({ active, dndClubUrl, bookClubUrl, activeHref, s
   const isSadmin = session?.user?.role === "sadmin"
   const [t21Open, setT21Open] = useState(false)
 
+  const visibleClubs = clubs.filter(
+    (c) => c.id !== "t21" && (c.id !== "quest" || isSadmin)
+  )
+
+  const clubOptions = [
+    ...visibleClubs.map((c) => ({ label: c.label, href: hrefFor(c.id, dndClubUrl, bookClubUrl) })),
+    ...(t21Url ? [{ label: "t21 Club", href: t21Url }] : []),
+  ]
+
+  function handleSelect(e: React.ChangeEvent<HTMLSelectElement>) {
+    const href = e.target.value
+    if (href === "t21") {
+      setT21Open(true)
+    } else if (href) {
+      window.location.href = href
+    }
+  }
+
+  function activeHrefValue(): string {
+    if (activeHref) return activeHref
+    if (active) return hrefFor(active, dndClubUrl, bookClubUrl)
+    return dndClubUrl
+  }
+
   return (
     <nav className="bg-black border-b border-slate-800">
       <div className="container mx-auto px-4 h-12 flex items-center gap-6">
-        {clubs.map((club) => {
-          if (club.id === "quest" && !isSadmin) return null
-          if (club.id === "t21") return null
+        {/* Desktop: horizontal links */}
+        <div className="hidden md:flex items-center gap-6">
+          {visibleClubs.map((club) => {
+            const isActive = active === club.id
+            const baseClass = "flex items-center gap-2 font-bold transition whitespace-nowrap"
+            const colorClass = isActive ? club.color.replace(" hover:", " ") : club.color
 
-          const isActive = active === club.id
-          const baseClass = "flex items-center gap-2 font-bold transition whitespace-nowrap"
-          const colorClass = isActive ? club.color.replace(" hover:", " ") : club.color
+            const inner = (
+              <>
+                {club.icon && (
+                  <img src={club.icon} alt="" className={club.iconClass ?? ""} style={{ width: club.iconSize ?? 20, height: club.iconSize ?? 20 }} />
+                )}
+                {club.label}
+              </>
+            )
 
-          const inner = (
-            <>
-              {club.icon && (
-                <img src={club.icon} alt="" className={club.iconClass ?? ""} style={{ width: club.iconSize ?? 20, height: club.iconSize ?? 20 }} />
-              )}
-              {club.label}
-            </>
-          )
+            const el = isActive && activeHref ? (
+              <a href={activeHref} className={`${baseClass} ${colorClass}`}>{inner}</a>
+            ) : (
+              <a href={hrefFor(club.id, dndClubUrl, bookClubUrl)} className={`${baseClass} ${colorClass}`}>{inner}</a>
+            )
+            return <span key={club.id}>{el}</span>
+          })}
+          {t21Url && (
+            <span key="t21">
+              <button onClick={() => setT21Open(true)} className="flex items-center gap-2 font-bold text-indigo-400 hover:text-indigo-300 transition whitespace-nowrap bg-transparent border-none cursor-pointer">
+                <span className="w-4 h-4 rounded flex items-center justify-center bg-indigo-600 text-white text-[8px] font-bold shrink-0">#</span>
+                <span className="text-xs">t21 Club</span>
+              </button>
+            </span>
+          )}
+        </div>
 
-          const el = isActive && activeHref ? (
-            <a href={activeHref} className={`${baseClass} ${colorClass}`}>{inner}</a>
-          ) : (
-            <a href={hrefFor(club.id, dndClubUrl, bookClubUrl)} className={`${baseClass} ${colorClass}`}>{inner}</a>
-          )
-          return <span key={club.id}>{el}</span>
-        })}
-        <span key="t21">
-          <button onClick={() => setT21Open(true)} className="flex items-center gap-2 font-bold text-indigo-400 hover:text-indigo-300 transition whitespace-nowrap bg-transparent border-none cursor-pointer">
-            <span className="w-4 h-4 rounded flex items-center justify-center bg-indigo-600 text-white text-[8px] font-bold shrink-0">#</span>
-            <span className="text-xs">t21 Club</span>
-          </button>
-        </span>
+        {/* Mobile: select dropdown */}
+        <div className="flex md:hidden items-center w-full">
+          <select
+            onChange={handleSelect}
+            value={activeHrefValue()}
+            className="w-full bg-slate-900 border border-slate-700 text-white text-sm font-semibold rounded-lg px-3 py-1.5 outline-none"
+          >
+            {visibleClubs.map((c) => (
+              <option key={c.id} value={hrefFor(c.id, dndClubUrl, bookClubUrl)}>
+                {c.label}
+              </option>
+            ))}
+            {t21Url && (
+              <option value="t21">t21 Club</option>
+            )}
+          </select>
+        </div>
       </div>
+
       {t21Open && t21Url && (
         <div
           className="fixed inset-0 z-50 flex items-start justify-start bg-black/70"

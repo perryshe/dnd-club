@@ -210,6 +210,30 @@ export default function MobileCharacterSheet(props: Props) {
   const labelClass = "text-xs text-slate-400 block mb-1";
   const sectionClass = "bg-slate-800/50 rounded-xl p-4 border " + accentBorder;
 
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
+
+  function toggleSection(key: string) {
+    setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
+  }
+
+  function Section({ title, defaultOpen = true, children }: { title: string; defaultOpen?: boolean; children: React.ReactNode }) {
+    const isOpen = openSections[title] ?? defaultOpen;
+    return (
+      <div className={sectionClass}>
+        <button
+          onClick={() => toggleSection(title)}
+          className="w-full flex items-center justify-between text-base font-bold text-amber-400 mb-0 bg-transparent border-none cursor-pointer"
+        >
+          <span>{title}</span>
+          <span className={"text-slate-500 transition-transform duration-200 " + (isOpen ? "rotate-180" : "")}>
+            &#9660;
+          </span>
+        </button>
+        {isOpen && <div className="mt-3">{children}</div>}
+      </div>
+    );
+  }
+
   function Modifier({ val }: { val: number }) {
     return (
       <span className={"text-lg font-bold " + (val >= 0 ? "text-green-400" : "text-red-400")}>
@@ -220,8 +244,60 @@ export default function MobileCharacterSheet(props: Props) {
   function renderStatsTab() {
     return (
       <div className="space-y-4">
-        <div className={sectionClass}>
-          <h2 className="text-base font-bold mb-3 text-amber-400">Характеристики</h2>
+        <Section title="Основная информация" defaultOpen={false}>
+          <div className="grid grid-cols-2 gap-3 text-sm">
+            <div>
+              <label className={labelClass}>Раса</label>
+              {canEdit ? (
+                <input value={race} onChange={(e) => setRace(e.target.value)} className={inputClass} />
+              ) : (
+                <div className="font-bold">{race}</div>
+              )}
+            </div>
+            <div>
+              <label className={labelClass}>Класс</label>
+              {canEdit ? (
+                <input value={charClass} onChange={(e) => setCharClass(e.target.value)} className={inputClass} />
+              ) : (
+                <div className="font-bold">{charClass}</div>
+              )}
+            </div>
+            <div>
+              <label className={labelClass}>Уровень</label>
+              {canEdit ? (
+                <input type="number" min={1} value={level} onChange={(e) => setLevel(Number(e.target.value) || 1)} className={inputClass} />
+              ) : (
+                <div className="font-bold">{level}</div>
+              )}
+            </div>
+            <div>
+              <label className={labelClass}>Предыстория</label>
+              {canEdit ? (
+                <input value={background} onChange={(e) => setBackground(e.target.value)} className={inputClass} />
+              ) : (
+                <div className="font-bold">{background}</div>
+              )}
+            </div>
+            <div>
+              <label className={labelClass}>Мировоззрение</label>
+              {canEdit ? (
+                <input value={alignment} onChange={(e) => setAlignment(e.target.value)} className={inputClass} />
+              ) : (
+                <div className="font-bold">{alignment}</div>
+              )}
+            </div>
+            <div>
+              <label className={labelClass}>Опыт</label>
+              {canEdit ? (
+                <input type="number" min={0} value={xp} onChange={(e) => setXp(Number(e.target.value) || 0)} className={inputClass} />
+              ) : (
+                <div className="font-bold">{xp}</div>
+              )}
+            </div>
+          </div>
+        </Section>
+
+        <Section title="Характеристики">
           <div className="grid grid-cols-2 gap-3">
             {ABILITY_KEYS.map((key) => {
               const score = stats[key] ?? 10;
@@ -248,10 +324,9 @@ export default function MobileCharacterSheet(props: Props) {
               );
             })}
           </div>
-        </div>
+        </Section>
 
-        <div className={sectionClass}>
-          <h2 className="text-base font-bold mb-3 text-amber-400">Спасброски</h2>
+        <Section title="Спасброски">
           <div className="space-y-1">
             {ABILITY_KEYS.map((key) => {
               const score = stats[key] ?? 10;
@@ -280,10 +355,9 @@ export default function MobileCharacterSheet(props: Props) {
               );
             })}
           </div>
-        </div>
+        </Section>
 
-        <div className={sectionClass}>
-          <h2 className="text-base font-bold mb-3 text-amber-400">Навыки</h2>
+        <Section title="Навыки">
           <div className="space-y-1">
             {SKILL_KEYS.map((key) => {
               const score = stats[SKILL_ABILITY[key]] ?? 10;
@@ -316,15 +390,14 @@ export default function MobileCharacterSheet(props: Props) {
             <span className="text-sm text-slate-400">Пассивная Внимательность: </span>
             <span className="font-bold text-amber-400">{passivePerception}</span>
           </div>
-        </div>
+        </Section>
       </div>
     );
   }
   function renderCombatTab() {
     return (
       <div className="space-y-4">
-        <div className={sectionClass}>
-          <h2 className="text-base font-bold mb-3 text-amber-400">Хиты и защита</h2>
+        <Section title="Хиты и защита">
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className={labelClass}>Текущие HP</label>
@@ -416,10 +489,9 @@ export default function MobileCharacterSheet(props: Props) {
               )}
             </div>
           </div>
-        </div>
+        </Section>
 
-        <div className={sectionClass}>
-          <h2 className="text-base font-bold mb-3 text-amber-400">Спасброски от смерти</h2>
+        <Section title="Спасброски от смерти">
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <span className="text-sm text-slate-400 w-16">Успехи:</span>
@@ -444,10 +516,9 @@ export default function MobileCharacterSheet(props: Props) {
               ))}
             </div>
           </div>
-        </div>
-        <div className={sectionClass}>
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-base font-bold text-amber-400">Атаки</h2>
+        </Section>
+        <Section title="Атаки">
+          <div className="flex items-center justify-end mb-3">
             {canEdit && (
               <button onClick={addAttack} className="text-amber-400 hover:text-amber-300 text-sm font-semibold">
                 + Добавить
@@ -504,7 +575,7 @@ export default function MobileCharacterSheet(props: Props) {
               </div>
             ))}
           </div>
-        </div>
+        </Section>
       </div>
     );
   }
@@ -513,9 +584,8 @@ export default function MobileCharacterSheet(props: Props) {
 
     return (
       <div className="space-y-4">
-        <div className={sectionClass}>
-          <h2 className="text-base font-bold mb-3 text-amber-400">Магия</h2>
-          <div className="grid grid-cols-3 gap-2 mb-3 text-sm">
+        <Section title="Параметры магии">
+          <div className="grid grid-cols-3 gap-2 text-sm">
             <div>
               <label className={labelClass}>Х-ка</label>
               {canEdit ? (
@@ -541,7 +611,7 @@ export default function MobileCharacterSheet(props: Props) {
               )}
             </div>
           </div>
-        </div>
+        </Section>
 
         {spellLevels.map((lvl) => {
           const list = spellList(lvl);
@@ -549,8 +619,7 @@ export default function MobileCharacterSheet(props: Props) {
           const maxSlots = lvl === 0 ? 8 : lvl === 7 ? 8 : 12;
           if (!canEdit && list.length === 0) return null;
           return (
-            <div key={lvl} className={sectionClass}>
-              <h2 className="text-base font-bold mb-3 text-amber-400">{label}</h2>
+            <Section key={lvl} title={label}>
               <div className="space-y-2">
                 {Array.from({ length: maxSlots }).map((_, i) => {
                   const val = list[i] || "";
@@ -575,7 +644,7 @@ export default function MobileCharacterSheet(props: Props) {
                   );
                 })}
               </div>
-            </div>
+            </Section>
           );
         })}
       </div>
@@ -596,8 +665,7 @@ export default function MobileCharacterSheet(props: Props) {
     return (
       <div className="space-y-4">
         {fields.map((f) => (
-          <div key={f.label} className={sectionClass}>
-            <h2 className="text-base font-bold mb-3 text-amber-400">{f.label}</h2>
+          <Section key={f.label} title={f.label}>
             {canEdit ? (
               <textarea
                 value={f.value}
@@ -608,62 +676,8 @@ export default function MobileCharacterSheet(props: Props) {
             ) : (
               <p className="text-sm text-slate-300 whitespace-pre-wrap">{f.value || "-"}</p>
             )}
-          </div>
+          </Section>
         ))}
-
-        <div className={sectionClass}>
-          <h2 className="text-base font-bold mb-3 text-amber-400">Основная информация</h2>
-          <div className="grid grid-cols-2 gap-3 text-sm">
-            <div>
-              <label className={labelClass}>Раса</label>
-              {canEdit ? (
-                <input value={race} onChange={(e) => setRace(e.target.value)} className={inputClass} />
-              ) : (
-                <div className="font-bold">{race}</div>
-              )}
-            </div>
-            <div>
-              <label className={labelClass}>Класс</label>
-              {canEdit ? (
-                <input value={charClass} onChange={(e) => setCharClass(e.target.value)} className={inputClass} />
-              ) : (
-                <div className="font-bold">{charClass}</div>
-              )}
-            </div>
-            <div>
-              <label className={labelClass}>Уровень</label>
-              {canEdit ? (
-                <input type="number" min={1} value={level} onChange={(e) => setLevel(Number(e.target.value) || 1)} className={inputClass} />
-              ) : (
-                <div className="font-bold">{level}</div>
-              )}
-            </div>
-            <div>
-              <label className={labelClass}>Предыстория</label>
-              {canEdit ? (
-                <input value={background} onChange={(e) => setBackground(e.target.value)} className={inputClass} />
-              ) : (
-                <div className="font-bold">{background}</div>
-              )}
-            </div>
-            <div>
-              <label className={labelClass}>Мировоззрение</label>
-              {canEdit ? (
-                <input value={alignment} onChange={(e) => setAlignment(e.target.value)} className={inputClass} />
-              ) : (
-                <div className="font-bold">{alignment}</div>
-              )}
-            </div>
-            <div>
-              <label className={labelClass}>Опыт</label>
-              {canEdit ? (
-                <input type="number" min={0} value={xp} onChange={(e) => setXp(Number(e.target.value) || 0)} className={inputClass} />
-              ) : (
-                <div className="font-bold">{xp}</div>
-              )}
-            </div>
-          </div>
-        </div>
       </div>
     );
   }
