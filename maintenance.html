@@ -256,7 +256,7 @@ body::before {
           <div class="progress-fill" id="progressFill"></div>
         </div>
         <div class="progress-label">
-          <span id="progressLabel">⌛ REMAINING</span>
+          <span id="progressLabel">remaining</span>
           <span id="progressPct">0%</span>
         </div>
       </div>
@@ -289,7 +289,7 @@ body::before {
     if (done) {
       display.classList.add('expired');
       display.textContent = '✓ ВЫПОЛНЕНО';
-      label.textContent = '✅ DONE';
+      label.textContent = 'done';
       fill.style.width = '100%';
       pct.textContent = '100%';
       return;
