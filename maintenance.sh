@@ -17,7 +17,7 @@ case "${1:-status}" in
     sed "s/TIMESTAMP/$(date +%s)/" "$PROJECT_DIR/maintenance.html" | sudo tee "$MAINT_HTML" > /dev/null
     sudo cp "$PROJECT_DIR/favicon-maintenance.svg" "/usr/share/nginx/html/favicon.ico"
 
-    cat > "$NGINX_CONF" << 'NGINX'
+    sudo tee "$NGINX_CONF" > /dev/null << 'NGINX'
 server {
     listen 80;
     server_name d21-club.ru www.d21-club.ru;
@@ -47,21 +47,21 @@ server {
 }
 NGINX
 
-    nginx -t && systemctl reload nginx
+    sudo nginx -t && sudo systemctl reload nginx
     echo "Maintenance mode ON"
     ;;
 
   off)
     if [ ! -f "$NGINX_BAK" ]; then
       echo "No backup config found. Restoring from repo..."
-      cp "$PROJECT_DIR/dnd-club-nginx.conf" "$NGINX_CONF"
+      sudo cp "$PROJECT_DIR/dnd-club-nginx.conf" "$NGINX_CONF"
     else
-      mv "$NGINX_BAK" "$NGINX_CONF"
+      sudo mv "$NGINX_BAK" "$NGINX_CONF"
     fi
 
-    rm -f "$MAINT_HTML" "/usr/share/nginx/html/favicon.ico"
+    sudo rm -f "$MAINT_HTML" "/usr/share/nginx/html/favicon.ico"
 
-    nginx -t && systemctl reload nginx
+    sudo nginx -t && sudo systemctl reload nginx
     echo "Maintenance mode OFF"
     ;;
 
