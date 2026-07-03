@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { createCharacter, updateCharacter } from "@/lib/character-actions"
+import { abilityModifier } from "@/lib/character-utils"
 
 const ABILITIES = [
   { label: "СИЛ", name: "str" },
@@ -42,10 +43,6 @@ const SKILLS = [
   { label: "Убеждение", name: "persuasion", ability: "cha" },
   { label: "Уход за животными", name: "animal_handling", ability: "wis" },
 ]
-
-function abilityModifier(score: number): number {
-  return Math.floor((score - 10) / 2)
-}
 
 function parseSheet(sheet: Record<string, any>, field: string, def: any = {}) {
   return sheet?.[field] ?? def

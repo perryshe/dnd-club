@@ -1,6 +1,7 @@
 import fs from "fs"
 import { PDFDocument, PDFHexString } from "pdf-lib"
 import fontkit from "@pdf-lib/fontkit"
+import { abilityModifier, formatMod, SKILL_ABILITY, computeSkillTotal } from "@/lib/character-utils"
 
 interface CharacterData {
   name: string
@@ -27,39 +28,11 @@ interface CharacterData {
   sheet: Record<string, any>
 }
 
-function abilityModifier(score: number): number {
-  return Math.floor((score - 10) / 2)
-}
-
-function formatMod(v: number): string {
-  return v >= 0 ? `+${v}` : `${v}`
-}
-
 function truncate(value: string, maxLen: number | undefined): string {
   if (!value) return ""
   if (maxLen === undefined) return value
   if (value.length <= maxLen) return value
   return value.slice(0, Math.max(maxLen - 1, 0)) + "…"
-}
-
-const SKILL_ABILITY: Record<string, string> = {
-  acrobatics: "dex", animal_handling: "wis", arcana: "int",
-  athletics: "str", deception: "cha", history: "int",
-  insight: "wis", intimidation: "cha", investigation: "int",
-  medicine: "wis", nature: "int", perception: "wis",
-  performance: "cha", persuasion: "cha", religion: "int",
-  sleight_of_hand: "dex", stealth: "dex", survival: "wis",
-}
-
-function computeSkillTotal(
-  stats: Record<string, number>,
-  skillKey: string,
-  profs: Record<string, boolean>,
-  pb: number
-): string {
-  const score = stats[SKILL_ABILITY[skillKey]] ?? 10
-  const mod = abilityModifier(score)
-  return formatMod(profs[skillKey] ? mod + pb : mod)
 }
 
 const PDF_INPUT_NAMES: Record<string, string> = {

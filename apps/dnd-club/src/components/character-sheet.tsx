@@ -1,39 +1,12 @@
 import { prisma } from "@/lib/prisma"
 import { auth } from "@/lib/auth"
+import { headers } from "next/headers"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowLeft, Trash2, Pencil, ArrowRightLeft, FileDown } from "lucide-react"
 import { deleteCharacter, transferCharacter } from "@/lib/character-actions"
-
-function abilityModifier(score: number): number {
-  return Math.floor((score - 10) / 2)
-}
-
-function formatMod(v: number): string {
-  return v >= 0 ? `+${v}` : `${v}`
-}
-
-const ABILITY_NAMES: Record<string, string> = {
-  str: "STR", dex: "DEX", con: "CON", int: "INT", wis: "WIS", cha: "CHA",
-}
-
-const SKILL_LABELS: Record<string, string> = {
-  acrobatics: "Акробатика", animal_handling: "Уход за животными", arcana: "Магия",
-  athletics: "Атлетика", deception: "Обман", history: "История",
-  insight: "Проницательность", intimidation: "Запугивание", investigation: "Анализ",
-  medicine: "Медицина", nature: "Природа", perception: "Внимательность",
-  performance: "Выступление", persuasion: "Убеждение", religion: "Религия",
-  sleight_of_hand: "Ловкость рук", stealth: "Скрытность", survival: "Выживание",
-}
-
-const SKILL_ABILITY: Record<string, string> = {
-  acrobatics: "dex", animal_handling: "wis", arcana: "int",
-  athletics: "str", deception: "cha", history: "int",
-  insight: "wis", intimidation: "cha", investigation: "int",
-  medicine: "wis", nature: "int", perception: "wis",
-  performance: "cha", persuasion: "cha", religion: "int",
-  sleight_of_hand: "dex", stealth: "dex", survival: "wis",
-}
+import { abilityModifier, formatMod, ABILITY_NAMES, SKILL_LABELS, SKILL_ABILITY } from "@/lib/character-utils"
+import MobileCharacterSheet from "@/components/character-sheet-mobile"
 
 export default async function CharacterSheet({
   characterId,
@@ -53,6 +26,22 @@ export default async function CharacterSheet({
 
   const isSAdmin = session?.user?.role === "sadmin"
   const users = isSAdmin ? await prisma.user.findMany({ orderBy: { name: "asc" } }) : []
+
+  const headersList = await headers()
+  const ua = headersList.get("user-agent") || ""
+  const isMobile = /mobile|android|iphone|ipad|ipod|webos|blackberry|iemobile|opera mini/i.test(ua)
+  if (isMobile) {
+    return (
+      <MobileCharacterSheet
+        character={character}
+        currentUserId={session?.user?.id}
+        isOwner={session?.user?.id === character.userId}
+        isAdmin={!!session && (session.user.role === "admin" || session.user.role === "sadmin")}
+        accentColor={accentColor}
+        accentBorder={accentBorder}
+      />
+    )
+  }
 
   const stats = character.stats as Record<string, number>
   const sheet = character.sheet as Record<string, any>

@@ -4,10 +4,7 @@ import { prisma } from "@/lib/prisma"
 import { auth } from "@/lib/auth"
 import { revalidatePath } from "next/cache"
 import { saveFile } from "./admin-actions"
-
-function abilityModifier(score: number): number {
-  return Math.floor((score - 10) / 2)
-}
+import { abilityModifier } from "@/lib/character-utils"
 
 async function handleAvatar(formData: FormData): Promise<string> {
   const avatarFile = formData.get("avatar") as File | null
