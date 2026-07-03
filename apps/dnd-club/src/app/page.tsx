@@ -15,31 +15,35 @@ export default async function Home() {
     return (
       <Link
         href={`/${hero.campaign.slug}`}
-        className={`group block rounded-lg border p-3 transition ${
+        className={`group block rounded-xl border-2 p-4 transition ${
           isDeadBand
-            ? "border-amber-900/30 bg-slate-900/60 hover:border-amber-500/50"
-            : "border-cyan-900/30 bg-slate-900/60 hover:border-cyan-500/50"
+            ? "border-amber-900/40 bg-slate-900 hover:border-amber-500/70 hover:shadow-lg hover:shadow-amber-900/20"
+            : "border-cyan-900/40 bg-slate-900 hover:border-cyan-500/70 hover:shadow-lg hover:shadow-cyan-900/20"
         }`}
       >
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           {hero.avatarUrl ? (
-            <img src={hero.avatarUrl} alt="" className="w-10 h-10 rounded-full object-cover shrink-0" />
+            <img src={hero.avatarUrl} alt="" className={`w-14 h-14 rounded-full object-cover shrink-0 ring-2 ${
+              isDeadBand ? "ring-amber-700/50" : "ring-cyan-700/50"
+            }`} />
           ) : (
-            <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm shrink-0 ${
+            <div className={`w-14 h-14 rounded-full flex items-center justify-center font-black text-lg shrink-0 ring-2 ${
               isDeadBand
-                ? "bg-amber-900/50 text-amber-400"
-                : "bg-cyan-900/50 text-cyan-400"
+                ? "bg-amber-900 text-amber-300 ring-amber-700/50"
+                : "bg-cyan-900 text-cyan-300 ring-cyan-700/50"
             }`}>
               {hero.name.charAt(0)}
             </div>
           )}
           <div className="min-w-0">
-            <div className="text-sm font-semibold text-white truncate">{hero.name}</div>
-            <div className="text-xs text-slate-500 font-mono truncate">
+            <div className="text-base font-bold text-white truncate">{hero.name}</div>
+            <div className="text-sm text-slate-400 font-mono truncate">
               {hero.race} {hero.class} {hero.level}
             </div>
-            <div className={`text-[10px] font-mono uppercase tracking-wider ${
-              isDeadBand ? "text-amber-600/80" : "text-cyan-600/80"
+            <div className={`inline-block mt-1 px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider font-semibold ${
+              isDeadBand
+                ? "bg-amber-900/60 text-amber-300"
+                : "bg-cyan-900/60 text-cyan-300"
             }`}>
               {hero.campaign.name}
             </div>
@@ -50,7 +54,7 @@ export default async function Home() {
   }
 
   const heroCards = recentHeroes.length > 0 ? (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {recentHeroes.map((hero) => (
         <HeroCard key={hero.id} hero={hero} />
       ))}
@@ -74,9 +78,9 @@ export default async function Home() {
           club="d21"
           rightContent={heroCards ? (
             <div>
-              <div className="flex items-center gap-2 mb-3">
-                <Users size={14} className="text-amber-400/60" />
-                <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-amber-400/60">
+              <div className="flex items-center gap-2 mb-4">
+                <Users size={18} className="text-amber-400" />
+                <span className="text-xs font-mono tracking-[0.3em] uppercase text-amber-400 font-semibold">
                   Последние герои
                 </span>
               </div>
