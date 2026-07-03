@@ -78,11 +78,9 @@ export default async function Home() {
           club="d21"
           rightContent={heroCards ? (
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <Users size={18} className="text-amber-400" />
-                <span className="text-xs font-mono tracking-[0.3em] uppercase text-amber-400 font-semibold">
-                  Последние герои
-                </span>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-500/40 bg-amber-950/70 text-amber-300 text-[10px] font-mono tracking-[0.25em] uppercase mb-4">
+                <Users size={12} className="text-amber-400" />
+                Последние герои
               </div>
               {heroCards}
             </div>
