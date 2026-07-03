@@ -3,50 +3,230 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Регламентные работы — d21 Club</title>
+<title>d21 Club — Регламентные работы</title>
+<link rel="icon" href="/favicon.ico">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
 body {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  background: #0f0f1a;
-  color: #e2e8f0;
+  font-family: 'SF Mono', 'Cascadia Code', 'JetBrains Mono', 'Consolas', monospace;
+  background: #0a0a14;
+  color: #94a3b8;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* scanlines */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255,255,255,0.015) 2px,
+    rgba(255,255,255,0.015) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.wrap {
+  max-width: 580px;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+/* top line */
+.top-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #f59e0b, #06b6d4, transparent);
+  margin-bottom: 40px;
+  border-radius: 1px;
+}
+
+/* status block */
+.status-block {
   text-align: center;
+  margin-bottom: 36px;
+}
+
+.status-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #f59e0b66, transparent);
+  margin: 8px 0;
+}
+
+.status-text {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: #f59e0b;
+  text-shadow: 0 0 20px rgba(245,158,11,0.4), 0 0 60px rgba(245,158,11,0.15);
+  animation: glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 20px rgba(245,158,11,0.4), 0 0 60px rgba(245,158,11,0.15); }
+  to   { text-shadow: 0 0 30px rgba(245,158,11,0.6), 0 0 80px rgba(245,158,11,0.25); }
+}
+
+/* maintenance box */
+.box {
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  background: #0f0f1a;
+  margin-bottom: 32px;
+  overflow: hidden;
+}
+
+.box-header {
+  padding: 10px 20px;
+  background: #0a0a14;
+  border-bottom: 1px solid #1e293b;
+  color: #475569;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+}
+
+.box-body {
   padding: 20px;
 }
-.wrap { max-width: 480px; }
-.icon { font-size: 64px; margin-bottom: 20px; }
-h1 {
-  font-size: 1.5rem;
-  margin-bottom: 12px;
-  color: #fbbf24;
+
+.box-body p {
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: #cbd5e1;
 }
-p { font-size: 0.95rem; color: #94a3b8; margin-bottom: 24px; line-height: 1.6; }
-.btn {
-  display: inline-block;
+
+.box-body .highlight {
+  color: #f59e0b;
+}
+
+.box-body .dim {
+  color: #64748b;
+  font-size: 0.8rem;
+}
+
+/* progress bar */
+.progress-wrap {
+  margin-top: 16px;
   background: #1e293b;
-  color: #e2e8f0;
-  border: 1px solid #334155;
-  padding: 10px 28px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background .2s;
+  border-radius: 4px;
+  height: 6px;
+  overflow: hidden;
+  position: relative;
 }
-.btn:hover { background: #334155; }
-.footer { margin-top: 48px; font-size: 0.75rem; color: #475569; }
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #f59e0b, #fbbf24, #f59e0b);
+  background-size: 200% 100%;
+  animation: progress 8s ease-in-out infinite, shimmer 2s linear infinite;
+  border-radius: 4px;
+}
+
+@keyframes progress {
+  0%   { width: 0%; }
+  50%  { width: 66%; }
+  100% { width: 90%; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: #475569;
+  margin-top: 4px;
+  font-family: 'SF Mono', 'Cascadia Code', 'JetBrains Mono', 'Consolas', monospace;
+}
+
+/* button */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: #f59e0b;
+  border: 1px solid #f59e0b33;
+  padding: 10px 28px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-family: inherit;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.25s;
+  margin-bottom: 48px;
+}
+
+.btn:hover {
+  background: #f59e0b0d;
+  border-color: #f59e0b66;
+  box-shadow: 0 0 20px rgba(245,158,11,0.15);
+}
+
+/* footer */
+.footer {
+  text-align: center;
+  font-size: 0.7rem;
+  color: #334155;
+  letter-spacing: 0.15em;
+}
+
+.footer::before,
+.footer::after {
+  content: ' ⏤ ';
+}
+
+/* crt off */
+@media (prefers-reduced-motion: reduce) {
+  .status-text { animation: none; }
+  .progress-fill { animation: none; width: 66%; }
+}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="icon">&#9888;</div>
-  <h1>Ведутся регламентные работы</h1>
-  <p>Сайт временно недоступен.<br>Мы обновляем инфраструктуру, чтобы стало лучше.<br>Workflow порядка 10 минут.</p>
-  <button class="btn" onclick="location.reload()">&#x21bb;&nbsp; Обновить</button>
+  <div class="top-line"></div>
+
+  <div class="status-block">
+    <div class="status-line"></div>
+    <div class="status-text">▸ STATUS: 503 SERVICE UNAVAILABLE ◂</div>
+    <div class="status-line"></div>
+  </div>
+
+  <div class="box">
+    <div class="box-header">┌─ MAINTENANCE ────────────────────┐</div>
+    <div class="box-body">
+      <p><span class="highlight">⚡</span> Ведутся регламентные работы</p>
+      <p><span class="dim">▸</span> обновление инфраструктуры</p>
+      <p><span class="dim">▸</span> примерное время: <span class="highlight">~10 минут</span></p>
+      <div class="progress-wrap">
+        <div class="progress-fill"></div>
+      </div>
+      <div class="progress-label">
+        <span>⌛ IN PROGRESS</span>
+        <span>66%</span>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn" onclick="location.reload()">🔄 ПОВТОРИТЬ СОЕДИНЕНИЕ</button>
+
   <div class="footer">d21 Club &copy; 2026</div>
 </div>
 </body>

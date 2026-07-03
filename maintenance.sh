@@ -15,6 +15,7 @@ case "${1:-status}" in
     fi
 
     sudo cp "$PROJECT_DIR/maintenance.html" "$MAINT_HTML"
+    sudo cp "$PROJECT_DIR/favicon-maintenance.svg" "/usr/share/nginx/html/favicon.ico"
 
     cat > "$NGINX_CONF" << 'NGINX'
 server {
@@ -35,6 +36,10 @@ server {
     root /usr/share/nginx/html;
     index maintenance.html;
 
+    location = /favicon.ico {
+        root /usr/share/nginx/html;
+    }
+
     location / {
         try_files /maintenance.html =503;
         add_header Retry-After "600";
@@ -54,7 +59,7 @@ NGINX
       mv "$NGINX_BAK" "$NGINX_CONF"
     fi
 
-    rm -f "$MAINT_HTML"
+    rm -f "$MAINT_HTML" "/usr/share/nginx/html/favicon.ico"
 
     nginx -t && systemctl reload nginx
     echo "Maintenance mode OFF"
