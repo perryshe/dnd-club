@@ -130,24 +130,25 @@ const telegramUrls: Record<ClubIdMain, string | null> = {
 
 type ClubHeaderProps = {
   club: ClubIdMain
+  rightContent?: React.ReactNode
 }
 
-export function ClubHeader({ club }: ClubHeaderProps) {
+export function ClubHeader({ club, rightContent }: ClubHeaderProps) {
   const config = clubHeaderConfig[club]
   const style = clubStyles[club]
   const tg = telegramUrls[club]
 
-  return (
-    <header className="text-center pt-24 pb-16">
-      <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-[10px] font-mono tracking-[0.25em] uppercase mb-8 ${style.badge}`}>
+  const label = (
+    <>
+      <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-[10px] font-mono tracking-[0.25em] uppercase ${rightContent ? "" : "mb-8"} ${style.badge}`}>
         Module // {config.division}
       </div>
 
-      <h1 className={`text-5xl md:text-7xl font-black mb-4 tracking-tight ${style.title}`}>
+      <h1 className={`text-5xl md:text-7xl font-black tracking-tight ${rightContent ? "mt-3 mb-3" : "mb-4"} ${style.title}`}>
         {club} Club
       </h1>
 
-      <nav className={`flex items-center justify-center gap-3 text-xs font-mono tracking-wider uppercase mb-8 ${style.link}`}>
+      <nav className={`flex items-center gap-3 text-xs font-mono tracking-wider uppercase mb-8 ${style.link} ${rightContent ? "" : "justify-center"}`}>
         {config.links.map((link, i) => (
           <span key={link.label}>
             {i > 0 && <span className={`${style.linkSep} mx-1`}>·</span>}
@@ -165,6 +166,29 @@ export function ClubHeader({ club }: ClubHeaderProps) {
           Telegram
         </a>
       )}
+    </>
+  )
+
+  if (rightContent) {
+    return (
+      <header className="pt-16 pb-12">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row items-start gap-8 md:gap-16">
+            <div className="text-left shrink-0">
+              {label}
+            </div>
+            <div className="flex-1 min-w-0 w-full">
+              {rightContent}
+            </div>
+          </div>
+        </div>
+      </header>
+    )
+  }
+
+  return (
+    <header className="text-center pt-24 pb-16">
+      {label}
     </header>
   )
 }

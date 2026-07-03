@@ -1,8 +1,62 @@
 import Link from "next/link"
-import { Sword, ArrowRight } from "lucide-react"
+import { Sword, ArrowRight, Users } from "lucide-react"
 import { ClubHeader } from "club-nav"
+import { prisma } from "@/lib/prisma"
 
-export default function Home() {
+export default async function Home() {
+  const recentHeroes = await prisma.character.findMany({
+    orderBy: { createdAt: "desc" },
+    take: 3,
+    include: { campaign: true, user: true },
+  })
+
+  function HeroCard({ hero }: { hero: typeof recentHeroes[number] }) {
+    const isDeadBand = hero.campaign.slug === "dead-band"
+    return (
+      <Link
+        href={`/${hero.campaign.slug}`}
+        className={`group block rounded-lg border p-3 transition ${
+          isDeadBand
+            ? "border-amber-900/30 bg-slate-900/60 hover:border-amber-500/50"
+            : "border-cyan-900/30 bg-slate-900/60 hover:border-cyan-500/50"
+        }`}
+      >
+        <div className="flex items-center gap-3">
+          {hero.avatarUrl ? (
+            <img src={hero.avatarUrl} alt="" className="w-10 h-10 rounded-full object-cover shrink-0" />
+          ) : (
+            <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm shrink-0 ${
+              isDeadBand
+                ? "bg-amber-900/50 text-amber-400"
+                : "bg-cyan-900/50 text-cyan-400"
+            }`}>
+              {hero.name.charAt(0)}
+            </div>
+          )}
+          <div className="min-w-0">
+            <div className="text-sm font-semibold text-white truncate">{hero.name}</div>
+            <div className="text-xs text-slate-500 font-mono truncate">
+              {hero.race} {hero.class} {hero.level}
+            </div>
+            <div className={`text-[10px] font-mono uppercase tracking-wider ${
+              isDeadBand ? "text-amber-600/80" : "text-cyan-600/80"
+            }`}>
+              {hero.campaign.name}
+            </div>
+          </div>
+        </div>
+      </Link>
+    )
+  }
+
+  const heroCards = recentHeroes.length > 0 ? (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      {recentHeroes.map((hero) => (
+        <HeroCard key={hero.id} hero={hero} />
+      ))}
+    </div>
+  ) : null
+
   return (
     <main className="min-h-screen text-white scanlines">
       {/* Hero */}
@@ -16,10 +70,23 @@ export default function Home() {
       >
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-900/40 to-slate-950/80 pointer-events-none" />
 
-        <ClubHeader club="d21" />
+        <ClubHeader
+          club="d21"
+          rightContent={heroCards ? (
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <Users size={14} className="text-amber-400/60" />
+                <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-amber-400/60">
+                  Последние герои
+                </span>
+              </div>
+              {heroCards}
+            </div>
+          ) : undefined}
+        />
 
           {/* Campaign cards */}
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto pb-16">
             {/* Dead Band — medieval */}
             <Link
               href="/dead-band"

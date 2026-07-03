@@ -6,6 +6,7 @@ import ReadingLog from "@/components/ReadingLog"
 import BookGrid from "@/components/BookGrid"
 import RatingTable from "@/components/RatingTable"
 import FreeLibraries from "@/components/FreeLibraries"
+import { prisma } from "@/lib/prisma"
 
 export const dynamic = "force-dynamic"
 
@@ -15,6 +16,11 @@ export const metadata: Metadata = {
 }
 
 export default async function HomePage({ searchParams }: { searchParams?: { sort?: string } }) {
+  const nextBook = await prisma.book.findFirst({
+    where: { status: "current", eventDate: { not: null } },
+    orderBy: { eventDate: "asc" },
+  })
+
   return (
     <main className="min-h-screen text-slate-300 bg-slate-950 scanlines selection:bg-cyan-500/20 selection:text-cyan-200">
       <div
@@ -30,12 +36,11 @@ export default async function HomePage({ searchParams }: { searchParams?: { sort
       <div className="fixed top-0 left-1/3 w-[500px] h-[500px] rounded-full bg-cyan-500/5 blur-3xl pointer-events-none" />
       <div className="fixed bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-purple-500/5 blur-3xl pointer-events-none" />
 
-      <ClubHeader club="b21" />
+      <ClubHeader club="b21" rightContent={nextBook ? <NextEvent /> : undefined} />
 
       <section className="relative">
         <div className="container mx-auto px-4 pb-16 text-center">
           <StatsCards />
-          <NextEvent />
         </div>
       </section>
 
