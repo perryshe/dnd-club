@@ -174,30 +174,13 @@ export function ClubHeader({ club }: ClubHeaderProps) {
 export default function ClubNav({ active, dndClubUrl, bookClubUrl, activeHref, session, t21Url }: Props) {
   const isSadmin = session?.user?.role === "sadmin"
   const [t21Open, setT21Open] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   const visibleClubs = clubs.filter(
     (c) => c.id !== "t21" && (c.id !== "quest" || isSadmin)
   )
 
-  const clubOptions = [
-    ...visibleClubs.map((c) => ({ label: c.label, href: hrefFor(c.id, dndClubUrl, bookClubUrl) })),
-    ...(t21Url ? [{ label: "t21 Club", href: t21Url }] : []),
-  ]
-
-  function handleSelect(e: React.ChangeEvent<HTMLSelectElement>) {
-    const href = e.target.value
-    if (href === "t21") {
-      setT21Open(true)
-    } else if (href) {
-      window.location.href = href
-    }
-  }
-
-  function activeHrefValue(): string {
-    if (activeHref) return activeHref
-    if (active) return hrefFor(active, dndClubUrl, bookClubUrl)
-    return dndClubUrl
-  }
+  const activeClub = active ? clubs.find((c) => c.id === active) : undefined
 
   return (
     <nav className="bg-black border-b border-slate-800">
@@ -235,22 +218,54 @@ export default function ClubNav({ active, dndClubUrl, bookClubUrl, activeHref, s
           )}
         </div>
 
-        {/* Mobile: select dropdown */}
-        <div className="flex md:hidden items-center w-full">
-          <select
-            onChange={handleSelect}
-            value={activeHrefValue()}
-            className="w-full bg-slate-900 border border-slate-700 text-white text-sm font-semibold rounded-lg px-3 py-1.5 outline-none"
+        {/* Mobile: button + dropdown menu */}
+        <div className="flex md:hidden items-center w-full relative">
+          <button
+            onClick={() => setMobileOpen((o) => !o)}
+            className="flex items-center gap-2 w-full bg-slate-900 border border-slate-700 text-white text-sm font-semibold rounded-lg px-3 py-1.5 outline-none"
           >
-            {visibleClubs.map((c) => (
-              <option key={c.id} value={hrefFor(c.id, dndClubUrl, bookClubUrl)}>
-                {c.label}
-              </option>
-            ))}
-            {t21Url && (
-              <option value="t21">t21 Club</option>
+            {activeClub?.icon && (
+              <img src={activeClub.icon} alt="" className={activeClub.iconClass ?? ""} style={{ width: activeClub.iconSize ?? 20, height: activeClub.iconSize ?? 20 }} />
             )}
-          </select>
+            <span className="flex-1 text-left">{activeClub?.label ?? "Club"}</span>
+            <svg className={`w-4 h-4 transition-transform ${mobileOpen ? "rotate-180" : ""}`} viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+            </svg>
+          </button>
+
+          {mobileOpen && (
+            <>
+              <div className="fixed inset-0 z-40" onClick={() => setMobileOpen(false)} />
+              <div className="absolute top-full left-0 right-0 mt-1 bg-slate-900 border border-slate-700 rounded-lg shadow-xl z-50 overflow-hidden">
+                {visibleClubs.map((club) => {
+                  const isActive = active === club.id
+                  const href = isActive && activeHref ? activeHref : hrefFor(club.id, dndClubUrl, bookClubUrl)
+                  return (
+                    <a
+                      key={club.id}
+                      href={href}
+                      onClick={() => setMobileOpen(false)}
+                      className={`flex items-center gap-2 px-3 py-2.5 text-sm font-semibold transition ${isActive ? "bg-slate-800 text-white" : "text-slate-300 hover:bg-slate-800 hover:text-white"}`}
+                    >
+                      {club.icon && (
+                        <img src={club.icon} alt="" className={club.iconClass ?? ""} style={{ width: club.iconSize ?? 20, height: club.iconSize ?? 20 }} />
+                      )}
+                      {club.label}
+                    </a>
+                  )
+                })}
+                {t21Url && (
+                  <button
+                    onClick={() => { setT21Open(true); setMobileOpen(false) }}
+                    className="flex items-center gap-2 w-full px-3 py-2.5 text-sm font-semibold text-indigo-400 hover:bg-slate-800 transition bg-transparent border-none cursor-pointer text-left"
+                  >
+                    <span className="w-4 h-4 rounded flex items-center justify-center bg-indigo-600 text-white text-[8px] font-bold shrink-0">#</span>
+                    <span className="text-xs">t21 Club</span>
+                  </button>
+                )}
+              </div>
+            </>
+          )}
         </div>
       </div>
 
