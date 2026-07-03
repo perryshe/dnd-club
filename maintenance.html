@@ -5,12 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>d21 Club — Регламентные работы</title>
 <link rel="icon" href="/favicon.ico">
+<meta name="build-start" content="TIMESTAMP">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   font-family: 'SF Mono', 'Cascadia Code', 'JetBrains Mono', 'Consolas', monospace;
-  background: #0a0a14;
+  background: #0a0008;
   color: #94a3b8;
   min-height: 100vh;
   display: flex;
@@ -31,11 +32,21 @@ body::after {
     0deg,
     transparent,
     transparent 2px,
-    rgba(255,255,255,0.015) 2px,
-    rgba(255,255,255,0.015) 4px
+    rgba(255,0,50,0.03) 2px,
+    rgba(255,0,50,0.03) 4px
   );
   pointer-events: none;
   z-index: 1;
+}
+
+/* glitch overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(255,0,50,0.08) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .wrap {
@@ -48,9 +59,10 @@ body::after {
 /* top line */
 .top-line {
   height: 2px;
-  background: linear-gradient(90deg, transparent, #f59e0b, #06b6d4, transparent);
+  background: linear-gradient(90deg, transparent, #ff0033, #ff0066, transparent);
   margin-bottom: 40px;
   border-radius: 1px;
+  box-shadow: 0 0 12px rgba(255,0,51,0.3);
 }
 
 /* status block */
@@ -61,38 +73,39 @@ body::after {
 
 .status-line {
   height: 1px;
-  background: linear-gradient(90deg, transparent, #f59e0b66, transparent);
+  background: linear-gradient(90deg, transparent, #ff003366, transparent);
   margin: 8px 0;
 }
 
 .status-text {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 700;
   letter-spacing: 0.15em;
-  color: #f59e0b;
-  text-shadow: 0 0 20px rgba(245,158,11,0.4), 0 0 60px rgba(245,158,11,0.15);
-  animation: glow 3s ease-in-out infinite alternate;
+  color: #ff0033;
+  text-shadow: 0 0 20px rgba(255,0,51,0.5), 0 0 60px rgba(255,0,51,0.2);
+  animation: glow 2.5s ease-in-out infinite alternate;
 }
 
 @keyframes glow {
-  from { text-shadow: 0 0 20px rgba(245,158,11,0.4), 0 0 60px rgba(245,158,11,0.15); }
-  to   { text-shadow: 0 0 30px rgba(245,158,11,0.6), 0 0 80px rgba(245,158,11,0.25); }
+  from { text-shadow: 0 0 20px rgba(255,0,51,0.5), 0 0 60px rgba(255,0,51,0.2); }
+  to   { text-shadow: 0 0 35px rgba(255,0,51,0.7), 0 0 90px rgba(255,0,51,0.3); }
 }
 
 /* maintenance box */
 .box {
-  border: 1px solid #1e293b;
+  border: 1px solid #330011;
   border-radius: 8px;
-  background: #0f0f1a;
+  background: #0d000a;
   margin-bottom: 32px;
   overflow: hidden;
+  box-shadow: 0 0 30px rgba(255,0,51,0.05);
 }
 
 .box-header {
   padding: 10px 20px;
-  background: #0a0a14;
-  border-bottom: 1px solid #1e293b;
-  color: #475569;
+  background: #0a0008;
+  border-bottom: 1px solid #330011;
+  color: #660022;
   font-size: 0.75rem;
   letter-spacing: 0.1em;
 }
@@ -108,20 +121,48 @@ body::after {
 }
 
 .box-body .highlight {
-  color: #f59e0b;
+  color: #ff0033;
 }
 
 .box-body .dim {
-  color: #64748b;
+  color: #660022;
   font-size: 0.8rem;
+}
+
+/* countdown */
+.countdown-wrap {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.countdown-display {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #ff0033;
+  text-shadow: 0 0 25px rgba(255,0,51,0.4);
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown-display.expired {
+  color: #ff0066;
+  animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
 }
 
 /* progress bar */
 .progress-wrap {
-  margin-top: 16px;
-  background: #1e293b;
+  width: 100%;
+  background: #1a000e;
   border-radius: 4px;
-  height: 6px;
+  height: 4px;
   overflow: hidden;
   position: relative;
 }
@@ -129,16 +170,11 @@ body::after {
 .progress-fill {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #f59e0b, #fbbf24, #f59e0b);
+  background: linear-gradient(90deg, #ff0033, #ff0066, #ff0033);
   background-size: 200% 100%;
-  animation: progress 8s ease-in-out infinite, shimmer 2s linear infinite;
+  animation: shimmer 2s linear infinite;
   border-radius: 4px;
-}
-
-@keyframes progress {
-  0%   { width: 0%; }
-  50%  { width: 66%; }
-  100% { width: 90%; }
+  transition: width 1s linear;
 }
 
 @keyframes shimmer {
@@ -150,9 +186,9 @@ body::after {
   display: flex;
   justify-content: space-between;
   font-size: 0.7rem;
-  color: #475569;
+  color: #660022;
   margin-top: 4px;
-  font-family: 'SF Mono', 'Cascadia Code', 'JetBrains Mono', 'Consolas', monospace;
+  font-family: inherit;
 }
 
 /* button */
@@ -161,8 +197,8 @@ body::after {
   align-items: center;
   gap: 8px;
   background: transparent;
-  color: #f59e0b;
-  border: 1px solid #f59e0b33;
+  color: #ff0033;
+  border: 1px solid #ff003333;
   padding: 10px 28px;
   border-radius: 6px;
   font-size: 0.8rem;
@@ -174,16 +210,16 @@ body::after {
 }
 
 .btn:hover {
-  background: #f59e0b0d;
-  border-color: #f59e0b66;
-  box-shadow: 0 0 20px rgba(245,158,11,0.15);
+  background: #ff00330d;
+  border-color: #ff003366;
+  box-shadow: 0 0 25px rgba(255,0,51,0.2);
 }
 
 /* footer */
 .footer {
   text-align: center;
   font-size: 0.7rem;
-  color: #334155;
+  color: #330011;
   letter-spacing: 0.15em;
 }
 
@@ -192,10 +228,8 @@ body::after {
   content: ' ⏤ ';
 }
 
-/* crt off */
 @media (prefers-reduced-motion: reduce) {
-  .status-text { animation: none; }
-  .progress-fill { animation: none; width: 66%; }
+  .countdown-display { animation: none; }
 }
 </style>
 </head>
@@ -214,13 +248,17 @@ body::after {
     <div class="box-body">
       <p><span class="highlight">⚡</span> Ведутся регламентные работы</p>
       <p><span class="dim">▸</span> обновление инфраструктуры</p>
-      <p><span class="dim">▸</span> примерное время: <span class="highlight">~10 минут</span></p>
-      <div class="progress-wrap">
-        <div class="progress-fill"></div>
-      </div>
-      <div class="progress-label">
-        <span>⌛ IN PROGRESS</span>
-        <span>66%</span>
+      <p><span class="dim">▸</span> примерное время: ~15 минут</p>
+
+      <div class="countdown-wrap">
+        <div class="countdown-display" id="countdown">--:--</div>
+        <div class="progress-wrap">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-label">
+          <span>⌛ REMAINING</span>
+          <span id="progressPct">0%</span>
+        </div>
       </div>
     </div>
   </div>
@@ -229,5 +267,39 @@ body::after {
 
   <div class="footer">d21 Club &copy; 2026</div>
 </div>
+
+<script>
+(function() {
+  var TOTAL = 15 * 60;
+  var meta = document.querySelector('meta[name="build-start"]');
+  var buildStart = parseInt(meta.getAttribute('content'), 10);
+  if (isNaN(buildStart)) buildStart = Math.floor(Date.now() / 1000);
+
+  var display = document.getElementById('countdown');
+  var fill = document.getElementById('progressFill');
+  var pct = document.getElementById('progressPct');
+
+  function tick() {
+    var now = Math.floor(Date.now() / 1000);
+    var elapsed = now - buildStart;
+    var remaining = Math.max(0, TOTAL - elapsed);
+    var mins = Math.floor(remaining / 60);
+    var secs = remaining % 60;
+    display.textContent = String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+
+    if (remaining <= 0) {
+      display.classList.add('expired');
+      display.textContent = '00:00';
+    }
+
+    var progress = Math.min(100, (elapsed / TOTAL) * 100);
+    fill.style.width = progress + '%';
+    pct.textContent = Math.floor(progress) + '%';
+  }
+
+  tick();
+  setInterval(tick, 1000);
+})();
+</script>
 </body>
 </html>

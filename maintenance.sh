@@ -14,7 +14,7 @@ case "${1:-status}" in
       sudo cp "$NGINX_CONF" "$NGINX_BAK"
     fi
 
-    sudo cp "$PROJECT_DIR/maintenance.html" "$MAINT_HTML"
+    sed "s/TIMESTAMP/$(date +%s)/" "$PROJECT_DIR/maintenance.html" | sudo tee "$MAINT_HTML" > /dev/null
     sudo cp "$PROJECT_DIR/favicon-maintenance.svg" "/usr/share/nginx/html/favicon.ico"
 
     cat > "$NGINX_CONF" << 'NGINX'
