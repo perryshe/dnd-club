@@ -125,20 +125,45 @@ export default function HomePage() {
       <div className="fixed top-0 left-1/3 w-[500px] h-[500px] rounded-full bg-cyan-500/5 blur-3xl pointer-events-none" />
       <div className="fixed bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-purple-500/5 blur-3xl pointer-events-none" />
 
-      <ClubHeader club="g21" />
+      <ClubHeader
+        club="g21"
+        rightContent={
+          loading ? (
+            <div className="text-xs font-mono text-slate-600 animate-pulse">// loading ...</div>
+          ) : nextMeeting ? (
+            <div className="rounded-lg border border-cyan-900/30 bg-slate-900/60 p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-cyan-400/60">
+                  Ближайшая встреча
+                </span>
+              </div>
+              <div className="text-lg font-semibold text-cyan-200">
+                {new Date(nextMeeting.date).toLocaleDateString("ru-RU", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
+              </div>
+              <div className="text-xs text-slate-500 font-mono mt-1">
+                {nextMeeting.games.length} {nextMeeting.games.length === 1 ? "игра" : "игр"}
+              </div>
+            </div>
+          ) : (
+            <div className="rounded-lg border border-slate-700/30 bg-slate-900/60 p-4">
+              <div className="flex items-center gap-1 text-xs font-mono text-slate-500">
+                <span className="text-cyan-500/60">{games.length}</span> игр
+                <span className="mx-2">·</span>
+                <span className="text-cyan-500/60">{meetings.length}</span> встреч
+                <span className="mx-2">·</span>
+                <span className="text-cyan-500/60">{wishes.length}</span> в вишлисте
+              </div>
+            </div>
+          )
+        }
+      />
 
       <section className="relative">
         <div className="container mx-auto px-4 pb-16 text-center">
-          {!loading && (
-            <div className="flex items-center justify-center gap-1 text-xs font-mono text-slate-600 mb-8">
-              <span className="text-cyan-500/60">{games.length}</span> игр
-              <span className="mx-2">·</span>
-              <span className="text-cyan-500/60">{meetings.length}</span> встреч
-              <span className="mx-2">·</span>
-              <span className="text-cyan-500/60">{wishes.length}</span> в вишлисте
-            </div>
-          )}
-
           <div className="flex flex-wrap justify-center gap-2">
             {tabs.map(t => (
               <button
