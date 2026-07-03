@@ -25,10 +25,28 @@ jobs:
           cd /home/club/Club
           docker stop dnd-book-club dnd-club book-club-2 game-club quest t21-game english 2>/dev/null || true
           docker rm -f dnd-book-club dnd-club book-club-2 game-club quest t21-game english 2>/dev/null || true
-      - name: Build app images
-        run: |
-          cd /home/club/Club
-          docker compose -f docker-compose.prod.yml build dnd-club book-club-2 quest t21-game english game-club
+      - name: Build dnd-club
+        run: docker compose -f docker-compose.prod.yml build dnd-club
+      - name: Prune build cache
+        run: docker builder prune -af
+      - name: Build book-club-2
+        run: docker compose -f docker-compose.prod.yml build book-club-2
+      - name: Prune build cache
+        run: docker builder prune -af
+      - name: Build quest
+        run: docker compose -f docker-compose.prod.yml build quest
+      - name: Prune build cache
+        run: docker builder prune -af
+      - name: Build t21-game
+        run: docker compose -f docker-compose.prod.yml build t21-game
+      - name: Prune build cache
+        run: docker builder prune -af
+      - name: Build english
+        run: docker compose -f docker-compose.prod.yml build english
+      - name: Prune build cache
+        run: docker builder prune -af
+      - name: Build game-club
+        run: docker compose -f docker-compose.prod.yml build game-club
       - name: Restart app services (db untouched)
         run: |
           cd /home/club/Club
