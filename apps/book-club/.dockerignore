@@ -1,8 +1,0 @@
-node_modules
-.next
-.git
-apps
-*.md
-.gitignore
-.dockerignore
-setup.sh

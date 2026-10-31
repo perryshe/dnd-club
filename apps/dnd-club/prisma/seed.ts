@@ -41,8 +41,6 @@ async function main() {
       console.log(`Campaign created: ${c.name}`)
     }
   }
-
-  // book seeding is handled by book-club service
 }
 
 main()

@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 
-export type ClubId = "d21" | "b21" | "t21" | "e21" | "g21" | "quest"
+export type ClubId = "d21" | "t21"
 
 type ClubDef = {
   id: ClubId
@@ -15,36 +15,27 @@ type ClubDef = {
 
 const clubs: ClubDef[] = [
   { id: "d21", label: "d21 Club", color: "text-amber-400 hover:text-amber-300", icon: "/favicon21.jpg", iconSize: 24, iconClass: "rounded" },
-  { id: "b21", label: "b21 Club", color: "text-cyan-400 hover:text-cyan-300", icon: "/book-favicon.svg", iconSize: 20 },
-  { id: "t21", label: "t21 Club", color: "text-indigo-400 hover:text-indigo-300" },
-  { id: "g21", label: "g21 Club", color: "text-cyan-300 hover:text-cyan-200" },
-  { id: "quest", label: "quest", color: "text-purple-400 hover:text-purple-300" },
-  { id: "e21", label: "e21 Club", color: "text-green-400 hover:text-green-300", icon: "/e21-favicon.svg", iconSize: 20 },
 ]
 
 type Props = {
   active?: ClubId
   dndClubUrl: string
-  bookClubUrl?: string
   activeHref?: string
   session?: { user?: { role?: string } } | null
   t21Url?: string
+  basePath?: string
 }
 
-function hrefFor(id: ClubId, dndClubUrl: string, bookClubUrl?: string): string {
+function hrefFor(id: ClubId, dndClubUrl: string): string {
   switch (id) {
     case "d21": return dndClubUrl
-    case "b21": return bookClubUrl ?? `${dndClubUrl}/b21`
     case "t21": return `${dndClubUrl}/t21/`
-    case "e21": return `${dndClubUrl}/e21/`
-    case "g21": return `${dndClubUrl}/g21/`
-    case "quest": return `${dndClubUrl}/quest/`
   }
 }
 
 // --- ClubHeader (for main pages) ---
 
-export type ClubIdMain = "d21" | "b21" | "g21" | "e21"
+export type ClubIdMain = "d21"
 
 const clubHeaderConfig: Record<ClubIdMain, { division: string; links: { label: string; href: string }[] }> = {
   d21: {
@@ -52,34 +43,6 @@ const clubHeaderConfig: Record<ClubIdMain, { division: string; links: { label: s
     links: [
       { label: "The dead Band", href: "/dead-band" },
       { label: "Night city", href: "/shards" },
-    ],
-  },
-  b21: {
-    division: "book club division",
-    links: [
-      { label: "reading log", href: "#reading-log" },
-      { label: "vote", href: "#voting" },
-      { label: "books", href: "#books" },
-    ],
-  },
-  g21: {
-    division: "board games division",
-    links: [
-      { label: "collection", href: "#collection" },
-      { label: "vote", href: "#vote" },
-      { label: "wishlist", href: "#wish" },
-    ],
-  },
-  e21: {
-    division: "english division",
-    links: [
-      { label: "home", href: "/" },
-      { label: "schedule", href: "/schedule" },
-      { label: "audio", href: "/audio" },
-      { label: "cheat sheet", href: "/cheat-sheet" },
-      { label: "glossary", href: "/glossary" },
-      { label: "AI scenarios", href: "/ai-scenarios" },
-      { label: "emails", href: "/email-templates" },
     ],
   },
 }
@@ -98,34 +61,10 @@ const clubStyles: Record<ClubIdMain, {
     linkSep: "text-amber-700",
     telegram: "bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 shadow-amber-900/30",
   },
-  b21: {
-    title: "text-cyan-400",
-    badge: "border-slate-700/30 bg-slate-900/50 text-slate-500",
-    link: "text-slate-500 hover:text-white",
-    linkSep: "text-slate-700",
-    telegram: "bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-500 hover:to-blue-600 shadow-sky-900/30",
-  },
-  g21: {
-    title: "text-cyan-300",
-    badge: "border-slate-700/30 bg-slate-900/50 text-slate-500",
-    link: "text-slate-500 hover:text-white",
-    linkSep: "text-slate-700",
-    telegram: "bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-500 hover:to-blue-600 shadow-sky-900/30",
-  },
-  e21: {
-    title: "text-green-400",
-    badge: "border-green-500/40 bg-green-950/70 text-green-300",
-    link: "text-green-400 hover:text-green-300",
-    linkSep: "text-green-700",
-    telegram: "bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-500 hover:to-emerald-600 shadow-green-900/30",
-  },
 }
 
 const telegramUrls: Record<ClubIdMain, string | null> = {
   d21: "https://t.me/d21_blg",
-  b21: "https://t.me/+P8j9F-vG5b0zNWVi",
-  g21: "https://t.me/+mGU5rw83i380ZGYy",
-  e21: null,
 }
 
 type ClubHeaderProps = {
@@ -195,43 +134,60 @@ export function ClubHeader({ club, rightContent }: ClubHeaderProps) {
 
 // --- ClubNav (top bar) ---
 
-export default function ClubNav({ active, dndClubUrl, bookClubUrl, activeHref, session, t21Url }: Props) {
-  const isSadmin = session?.user?.role === "sadmin"
+export default function ClubNav({ active, dndClubUrl, activeHref, t21Url, basePath }: Props) {
   const [t21Open, setT21Open] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
 
-  const visibleClubs = clubs.filter(
-    (c) => c.id !== "t21" && (c.id !== "quest" || isSadmin)
-  )
+  const iconSrc = (club: ClubDef): string => {
+    if (!club.icon) return ""
+    if (basePath && club.id === active) return `${basePath}${club.icon}`
+    return club.icon
+  }
 
   const activeClub = active ? clubs.find((c) => c.id === active) : undefined
+
+  const renderClub = (club: ClubDef, mobile: boolean) => {
+    const isActive = active === club.id
+    const baseClass = "flex items-center gap-2 font-bold transition whitespace-nowrap"
+    const colorClass = isActive ? club.color.replace(" hover:", " ") : club.color
+
+    const inner = (
+      <>
+        {club.icon && (
+          <img src={iconSrc(club)} alt="" className={club.iconClass ?? ""} style={{ width: club.iconSize ?? 20, height: club.iconSize ?? 20 }} />
+        )}
+        {club.label}
+      </>
+    )
+
+    if (mobile) {
+      const href = isActive && activeHref ? activeHref : hrefFor(club.id, dndClubUrl)
+      return (
+        <a
+          key={club.id}
+          href={href}
+          onClick={() => setMobileOpen(false)}
+          className={`flex items-center gap-2 px-3 py-2.5 text-sm font-semibold transition ${isActive ? "bg-slate-800 text-white" : "text-slate-300 hover:bg-slate-800 hover:text-white"}`}
+        >
+          {inner}
+        </a>
+      )
+    }
+
+    const el = isActive && activeHref ? (
+      <a href={activeHref} className={`${baseClass} ${colorClass}`}>{inner}</a>
+    ) : (
+      <a href={hrefFor(club.id, dndClubUrl)} className={`${baseClass} ${colorClass}`}>{inner}</a>
+    )
+    return <span key={club.id}>{el}</span>
+  }
 
   return (
     <nav className="bg-black border-b border-slate-800">
       <div className="container mx-auto px-4 h-12 flex items-center gap-6">
         {/* Desktop: horizontal links */}
         <div className="hidden md:flex items-center gap-6">
-          {visibleClubs.map((club) => {
-            const isActive = active === club.id
-            const baseClass = "flex items-center gap-2 font-bold transition whitespace-nowrap"
-            const colorClass = isActive ? club.color.replace(" hover:", " ") : club.color
-
-            const inner = (
-              <>
-                {club.icon && (
-                  <img src={club.icon} alt="" className={club.iconClass ?? ""} style={{ width: club.iconSize ?? 20, height: club.iconSize ?? 20 }} />
-                )}
-                {club.label}
-              </>
-            )
-
-            const el = isActive && activeHref ? (
-              <a href={activeHref} className={`${baseClass} ${colorClass}`}>{inner}</a>
-            ) : (
-              <a href={hrefFor(club.id, dndClubUrl, bookClubUrl)} className={`${baseClass} ${colorClass}`}>{inner}</a>
-            )
-            return <span key={club.id}>{el}</span>
-          })}
+          {clubs.map((club) => renderClub(club, false))}
           {t21Url && (
             <span key="t21">
               <button onClick={() => setT21Open(true)} className="flex items-center gap-2 font-bold text-indigo-400 hover:text-indigo-300 transition whitespace-nowrap bg-transparent border-none cursor-pointer">
@@ -249,7 +205,7 @@ export default function ClubNav({ active, dndClubUrl, bookClubUrl, activeHref, s
             className="flex items-center gap-2 w-full bg-slate-900 border border-slate-700 text-white text-sm font-semibold rounded-lg px-3 py-1.5 outline-none"
           >
             {activeClub?.icon && (
-              <img src={activeClub.icon} alt="" className={activeClub.iconClass ?? ""} style={{ width: activeClub.iconSize ?? 20, height: activeClub.iconSize ?? 20 }} />
+              <img src={iconSrc(activeClub)} alt="" className={activeClub.iconClass ?? ""} style={{ width: activeClub.iconSize ?? 20, height: activeClub.iconSize ?? 20 }} />
             )}
             <span className="flex-1 text-left">{activeClub?.label ?? "Club"}</span>
             <svg className={`w-4 h-4 transition-transform ${mobileOpen ? "rotate-180" : ""}`} viewBox="0 0 20 20" fill="currentColor">
@@ -260,24 +216,8 @@ export default function ClubNav({ active, dndClubUrl, bookClubUrl, activeHref, s
           {mobileOpen && (
             <>
               <div className="fixed inset-0 z-40" onClick={() => setMobileOpen(false)} />
-              <div className="absolute top-full left-0 right-0 mt-1 bg-slate-900 border border-slate-700 rounded-lg shadow-xl z-50 overflow-hidden">
-                {visibleClubs.map((club) => {
-                  const isActive = active === club.id
-                  const href = isActive && activeHref ? activeHref : hrefFor(club.id, dndClubUrl, bookClubUrl)
-                  return (
-                    <a
-                      key={club.id}
-                      href={href}
-                      onClick={() => setMobileOpen(false)}
-                      className={`flex items-center gap-2 px-3 py-2.5 text-sm font-semibold transition ${isActive ? "bg-slate-800 text-white" : "text-slate-300 hover:bg-slate-800 hover:text-white"}`}
-                    >
-                      {club.icon && (
-                        <img src={club.icon} alt="" className={club.iconClass ?? ""} style={{ width: club.iconSize ?? 20, height: club.iconSize ?? 20 }} />
-                      )}
-                      {club.label}
-                    </a>
-                  )
-                })}
+              <div className="absolute top-full left-0 right-0 mt-1 bg-slate-900 border border-slate-700 rounded-lg shadow-xl z-50 max-h-80 overflow-y-auto">
+                {clubs.map((club) => renderClub(club, true))}
                 {t21Url && (
                   <button
                     onClick={() => { setT21Open(true); setMobileOpen(false) }}

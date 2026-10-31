@@ -27,7 +27,6 @@ export default async function RootLayout({
           <ClubNav
             active="d21"
             dndClubUrl={process.env.NEXT_PUBLIC_DND_CLUB_URL ?? "/"}
-            bookClubUrl={process.env.NEXT_PUBLIC_BOOK_CLUB_URL}
             activeHref="/"
             session={session}
             t21Url={process.env.NEXT_PUBLIC_T21_GAME_URL}
