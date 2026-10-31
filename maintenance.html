@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>d21 Club — Регламентные работы</title>
+<link rel="icon" href="/favicon.ico">
+<meta name="build-start" content="TIMESTAMP">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'SF Mono', 'Cascadia Code', 'JetBrains Mono', 'Consolas', monospace;
+  background: #0a0008;
+  color: #94a3b8;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* scanlines */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255,0,50,0.03) 2px,
+    rgba(255,0,50,0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* glitch overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(255,0,50,0.08) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wrap {
+  max-width: 580px;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+/* top line */
+.top-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ff0033, #ff0066, transparent);
+  margin-bottom: 40px;
+  border-radius: 1px;
+  box-shadow: 0 0 12px rgba(255,0,51,0.3);
+}
+
+/* status block */
+.status-block {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.status-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #ff003366, transparent);
+  margin: 8px 0;
+}
+
+.status-text {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: #ff0033;
+  text-shadow: 0 0 20px rgba(255,0,51,0.5), 0 0 60px rgba(255,0,51,0.2);
+  animation: glow 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 20px rgba(255,0,51,0.5), 0 0 60px rgba(255,0,51,0.2); }
+  to   { text-shadow: 0 0 35px rgba(255,0,51,0.7), 0 0 90px rgba(255,0,51,0.3); }
+}
+
+/* maintenance box */
+.box {
+  border: 1px solid #330011;
+  border-radius: 8px;
+  background: #0d000a;
+  margin-bottom: 32px;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(255,0,51,0.05);
+}
+
+.box-header {
+  padding: 10px 20px;
+  background: #0a0008;
+  border-bottom: 1px solid #330011;
+  color: #660022;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+}
+
+.box-body {
+  padding: 20px;
+}
+
+.box-body p {
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: #cbd5e1;
+}
+
+.box-body .highlight {
+  color: #ff0033;
+}
+
+.box-body .dim {
+  color: #660022;
+  font-size: 0.8rem;
+}
+
+/* countdown */
+.countdown-wrap {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.countdown-display {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #ff0033;
+  text-shadow: 0 0 25px rgba(255,0,51,0.4);
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown-display.expired {
+  color: #ff0066;
+  animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* progress bar */
+.progress-wrap {
+  width: 100%;
+  background: #1a000e;
+  border-radius: 4px;
+  height: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #ff0033, #ff0066, #ff0033);
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+  border-radius: 4px;
+  transition: width 1s linear;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: #660022;
+  margin-top: 4px;
+  font-family: inherit;
+}
+
+/* button */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: #ff0033;
+  border: 1px solid #ff003333;
+  padding: 10px 28px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-family: inherit;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.25s;
+  margin-bottom: 48px;
+}
+
+.btn:hover {
+  background: #ff00330d;
+  border-color: #ff003366;
+  box-shadow: 0 0 25px rgba(255,0,51,0.2);
+}
+
+/* footer */
+.footer {
+  text-align: center;
+  font-size: 0.7rem;
+  color: #330011;
+  letter-spacing: 0.15em;
+}
+
+.footer::before,
+.footer::after {
+  content: ' ⏤ ';
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .countdown-display { animation: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top-line"></div>
+
+  <div class="status-block">
+    <div class="status-line"></div>
+    <div class="status-text">▸ STATUS: 503 SERVICE UNAVAILABLE ◂</div>
+    <div class="status-line"></div>
+  </div>
+
+  <div class="box">
+    <div class="box-header">┌─ MAINTENANCE ────────────────────┐</div>
+    <div class="box-body">
+      <p><span class="highlight">⚡</span> Ведутся регламентные работы</p>
+      <p><span class="dim">▸</span> обновление инфраструктуры</p>
+      <p><span class="dim">▸</span> примерное время: ~16 минут</p>
+
+      <div class="countdown-wrap">
+        <div class="countdown-display" id="countdown">--:--</div>
+        <div class="progress-wrap">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-label">
+          <span id="progressLabel">done</span>
+          <span id="progressPct">0%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn" onclick="location.reload()">🔄 ПОВТОРИТЬ СОЕДИНЕНИЕ</button>
+
+  <div class="footer">d21 Club &copy; 2026</div>
+</div>
+
+<script>
+(function() {
+  var TOTAL = 16 * 60;
+  var meta = document.querySelector('meta[name="build-start"]');
+  var buildStart = parseInt(meta.getAttribute('content'), 10);
+  if (isNaN(buildStart)) buildStart = Math.floor(Date.now() / 1000);
+
+  var display = document.getElementById('countdown');
+  var fill = document.getElementById('progressFill');
+  var pct = document.getElementById('progressPct');
+  var label = document.getElementById('progressLabel');
+
+  function tick() {
+    var now = Math.floor(Date.now() / 1000);
+    var elapsed = now - buildStart;
+    var remaining = Math.max(0, TOTAL - elapsed);
+    var done = remaining <= 0;
+
+    if (done) {
+      display.classList.add('expired');
+      display.textContent = '✓ ВЫПОЛНЕНО';
+      label.textContent = 'done';
+      fill.style.width = '100%';
+      pct.textContent = '100%';
+      return;
+    }
+
+    var mins = Math.floor(remaining / 60);
+    var secs = remaining % 60;
+    display.textContent = String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+
+    var progress = Math.min(100, (elapsed / TOTAL) * 100);
+    fill.style.width = progress + '%';
+    pct.textContent = Math.floor(progress) + '%';
+  }
+
+  tick();
+  setInterval(tick, 1000);
+})();
+</script>
+</body>
+</html>
